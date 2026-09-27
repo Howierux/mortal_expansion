@@ -14,8 +14,10 @@ import terrablender.worldgen.RegionUtils;
 import java.util.function.Consumer;
 
 /**
- * TerraBlender region responsible for placing Mortal Expansion biomes into
- * normal Overworld climate generation.
+ * TerraBlender region responsible for Graveyard placement.
+ *
+ * Spiritwood Forest intentionally has its own separate TerraBlender region so
+ * its rarity is rolled independently instead of piggybacking on Graveyards.
  */
 public final class MortalExpansionOverworldRegion extends Region {
     private static final long INLAND_MIN =
@@ -31,13 +33,6 @@ public final class MortalExpansionOverworldRegion extends Region {
             Consumer<Pair<Climate.ParameterPoint, ResourceKey<Biome>>> mapper
     ) {
         this.addModifiedVanillaOverworldBiomes(mapper, builder -> {
-            // Spiritwood Forest inherits only inland vanilla Forest climate
-            // points. This prevents it from replacing coastal/ocean climate
-            // bands and creating land-like terrain where water/beaches should be.
-            RegionUtils.getVanillaParameterPoints(Biomes.FOREST).stream()
-                    .filter(point -> point.continentalness().min() >= INLAND_MIN)
-                    .forEach(point -> builder.replaceBiome(point, ModBiomes.SPIRITWOOD_FOREST));
-
             // Graveyards inherit only the inland subset of vanilla Plains
             // climate points. This excludes ocean/deep-ocean/coast parameter
             // bands, so Graveyards do not replace beach or ocean terrain.

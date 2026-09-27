@@ -11,12 +11,23 @@ public final class ModTerraBlender {
     private ModTerraBlender() {}
 
     /**
-     * Weight 1 keeps Spiritwood regions deliberately uncommon relative to
-     * TerraBlender's vanilla Overworld region weight.
+     * Graveyard and Spiritwood each use their own low-weight region so their
+     * appearance odds are independent from one another.
      */
     public static void registerRegions() {
         Regions.register(new MortalExpansionOverworldRegion(
-                ResourceLocation.fromNamespaceAndPath(MortalExpansion.MOD_ID, "overworld"),
+                ResourceLocation.fromNamespaceAndPath(
+                        MortalExpansion.MOD_ID,
+                        "graveyard_overworld"
+                ),
+                1
+        ));
+
+        Regions.register(new SpiritwoodOverworldRegion(
+                ResourceLocation.fromNamespaceAndPath(
+                        MortalExpansion.MOD_ID,
+                        "spiritwood_overworld"
+                ),
                 1
         ));
     }
