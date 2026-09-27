@@ -2,6 +2,7 @@ package com.howierux.mortalexpansion.command;
 
 import com.howierux.mortalexpansion.haunt.HauntManager;
 import com.howierux.mortalexpansion.haunt.HauntTier;
+import com.howierux.mortalexpansion.haunt.NaturalHauntGenerator;
 import com.mojang.brigadier.CommandDispatcher;
 import com.mojang.brigadier.arguments.IntegerArgumentType;
 import com.mojang.brigadier.arguments.StringArgumentType;
@@ -11,6 +12,7 @@ import net.minecraft.commands.Commands;
 import net.minecraft.core.BlockPos;
 import net.minecraft.network.chat.Component;
 import net.minecraft.server.level.ServerLevel;
+import net.minecraft.world.level.ChunkPos;
 import net.neoforged.bus.api.SubscribeEvent;
 import net.neoforged.neoforge.event.RegisterCommandsEvent;
 
@@ -33,6 +35,8 @@ public final class ModCommands {
                         .then(Commands.literal("haunt")
                                 .then(Commands.literal("get")
                                         .executes(ModCommands::getHaunt))
+                                .then(Commands.literal("natural")
+                                        .executes(ModCommands::getNaturalHaunt))
                                 .then(Commands.literal("set")
                                         .then(Commands.argument("tier", StringArgumentType.word())
                                                 .suggests((context, builder) -> {
@@ -58,6 +62,20 @@ public final class ModCommands {
 
         source.sendSuccess(() -> Component.literal(
                 "Chunk haunt: " + tier.displayName() + " (" + tier.id() + ")"
+        ), false);
+        return tier.id();
+    }
+
+    private static int getNaturalHaunt(CommandContext<CommandSourceStack> context) {
+        CommandSourceStack source = context.getSource();
+        ServerLevel level = source.getLevel();
+        BlockPos pos = BlockPos.containing(source.getPosition());
+        ChunkPos chunkPos = new ChunkPos(pos);
+
+        HauntTier tier = NaturalHauntGenerator.determineInitialTier(level, chunkPos);
+
+        source.sendSuccess(() -> Component.literal(
+                "Biome-derived natural haunt: " + tier.displayName() + " (" + tier.id() + ")"
         ), false);
         return tier.id();
     }
