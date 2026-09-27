@@ -2,8 +2,7 @@ package com.howierux.mortalexpansion.registry;
 
 import com.howierux.mortalexpansion.MortalExpansion;
 import com.howierux.mortalexpansion.item.SpiritwoodSaplingItem;
-import net.minecraft.world.item.BlockItem;
-import net.minecraft.world.item.Item;
+import net.minecraft.world.item.*;
 import net.neoforged.bus.api.IEventBus;
 import net.neoforged.neoforge.registries.DeferredItem;
 import net.neoforged.neoforge.registries.DeferredRegister;
@@ -43,6 +42,60 @@ public final class ModItems {
 
     public static final DeferredItem<BlockItem> SPIRITWOOD_BUTTON =
             ITEMS.registerSimpleBlockItem(ModBlocks.SPIRITWOOD_BUTTON);
+
+    public static final DeferredItem<BlockItem> BLOODSTONE_ORE =
+            ITEMS.registerSimpleBlockItem(ModBlocks.BLOODSTONE_ORE);
+
+    public static final DeferredItem<Item> BLOODSTONE = ITEMS.registerItem(
+            "bloodstone",
+            Item::new,
+            new Item.Properties()
+    );
+
+    public static final DeferredItem<SwordItem> BLOODSTONE_SWORD = ITEMS.registerItem(
+            "bloodstone_sword",
+            properties -> new SwordItem(
+                    Tiers.DIAMOND,
+                    properties.attributes(SwordItem.createAttributes(Tiers.DIAMOND, 3, -2.4F))
+            ),
+            new Item.Properties()
+    );
+
+    public static final DeferredItem<PickaxeItem> BLOODSTONE_PICKAXE = ITEMS.registerItem(
+            "bloodstone_pickaxe",
+            properties -> new PickaxeItem(
+                    Tiers.DIAMOND,
+                    properties.attributes(PickaxeItem.createAttributes(Tiers.DIAMOND, 1.0F, -2.8F))
+            ),
+            new Item.Properties()
+    );
+
+    public static final DeferredItem<AxeItem> BLOODSTONE_AXE = ITEMS.registerItem(
+            "bloodstone_axe",
+            properties -> new AxeItem(
+                    Tiers.DIAMOND,
+                    properties.attributes(AxeItem.createAttributes(Tiers.DIAMOND, 5.0F, -3.0F))
+            ),
+            new Item.Properties()
+    );
+
+    public static final DeferredItem<ShovelItem> BLOODSTONE_SHOVEL = ITEMS.registerItem(
+            "bloodstone_shovel",
+            properties -> new ShovelItem(
+                    Tiers.DIAMOND,
+                    properties.attributes(ShovelItem.createAttributes(Tiers.DIAMOND, 1.5F, -3.0F))
+            ),
+            new Item.Properties()
+    );
+
+    public static final DeferredItem<HoeItem> BLOODSTONE_HOE = ITEMS.registerItem(
+            "bloodstone_hoe",
+            properties -> new HoeItem(
+                    Tiers.DIAMOND,
+                    properties.attributes(HoeItem.createAttributes(Tiers.DIAMOND, -3.0F, 0.0F))
+            ),
+            new Item.Properties()
+    );
 
     public static final DeferredItem<BlockItem> SPIRITWOOD_LEAVES =
             ITEMS.registerSimpleBlockItem(ModBlocks.SPIRITWOOD_LEAVES);

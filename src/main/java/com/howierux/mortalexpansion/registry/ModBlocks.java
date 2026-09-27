@@ -3,6 +3,7 @@ package com.howierux.mortalexpansion.registry;
 import com.howierux.mortalexpansion.MortalExpansion;
 import com.howierux.mortalexpansion.block.SpiritwoodSaplingBlock;
 import com.howierux.mortalexpansion.worldgen.ModTreeGrowers;
+import net.minecraft.util.valueproviders.UniformInt;
 import net.minecraft.world.level.block.*;
 import net.minecraft.world.level.block.state.BlockBehaviour;
 import net.minecraft.world.level.block.state.properties.BlockSetType;
@@ -71,6 +72,12 @@ public final class ModBlocks {
             "spiritwood_button",
             properties -> new ButtonBlock(BlockSetType.OAK, 30, properties),
             BlockBehaviour.Properties.ofFullCopy(Blocks.OAK_BUTTON)
+    );
+
+    public static final DeferredBlock<DropExperienceBlock> BLOODSTONE_ORE = BLOCKS.registerBlock(
+            "bloodstone_ore",
+            properties -> new DropExperienceBlock(properties, UniformInt.of(3, 7)),
+            BlockBehaviour.Properties.ofFullCopy(Blocks.DEEPSLATE_DIAMOND_ORE)
     );
 
     public static final DeferredBlock<LeavesBlock> SPIRITWOOD_LEAVES = BLOCKS.registerBlock(

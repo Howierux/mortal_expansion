@@ -1,10 +1,14 @@
 package com.howierux.mortalexpansion.haunt;
 
 import com.howierux.mortalexpansion.registry.ModAttachments;
+import com.howierux.mortalexpansion.registry.ModBlocks;
+import net.minecraft.core.BlockPos;
 import net.minecraft.server.level.ServerLevel;
 import net.minecraft.util.RandomSource;
 import net.minecraft.world.level.ChunkPos;
 import net.minecraft.world.level.Level;
+import net.minecraft.world.level.block.Blocks;
+import net.minecraft.world.level.block.state.BlockState;
 import net.minecraft.world.level.chunk.LevelChunk;
 import net.neoforged.bus.api.SubscribeEvent;
 import net.neoforged.neoforge.event.level.ChunkEvent;
@@ -40,6 +44,12 @@ public final class HauntSimulationHandler {
 
     /** 10% daily chance to lose one tier: 90% chance to remain unchanged. */
     private static final float DECAY_CHANCE = 0.10F;
+
+    /**
+     * 0.25% daily conversion roll for each loaded chunk that starts the day
+     * at Dead Rising (3) or higher.
+     */
+    private static final float BLOODSTONE_CONVERSION_CHANCE = 0.0025F;
 
     private static final int[][] CARDINAL_OFFSETS = {
             {1, 0},
@@ -192,6 +202,21 @@ public final class HauntSimulationHandler {
                     );
                 }
             }
+
+            // At Dead Rising (3) or above, haunt can very rarely crystallize
+            // one loaded diamond ore block into Bloodstone Ore. A successful
+            // conversion consumes one haunt tier from this chunk.
+            if (sourceTier.id() >= HauntTier.DEAD_RISING.id()
+                    && random.nextFloat() < BLOODSTONE_CONVERSION_CHANCE
+                    && tryConvertDiamondOre(level, chunk, random)) {
+                HauntTier floor = determineSourceFloor(chunk);
+                HauntTier planned = resultingTiers.getOrDefault(sourceKey, sourceTier);
+
+                resultingTiers.put(
+                        sourceKey,
+                        HauntTier.fromId(Math.max(floor.id(), planned.id() - 1))
+                );
+            }
         }
 
         for (Map.Entry<Long, HauntTier> entry : resultingTiers.entrySet()) {
@@ -205,6 +230,57 @@ public final class HauntSimulationHandler {
                 }
             }
         }
+    }
+
+    /**
+     * Selects one diamond ore block uniformly from this loaded chunk and
+     * replaces it with Bloodstone Ore.
+     *
+     * The full chunk scan only occurs after the extremely rare conversion
+     * roll, keeping average simulation overhead low.
+     */
+    private static boolean tryConvertDiamondOre(
+            ServerLevel level,
+            LevelChunk chunk,
+            RandomSource random
+    ) {
+        ChunkPos chunkPos = chunk.getPos();
+        BlockPos.MutableBlockPos cursor = new BlockPos.MutableBlockPos();
+        BlockPos selected = null;
+        int candidatesSeen = 0;
+
+        for (int y = level.getMinBuildHeight(); y < level.getMaxBuildHeight(); y++) {
+            for (int localX = 0; localX < 16; localX++) {
+                for (int localZ = 0; localZ < 16; localZ++) {
+                    cursor.set(
+                            chunkPos.getMinBlockX() + localX,
+                            y,
+                            chunkPos.getMinBlockZ() + localZ
+                    );
+
+                    BlockState state = chunk.getBlockState(cursor);
+                    if (!state.is(Blocks.DIAMOND_ORE)
+                            && !state.is(Blocks.DEEPSLATE_DIAMOND_ORE)) {
+                        continue;
+                    }
+
+                    candidatesSeen++;
+                    if (random.nextInt(candidatesSeen) == 0) {
+                        selected = cursor.immutable();
+                    }
+                }
+            }
+        }
+
+        if (selected == null) {
+            return false;
+        }
+
+        return level.setBlock(
+                selected,
+                ModBlocks.BLOODSTONE_ORE.get().defaultBlockState(),
+                3
+        );
     }
 
     /**

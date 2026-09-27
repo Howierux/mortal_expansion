@@ -10,5 +10,12 @@
   "block.mortal_expansion.spiritwood_door": "Spiritwood Door",
   "block.mortal_expansion.spiritwood_trapdoor": "Spiritwood Trapdoor",
   "block.mortal_expansion.spiritwood_pressure_plate": "Spiritwood Pressure Plate",
-  "block.mortal_expansion.spiritwood_button": "Spiritwood Button"
+  "block.mortal_expansion.spiritwood_button": "Spiritwood Button",
+  "block.mortal_expansion.bloodstone_ore": "Bloodstone Ore",
+  "item.mortal_expansion.bloodstone": "Bloodstone",
+  "item.mortal_expansion.bloodstone_sword": "Bloodstone Sword",
+  "item.mortal_expansion.bloodstone_pickaxe": "Bloodstone Pickaxe",
+  "item.mortal_expansion.bloodstone_axe": "Bloodstone Axe",
+  "item.mortal_expansion.bloodstone_shovel": "Bloodstone Shovel",
+  "item.mortal_expansion.bloodstone_hoe": "Bloodstone Hoe"
 }

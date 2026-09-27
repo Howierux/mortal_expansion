@@ -16,6 +16,22 @@ public final class ModCreativeTabs {
             event.accept(ModItems.SPIRITWOOD_LOG.get());
             event.accept(ModItems.SPIRITWOOD_LEAVES.get());
             event.accept(ModItems.SPIRITWOOD_SAPLING.get());
+            event.accept(ModItems.BLOODSTONE_ORE.get());
+        }
+
+        if (event.getTabKey() == CreativeModeTabs.INGREDIENTS) {
+            event.accept(ModItems.BLOODSTONE.get());
+        }
+
+        if (event.getTabKey() == CreativeModeTabs.TOOLS_AND_UTILITIES) {
+            event.accept(ModItems.BLOODSTONE_PICKAXE.get());
+            event.accept(ModItems.BLOODSTONE_SHOVEL.get());
+            event.accept(ModItems.BLOODSTONE_HOE.get());
+        }
+
+        if (event.getTabKey() == CreativeModeTabs.COMBAT) {
+            event.accept(ModItems.BLOODSTONE_SWORD.get());
+            event.accept(ModItems.BLOODSTONE_AXE.get());
         }
 
         if (event.getTabKey() == CreativeModeTabs.BUILDING_BLOCKS) {
