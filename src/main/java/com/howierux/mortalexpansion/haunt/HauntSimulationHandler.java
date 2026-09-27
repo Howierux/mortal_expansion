@@ -35,8 +35,8 @@ public final class HauntSimulationHandler {
 
     private static final long TICKS_PER_DAY = 24_000L;
 
-    /** 5% daily chance for each haunted loaded chunk to attempt one spread. */
-    private static final float SPREAD_CHANCE = 0.05F;
+    /** 7.5% daily chance for each haunted loaded chunk to attempt one spread. */
+    private static final float SPREAD_CHANCE = 0.075F;
 
     /** 10% daily chance to lose one tier: 90% chance to remain unchanged. */
     private static final float DECAY_CHANCE = 0.10F;
