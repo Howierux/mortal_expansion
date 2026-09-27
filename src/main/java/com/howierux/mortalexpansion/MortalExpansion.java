@@ -9,6 +9,7 @@ import com.howierux.mortalexpansion.registry.ModBlocks;
 import com.howierux.mortalexpansion.registry.ModCreativeTabs;
 import com.howierux.mortalexpansion.registry.ModItems;
 import com.howierux.mortalexpansion.worldgen.ModTerraBlender;
+import com.howierux.mortalexpansion.worldgen.ModFeatures;
 import net.neoforged.bus.api.IEventBus;
 import net.neoforged.fml.common.Mod;
 import net.neoforged.neoforge.common.NeoForge;
@@ -27,6 +28,7 @@ public final class MortalExpansion {
         ModBlocks.register(modBus);
         ModItems.register(modBus);
         ModAttachments.register(modBus);
+        ModFeatures.register(modBus);
         ModCreativeTabs.register(modBus);
 
         ModTerraBlender.registerRegions();
