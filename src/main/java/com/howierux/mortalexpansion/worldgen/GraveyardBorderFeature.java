@@ -3,7 +3,9 @@ package com.howierux.mortalexpansion.worldgen;
 import com.howierux.mortalexpansion.registry.ModBlocks;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.Direction;
+import net.minecraft.tags.BlockTags;
 import net.minecraft.world.level.WorldGenLevel;
+import net.minecraft.world.level.block.Blocks;
 import net.minecraft.world.level.block.FenceBlock;
 import net.minecraft.world.level.block.state.BlockState;
 import net.minecraft.world.level.levelgen.Heightmap;
@@ -15,15 +17,14 @@ import java.util.HashSet;
 import java.util.Set;
 
 /**
- * Traces the surface edge of Graveyard biome cells.
- *
- * Diagonal-only transitions are converted into a one-block orthogonal step so
- * the Stone Fence can form a continuous Minecraft-style perimeter.
+ * Finds the largest axis-aligned rectangle of usable Graveyard terrain inside
+ * the generating chunk and fences that rectangle instead of tracing the
+ * irregular biome edge.
  */
 public final class GraveyardBorderFeature extends Feature<NoneFeatureConfiguration> {
-    private static final Direction[] HORIZONTAL = {
-            Direction.NORTH, Direction.EAST, Direction.SOUTH, Direction.WEST
-    };
+    private static final int CHUNK_SIZE = 16;
+    private static final int MIN_WIDTH = 5;
+    private static final int MIN_DEPTH = 5;
 
     public GraveyardBorderFeature() {
         super(NoneFeatureConfiguration.CODEC);
@@ -37,31 +38,51 @@ public final class GraveyardBorderFeature extends Feature<NoneFeatureConfigurati
         int minX = origin.getX() & ~15;
         int minZ = origin.getZ() & ~15;
 
-        Set<BlockPos> border = new HashSet<>();
+        boolean[][] usable = new boolean[CHUNK_SIZE][CHUNK_SIZE];
 
-        for (int dx = 0; dx < 16; dx++) {
-            for (int dz = 0; dz < 16; dz++) {
-                BlockPos surface = surfaceAir(level, minX + dx, minZ + dz);
-
-                if (level.getBiome(surface).is(ModBiomes.GRAVEYARD)
-                        && touchesNonGraveyard(level, surface)) {
-                    border.add(surface);
-                }
+        for (int z = 0; z < CHUNK_SIZE; z++) {
+            for (int x = 0; x < CHUNK_SIZE; x++) {
+                usable[z][x] = isUsableGraveyardColumn(level, minX + x, minZ + z);
             }
         }
 
-        bridgeDiagonalCorners(level, border, minX, minZ);
+        Rectangle rectangle = largestRectangle(usable);
+        if (rectangle == null
+                || rectangle.width() < MIN_WIDTH
+                || rectangle.depth() < MIN_DEPTH) {
+            return false;
+        }
 
+        Set<BlockPos> border = new HashSet<>();
+
+        for (int x = rectangle.minX(); x <= rectangle.maxX(); x++) {
+            border.add(surfaceAir(level, minX + x, minZ + rectangle.minZ()));
+            border.add(surfaceAir(level, minX + x, minZ + rectangle.maxZ()));
+        }
+
+        for (int z = rectangle.minZ() + 1; z < rectangle.maxZ(); z++) {
+            border.add(surfaceAir(level, minX + rectangle.minX(), minZ + z));
+            border.add(surfaceAir(level, minX + rectangle.maxX(), minZ + z));
+        }
+
+        // Gravestone foundation first.
+        for (BlockPos surface : border) {
+            if (level.getBlockState(surface).canBeReplaced()) {
+                level.setBlock(
+                        surface.below(),
+                        ModBlocks.GRAVESTONE.get().defaultBlockState(),
+                        2
+                );
+            }
+        }
+
+        // Then Stone Fence with explicit connections. This avoids depending on
+        // worldgen neighbor-update order.
         for (BlockPos surface : border) {
             if (!level.getBlockState(surface).canBeReplaced()) {
                 continue;
             }
 
-            level.setBlock(
-                    surface.below(),
-                    ModBlocks.GRAVESTONE.get().defaultBlockState(),
-                    2
-            );
             level.setBlock(
                     surface,
                     fenceStateFor(level, border, surface),
@@ -69,57 +90,92 @@ public final class GraveyardBorderFeature extends Feature<NoneFeatureConfigurati
             );
         }
 
-        // Recalculate once more now that neighboring fence blocks exist.
+        // Re-evaluate once all fence blocks are present.
         for (BlockPos surface : border) {
             if (level.getBlockState(surface).is(ModBlocks.STONE_FENCE.get())) {
                 level.setBlock(surface, fenceStateFor(level, border, surface), 2);
             }
         }
 
-        return !border.isEmpty();
+        return true;
     }
 
-    private static void bridgeDiagonalCorners(
-            WorldGenLevel level,
-            Set<BlockPos> border,
-            int minX,
-            int minZ
-    ) {
-        Set<BlockPos> additions = new HashSet<>();
-        Set<BlockPos> snapshot = new HashSet<>(border);
+    /**
+     * Graveyard cells on water, sand, sandstone, or gravel-like beach terrain
+     * are excluded even if a modded worldgen combination produces an unusual
+     * coastal overlap.
+     */
+    private static boolean isUsableGraveyardColumn(WorldGenLevel level, int x, int z) {
+        BlockPos surface = surfaceAir(level, x, z);
+        BlockState ground = level.getBlockState(surface.below());
 
-        for (BlockPos pos : snapshot) {
-            for (int sx : new int[]{-1, 1}) {
-                for (int sz : new int[]{-1, 1}) {
-                    BlockPos diagonal = findAtXZ(snapshot, pos.getX() + sx, pos.getZ() + sz);
-                    if (diagonal == null) {
-                        continue;
+        if (!level.getBiome(surface).is(ModBiomes.GRAVEYARD)) {
+            return false;
+        }
+
+        if (!level.getFluidState(surface).isEmpty()
+                || !level.getFluidState(surface.below()).isEmpty()) {
+            return false;
+        }
+
+        if (ground.is(Blocks.SAND)
+                || ground.is(Blocks.RED_SAND)
+                || ground.is(Blocks.SANDSTONE)
+                || ground.is(Blocks.RED_SANDSTONE)
+                || ground.is(Blocks.GRAVEL)) {
+            return false;
+        }
+
+        return ground.is(BlockTags.DIRT)
+                || ground.is(Blocks.STONE)
+                || ground.is(Blocks.GRAVESTONE);
+    }
+
+    /**
+     * O(width * depth) histogram algorithm for the maximum all-true rectangle.
+     */
+    private static Rectangle largestRectangle(boolean[][] grid) {
+        int[] heights = new int[CHUNK_SIZE];
+        Rectangle best = null;
+        int bestArea = 0;
+
+        for (int z = 0; z < CHUNK_SIZE; z++) {
+            for (int x = 0; x < CHUNK_SIZE; x++) {
+                heights[x] = grid[z][x] ? heights[x] + 1 : 0;
+            }
+
+            int[] stack = new int[CHUNK_SIZE + 1];
+            int stackSize = 0;
+
+            for (int x = 0; x <= CHUNK_SIZE; x++) {
+                int currentHeight = x == CHUNK_SIZE ? 0 : heights[x];
+
+                while (stackSize > 0
+                        && heights[stack[stackSize - 1]] > currentHeight) {
+                    int index = stack[--stackSize];
+                    int height = heights[index];
+                    int left = stackSize == 0 ? 0 : stack[stackSize - 1] + 1;
+                    int width = x - left;
+                    int area = width * height;
+
+                    if (area > bestArea) {
+                        bestArea = area;
+                        best = new Rectangle(
+                                left,
+                                z - height + 1,
+                                x - 1,
+                                z
+                        );
                     }
+                }
 
-                    BlockPos xStep = surfaceAir(level, pos.getX() + sx, pos.getZ());
-                    BlockPos zStep = surfaceAir(level, pos.getX(), pos.getZ() + sz);
-
-                    boolean hasX = findAtXZ(snapshot, xStep.getX(), xStep.getZ()) != null;
-                    boolean hasZ = findAtXZ(snapshot, zStep.getX(), zStep.getZ()) != null;
-
-                    if (hasX || hasZ) {
-                        continue;
-                    }
-
-                    BlockPos candidate = isInsideChunk(xStep, minX, minZ)
-                            && level.getBiome(xStep).is(ModBiomes.GRAVEYARD)
-                            ? xStep
-                            : zStep;
-
-                    if (isInsideChunk(candidate, minX, minZ)
-                            && level.getBiome(candidate).is(ModBiomes.GRAVEYARD)) {
-                        additions.add(candidate);
-                    }
+                if (x < CHUNK_SIZE) {
+                    stack[stackSize++] = x;
                 }
             }
         }
 
-        border.addAll(additions);
+        return best;
     }
 
     private static BlockState fenceStateFor(
@@ -145,33 +201,22 @@ public final class GraveyardBorderFeature extends Feature<NoneFeatureConfigurati
                 || level.getBlockState(neighbor).is(ModBlocks.STONE_FENCE.get());
     }
 
-    private static BlockPos findAtXZ(Set<BlockPos> positions, int x, int z) {
-        for (BlockPos pos : positions) {
-            if (pos.getX() == x && pos.getZ() == z) {
-                return pos;
-            }
-        }
-        return null;
-    }
-
-    private static boolean isInsideChunk(BlockPos pos, int minX, int minZ) {
-        return pos.getX() >= minX && pos.getX() < minX + 16
-                && pos.getZ() >= minZ && pos.getZ() < minZ + 16;
-    }
-
-    private static boolean touchesNonGraveyard(WorldGenLevel level, BlockPos surface) {
-        for (Direction direction : HORIZONTAL) {
-            BlockPos neighborXZ = surface.relative(direction);
-            BlockPos neighborSurface = surfaceAir(level, neighborXZ.getX(), neighborXZ.getZ());
-            if (!level.getBiome(neighborSurface).is(ModBiomes.GRAVEYARD)) {
-                return true;
-            }
-        }
-        return false;
-    }
-
     private static BlockPos surfaceAir(WorldGenLevel level, int x, int z) {
-        int y = level.getHeight(Heightmap.Types.MOTION_BLOCKING_NO_LEAVES, x, z);
+        int y = level.getHeight(
+                Heightmap.Types.MOTION_BLOCKING_NO_LEAVES,
+                x,
+                z
+        );
         return new BlockPos(x, y, z);
+    }
+
+    private record Rectangle(int minX, int minZ, int maxX, int maxZ) {
+        int width() {
+            return maxX - minX + 1;
+        }
+
+        int depth() {
+            return maxZ - minZ + 1;
+        }
     }
 }
