@@ -14,7 +14,7 @@ import net.neoforged.neoforge.common.NeoForge;
  */
 @Mod(MortalExpansion.MOD_ID)
 public final class MortalExpansion {
-    public static final String MOD_ID = "mortalexpansion";
+    public static final String MOD_ID = "mortal_expansion";
 
     public MortalExpansion(IEventBus modBus) {
         ModAttachments.register(modBus);
