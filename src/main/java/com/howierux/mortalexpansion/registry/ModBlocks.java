@@ -76,7 +76,7 @@ public final class ModBlocks {
 
     public static final DeferredBlock<DropExperienceBlock> BLOODSTONE_ORE = BLOCKS.registerBlock(
             "bloodstone_ore",
-            properties -> new DropExperienceBlock(properties, UniformInt.of(3, 7)),
+            properties -> new DropExperienceBlock(UniformInt.of(3, 7), properties),
             BlockBehaviour.Properties.ofFullCopy(Blocks.DEEPSLATE_DIAMOND_ORE)
     );
 
