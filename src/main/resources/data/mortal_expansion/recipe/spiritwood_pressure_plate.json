@@ -1,0 +1,15 @@
+{
+  "type": "minecraft:crafting_shaped",
+  "category": "redstone",
+  "pattern": [
+    "PP"
+  ],
+  "key": {
+    "P": {
+      "item": "mortal_expansion:spiritwood_planks"
+    }
+  },
+  "result": {
+    "id": "mortal_expansion:spiritwood_pressure_plate"
+  }
+}

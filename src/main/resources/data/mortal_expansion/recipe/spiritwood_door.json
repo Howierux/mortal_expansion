@@ -1,0 +1,18 @@
+{
+  "type": "minecraft:crafting_shaped",
+  "category": "building",
+  "pattern": [
+    "PP",
+    "PP",
+    "PP"
+  ],
+  "key": {
+    "P": {
+      "item": "mortal_expansion:spiritwood_planks"
+    }
+  },
+  "result": {
+    "id": "mortal_expansion:spiritwood_door",
+    "count": 3
+  }
+}

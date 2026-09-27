@@ -1,0 +1,13 @@
+{
+  "variants": {
+    "type=bottom": {
+      "model": "mortal_expansion:block/spiritwood_slab"
+    },
+    "type=double": {
+      "model": "mortal_expansion:block/spiritwood_planks"
+    },
+    "type=top": {
+      "model": "mortal_expansion:block/spiritwood_slab_top"
+    }
+  }
+}

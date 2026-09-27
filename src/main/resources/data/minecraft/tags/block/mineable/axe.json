@@ -1,1 +1,15 @@
-{"replace":false,"values":["mortal_expansion:spiritwood_log"]}
+{
+  "replace": false,
+  "values": [
+    "mortal_expansion:spiritwood_log",
+    "mortal_expansion:spiritwood_planks",
+    "mortal_expansion:spiritwood_stairs",
+    "mortal_expansion:spiritwood_slab",
+    "mortal_expansion:spiritwood_fence",
+    "mortal_expansion:spiritwood_fence_gate",
+    "mortal_expansion:spiritwood_door",
+    "mortal_expansion:spiritwood_trapdoor",
+    "mortal_expansion:spiritwood_pressure_plate",
+    "mortal_expansion:spiritwood_button"
+  ]
+}
