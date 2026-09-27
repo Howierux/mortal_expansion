@@ -162,16 +162,19 @@ public final class HauntSimulationHandler {
                 if (targetChunk != null) {
                     HauntTier targetTier = startingTiers.getOrDefault(targetKey, HauntTier.VOID);
 
-                    // A chunk can only push a neighbor upward if it is currently
-                    // more haunted than that neighbor. At most one tier is
-                    // gained by a target during a single daily pass.
-                    if (sourceTier.id() > targetTier.id()) {
-                        HauntTier alreadyPlanned = resultingTiers.getOrDefault(targetKey, targetTier);
-                        HauntTier spreadTier = HauntTier.fromId(targetTier.id() + 1);
+                    // Any haunted chunk can add haunt pressure to a neighbor,
+                    // even when the target is already at or above the source's
+                    // current tier. This lets a stable source such as a
+                    // Supernatural Spiritwood Forest very slowly push nearby
+                    // ordinary chunks into higher tiers over long periods.
+                    //
+                    // A target can still gain at most one tier in a daily pass,
+                    // and Eldritch remains the hard maximum.
+                    HauntTier alreadyPlanned = resultingTiers.getOrDefault(targetKey, targetTier);
+                    HauntTier spreadTier = HauntTier.fromId(targetTier.id() + 1);
 
-                        if (spreadTier.id() > alreadyPlanned.id()) {
-                            resultingTiers.put(targetKey, spreadTier);
-                        }
+                    if (spreadTier.id() > alreadyPlanned.id()) {
+                        resultingTiers.put(targetKey, spreadTier);
                     }
                 }
             }
