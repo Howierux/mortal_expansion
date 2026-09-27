@@ -3,6 +3,9 @@ package com.howierux.mortalexpansion;
 import com.howierux.mortalexpansion.command.ModCommands;
 import com.howierux.mortalexpansion.haunt.HauntGenerationHandler;
 import com.howierux.mortalexpansion.registry.ModAttachments;
+import com.howierux.mortalexpansion.registry.ModBlocks;
+import com.howierux.mortalexpansion.registry.ModCreativeTabs;
+import com.howierux.mortalexpansion.registry.ModItems;
 import com.howierux.mortalexpansion.worldgen.ModTerraBlender;
 import net.neoforged.bus.api.IEventBus;
 import net.neoforged.fml.common.Mod;
@@ -19,7 +22,11 @@ public final class MortalExpansion {
     public static final String MOD_ID = "mortal_expansion";
 
     public MortalExpansion(IEventBus modBus) {
+        ModBlocks.register(modBus);
+        ModItems.register(modBus);
         ModAttachments.register(modBus);
+        ModCreativeTabs.register(modBus);
+
         ModTerraBlender.registerRegions();
 
         NeoForge.EVENT_BUS.register(ModCommands.class);
