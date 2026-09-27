@@ -33,7 +33,7 @@ public final class HauntGenerationHandler {
             return;
         }
 
-        HauntTier initialTier = NaturalHauntGenerator.determineInitialTier(level, chunk.getPos());
+        HauntTier initialTier = NaturalHauntGenerator.determineInitialTier(chunk);
 
         if (initialTier != HauntTier.VOID) {
             chunk.setData(ModAttachments.HAUNT_TIER, initialTier.id());
