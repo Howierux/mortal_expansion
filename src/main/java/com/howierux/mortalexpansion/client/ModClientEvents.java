@@ -1,0 +1,69 @@
+package com.howierux.mortalexpansion.client;
+
+import com.howierux.mortalexpansion.MortalExpansion;
+import com.howierux.mortalexpansion.registry.ModBlocks;
+import com.howierux.mortalexpansion.registry.ModItems;
+import net.minecraft.client.renderer.BiomeColors;
+import net.minecraft.world.level.FoliageColor;
+import net.neoforged.api.distmarker.Dist;
+import net.neoforged.bus.api.SubscribeEvent;
+import net.neoforged.fml.common.EventBusSubscriber;
+import net.neoforged.neoforge.client.event.RegisterColorHandlersEvent;
+
+@EventBusSubscriber(modid = MortalExpansion.MOD_ID, bus = EventBusSubscriber.Bus.MOD, value = Dist.CLIENT)
+public final class ModClientEvents {
+    private ModClientEvents() {}
+
+    private static int coolFoliage(int color) {
+        int r = (color >> 16) & 0xFF;
+        int g = (color >> 8) & 0xFF;
+        int b = color & 0xFF;
+
+        r = Math.max(0, r - 8);
+        g = Math.min(255, g + 2);
+        b = Math.min(255, b + 14);
+
+        return 0xFF000000 | (r << 16) | (g << 8) | b;
+    }
+
+    @SubscribeEvent
+    public static void registerBlockColors(RegisterColorHandlersEvent.Block event) {
+        event.register(
+                (state, level, pos, tintIndex) -> 0xFFE7EEEE,
+                ModBlocks.SPIRITWOOD_LOG.get()
+        );
+
+        event.register(
+                (state, level, pos, tintIndex) -> {
+                    int base = level != null && pos != null
+                            ? BiomeColors.getAverageFoliageColor(level, pos)
+                            : FoliageColor.getDefaultColor();
+                    return coolFoliage(base);
+                },
+                ModBlocks.SPIRITWOOD_LEAVES.get()
+        );
+
+        event.register(
+                (state, level, pos, tintIndex) -> 0xFFE8FFE8,
+                ModBlocks.SPIRITWOOD_SAPLING.get()
+        );
+    }
+
+    @SubscribeEvent
+    public static void registerItemColors(RegisterColorHandlersEvent.Item event) {
+        event.register(
+                (stack, tintIndex) -> 0xFFE7EEEE,
+                ModItems.SPIRITWOOD_LOG.get()
+        );
+
+        event.register(
+                (stack, tintIndex) -> coolFoliage(FoliageColor.getDefaultColor()),
+                ModItems.SPIRITWOOD_LEAVES.get()
+        );
+
+        event.register(
+                (stack, tintIndex) -> 0xFFE8FFE8,
+                ModItems.SPIRITWOOD_SAPLING.get()
+        );
+    }
+}
