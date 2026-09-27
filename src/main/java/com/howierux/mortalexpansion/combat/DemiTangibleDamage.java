@@ -27,7 +27,9 @@ public final class DemiTangibleDamage {
         }
 
         Entity direct = source.getDirectEntity();
-        if (direct != null && direct.getType() == EntityType.FIREBALL) {
+        if (direct != null
+                && (direct.getType() == EntityType.FIREBALL
+                || direct.getType() == EntityType.SPECTRAL_ARROW)) {
             return true;
         }
 
