@@ -79,7 +79,15 @@ Expanding on the idea of Mortality.
     # Side this dependency is applied on - BOTH, CLIENT, or SERVER
     side="BOTH"
 
-# Here's another dependency
+# TerraBlender is required for Spiritwood Forest and future Mortal Expansion biome insertion.
+[[dependencies.${mod_id}]]
+    modId="terrablender"
+    type="required"
+    versionRange="[4.1.0.8,)"
+    ordering="AFTER"
+    side="BOTH"
+
+# Minecraft dependency
 [[dependencies.${mod_id}]]
     modId="minecraft"
     type="required"
