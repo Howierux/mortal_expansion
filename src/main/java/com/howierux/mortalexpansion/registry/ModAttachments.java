@@ -28,6 +28,22 @@ public final class ModAttachments {
                     .build()
     );
 
+    /**
+     * Personal haunt stored directly on each player.
+     *
+     * This is independent of chunk haunt: moving into or out of a haunted chunk
+     * does not directly replace the player's personal value.
+     *
+     * copyOnDeath() keeps personal haunt attached to the same player after death.
+     */
+    public static final Supplier<AttachmentType<Integer>> PLAYER_HAUNT_TIER = ATTACHMENTS.register(
+            "player_haunt_tier",
+            () -> AttachmentType.builder(() -> HauntTier.VOID.id())
+                    .serialize(Codec.intRange(HauntTier.MIN_ID, HauntTier.MAX_ID))
+                    .copyOnDeath()
+                    .build()
+    );
+
     public static void register(IEventBus modBus) {
         ATTACHMENTS.register(modBus);
     }
