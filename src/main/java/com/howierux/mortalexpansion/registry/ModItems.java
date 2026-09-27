@@ -55,8 +55,8 @@ public final class ModItems {
     public static final DeferredItem<SwordItem> BLOODSTONE_SWORD = ITEMS.registerItem(
             "bloodstone_sword",
             properties -> new SwordItem(
-                    Tiers.DIAMOND,
-                    properties.attributes(SwordItem.createAttributes(Tiers.DIAMOND, 3, -2.4F))
+                    ModTiers.BLOODSTONE,
+                    properties.attributes(SwordItem.createAttributes(ModTiers.BLOODSTONE, 7.69F, -2.4F))
             ),
             new Item.Properties()
     );
@@ -64,8 +64,8 @@ public final class ModItems {
     public static final DeferredItem<PickaxeItem> BLOODSTONE_PICKAXE = ITEMS.registerItem(
             "bloodstone_pickaxe",
             properties -> new PickaxeItem(
-                    Tiers.DIAMOND,
-                    properties.attributes(PickaxeItem.createAttributes(Tiers.DIAMOND, 1.0F, -2.8F))
+                    ModTiers.BLOODSTONE,
+                    properties.attributes(PickaxeItem.createAttributes(ModTiers.BLOODSTONE, 4.35F, -2.8F))
             ),
             new Item.Properties()
     );
@@ -73,8 +73,8 @@ public final class ModItems {
     public static final DeferredItem<AxeItem> BLOODSTONE_AXE = ITEMS.registerItem(
             "bloodstone_axe",
             properties -> new AxeItem(
-                    Tiers.DIAMOND,
-                    properties.attributes(AxeItem.createAttributes(Tiers.DIAMOND, 5.0F, -3.0F))
+                    ModTiers.BLOODSTONE,
+                    properties.attributes(AxeItem.createAttributes(ModTiers.BLOODSTONE, 11.03F, -3.0F))
             ),
             new Item.Properties()
     );
@@ -82,8 +82,8 @@ public final class ModItems {
     public static final DeferredItem<ShovelItem> BLOODSTONE_SHOVEL = ITEMS.registerItem(
             "bloodstone_shovel",
             properties -> new ShovelItem(
-                    Tiers.DIAMOND,
-                    properties.attributes(ShovelItem.createAttributes(Tiers.DIAMOND, 1.5F, -3.0F))
+                    ModTiers.BLOODSTONE,
+                    properties.attributes(ShovelItem.createAttributes(ModTiers.BLOODSTONE, 5.185F, -3.0F))
             ),
             new Item.Properties()
     );
@@ -91,8 +91,8 @@ public final class ModItems {
     public static final DeferredItem<HoeItem> BLOODSTONE_HOE = ITEMS.registerItem(
             "bloodstone_hoe",
             properties -> new HoeItem(
-                    Tiers.DIAMOND,
-                    properties.attributes(HoeItem.createAttributes(Tiers.DIAMOND, -3.0F, 0.0F))
+                    ModTiers.BLOODSTONE,
+                    properties.attributes(HoeItem.createAttributes(ModTiers.BLOODSTONE, -2.33F, 0.0F))
             ),
             new Item.Properties()
     );
