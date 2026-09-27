@@ -14,15 +14,15 @@ public final class ModTiers {
 
     /**
      * Bloodstone keeps diamond's mining speed, harvest capability, and
-     * enchantability, but has 1.67x diamond durability.
+     * enchantability, but has 1.5x diamond durability.
      *
      * Attack damage for individual Bloodstone tools is scaled separately so
-     * their actual final damage matches 1.67x the equivalent diamond tool.
+     * their actual final damage matches 1.5x the equivalent diamond tool.
      */
     public static final Tier BLOODSTONE = new Tier() {
         @Override
         public int getUses() {
-            return 2607;
+            return 2342;
         }
 
         @Override
@@ -48,6 +48,45 @@ public final class ModTiers {
         @Override
         public Ingredient getRepairIngredient() {
             return Ingredient.of(ModItems.BLOODSTONE.get());
+        }
+    };
+
+    /**
+     * Spectralite is the smithing upgrade above Bloodstone. It keeps
+     * Netherite's mining speed, harvest capability, and enchantability while
+     * increasing Bloodstone durability by 1.3x.
+     *
+     * Individual tool damage is also scaled to 1.3x the Bloodstone equivalent.
+     */
+    public static final Tier SPECTRALITE = new Tier() {
+        @Override
+        public int getUses() {
+            return 3045;
+        }
+
+        @Override
+        public float getSpeed() {
+            return 9.0F;
+        }
+
+        @Override
+        public float getAttackDamageBonus() {
+            return 4.0F;
+        }
+
+        @Override
+        public TagKey<Block> getIncorrectBlocksForDrops() {
+            return BlockTags.INCORRECT_FOR_NETHERITE_TOOL;
+        }
+
+        @Override
+        public int getEnchantmentValue() {
+            return 15;
+        }
+
+        @Override
+        public Ingredient getRepairIngredient() {
+            return Ingredient.of(net.minecraft.world.item.Items.NETHERITE_INGOT);
         }
     };
 }

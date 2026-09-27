@@ -56,7 +56,7 @@ public final class ModItems {
             "bloodstone_sword",
             properties -> new SwordItem(
                     ModTiers.BLOODSTONE,
-                    properties.attributes(SwordItem.createAttributes(ModTiers.BLOODSTONE, 7.69F, -2.4F))
+                    properties.attributes(SwordItem.createAttributes(ModTiers.BLOODSTONE, 6.5F, -2.4F))
             ),
             new Item.Properties()
     );
@@ -65,7 +65,7 @@ public final class ModItems {
             "bloodstone_pickaxe",
             properties -> new PickaxeItem(
                     ModTiers.BLOODSTONE,
-                    properties.attributes(PickaxeItem.createAttributes(ModTiers.BLOODSTONE, 4.35F, -2.8F))
+                    properties.attributes(PickaxeItem.createAttributes(ModTiers.BLOODSTONE, 3.5F, -2.8F))
             ),
             new Item.Properties()
     );
@@ -74,7 +74,7 @@ public final class ModItems {
             "bloodstone_axe",
             properties -> new AxeItem(
                     ModTiers.BLOODSTONE,
-                    properties.attributes(AxeItem.createAttributes(ModTiers.BLOODSTONE, 11.03F, -3.0F))
+                    properties.attributes(AxeItem.createAttributes(ModTiers.BLOODSTONE, 9.5F, -3.0F))
             ),
             new Item.Properties()
     );
@@ -83,7 +83,7 @@ public final class ModItems {
             "bloodstone_shovel",
             properties -> new ShovelItem(
                     ModTiers.BLOODSTONE,
-                    properties.attributes(ShovelItem.createAttributes(ModTiers.BLOODSTONE, 5.185F, -3.0F))
+                    properties.attributes(ShovelItem.createAttributes(ModTiers.BLOODSTONE, 4.25F, -3.0F))
             ),
             new Item.Properties()
     );
@@ -92,7 +92,52 @@ public final class ModItems {
             "bloodstone_hoe",
             properties -> new HoeItem(
                     ModTiers.BLOODSTONE,
-                    properties.attributes(HoeItem.createAttributes(ModTiers.BLOODSTONE, -2.33F, 0.0F))
+                    properties.attributes(HoeItem.createAttributes(ModTiers.BLOODSTONE, -2.5F, 0.0F))
+            ),
+            new Item.Properties()
+    );
+
+    public static final DeferredItem<SwordItem> SPECTRALITE_SWORD = ITEMS.registerItem(
+            "spectralite_sword",
+            properties -> new SwordItem(
+                    ModTiers.SPECTRALITE,
+                    properties.fireResistant().attributes(SwordItem.createAttributes(ModTiers.SPECTRALITE, 8.65F, -2.4F))
+            ),
+            new Item.Properties()
+    );
+
+    public static final DeferredItem<PickaxeItem> SPECTRALITE_PICKAXE = ITEMS.registerItem(
+            "spectralite_pickaxe",
+            properties -> new PickaxeItem(
+                    ModTiers.SPECTRALITE,
+                    properties.fireResistant().attributes(PickaxeItem.createAttributes(ModTiers.SPECTRALITE, 4.75F, -2.8F))
+            ),
+            new Item.Properties()
+    );
+
+    public static final DeferredItem<AxeItem> SPECTRALITE_AXE = ITEMS.registerItem(
+            "spectralite_axe",
+            properties -> new AxeItem(
+                    ModTiers.SPECTRALITE,
+                    properties.fireResistant().attributes(AxeItem.createAttributes(ModTiers.SPECTRALITE, 12.55F, -3.0F))
+            ),
+            new Item.Properties()
+    );
+
+    public static final DeferredItem<ShovelItem> SPECTRALITE_SHOVEL = ITEMS.registerItem(
+            "spectralite_shovel",
+            properties -> new ShovelItem(
+                    ModTiers.SPECTRALITE,
+                    properties.fireResistant().attributes(ShovelItem.createAttributes(ModTiers.SPECTRALITE, 5.725F, -3.0F))
+            ),
+            new Item.Properties()
+    );
+
+    public static final DeferredItem<HoeItem> SPECTRALITE_HOE = ITEMS.registerItem(
+            "spectralite_hoe",
+            properties -> new HoeItem(
+                    ModTiers.SPECTRALITE,
+                    properties.fireResistant().attributes(HoeItem.createAttributes(ModTiers.SPECTRALITE, -3.05F, 0.0F))
             ),
             new Item.Properties()
     );

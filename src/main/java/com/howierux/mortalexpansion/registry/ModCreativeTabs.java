@@ -27,11 +27,16 @@ public final class ModCreativeTabs {
             event.accept(ModItems.BLOODSTONE_PICKAXE.get());
             event.accept(ModItems.BLOODSTONE_SHOVEL.get());
             event.accept(ModItems.BLOODSTONE_HOE.get());
+            event.accept(ModItems.SPECTRALITE_PICKAXE.get());
+            event.accept(ModItems.SPECTRALITE_SHOVEL.get());
+            event.accept(ModItems.SPECTRALITE_HOE.get());
         }
 
         if (event.getTabKey() == CreativeModeTabs.COMBAT) {
             event.accept(ModItems.BLOODSTONE_SWORD.get());
             event.accept(ModItems.BLOODSTONE_AXE.get());
+            event.accept(ModItems.SPECTRALITE_SWORD.get());
+            event.accept(ModItems.SPECTRALITE_AXE.get());
         }
 
         if (event.getTabKey() == CreativeModeTabs.BUILDING_BLOCKS) {

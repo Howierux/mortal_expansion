@@ -1,6 +1,7 @@
 {
   "replace": false,
   "values": [
-    "mortal_expansion:bloodstone_sword"
+    "mortal_expansion:bloodstone_sword",
+    "mortal_expansion:spectralite_sword"
   ]
 }
