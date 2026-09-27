@@ -12,16 +12,17 @@ import net.minecraft.world.entity.monster.Ghast;
 import javax.annotation.Nullable;
 
 /**
- * Renders vanilla Ghast artwork translucently at 69% opacity.
+ * Renders vanilla Ghast artwork translucently at 20% opacity.
  *
- * Using the vanilla texture directly avoids maintaining a modified copy of the
- * Ghast texture and keeps resource-pack compatibility.
+ * Eyes and mouth receive a second masked render pass so those facial features
+ * remain readable at roughly 50% effective opacity.
  */
 public final class IntangibleGhastRenderer extends GhastRenderer {
-    private static final float INTANGIBLE_ALPHA = 0.20F;
+    public static final float INTANGIBLE_ALPHA = 0.20F;
 
     public IntangibleGhastRenderer(EntityRendererProvider.Context context) {
         super(context);
+        this.addLayer(new GhastFaceOpacityLayer(this));
     }
 
     @Override
