@@ -1,5 +1,6 @@
 package com.howierux.mortalexpansion.haunt;
 
+import com.howierux.mortalexpansion.registry.ModAttachments;
 import net.minecraft.server.level.ServerLevel;
 import net.minecraft.world.level.Level;
 import net.minecraft.world.level.chunk.LevelChunk;
@@ -35,7 +36,7 @@ public final class HauntGenerationHandler {
         HauntTier initialTier = NaturalHauntGenerator.determineInitialTier(level, chunk.getPos());
 
         if (initialTier != HauntTier.VOID) {
-            HauntManager.setTier(level, chunk.getPos(), initialTier);
+            chunk.setData(ModAttachments.HAUNT_TIER, initialTier.id());
         }
     }
 }
