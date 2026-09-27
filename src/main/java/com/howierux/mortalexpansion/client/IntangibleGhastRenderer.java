@@ -18,7 +18,7 @@ import javax.annotation.Nullable;
  * Ghast texture and keeps resource-pack compatibility.
  */
 public final class IntangibleGhastRenderer extends GhastRenderer {
-    private static final float INTANGIBLE_ALPHA = 0.69F;
+    private static final float INTANGIBLE_ALPHA = 0.20F;
 
     public IntangibleGhastRenderer(EntityRendererProvider.Context context) {
         super(context);
