@@ -31,7 +31,12 @@ public final class MortalExpansionOverworldRegion extends Region {
             Consumer<Pair<Climate.ParameterPoint, ResourceKey<Biome>>> mapper
     ) {
         this.addModifiedVanillaOverworldBiomes(mapper, builder -> {
-            builder.replaceBiome(Biomes.FOREST, ModBiomes.SPIRITWOOD_FOREST);
+            // Spiritwood Forest inherits only inland vanilla Forest climate
+            // points. This prevents it from replacing coastal/ocean climate
+            // bands and creating land-like terrain where water/beaches should be.
+            RegionUtils.getVanillaParameterPoints(Biomes.FOREST).stream()
+                    .filter(point -> point.continentalness().min() >= INLAND_MIN)
+                    .forEach(point -> builder.replaceBiome(point, ModBiomes.SPIRITWOOD_FOREST));
 
             // Graveyards inherit only the inland subset of vanilla Plains
             // climate points. This excludes ocean/deep-ocean/coast parameter
