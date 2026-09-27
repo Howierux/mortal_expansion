@@ -49,6 +49,9 @@ public final class ModItems {
     public static final DeferredItem<BlockItem> GRAVE =
             ITEMS.registerSimpleBlockItem(ModBlocks.GRAVE);
 
+    public static final DeferredItem<BlockItem> STONE_FENCE =
+            ITEMS.registerSimpleBlockItem(ModBlocks.STONE_FENCE);
+
     public static final DeferredItem<BlockItem> BLOODSTONE_ORE =
             ITEMS.registerSimpleBlockItem(ModBlocks.BLOODSTONE_ORE);
 

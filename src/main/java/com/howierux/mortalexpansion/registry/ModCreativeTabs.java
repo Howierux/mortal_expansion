@@ -51,6 +51,7 @@ public final class ModCreativeTabs {
             event.accept(ModItems.SPIRITWOOD_BUTTON.get());
             event.accept(ModItems.GRAVESTONE.get());
             event.accept(ModItems.GRAVE.get());
+            event.accept(ModItems.STONE_FENCE.get());
         }
     }
 }

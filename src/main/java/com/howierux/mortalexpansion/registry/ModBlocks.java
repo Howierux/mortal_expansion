@@ -86,6 +86,12 @@ public final class ModBlocks {
             BlockBehaviour.Properties.ofFullCopy(Blocks.STONE)
     );
 
+    public static final DeferredBlock<FenceBlock> STONE_FENCE = BLOCKS.registerBlock(
+            "stone_fence",
+            FenceBlock::new,
+            BlockBehaviour.Properties.ofFullCopy(Blocks.STONE)
+    );
+
     public static final DeferredBlock<DropExperienceBlock> BLOODSTONE_ORE = BLOCKS.registerBlock(
             "bloodstone_ore",
             properties -> new DropExperienceBlock(UniformInt.of(3, 7), properties),

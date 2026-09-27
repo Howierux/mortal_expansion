@@ -2,9 +2,9 @@
   "type": "minecraft:crafting_shaped",
   "category": "building",
   "pattern": [
-    "G",
-    "G",
-    "G"
+    "GG",
+    "GG",
+    "GG"
   ],
   "key": {
     "G": {
@@ -13,6 +13,6 @@
   },
   "result": {
     "id": "mortal_expansion:grave",
-    "count": 6
+    "count": 3
   }
 }

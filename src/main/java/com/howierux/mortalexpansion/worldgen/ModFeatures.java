@@ -13,6 +13,12 @@ public final class ModFeatures {
     public static final DeferredRegister<Feature<?>> FEATURES =
             DeferredRegister.create(Registries.FEATURE, MortalExpansion.MOD_ID);
 
+    public static final DeferredHolder<Feature<?>, GraveyardBorderFeature> GRAVEYARD_BORDER =
+            FEATURES.register("graveyard_border", GraveyardBorderFeature::new);
+
+    public static final DeferredHolder<Feature<?>, MausoleumFeature> MAUSOLEUM =
+            FEATURES.register("mausoleum", MausoleumFeature::new);
+
     public static final DeferredHolder<Feature<?>, GraveRowsFeature> GRAVE_ROWS =
             FEATURES.register("grave_rows", GraveRowsFeature::new);
 

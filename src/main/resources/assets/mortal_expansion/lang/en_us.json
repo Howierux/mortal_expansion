@@ -24,5 +24,6 @@
   "item.mortal_expansion.spectralite_shovel": "Spectralite Shovel",
   "item.mortal_expansion.spectralite_hoe": "Spectralite Hoe",
   "block.mortal_expansion.gravestone": "Gravestone",
-  "block.mortal_expansion.grave": "Grave"
+  "block.mortal_expansion.grave": "Grave",
+  "block.mortal_expansion.stone_fence": "Stone Fence"
 }
