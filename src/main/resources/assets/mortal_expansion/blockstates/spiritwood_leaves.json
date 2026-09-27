@@ -1,7 +1,22 @@
 {
   "variants": {
-    "": {
-      "model": "mortal_expansion:block/spiritwood_leaves"
-    }
+    "": [
+      {
+        "model": "mortal_expansion:block/spiritwood_leaves_phase0",
+        "weight": 1
+      },
+      {
+        "model": "mortal_expansion:block/spiritwood_leaves_phase1",
+        "weight": 1
+      },
+      {
+        "model": "mortal_expansion:block/spiritwood_leaves_phase2",
+        "weight": 1
+      },
+      {
+        "model": "mortal_expansion:block/spiritwood_leaves_phase3",
+        "weight": 1
+      }
+    ]
   }
 }
