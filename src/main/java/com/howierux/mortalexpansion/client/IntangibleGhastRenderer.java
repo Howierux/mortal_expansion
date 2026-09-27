@@ -1,8 +1,6 @@
 package com.howierux.mortalexpansion.client;
 
-import com.mojang.blaze3d.systems.RenderSystem;
-import com.mojang.blaze3d.vertex.PoseStack;
-import net.minecraft.client.renderer.MultiBufferSource;
+import com.howierux.mortalexpansion.MortalExpansion;
 import net.minecraft.client.renderer.RenderType;
 import net.minecraft.client.renderer.entity.EntityRendererProvider;
 import net.minecraft.client.renderer.entity.GhastRenderer;
@@ -12,34 +10,32 @@ import net.minecraft.world.entity.monster.Ghast;
 import javax.annotation.Nullable;
 
 /**
- * Renders vanilla Ghast artwork translucently at 20% opacity.
+ * Intangible Ghast renderer.
  *
- * Eyes and mouth receive a second masked render pass so those facial features
- * remain readable at roughly 50% effective opacity.
+ * The Ghast body/tentacles are rendered at 20% opacity, while only the actual
+ * eyes and mouth pixels are raised to roughly 50% opacity. Both normal and
+ * charging expressions have their own adjusted texture.
  */
 public final class IntangibleGhastRenderer extends GhastRenderer {
-    public static final float INTANGIBLE_ALPHA = 0.20F;
+    private static final ResourceLocation GHAST_LOCATION =
+            ResourceLocation.fromNamespaceAndPath(
+                    MortalExpansion.MOD_ID,
+                    "textures/entity/ghast/ghast.png"
+            );
+
+    private static final ResourceLocation GHAST_SHOOTING_LOCATION =
+            ResourceLocation.fromNamespaceAndPath(
+                    MortalExpansion.MOD_ID,
+                    "textures/entity/ghast/ghast_shooting.png"
+            );
 
     public IntangibleGhastRenderer(EntityRendererProvider.Context context) {
         super(context);
-        this.addLayer(new GhastFaceOpacityLayer(this));
     }
 
     @Override
-    public void render(
-            Ghast ghast,
-            float entityYaw,
-            float partialTick,
-            PoseStack poseStack,
-            MultiBufferSource buffer,
-            int packedLight
-    ) {
-        RenderSystem.setShaderColor(1.0F, 1.0F, 1.0F, INTANGIBLE_ALPHA);
-        try {
-            super.render(ghast, entityYaw, partialTick, poseStack, buffer, packedLight);
-        } finally {
-            RenderSystem.setShaderColor(1.0F, 1.0F, 1.0F, 1.0F);
-        }
+    public ResourceLocation getTextureLocation(Ghast ghast) {
+        return ghast.isCharging() ? GHAST_SHOOTING_LOCATION : GHAST_LOCATION;
     }
 
     @Override
@@ -50,7 +46,7 @@ public final class IntangibleGhastRenderer extends GhastRenderer {
             boolean translucent,
             boolean glowing
     ) {
-        ResourceLocation texture = super.getTextureLocation(ghast);
+        ResourceLocation texture = getTextureLocation(ghast);
 
         if (glowing && !bodyVisible && !translucent) {
             return RenderType.outline(texture);
