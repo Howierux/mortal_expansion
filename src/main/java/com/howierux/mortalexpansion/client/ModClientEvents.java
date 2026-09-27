@@ -4,11 +4,13 @@ import com.howierux.mortalexpansion.MortalExpansion;
 import com.howierux.mortalexpansion.registry.ModBlocks;
 import com.howierux.mortalexpansion.registry.ModItems;
 import net.minecraft.client.renderer.BiomeColors;
+import net.minecraft.world.entity.EntityType;
 import net.minecraft.world.level.FoliageColor;
 import net.neoforged.api.distmarker.Dist;
 import net.neoforged.bus.api.SubscribeEvent;
 import net.neoforged.fml.common.EventBusSubscriber;
 import net.neoforged.neoforge.client.event.RegisterColorHandlersEvent;
+import net.neoforged.neoforge.client.event.EntityRenderersEvent;
 
 @EventBusSubscriber(modid = MortalExpansion.MOD_ID, bus = EventBusSubscriber.Bus.MOD, value = Dist.CLIENT)
 public final class ModClientEvents {
@@ -24,6 +26,11 @@ public final class ModClientEvents {
         b = Math.min(255, b + 14);
 
         return 0xFF000000 | (r << 16) | (g << 8) | b;
+    }
+
+    @SubscribeEvent
+    public static void registerEntityRenderers(EntityRenderersEvent.RegisterRenderers event) {
+        event.registerEntityRenderer(EntityType.GHAST, IntangibleGhastRenderer::new);
     }
 
     @SubscribeEvent
