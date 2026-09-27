@@ -1,0 +1,19 @@
+{
+  "variants": {
+    "facing=north": {
+      "model": "mortal_expansion:block/grave"
+    },
+    "facing=east": {
+      "model": "mortal_expansion:block/grave",
+      "y": 90
+    },
+    "facing=south": {
+      "model": "mortal_expansion:block/grave",
+      "y": 180
+    },
+    "facing=west": {
+      "model": "mortal_expansion:block/grave",
+      "y": 270
+    }
+  }
+}

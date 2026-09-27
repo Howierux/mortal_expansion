@@ -49,6 +49,8 @@ public final class ModCreativeTabs {
             event.accept(ModItems.SPIRITWOOD_TRAPDOOR.get());
             event.accept(ModItems.SPIRITWOOD_PRESSURE_PLATE.get());
             event.accept(ModItems.SPIRITWOOD_BUTTON.get());
+            event.accept(ModItems.GRAVESTONE.get());
+            event.accept(ModItems.GRAVE.get());
         }
     }
 }

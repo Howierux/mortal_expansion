@@ -43,6 +43,12 @@ public final class ModItems {
     public static final DeferredItem<BlockItem> SPIRITWOOD_BUTTON =
             ITEMS.registerSimpleBlockItem(ModBlocks.SPIRITWOOD_BUTTON);
 
+    public static final DeferredItem<BlockItem> GRAVESTONE =
+            ITEMS.registerSimpleBlockItem(ModBlocks.GRAVESTONE);
+
+    public static final DeferredItem<BlockItem> GRAVE =
+            ITEMS.registerSimpleBlockItem(ModBlocks.GRAVE);
+
     public static final DeferredItem<BlockItem> BLOODSTONE_ORE =
             ITEMS.registerSimpleBlockItem(ModBlocks.BLOODSTONE_ORE);
 

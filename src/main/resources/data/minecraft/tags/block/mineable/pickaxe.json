@@ -1,6 +1,8 @@
 {
   "replace": false,
   "values": [
-    "mortal_expansion:bloodstone_ore"
+    "mortal_expansion:bloodstone_ore",
+    "mortal_expansion:gravestone",
+    "mortal_expansion:grave"
   ]
 }
