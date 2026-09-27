@@ -128,7 +128,7 @@ public final class GraveyardBorderFeature extends Feature<NoneFeatureConfigurati
 
         return ground.is(BlockTags.DIRT)
                 || ground.is(Blocks.STONE)
-                || ground.is(Blocks.GRAVESTONE);
+                || ground.is(ModBlocks.GRAVESTONE.get());
     }
 
     /**
