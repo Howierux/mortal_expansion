@@ -11,11 +11,11 @@ import net.minecraft.world.level.block.state.BlockState;
 import org.joml.Vector3f;
 
 /**
- * Spiritwood sapling with a very subtle green shimmer while planted.
+ * Spiritwood sapling with a subtle but clearly visible green shimmer while planted.
  */
 public class SpiritwoodSaplingBlock extends SaplingBlock {
     private static final DustParticleOptions SPIRIT_SHIMMER =
-            new DustParticleOptions(new Vector3f(0.28F, 0.78F, 0.38F), 0.35F);
+            new DustParticleOptions(new Vector3f(0.32F, 0.92F, 0.42F), 0.60F);
 
     public SpiritwoodSaplingBlock(TreeGrower treeGrower, BlockBehaviour.Properties properties) {
         super(treeGrower, properties);
@@ -25,7 +25,7 @@ public class SpiritwoodSaplingBlock extends SaplingBlock {
     public void animateTick(BlockState state, Level level, BlockPos pos, RandomSource random) {
         super.animateTick(state, level, pos, random);
 
-        if (random.nextInt(18) == 0) {
+        if (random.nextInt(8) == 0) {
             double x = pos.getX() + 0.25D + random.nextDouble() * 0.5D;
             double y = pos.getY() + 0.15D + random.nextDouble() * 0.65D;
             double z = pos.getZ() + 0.25D + random.nextDouble() * 0.5D;
