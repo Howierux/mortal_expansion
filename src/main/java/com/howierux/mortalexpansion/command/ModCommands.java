@@ -12,7 +12,7 @@ import net.minecraft.commands.Commands;
 import net.minecraft.core.BlockPos;
 import net.minecraft.network.chat.Component;
 import net.minecraft.server.level.ServerLevel;
-import net.minecraft.world.level.ChunkPos;
+import net.minecraft.world.level.chunk.LevelChunk;
 import net.neoforged.bus.api.SubscribeEvent;
 import net.neoforged.neoforge.event.RegisterCommandsEvent;
 
@@ -70,9 +70,9 @@ public final class ModCommands {
         CommandSourceStack source = context.getSource();
         ServerLevel level = source.getLevel();
         BlockPos pos = BlockPos.containing(source.getPosition());
-        ChunkPos chunkPos = new ChunkPos(pos);
+        LevelChunk chunk = level.getChunkAt(pos);
 
-        HauntTier tier = NaturalHauntGenerator.determineInitialTier(level, chunkPos);
+        HauntTier tier = NaturalHauntGenerator.determineInitialTier(chunk);
 
         source.sendSuccess(() -> Component.literal(
                 "Biome-derived natural haunt: " + tier.displayName() + " (" + tier.id() + ")"
