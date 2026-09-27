@@ -1,18 +1,48 @@
 {
   "variants": {
-    "facing=north": {
-      "model": "mortal_expansion:block/grave"
+    "depth=0,facing=north": {
+      "model": "mortal_expansion:block/grave_edge_low"
     },
-    "facing=east": {
-      "model": "mortal_expansion:block/grave",
-      "y": 90
-    },
-    "facing=south": {
-      "model": "mortal_expansion:block/grave",
+    "depth=0,facing=south": {
+      "model": "mortal_expansion:block/grave_edge_high",
       "y": 180
     },
-    "facing=west": {
-      "model": "mortal_expansion:block/grave",
+    "depth=0,facing=east": {
+      "model": "mortal_expansion:block/grave_edge_high",
+      "y": 90
+    },
+    "depth=0,facing=west": {
+      "model": "mortal_expansion:block/grave_edge_low",
+      "y": 270
+    },
+    "depth=1,facing=north": {
+      "model": "mortal_expansion:block/grave_center"
+    },
+    "depth=1,facing=south": {
+      "model": "mortal_expansion:block/grave_center",
+      "y": 180
+    },
+    "depth=1,facing=east": {
+      "model": "mortal_expansion:block/grave_center",
+      "y": 90
+    },
+    "depth=1,facing=west": {
+      "model": "mortal_expansion:block/grave_center",
+      "y": 270
+    },
+    "depth=2,facing=north": {
+      "model": "mortal_expansion:block/grave_edge_high"
+    },
+    "depth=2,facing=south": {
+      "model": "mortal_expansion:block/grave_edge_low",
+      "y": 180
+    },
+    "depth=2,facing=east": {
+      "model": "mortal_expansion:block/grave_edge_low",
+      "y": 90
+    },
+    "depth=2,facing=west": {
+      "model": "mortal_expansion:block/grave_edge_high",
       "y": 270
     }
   }

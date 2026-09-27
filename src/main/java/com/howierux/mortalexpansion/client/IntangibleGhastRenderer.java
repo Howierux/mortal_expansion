@@ -1,6 +1,8 @@
 package com.howierux.mortalexpansion.client;
 
-import com.howierux.mortalexpansion.MortalExpansion;
+import com.mojang.blaze3d.systems.RenderSystem;
+import com.mojang.blaze3d.vertex.PoseStack;
+import net.minecraft.client.renderer.MultiBufferSource;
 import net.minecraft.client.renderer.RenderType;
 import net.minecraft.client.renderer.entity.EntityRendererProvider;
 import net.minecraft.client.renderer.entity.GhastRenderer;
@@ -10,38 +12,35 @@ import net.minecraft.world.entity.monster.Ghast;
 import javax.annotation.Nullable;
 
 /**
- * Ghast renderer used by Mortal Expansion's intangible visual language.
+ * Renders vanilla Ghast artwork translucently at 69% opacity.
  *
- * The textures preserve the vanilla Ghast artwork but reduce non-transparent
- * texel alpha to 69% of vanilla, i.e. a 31% opacity reduction.
+ * Using the vanilla texture directly avoids maintaining a modified copy of the
+ * Ghast texture and keeps resource-pack compatibility.
  */
 public final class IntangibleGhastRenderer extends GhastRenderer {
-    private static final ResourceLocation GHAST_LOCATION =
-            ResourceLocation.fromNamespaceAndPath(
-                    MortalExpansion.MOD_ID,
-                    "textures/entity/ghast/ghast.png"
-            );
-
-    private static final ResourceLocation GHAST_SHOOTING_LOCATION =
-            ResourceLocation.fromNamespaceAndPath(
-                    MortalExpansion.MOD_ID,
-                    "textures/entity/ghast/ghast_shooting.png"
-            );
+    private static final float INTANGIBLE_ALPHA = 0.69F;
 
     public IntangibleGhastRenderer(EntityRendererProvider.Context context) {
         super(context);
     }
 
     @Override
-    public ResourceLocation getTextureLocation(Ghast ghast) {
-        return ghast.isCharging() ? GHAST_SHOOTING_LOCATION : GHAST_LOCATION;
+    public void render(
+            Ghast ghast,
+            float entityYaw,
+            float partialTick,
+            PoseStack poseStack,
+            MultiBufferSource buffer,
+            int packedLight
+    ) {
+        RenderSystem.setShaderColor(1.0F, 1.0F, 1.0F, INTANGIBLE_ALPHA);
+        try {
+            super.render(ghast, entityYaw, partialTick, poseStack, buffer, packedLight);
+        } finally {
+            RenderSystem.setShaderColor(1.0F, 1.0F, 1.0F, 1.0F);
+        }
     }
 
-    /**
-     * Vanilla Ghasts normally render with an opaque/cutout entity type.
-     * A translucent render type is required for the reduced-alpha texture to
-     * blend instead of behaving as a binary cutout.
-     */
     @Override
     @Nullable
     protected RenderType getRenderType(
@@ -50,10 +49,12 @@ public final class IntangibleGhastRenderer extends GhastRenderer {
             boolean translucent,
             boolean glowing
     ) {
+        ResourceLocation texture = super.getTextureLocation(ghast);
+
         if (glowing && !bodyVisible && !translucent) {
-            return RenderType.outline(getTextureLocation(ghast));
+            return RenderType.outline(texture);
         }
 
-        return RenderType.entityTranslucent(getTextureLocation(ghast));
+        return RenderType.entityTranslucent(texture);
     }
 }

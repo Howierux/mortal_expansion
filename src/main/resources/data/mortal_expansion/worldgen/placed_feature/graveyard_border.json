@@ -1,8 +1,4 @@
 {
   "feature": "mortal_expansion:graveyard_border",
-  "placement": [
-    {
-      "type": "minecraft:biome"
-    }
-  ]
+  "placement": []
 }

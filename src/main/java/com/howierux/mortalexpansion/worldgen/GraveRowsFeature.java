@@ -18,11 +18,10 @@ import net.minecraft.world.level.levelgen.feature.configurations.NoneFeatureConf
  * Generates organized grave plots in Graveyard biomes.
  *
  * Each plot is:
- *
  *   [Grave][Coarse Dirt][Coarse Dirt]
  *
- * Several plots are aligned side-by-side into rows, with a one-block aisle
- * between consecutive rows.
+ * The generated Grave is shifted to the edge of its block that touches the
+ * burial plot, while hand-placed Graves may also use the center position.
  */
 public final class GraveRowsFeature extends Feature<NoneFeatureConfiguration> {
     private static final Direction[] HORIZONTAL = {
@@ -44,8 +43,8 @@ public final class GraveRowsFeature extends Feature<NoneFeatureConfiguration> {
         Direction bodyDirection = HORIZONTAL[random.nextInt(HORIZONTAL.length)];
         Direction rowDirection = bodyDirection.getClockWise();
 
-        int rows = 2 + random.nextInt(2);          // 2-3 rows
-        int gravesPerRow = 3 + random.nextInt(3); // 3-5 graves per row
+        int rows = 2 + random.nextInt(2);
+        int gravesPerRow = 3 + random.nextInt(3);
         int rowWidth = (gravesPerRow - 1) * 2;
 
         BlockPos origin = context.origin();
@@ -99,9 +98,9 @@ public final class GraveRowsFeature extends Feature<NoneFeatureConfiguration> {
 
         BlockState graveState = ModBlocks.GRAVE.get()
                 .defaultBlockState()
-                .setValue(GraveBlock.FACING, bodyDirection);
+                .setValue(GraveBlock.FACING, bodyDirection)
+                .setValue(GraveBlock.DEPTH, depthToward(bodyDirection));
 
-        level.setBlock(graveGround, level.getBlockState(graveGround), 2);
         level.setBlock(gravePos, graveState, 2);
         level.setBlock(dirtOneGround, Blocks.COARSE_DIRT.defaultBlockState(), 2);
         level.setBlock(dirtTwoGround, Blocks.COARSE_DIRT.defaultBlockState(), 2);
@@ -109,13 +108,18 @@ public final class GraveRowsFeature extends Feature<NoneFeatureConfiguration> {
         return true;
     }
 
+    private static int depthToward(Direction direction) {
+        return switch (direction) {
+            case NORTH, WEST -> 0;
+            case SOUTH, EAST -> 2;
+            default -> 1;
+        };
+    }
+
     private static boolean isUsableGround(BlockState state) {
         return state.is(BlockTags.DIRT);
     }
 
-    /**
-     * Heightmap height is the first open block above the terrain surface.
-     */
     private static BlockPos surfaceAir(WorldGenLevel level, BlockPos xz) {
         int y = level.getHeight(
                 Heightmap.Types.MOTION_BLOCKING_NO_LEAVES,

@@ -6,30 +6,41 @@ import net.minecraft.core.Direction;
 import net.minecraft.world.item.context.BlockPlaceContext;
 import net.minecraft.world.level.BlockGetter;
 import net.minecraft.world.level.block.HorizontalDirectionalBlock;
-import net.minecraft.world.level.block.Rotation;
-import net.minecraft.world.level.block.Mirror;
 import net.minecraft.world.level.block.state.BlockBehaviour;
 import net.minecraft.world.level.block.state.BlockState;
 import net.minecraft.world.level.block.state.StateDefinition;
+import net.minecraft.world.level.block.state.properties.IntegerProperty;
 import net.minecraft.world.phys.shapes.CollisionContext;
 import net.minecraft.world.phys.shapes.VoxelShape;
 
 /**
- * A simple upright grave marker. It occupies half of a block's horizontal
- * depth, like a vertical slab, and rotates to face the player when placed.
+ * Upright half-block grave marker.
+ *
+ * DEPTH controls where the vertical slab sits along its thickness axis:
+ * 0 = low/north/west edge, 1 = centered, 2 = high/south/east edge.
  */
 public final class GraveBlock extends HorizontalDirectionalBlock {
     public static final MapCodec<GraveBlock> CODEC = simpleCodec(GraveBlock::new);
+    public static final IntegerProperty DEPTH = IntegerProperty.create("depth", 0, 2);
 
-    private static final VoxelShape NORTH_SOUTH_SHAPE =
-            box(0.0D, 0.0D, 4.0D, 16.0D, 16.0D, 12.0D);
-    private static final VoxelShape EAST_WEST_SHAPE =
-            box(4.0D, 0.0D, 0.0D, 12.0D, 16.0D, 16.0D);
+    private static final VoxelShape[] NORTH_SOUTH_SHAPES = {
+            box(0.0D, 0.0D, 0.0D, 16.0D, 16.0D, 8.0D),
+            box(0.0D, 0.0D, 4.0D, 16.0D, 16.0D, 12.0D),
+            box(0.0D, 0.0D, 8.0D, 16.0D, 16.0D, 16.0D)
+    };
+
+    private static final VoxelShape[] EAST_WEST_SHAPES = {
+            box(0.0D, 0.0D, 0.0D, 8.0D, 16.0D, 16.0D),
+            box(4.0D, 0.0D, 0.0D, 12.0D, 16.0D, 16.0D),
+            box(8.0D, 0.0D, 0.0D, 16.0D, 16.0D, 16.0D)
+    };
 
     public GraveBlock(BlockBehaviour.Properties properties) {
         super(properties);
         this.registerDefaultState(
-                this.stateDefinition.any().setValue(FACING, Direction.NORTH)
+                this.stateDefinition.any()
+                        .setValue(FACING, Direction.NORTH)
+                        .setValue(DEPTH, 1)
         );
     }
 
@@ -40,8 +51,20 @@ public final class GraveBlock extends HorizontalDirectionalBlock {
 
     @Override
     public BlockState getStateForPlacement(BlockPlaceContext context) {
+        Direction facing = context.getHorizontalDirection().getOpposite();
+        BlockPos pos = context.getClickedPos();
+
+        double local = facing.getAxis() == Direction.Axis.Z
+                ? context.getClickLocation().z - pos.getZ()
+                : context.getClickLocation().x - pos.getX();
+
+        int depth = local < (1.0D / 3.0D)
+                ? 0
+                : local < (2.0D / 3.0D) ? 1 : 2;
+
         return this.defaultBlockState()
-                .setValue(FACING, context.getHorizontalDirection().getOpposite());
+                .setValue(FACING, facing)
+                .setValue(DEPTH, depth);
     }
 
     @Override
@@ -51,15 +74,16 @@ public final class GraveBlock extends HorizontalDirectionalBlock {
             BlockPos pos,
             CollisionContext context
     ) {
+        int depth = state.getValue(DEPTH);
         return state.getValue(FACING).getAxis() == Direction.Axis.Z
-                ? NORTH_SOUTH_SHAPE
-                : EAST_WEST_SHAPE;
+                ? NORTH_SOUTH_SHAPES[depth]
+                : EAST_WEST_SHAPES[depth];
     }
 
     @Override
     protected void createBlockStateDefinition(
             StateDefinition.Builder<net.minecraft.world.level.block.Block, BlockState> builder
     ) {
-        builder.add(FACING);
+        builder.add(FACING, DEPTH);
     }
 }

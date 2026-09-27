@@ -114,7 +114,9 @@ public final class MausoleumFeature extends Feature<NoneFeatureConfiguration> {
         Direction facing = random.nextBoolean() ? Direction.SOUTH : Direction.NORTH;
         level.setBlock(
                 new BlockPos(centerX, floorY + 1, centerZ - 1),
-                ModBlocks.GRAVE.get().defaultBlockState().setValue(GraveBlock.FACING, facing),
+                ModBlocks.GRAVE.get().defaultBlockState()
+                        .setValue(GraveBlock.FACING, facing)
+                        .setValue(GraveBlock.DEPTH, 1),
                 3
         );
 
