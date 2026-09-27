@@ -18,4 +18,9 @@ public final class ModBiomes {
             Registries.BIOME,
             ResourceLocation.fromNamespaceAndPath(MortalExpansion.MOD_ID, "spiritwood_forest")
     );
+
+    public static final ResourceKey<Biome> GRAVEYARD = ResourceKey.create(
+            Registries.BIOME,
+            ResourceLocation.fromNamespaceAndPath(MortalExpansion.MOD_ID, "graveyard")
+    );
 }

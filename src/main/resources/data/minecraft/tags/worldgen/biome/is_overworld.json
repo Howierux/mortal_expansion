@@ -1,4 +1,7 @@
 {
   "replace": false,
-  "values": ["mortal_expansion:spiritwood_forest"]
+  "values": [
+    "mortal_expansion:spiritwood_forest",
+    "mortal_expansion:graveyard"
+  ]
 }

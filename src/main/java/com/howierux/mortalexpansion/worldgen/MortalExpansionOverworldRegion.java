@@ -29,8 +29,9 @@ public final class MortalExpansionOverworldRegion extends Region {
             Registry<Biome> registry,
             Consumer<Pair<Climate.ParameterPoint, ResourceKey<Biome>>> mapper
     ) {
-        this.addModifiedVanillaOverworldBiomes(mapper, builder ->
-                builder.replaceBiome(Biomes.FOREST, ModBiomes.SPIRITWOOD_FOREST)
-        );
+        this.addModifiedVanillaOverworldBiomes(mapper, builder -> {
+            builder.replaceBiome(Biomes.FOREST, ModBiomes.SPIRITWOOD_FOREST);
+            builder.replaceBiome(Biomes.PLAINS, ModBiomes.GRAVEYARD);
+        });
     }
 }
