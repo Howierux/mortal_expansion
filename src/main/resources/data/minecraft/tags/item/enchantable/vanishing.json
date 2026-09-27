@@ -1,0 +1,10 @@
+{
+  "replace": false,
+  "values": [
+    "mortal_expansion:bloodstone_sword",
+    "mortal_expansion:bloodstone_axe",
+    "mortal_expansion:bloodstone_pickaxe",
+    "mortal_expansion:bloodstone_shovel",
+    "mortal_expansion:bloodstone_hoe"
+  ]
+}
