@@ -4,6 +4,7 @@ import com.howierux.mortalexpansion.command.ModCommands;
 import com.howierux.mortalexpansion.haunt.HauntGenerationHandler;
 import com.howierux.mortalexpansion.haunt.HauntSimulationHandler;
 import com.howierux.mortalexpansion.haunt.HauntSpawnHandler;
+import com.howierux.mortalexpansion.haunt.HaintWitchHutSpawnHandler;
 import com.howierux.mortalexpansion.loot.MobDropHandler;
 import com.howierux.mortalexpansion.combat.IntangibleCombatHandler;
 import com.howierux.mortalexpansion.entity.PharaohlPyramidHandler;
@@ -54,6 +55,7 @@ public final class MortalExpansion {
         NeoForge.EVENT_BUS.register(HauntGenerationHandler.class);
         NeoForge.EVENT_BUS.register(HauntSimulationHandler.class);
         NeoForge.EVENT_BUS.register(HauntSpawnHandler.class);
+        NeoForge.EVENT_BUS.register(HaintWitchHutSpawnHandler.class);
         NeoForge.EVENT_BUS.register(IntangibleCombatHandler.class);
         NeoForge.EVENT_BUS.register(PharaohlPyramidHandler.class);
         NeoForge.EVENT_BUS.register(MobDropHandler.class);
