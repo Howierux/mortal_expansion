@@ -7,6 +7,7 @@ import com.howierux.mortalexpansion.registry.ModEntities;
 import com.howierux.mortalexpansion.registry.ModMenus;
 import com.howierux.mortalexpansion.client.screen.EctchantmentMachineScreen;
 import com.howierux.mortalexpansion.client.screen.EctoplasmicGeneratorScreen;
+import com.howierux.mortalexpansion.client.screen.EnchantmentGeneratorScreen;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.client.renderer.BiomeColors;
 import net.minecraft.world.entity.EntityType;
@@ -68,6 +69,7 @@ public final class ModClientEvents {
     public static void registerMenuScreens(RegisterMenuScreensEvent event) {
         event.register(ModMenus.ECTCHANTMENT_MACHINE.get(), EctchantmentMachineScreen::new);
         event.register(ModMenus.ECTOPLASMIC_GENERATOR.get(), EctoplasmicGeneratorScreen::new);
+        event.register(ModMenus.ENCHANTMENT_GENERATOR.get(), EnchantmentGeneratorScreen::new);
     }
 
     @SubscribeEvent
