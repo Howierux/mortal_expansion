@@ -52,10 +52,13 @@
   "item.mortal_expansion.purified_gravestone_sword": "Purified Gravestone Sword",
   "block.mortal_expansion.ectchantment_machine": "Ectchantment Machine",
   "enchantment.mortal_expansion.demi_tangible": "Demi-Tangible",
-  "message.mortal_expansion.ectchantment_machine.full": "Ectoplasmic reservoir full: %s/%s",
-  "message.mortal_expansion.ectchantment_machine.charge": "Ectoplasmic charge: %s/%s",
+  "message.mortal_expansion.ectchantment_machine.full": "Ectoplasmic reservoir full: %s/%s | FE: %s/%s",
+  "message.mortal_expansion.ectchantment_machine.charge": "Ectoplasmic charge: %s/%s | FE: %s/%s",
   "message.mortal_expansion.ectchantment_machine.success": "Demi-Tangible applied.",
   "message.mortal_expansion.ectchantment_machine.already_present": "This item is already Demi-Tangible.",
-  "message.mortal_expansion.ectchantment_machine.needs_fuel": "Not enough ectoplasmic charge: %s/%s required",
-  "message.mortal_expansion.ectchantment_machine.not_supported": "This item cannot receive Demi-Tangible."
+  "message.mortal_expansion.ectchantment_machine.needs_fuel": "Need %s ectoplasmic charge or %s FE. Stored: %s ectoplasmic / %s FE",
+  "message.mortal_expansion.ectchantment_machine.not_supported": "This item cannot receive Demi-Tangible.",
+  "block.mortal_expansion.ectoplasmic_generator": "Ectoplasmic Generator",
+  "message.mortal_expansion.ectoplasmic_generator.busy": "The Ectoplasmic Generator is already burning fuel.",
+  "message.mortal_expansion.ectoplasmic_generator.status": "Stored FE: %s/%s | Burn: %s ticks | Haunt: %s (%sx) | Output: %s FE/t"
 }
