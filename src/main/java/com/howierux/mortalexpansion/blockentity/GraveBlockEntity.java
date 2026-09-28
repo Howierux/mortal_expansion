@@ -43,23 +43,10 @@ public final class GraveBlockEntity extends BlockEntity {
         return naturallyGenerated;
     }
 
-    @Override
-    public void onLoad() {
-        super.onLoad();
-
-        if (level != null) {
-            BlockState state = getBlockState();
-            if (state.hasProperty(GraveBlock.NATURAL)
-                    && state.getValue(GraveBlock.NATURAL) != naturallyGenerated) {
-                level.setBlock(
-                        worldPosition,
-                        state.setValue(GraveBlock.NATURAL, naturallyGenerated),
-                        3
-                );
-            }
-        }
-    }
-
+    /**
+     * Runtime provenance change, used when a placed Grave naturalizes.
+     * This happens during normal server ticking, never during world generation.
+     */
     public void setNaturallyGenerated(boolean naturallyGenerated) {
         this.naturallyGenerated = naturallyGenerated;
         setChanged();
@@ -71,10 +58,19 @@ public final class GraveBlockEntity extends BlockEntity {
                 level.setBlock(
                         worldPosition,
                         state.setValue(GraveBlock.NATURAL, naturallyGenerated),
-                        3
+                        2
                 );
             }
         }
+    }
+
+    /**
+     * World-generation-safe provenance update. The generator places the block
+     * with NATURAL=true up front, so this method must not rewrite the block.
+     */
+    public void markNaturallyGeneratedFromWorldgen() {
+        naturallyGenerated = true;
+        setChanged();
     }
 
     public static void serverTick(
@@ -84,6 +80,18 @@ public final class GraveBlockEntity extends BlockEntity {
             GraveBlockEntity grave
     ) {
         if (!(level instanceof ServerLevel serverLevel)) {
+            return;
+        }
+
+        // Repair visual state from older saves only after the chunk is fully
+        // loaded and ticking, never from onLoad/world generation.
+        if (state.hasProperty(GraveBlock.NATURAL)
+                && state.getValue(GraveBlock.NATURAL) != grave.naturallyGenerated) {
+            level.setBlock(
+                    pos,
+                    state.setValue(GraveBlock.NATURAL, grave.naturallyGenerated),
+                    2
+            );
             return;
         }
 
