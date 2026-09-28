@@ -44,6 +44,10 @@ public final class ModCreativeTabs {
             event.accept(ModItems.SPECTRALITE_AXE.get());
         }
 
+        if (event.getTabKey() == CreativeModeTabs.FUNCTIONAL_BLOCKS) {
+            event.accept(ModItems.ECTCHANTMENT_MACHINE.get());
+        }
+
         if (event.getTabKey() == CreativeModeTabs.BUILDING_BLOCKS) {
             event.accept(ModItems.SPIRITWOOD_PLANKS.get());
             event.accept(ModItems.PURIFIED_GRAVESTONE.get());
