@@ -15,6 +15,15 @@ public final class IntangibleCombatHandler {
 
     @SubscribeEvent
     public static void onIncomingDamage(LivingIncomingDamageEvent event) {
+        ItemStack weapon = event.getSource().getWeaponItem();
+        boolean purifiedGravestoneSword = weapon != null
+                && !weapon.isEmpty()
+                && weapon.is(ModItems.PURIFIED_GRAVESTONE_SWORD.get());
+
+        if (purifiedGravestoneSword) {
+            event.setAmount(event.getAmount() * 1.5F);
+        }
+
         if (event.getEntity() instanceof PharaohlEntity pharaohl
                 && !pharaohl.isCurrentlyIntangible()) {
             boolean demiTangible =
@@ -35,11 +44,5 @@ public final class IntangibleCombatHandler {
             return;
         }
 
-        ItemStack weapon = event.getSource().getWeaponItem();
-        if (weapon != null
-                && !weapon.isEmpty()
-                && weapon.is(ModItems.PURIFIED_GRAVESTONE_SWORD.get())) {
-            event.setAmount(event.getAmount() * 1.5F);
-        }
     }
 }
