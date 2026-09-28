@@ -173,6 +173,12 @@ public final class ModBlocks {
             BlockBehaviour.Properties.ofFullCopy(Blocks.DEEPSLATE_DIAMOND_ORE)
     );
 
+    public static final DeferredBlock<DropExperienceBlock> BLOODSTONE_ORE_STONE = BLOCKS.registerBlock(
+            "bloodstone_ore_stone",
+            properties -> new DropExperienceBlock(UniformInt.of(3, 7), properties),
+            BlockBehaviour.Properties.ofFullCopy(Blocks.DIAMOND_ORE)
+    );
+
     public static final DeferredBlock<LeavesBlock> SPIRITWOOD_LEAVES = BLOCKS.registerBlock(
             "spiritwood_leaves", LeavesBlock::new,
             BlockBehaviour.Properties.ofFullCopy(Blocks.OAK_LEAVES)
