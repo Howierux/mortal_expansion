@@ -20,10 +20,6 @@ public final class IntangibleCombatHandler {
                 && !weapon.isEmpty()
                 && weapon.is(ModItems.PURIFIED_GRAVESTONE_SWORD.get());
 
-        if (purifiedGravestoneSword) {
-            event.setAmount(event.getAmount() * 1.5F);
-        }
-
         if (event.getEntity() instanceof PharaohlEntity pharaohl
                 && !pharaohl.isCurrentlyIntangible()) {
             boolean demiTangible =
@@ -44,5 +40,8 @@ public final class IntangibleCombatHandler {
             return;
         }
 
+        if (purifiedGravestoneSword) {
+            event.setAmount(event.getAmount() * 1.5F);
+        }
     }
 }
