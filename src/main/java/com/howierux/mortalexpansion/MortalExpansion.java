@@ -12,6 +12,7 @@ import com.howierux.mortalexpansion.registry.ModCreativeTabs;
 import com.howierux.mortalexpansion.registry.ModCapabilities;
 import com.howierux.mortalexpansion.registry.ModEntities;
 import com.howierux.mortalexpansion.registry.ModItems;
+import com.howierux.mortalexpansion.registry.ModMenus;
 import com.howierux.mortalexpansion.registry.ModStructures;
 import com.howierux.mortalexpansion.worldgen.ModTerraBlender;
 import com.howierux.mortalexpansion.worldgen.ModFeatures;
@@ -33,6 +34,7 @@ public final class MortalExpansion {
         ModBlocks.register(modBus);
         ModItems.register(modBus);
         ModBlockEntities.register(modBus);
+        ModMenus.register(modBus);
         ModCapabilities.register(modBus);
         ModAttachments.register(modBus);
         ModEntities.register(modBus);
