@@ -31,7 +31,7 @@ public final class NaturalHauntGenerator {
 
     public static HauntTier determineInitialTier(ChunkAccess chunk) {
         ChunkPos chunkPos = chunk.getPos();
-        HauntTier highest = HauntTier.VOID;
+        HauntTier highest = HauntTier.NATURAL;
         int quartY = QuartPos.fromBlock(SAMPLE_Y);
 
         for (int localX : SAMPLE_OFFSETS) {
@@ -67,6 +67,6 @@ public final class NaturalHauntGenerator {
             return HauntTier.NATURAL;
         }
 
-        return HauntTier.VOID;
+        return HauntTier.NATURAL;
     }
 }
