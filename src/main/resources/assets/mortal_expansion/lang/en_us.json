@@ -49,5 +49,13 @@
   "block.mortal_expansion.purified_spiritwood_button": "Purified Spiritwood Button",
   "item.mortal_expansion.pure_ectoplasm": "Pure Ectoplasm",
   "item.mortal_expansion.gravestone_sword": "Gravestone Sword",
-  "item.mortal_expansion.purified_gravestone_sword": "Purified Gravestone Sword"
+  "item.mortal_expansion.purified_gravestone_sword": "Purified Gravestone Sword",
+  "block.mortal_expansion.ectchantment_machine": "Ectchantment Machine",
+  "enchantment.mortal_expansion.demi_tangible": "Demi-Tangible",
+  "message.mortal_expansion.ectchantment_machine.full": "Ectoplasmic reservoir full: %s/%s",
+  "message.mortal_expansion.ectchantment_machine.charge": "Ectoplasmic charge: %s/%s",
+  "message.mortal_expansion.ectchantment_machine.success": "Demi-Tangible applied.",
+  "message.mortal_expansion.ectchantment_machine.already_present": "This item is already Demi-Tangible.",
+  "message.mortal_expansion.ectchantment_machine.needs_fuel": "Not enough ectoplasmic charge: %s/%s required",
+  "message.mortal_expansion.ectchantment_machine.not_supported": "This item cannot receive Demi-Tangible."
 }
