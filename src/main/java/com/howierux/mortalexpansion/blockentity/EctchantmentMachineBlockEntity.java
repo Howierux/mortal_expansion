@@ -3,6 +3,8 @@ package com.howierux.mortalexpansion.blockentity;
 import com.howierux.mortalexpansion.registry.ModBlockEntities;
 import com.howierux.mortalexpansion.registry.ModEnchantments;
 import com.howierux.mortalexpansion.registry.ModItems;
+import com.howierux.mortalexpansion.registry.ModDataComponents;
+import net.minecraft.core.component.DataComponents;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.Holder;
 import net.minecraft.core.HolderLookup;
@@ -99,19 +101,22 @@ public final class EctchantmentMachineBlockEntity extends BlockEntity {
             return EnchantResult.NOT_SUPPORTED;
         }
 
-        if (stack.getEnchantmentLevel(enchantment) > 0) {
+        if (Boolean.TRUE.equals(stack.get(ModDataComponents.DEMI_TANGIBLE.get()))
+                || stack.getEnchantmentLevel(enchantment) > 0) {
             return EnchantResult.ALREADY_PRESENT;
         }
 
         if (ectoplasmicCharge >= ENCHANTMENT_COST) {
-            stack.enchant(enchantment, 1);
+            stack.set(ModDataComponents.DEMI_TANGIBLE.get(), true);
+            stack.set(DataComponents.ENCHANTMENT_GLINT_OVERRIDE, true);
             ectoplasmicCharge -= ENCHANTMENT_COST;
             setChanged();
             return EnchantResult.SUCCESS;
         }
 
         if (energyStorage.getEnergyStored() >= FE_ENCHANTMENT_COST) {
-            stack.enchant(enchantment, 1);
+            stack.set(ModDataComponents.DEMI_TANGIBLE.get(), true);
+            stack.set(DataComponents.ENCHANTMENT_GLINT_OVERRIDE, true);
             energyStorage.extractEnergy(FE_ENCHANTMENT_COST, false);
             setChanged();
             return EnchantResult.SUCCESS;
