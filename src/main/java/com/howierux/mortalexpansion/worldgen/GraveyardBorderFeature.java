@@ -17,14 +17,18 @@ import java.util.HashSet;
 import java.util.Set;
 
 /**
- * Builds one main rectangular cemetery enclosure per 64x64 worldgen cell.
+ * Builds at most one main cemetery enclosure per 2x2-chunk (32x32) cell.
  *
- * All chunks in the cell calculate the same largest usable Graveyard
- * rectangle, but only the chunk containing that rectangle's center is allowed
- * to place it. This avoids the previous one-rectangle-per-chunk grid.
+ * The previous 64x64 implementation made every Graveyard chunk scan 4,096
+ * terrain columns. Teleporting into newly generated Graveyard terrain could
+ * therefore multiply that work across many chunks and stall world generation.
+ *
+ * This version first elects a single Graveyard chunk as the cell owner using
+ * only four center-biome checks. Only that owner performs the 32x32 scan.
  */
 public final class GraveyardBorderFeature extends Feature<NoneFeatureConfiguration> {
-    private static final int CELL_SIZE = 64;
+    private static final int CELL_SIZE = 32;
+    private static final int CHUNK_SIZE = 16;
     private static final int MIN_WIDTH = 8;
     private static final int MIN_DEPTH = 8;
 
@@ -37,8 +41,21 @@ public final class GraveyardBorderFeature extends Feature<NoneFeatureConfigurati
         WorldGenLevel level = context.level();
         BlockPos origin = context.origin();
 
-        int cellMinX = Math.floorDiv(origin.getX(), CELL_SIZE) * CELL_SIZE;
-        int cellMinZ = Math.floorDiv(origin.getZ(), CELL_SIZE) * CELL_SIZE;
+        int currentChunkX = Math.floorDiv(origin.getX(), CHUNK_SIZE);
+        int currentChunkZ = Math.floorDiv(origin.getZ(), CHUNK_SIZE);
+
+        int cellChunkX = Math.floorDiv(currentChunkX, 2) * 2;
+        int cellChunkZ = Math.floorDiv(currentChunkZ, 2) * 2;
+
+        ChunkOwner owner = findOwner(level, cellChunkX, cellChunkZ);
+        if (owner == null
+                || owner.chunkX() != currentChunkX
+                || owner.chunkZ() != currentChunkZ) {
+            return false;
+        }
+
+        int cellMinX = cellChunkX * CHUNK_SIZE;
+        int cellMinZ = cellChunkZ * CHUNK_SIZE;
 
         boolean[][] usable = new boolean[CELL_SIZE][CELL_SIZE];
 
@@ -56,20 +73,6 @@ public final class GraveyardBorderFeature extends Feature<NoneFeatureConfigurati
         if (rectangle == null
                 || rectangle.width() < MIN_WIDTH
                 || rectangle.depth() < MIN_DEPTH) {
-            return false;
-        }
-
-        int rectangleCenterX =
-                cellMinX + (rectangle.minX() + rectangle.maxX()) / 2;
-        int rectangleCenterZ =
-                cellMinZ + (rectangle.minZ() + rectangle.maxZ()) / 2;
-
-        int ownerChunkX = Math.floorDiv(rectangleCenterX, 16);
-        int ownerChunkZ = Math.floorDiv(rectangleCenterZ, 16);
-        int currentChunkX = Math.floorDiv(origin.getX(), 16);
-        int currentChunkZ = Math.floorDiv(origin.getZ(), 16);
-
-        if (currentChunkX != ownerChunkX || currentChunkZ != ownerChunkZ) {
             return false;
         }
 
@@ -134,6 +137,32 @@ public final class GraveyardBorderFeature extends Feature<NoneFeatureConfigurati
         }
 
         return true;
+    }
+
+    /**
+     * Pick one Graveyard chunk per 2x2 cell before doing any expensive scan.
+     * A cell with no Graveyard at any chunk center gets no enclosure.
+     */
+    private static ChunkOwner findOwner(
+            WorldGenLevel level,
+            int cellChunkX,
+            int cellChunkZ
+    ) {
+        for (int dz = 0; dz < 2; dz++) {
+            for (int dx = 0; dx < 2; dx++) {
+                int chunkX = cellChunkX + dx;
+                int chunkZ = cellChunkZ + dz;
+                int centerX = chunkX * CHUNK_SIZE + 8;
+                int centerZ = chunkZ * CHUNK_SIZE + 8;
+                BlockPos center = surfaceAir(level, centerX, centerZ);
+
+                if (level.getBiome(center).is(ModBiomes.GRAVEYARD)) {
+                    return new ChunkOwner(chunkX, chunkZ);
+                }
+            }
+        }
+
+        return null;
     }
 
     private static boolean isUsableGraveyardColumn(
@@ -263,6 +292,8 @@ public final class GraveyardBorderFeature extends Feature<NoneFeatureConfigurati
         );
         return new BlockPos(x, y, z);
     }
+
+    private record ChunkOwner(int chunkX, int chunkZ) {}
 
     private record Rectangle(
             int minX,
