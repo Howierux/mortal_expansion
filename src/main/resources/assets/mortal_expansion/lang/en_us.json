@@ -11,7 +11,7 @@
   "block.mortal_expansion.spiritwood_trapdoor": "Spiritwood Trapdoor",
   "block.mortal_expansion.spiritwood_pressure_plate": "Spiritwood Pressure Plate",
   "block.mortal_expansion.spiritwood_button": "Spiritwood Button",
-  "block.mortal_expansion.bloodstone_ore": "Bloodstone Ore",
+  "block.mortal_expansion.bloodstone_ore": "Deepslate Bloodstone Ore",
   "item.mortal_expansion.bloodstone": "Bloodstone",
   "item.mortal_expansion.bloodstone_sword": "Bloodstone Sword",
   "item.mortal_expansion.bloodstone_pickaxe": "Bloodstone Pickaxe",
@@ -68,5 +68,6 @@
   "gui.mortal_expansion.ectoplasmic_generator.fe": "Stored FE: %s / %s",
   "gui.mortal_expansion.ectoplasmic_generator.burn": "Burn Time: %s ticks",
   "gui.mortal_expansion.ectoplasmic_generator.haunt": "Haunt: %s (%sx)",
-  "gui.mortal_expansion.ectoplasmic_generator.output": "Current Output: %s FE/t"
+  "gui.mortal_expansion.ectoplasmic_generator.output": "Current Output: %s FE/t",
+  "block.mortal_expansion.bloodstone_ore_stone": "Bloodstone Ore"
 }
