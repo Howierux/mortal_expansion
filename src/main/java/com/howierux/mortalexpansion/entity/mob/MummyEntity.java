@@ -22,6 +22,9 @@ public final class MummyEntity extends AbstractMortalMonster {
             GhostEntity ghost = ModEntities.GHOST.get().create(server);
             if (ghost != null) {
                 ghost.moveTo(getX(), getY(), getZ(), getYRot(), getXRot());
+                if (isAllied() && getAlliedOwner() != null) {
+                    ghost.setAlliedOwner(getAlliedOwner());
+                }
                 server.addFreshEntity(ghost);
             }
         }

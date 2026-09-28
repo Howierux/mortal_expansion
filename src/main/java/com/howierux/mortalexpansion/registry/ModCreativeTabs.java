@@ -21,6 +21,7 @@ public final class ModCreativeTabs {
 
         if (event.getTabKey() == CreativeModeTabs.INGREDIENTS) {
             event.accept(ModItems.BLOODSTONE.get());
+            event.accept(ModItems.RAW_ECTOPLASM.get());
         }
 
         if (event.getTabKey() == CreativeModeTabs.TOOLS_AND_UTILITIES) {
@@ -33,6 +34,7 @@ public final class ModCreativeTabs {
         }
 
         if (event.getTabKey() == CreativeModeTabs.COMBAT) {
+            event.accept(ModItems.PHARAOHL_SCEPTER.get());
             event.accept(ModItems.BLOODSTONE_SWORD.get());
             event.accept(ModItems.BLOODSTONE_AXE.get());
             event.accept(ModItems.SPECTRALITE_SWORD.get());

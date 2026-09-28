@@ -2,6 +2,7 @@ package com.howierux.mortalexpansion.registry;
 
 import com.howierux.mortalexpansion.MortalExpansion;
 import com.howierux.mortalexpansion.item.SpiritwoodSaplingItem;
+import com.howierux.mortalexpansion.item.PharaohlScepterItem;
 import net.minecraft.world.item.*;
 import net.neoforged.bus.api.IEventBus;
 import net.neoforged.neoforge.registries.DeferredItem;
@@ -59,6 +60,18 @@ public final class ModItems {
             "bloodstone",
             Item::new,
             new Item.Properties()
+    );
+
+    public static final DeferredItem<Item> RAW_ECTOPLASM = ITEMS.registerItem(
+            "raw_ectoplasm",
+            Item::new,
+            new Item.Properties()
+    );
+
+    public static final DeferredItem<PharaohlScepterItem> PHARAOHL_SCEPTER = ITEMS.registerItem(
+            "pharaohl_scepter",
+            PharaohlScepterItem::new,
+            new Item.Properties().stacksTo(1)
     );
 
     public static final DeferredItem<SwordItem> BLOODSTONE_SWORD = ITEMS.registerItem(

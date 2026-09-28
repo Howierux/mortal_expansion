@@ -33,5 +33,7 @@
   "entity.mortal_expansion.haunt": "Haunt",
   "entity.mortal_expansion.haint": "Haint",
   "entity.mortal_expansion.mummy": "Mummy",
-  "entity.mortal_expansion.pharaohl": "Pharaohl"
+  "entity.mortal_expansion.pharaohl": "Pharaohl",
+  "item.mortal_expansion.raw_ectoplasm": "Ectoplasm",
+  "item.mortal_expansion.pharaohl_scepter": "Pharaohl's Scepter"
 }

@@ -1,6 +1,7 @@
 package com.howierux.mortalexpansion.entity.mob;
 
 import net.minecraft.core.BlockPos;
+import net.minecraft.nbt.CompoundTag;
 import com.howierux.mortalexpansion.entity.IntangibleEntities;
 import net.minecraft.tags.FluidTags;
 import net.minecraft.world.entity.EntityType;
@@ -15,11 +16,15 @@ import net.minecraft.world.entity.ai.goal.WaterAvoidingRandomStrollGoal;
 import net.minecraft.world.entity.ai.goal.target.HurtByTargetGoal;
 import net.minecraft.world.entity.ai.goal.target.NearestAttackableTargetGoal;
 import net.minecraft.world.entity.monster.Monster;
+import net.minecraft.world.entity.LivingEntity;
 import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.level.Level;
 import net.minecraft.world.level.pathfinder.PathType;
 import net.minecraft.world.phys.AABB;
 import net.minecraft.world.phys.Vec3;
+
+import javax.annotation.Nullable;
+import java.util.UUID;
 
 public abstract class AbstractMortalMonster extends Monster {
     private static final double HOVER_BASE = 0.08D;
@@ -27,6 +32,8 @@ public abstract class AbstractMortalMonster extends Monster {
     private static final double HOVER_SPEED = 0.12D;
 
     private double appliedHoverOffset;
+    @Nullable
+    private UUID alliedOwner;
     protected AbstractMortalMonster(EntityType<? extends Monster> type, Level level) {
         super(type, level);
         setPathfindingMalus(PathType.WATER, -1.0F);
@@ -75,13 +82,35 @@ public abstract class AbstractMortalMonster extends Monster {
                         10,
                         false,
                         false,
-                        target -> this instanceof HorizontalPhasingMob phasing
+                        target -> !isAllied()
+                                && this instanceof HorizontalPhasingMob phasing
                                 && phasing.canPhaseHorizontally()
                 )
         );
         targetSelector.addGoal(
                 3,
-                new NearestAttackableTargetGoal<>(this, Player.class, true)
+                new NearestAttackableTargetGoal<>(
+                        this,
+                        Player.class,
+                        10,
+                        true,
+                        false,
+                        target -> !isAllied()
+                )
+        );
+        targetSelector.addGoal(
+                4,
+                new NearestAttackableTargetGoal<>(
+                        this,
+                        Monster.class,
+                        10,
+                        true,
+                        false,
+                        target -> isAllied()
+                                && target != this
+                                && (!(target instanceof AbstractMortalMonster mortal)
+                                || !mortal.isAllied())
+                )
         );
     }
 
@@ -128,6 +157,53 @@ public abstract class AbstractMortalMonster extends Monster {
     private boolean isTouchingWater(AABB box) {
         return BlockPos.betweenClosedStream(box.deflate(1.0E-4D))
                 .anyMatch(pos -> level().getFluidState(pos).is(FluidTags.WATER));
+    }
+
+    public void setAlliedOwner(UUID owner) {
+        this.alliedOwner = owner;
+        setTarget(null);
+    }
+
+    public boolean isAllied() {
+        return alliedOwner != null;
+    }
+
+    @Nullable
+    public UUID getAlliedOwner() {
+        return alliedOwner;
+    }
+
+    @Override
+    public void setTarget(@Nullable LivingEntity target) {
+        if (isAllied()) {
+            if (target instanceof Player) {
+                super.setTarget(null);
+                return;
+            }
+
+            if (target instanceof AbstractMortalMonster mortal && mortal.isAllied()) {
+                super.setTarget(null);
+                return;
+            }
+        }
+
+        super.setTarget(target);
+    }
+
+    @Override
+    protected void addAdditionalSaveData(CompoundTag tag) {
+        super.addAdditionalSaveData(tag);
+        if (alliedOwner != null) {
+            tag.putUUID("MortalExpansionAlliedOwner", alliedOwner);
+        }
+    }
+
+    @Override
+    protected void readAdditionalSaveData(CompoundTag tag) {
+        super.readAdditionalSaveData(tag);
+        alliedOwner = tag.hasUUID("MortalExpansionAlliedOwner")
+                ? tag.getUUID("MortalExpansionAlliedOwner")
+                : null;
     }
 
     @Override
