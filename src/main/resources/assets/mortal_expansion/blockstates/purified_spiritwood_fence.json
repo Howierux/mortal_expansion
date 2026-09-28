@@ -2,7 +2,7 @@
   "multipart": [
     {
       "apply": {
-        "model": "mortal_expansion:block/charged_spiritwood_fence_post"
+        "model": "mortal_expansion:block/purified_spiritwood_fence_post"
       }
     },
     {
@@ -10,7 +10,7 @@
         "north": "true"
       },
       "apply": {
-        "model": "mortal_expansion:block/charged_spiritwood_fence_side",
+        "model": "mortal_expansion:block/purified_spiritwood_fence_side",
         "uvlock": true
       }
     },
@@ -19,7 +19,7 @@
         "east": "true"
       },
       "apply": {
-        "model": "mortal_expansion:block/charged_spiritwood_fence_side",
+        "model": "mortal_expansion:block/purified_spiritwood_fence_side",
         "uvlock": true,
         "y": 90
       }
@@ -29,7 +29,7 @@
         "south": "true"
       },
       "apply": {
-        "model": "mortal_expansion:block/charged_spiritwood_fence_side",
+        "model": "mortal_expansion:block/purified_spiritwood_fence_side",
         "uvlock": true,
         "y": 180
       }
@@ -39,7 +39,7 @@
         "west": "true"
       },
       "apply": {
-        "model": "mortal_expansion:block/charged_spiritwood_fence_side",
+        "model": "mortal_expansion:block/purified_spiritwood_fence_side",
         "uvlock": true,
         "y": 270
       }
