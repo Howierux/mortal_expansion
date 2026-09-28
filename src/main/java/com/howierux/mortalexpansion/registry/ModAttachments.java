@@ -18,8 +18,8 @@ public final class ModAttachments {
             DeferredRegister.create(NeoForgeRegistries.ATTACHMENT_TYPES, MortalExpansion.MOD_ID);
 
     /**
-     * Stored directly on each chunk as an integer tier id.
-     * Using setData() to change this value automatically marks the chunk unsaved.
+     * Named chunk haunt tier. Retained as a separate attachment so worlds made
+     * before fine-grained haunt points keep their existing tier.
      */
     public static final Supplier<AttachmentType<Integer>> HAUNT_TIER = ATTACHMENTS.register(
             "haunt_tier",
@@ -29,17 +29,35 @@ public final class ModAttachments {
     );
 
     /**
-     * Personal haunt stored directly on each player.
+     * Fine-grained position within a chunk's named tier.
      *
-     * This is independent of chunk haunt: moving into or out of a haunted chunk
-     * does not directly replace the player's personal value.
-     *
-     * copyOnDeath() keeps personal haunt attached to the same player after death.
+     * -1 means this chunk predates point stratification and should initialize
+     * to the midpoint of its existing tier on first access.
      */
+    public static final Supplier<AttachmentType<Integer>> HAUNT_PROGRESS = ATTACHMENTS.register(
+            "haunt_progress",
+            () -> AttachmentType.builder(() -> -1)
+                    .serialize(Codec.intRange(-1, HauntTier.POINTS_PER_TIER - 1))
+                    .build()
+    );
+
+    /** Named personal haunt tier, preserved across death. */
     public static final Supplier<AttachmentType<Integer>> PLAYER_HAUNT_TIER = ATTACHMENTS.register(
             "player_haunt_tier",
             () -> AttachmentType.builder(() -> HauntTier.VOID.id())
                     .serialize(Codec.intRange(HauntTier.MIN_ID, HauntTier.MAX_ID))
+                    .copyOnDeath()
+                    .build()
+    );
+
+    /**
+     * Fine-grained position within the player's named tier.
+     * -1 migrates older tier-only player data to the midpoint on first access.
+     */
+    public static final Supplier<AttachmentType<Integer>> PLAYER_HAUNT_PROGRESS = ATTACHMENTS.register(
+            "player_haunt_progress",
+            () -> AttachmentType.builder(() -> -1)
+                    .serialize(Codec.intRange(-1, HauntTier.POINTS_PER_TIER - 1))
                     .copyOnDeath()
                     .build()
     );
