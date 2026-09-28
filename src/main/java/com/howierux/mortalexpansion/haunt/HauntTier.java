@@ -47,7 +47,7 @@ public enum HauntTier {
     }
 
     public int minimumValue() {
-        return this == VOID ? 0 : id * POINTS_PER_TIER;
+        return id * POINTS_PER_TIER;
     }
 
     public int midpointValue() {
@@ -55,7 +55,7 @@ public enum HauntTier {
     }
 
     public int maximumValue() {
-        return this == VOID ? 0 : minimumValue() + POINTS_PER_TIER - 1;
+        return minimumValue() + POINTS_PER_TIER - 1;
     }
 
     public HauntTier next() {
@@ -77,18 +77,12 @@ public enum HauntTier {
     }
 
     public static HauntTier fromValue(int value) {
-        if (value <= 0) {
-            return VOID;
-        }
-        return fromId(Math.max(1, value / POINTS_PER_TIER));
+        int clamped = clampValue(value);
+        return fromId(clamped / POINTS_PER_TIER);
     }
 
     public static int progressFromValue(int value) {
-        HauntTier tier = fromValue(value);
-        if (tier == VOID) {
-            return 0;
-        }
-        return Math.floorMod(value, POINTS_PER_TIER);
+        return Math.floorMod(clampValue(value), POINTS_PER_TIER);
     }
 
     public static int clampValue(int value) {
