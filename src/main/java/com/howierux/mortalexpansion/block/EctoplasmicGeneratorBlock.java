@@ -2,9 +2,11 @@ package com.howierux.mortalexpansion.block;
 
 import com.howierux.mortalexpansion.blockentity.EctoplasmicGeneratorBlockEntity;
 import com.howierux.mortalexpansion.registry.ModBlockEntities;
+import com.howierux.mortalexpansion.menu.EctoplasmicGeneratorMenu;
 import com.mojang.serialization.MapCodec;
 import net.minecraft.core.BlockPos;
 import net.minecraft.network.chat.Component;
+import net.minecraft.world.SimpleMenuProvider;
 import net.minecraft.world.InteractionHand;
 import net.minecraft.world.InteractionResult;
 import net.minecraft.world.ItemInteractionResult;
@@ -110,7 +112,15 @@ public final class EctoplasmicGeneratorBlock extends BaseEntityBlock {
     ) {
         if (level.getBlockEntity(pos) instanceof EctoplasmicGeneratorBlockEntity generator) {
             if (!level.isClientSide) {
-                showStatus(player, generator);
+                player.openMenu(new SimpleMenuProvider(
+                        (containerId, inventory, menuPlayer) ->
+                                new EctoplasmicGeneratorMenu(
+                                        containerId,
+                                        inventory,
+                                        generator.createMenuData()
+                                ),
+                        Component.translatable("gui.mortal_expansion.ectoplasmic_generator.title")
+                ));
             }
             return InteractionResult.sidedSuccess(level.isClientSide);
         }
