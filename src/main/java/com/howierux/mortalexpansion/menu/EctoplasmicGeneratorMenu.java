@@ -29,11 +29,11 @@ public final class EctoplasmicGeneratorMenu extends AbstractContainerMenu {
     }
 
     public int getEnergyStored() {
-        return data.get(0);
+        return data.get(0) * 10;
     }
 
     public int getEnergyCapacity() {
-        return data.get(1);
+        return data.get(1) * 10;
     }
 
     public int getBurnTicksRemaining() {
