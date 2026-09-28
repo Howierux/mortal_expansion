@@ -131,8 +131,9 @@ public final class HauntSimulationHandler {
      * Gives personal haunt a small chance to leak into the world throughout
      * the day while a player is actively present in the Overworld.
      *
-     * Leakage is intentionally one-way here: the player's tier is not consumed
-     * or reduced by contaminating a chunk.
+     * Leakage transfers one haunt tier from the player into the world:
+     * a successful leak raises the current chunk by one tier and lowers the
+     * player's personal haunt by one tier.
      */
     private static void runPlayerHauntLeakChecks(ServerLevel level) {
         if (level.getGameTime() % PLAYER_LEAK_CHECK_INTERVAL != 0L) {
@@ -164,6 +165,7 @@ public final class HauntSimulationHandler {
                     pos,
                     HauntTier.fromId(chunkTier.id() + 1)
             );
+            PlayerHauntManager.lower(player);
         }
     }
 
