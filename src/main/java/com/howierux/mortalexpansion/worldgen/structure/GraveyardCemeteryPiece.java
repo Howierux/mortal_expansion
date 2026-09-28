@@ -123,10 +123,10 @@ public final class GraveyardCemeteryPiece extends StructurePiece {
 
         BlockState fence = ModBlocks.STONE_FENCE.get()
                 .defaultBlockState()
-                .setValue(FenceBlock.NORTH, isPerimeter(x, z - 1))
-                .setValue(FenceBlock.EAST, isPerimeter(x + 1, z))
-                .setValue(FenceBlock.SOUTH, isPerimeter(x, z + 1))
-                .setValue(FenceBlock.WEST, isPerimeter(x - 1, z));
+                .setValue(FenceBlock.NORTH, fenceConnects(level, x, z - 1))
+                .setValue(FenceBlock.EAST, fenceConnects(level, x + 1, z))
+                .setValue(FenceBlock.SOUTH, fenceConnects(level, x, z + 1))
+                .setValue(FenceBlock.WEST, fenceConnects(level, x - 1, z));
 
         level.setBlock(fencePos, fence, 2);
         level.getChunk(fencePos).markPosForPostprocessing(fencePos);
@@ -139,6 +139,27 @@ public final class GraveyardCemeteryPiece extends StructurePiece {
         return x >= minX && x <= maxX
                 && z >= minZ && z <= maxZ
                 && (x == minX || x == maxX || z == minZ || z == maxZ);
+    }
+
+    private boolean fenceConnects(WorldGenLevel level, int x, int z) {
+        if (isPerimeter(x, z)) {
+            return true;
+        }
+
+        int y = level.getHeight(
+                Heightmap.Types.MOTION_BLOCKING_NO_LEAVES,
+                x,
+                z
+        );
+
+        for (int dy = -2; dy <= 2; dy++) {
+            if (level.getBlockState(new BlockPos(x, y + dy, z))
+                    .is(ModBlocks.GRAVESTONE.get())) {
+                return true;
+            }
+        }
+
+        return false;
     }
 
     private void buildGraveSection(
