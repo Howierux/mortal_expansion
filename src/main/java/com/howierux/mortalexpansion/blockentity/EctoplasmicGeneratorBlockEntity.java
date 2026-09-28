@@ -8,6 +8,7 @@ import net.minecraft.core.BlockPos;
 import net.minecraft.core.Direction;
 import net.minecraft.core.HolderLookup;
 import net.minecraft.nbt.CompoundTag;
+import net.minecraft.world.inventory.ContainerData;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.level.Level;
 import net.minecraft.world.level.block.entity.BlockEntity;
@@ -49,6 +50,33 @@ public final class EctoplasmicGeneratorBlockEntity extends BlockEntity {
 
     public int getBurnTicksRemaining() {
         return burnTicksRemaining;
+    }
+
+    public ContainerData createMenuData() {
+        return new ContainerData() {
+            @Override
+            public int get(int index) {
+                return switch (index) {
+                    case 0 -> energyStorage.getEnergyStored() / 10;
+                    case 1 -> ENERGY_CAPACITY / 10;
+                    case 2 -> burnTicksRemaining;
+                    case 3 -> getLocalHauntTier().id();
+                    case 4 -> (int) Math.round(getHauntMultiplier() * 100.0D);
+                    case 5 -> getCurrentGenerationPerTick();
+                    default -> 0;
+                };
+            }
+
+            @Override
+            public void set(int index, int value) {
+                // Read-only generator status data.
+            }
+
+            @Override
+            public int getCount() {
+                return 6;
+            }
+        };
     }
 
     public boolean isBurning() {
