@@ -13,10 +13,13 @@ import net.minecraft.world.level.Level;
 import net.minecraft.world.level.block.BaseEntityBlock;
 import net.minecraft.world.level.block.RenderShape;
 import net.minecraft.world.level.block.entity.BlockEntity;
+import net.minecraft.world.level.block.entity.BlockEntityTicker;
+import net.minecraft.world.level.block.entity.BlockEntityType;
 import net.minecraft.world.level.block.state.BlockBehaviour;
 import net.minecraft.world.level.block.state.BlockState;
 import net.minecraft.world.level.block.state.StateDefinition;
 import net.minecraft.world.level.block.state.properties.BlockStateProperties;
+import net.minecraft.world.level.block.state.properties.BooleanProperty;
 import net.minecraft.world.level.block.state.properties.DirectionProperty;
 import net.minecraft.world.level.block.state.properties.IntegerProperty;
 import net.minecraft.world.phys.shapes.CollisionContext;
@@ -39,6 +42,7 @@ public final class GraveBlock extends BaseEntityBlock {
     public static final MapCodec<GraveBlock> CODEC = simpleCodec(GraveBlock::new);
     public static final DirectionProperty FACING = BlockStateProperties.HORIZONTAL_FACING;
     public static final IntegerProperty DEPTH = IntegerProperty.create("depth", 0, 2);
+    public static final BooleanProperty NATURAL = BooleanProperty.create("natural");
 
     private static final VoxelShape[] NORTH_SOUTH_SHAPES = {
             box(0.0D, 0.0D, 0.0D, 16.0D, 16.0D, 8.0D),
@@ -58,6 +62,7 @@ public final class GraveBlock extends BaseEntityBlock {
                 this.stateDefinition.any()
                         .setValue(FACING, Direction.NORTH)
                         .setValue(DEPTH, 1)
+                        .setValue(NATURAL, false)
         );
     }
 
@@ -75,6 +80,22 @@ public final class GraveBlock extends BaseEntityBlock {
     @Override
     public BlockEntity newBlockEntity(BlockPos pos, BlockState state) {
         return new GraveBlockEntity(pos, state);
+    }
+
+    @Nullable
+    @Override
+    public <T extends BlockEntity> BlockEntityTicker<T> getTicker(
+            Level level,
+            BlockState state,
+            BlockEntityType<T> type
+    ) {
+        return level.isClientSide
+                ? null
+                : createTickerHelper(
+                        type,
+                        com.howierux.mortalexpansion.registry.ModBlockEntities.GRAVE.get(),
+                        GraveBlockEntity::serverTick
+                );
     }
 
     @Override
@@ -133,6 +154,6 @@ public final class GraveBlock extends BaseEntityBlock {
     protected void createBlockStateDefinition(
             StateDefinition.Builder<net.minecraft.world.level.block.Block, BlockState> builder
     ) {
-        builder.add(FACING, DEPTH);
+        builder.add(FACING, DEPTH, NATURAL);
     }
 }
