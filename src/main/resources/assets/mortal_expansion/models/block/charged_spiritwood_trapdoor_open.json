@@ -1,0 +1,6 @@
+{
+  "parent": "minecraft:block/template_trapdoor_open",
+  "textures": {
+    "texture": "mortal_expansion:block/charged_spiritwood_trapdoor"
+  }
+}
