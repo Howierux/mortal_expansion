@@ -6,20 +6,13 @@
       "rolls": 1,
       "conditions": [
         {
-          "condition": "minecraft:block_state_property",
-          "block": "mortal_expansion:charged_spiritwood_door",
-          "properties": {
-            "half": "lower"
-          }
-        },
-        {
           "condition": "minecraft:survives_explosion"
         }
       ],
       "entries": [
         {
           "type": "minecraft:item",
-          "name": "mortal_expansion:charged_spiritwood_door"
+          "name": "mortal_expansion:purified_spiritwood_fence_gate"
         }
       ]
     }
