@@ -2,14 +2,26 @@ package com.howierux.mortalexpansion.entity.mob;
 
 import com.howierux.mortalexpansion.entity.DynamicIntangible;
 import com.howierux.mortalexpansion.registry.ModEntities;
+import net.minecraft.network.chat.Component;
+import net.minecraft.server.level.ServerBossEvent;
 import net.minecraft.server.level.ServerLevel;
+import net.minecraft.server.level.ServerPlayer;
+import net.minecraft.world.BossEvent;
 import net.minecraft.world.entity.EntityType;
 import net.minecraft.world.entity.ai.attributes.AttributeSupplier;
 import net.minecraft.world.level.Level;
 
+import javax.annotation.Nullable;
+
 public final class PharaohlEntity extends AbstractMortalMonster implements DynamicIntangible {
     private static final int PHASE_TICKS = 160;
     private static final int SUMMON_INTERVAL = 240;
+
+    private final ServerBossEvent bossEvent = new ServerBossEvent(
+            this.getDisplayName(),
+            BossEvent.BossBarColor.WHITE,
+            BossEvent.BossBarOverlay.NOTCHED_20
+    );
 
     public PharaohlEntity(EntityType<? extends PharaohlEntity> type, Level level) {
         super(type, level);
@@ -47,5 +59,30 @@ public final class PharaohlEntity extends AbstractMortalMonster implements Dynam
                 }
             }
         }
+    }
+
+    @Override
+    protected void customServerAiStep() {
+        super.customServerAiStep();
+        bossEvent.setProgress(getHealth() / getMaxHealth());
+        bossEvent.setName(getDisplayName());
+    }
+
+    @Override
+    public void startSeenByPlayer(ServerPlayer player) {
+        super.startSeenByPlayer(player);
+        bossEvent.addPlayer(player);
+    }
+
+    @Override
+    public void stopSeenByPlayer(ServerPlayer player) {
+        super.stopSeenByPlayer(player);
+        bossEvent.removePlayer(player);
+    }
+
+    @Override
+    public void setCustomName(@Nullable Component name) {
+        super.setCustomName(name);
+        bossEvent.setName(getDisplayName());
     }
 }
