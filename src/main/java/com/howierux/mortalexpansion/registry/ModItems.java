@@ -85,6 +85,9 @@ public final class ModItems {
     public static final DeferredItem<BlockItem> BLOODSTONE_ORE =
             ITEMS.registerSimpleBlockItem(ModBlocks.BLOODSTONE_ORE);
 
+    public static final DeferredItem<BlockItem> BLOODSTONE_ORE_STONE =
+            ITEMS.registerSimpleBlockItem(ModBlocks.BLOODSTONE_ORE_STONE);
+
     public static final DeferredItem<Item> BLOODSTONE = ITEMS.registerItem(
             "bloodstone",
             Item::new,
