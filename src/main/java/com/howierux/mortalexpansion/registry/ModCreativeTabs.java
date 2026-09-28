@@ -46,6 +46,7 @@ public final class ModCreativeTabs {
 
         if (event.getTabKey() == CreativeModeTabs.FUNCTIONAL_BLOCKS) {
             event.accept(ModItems.ECTCHANTMENT_MACHINE.get());
+            event.accept(ModItems.ECTOPLASMIC_GENERATOR.get());
         }
 
         if (event.getTabKey() == CreativeModeTabs.BUILDING_BLOCKS) {
