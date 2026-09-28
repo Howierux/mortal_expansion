@@ -69,5 +69,6 @@
   "gui.mortal_expansion.ectoplasmic_generator.burn": "Burn Time: %s ticks",
   "gui.mortal_expansion.ectoplasmic_generator.haunt": "Haunt: %s (%sx)",
   "gui.mortal_expansion.ectoplasmic_generator.output": "Current Output: %s FE/t",
-  "block.mortal_expansion.bloodstone_ore_stone": "Bloodstone Ore"
+  "block.mortal_expansion.bloodstone_ore_stone": "Bloodstone Ore",
+  "itemGroup.mortal_expansion": "Mortal Expansion"
 }
