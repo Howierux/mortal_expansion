@@ -49,7 +49,7 @@ public final class ModCommands {
                                                 })
                                                 .executes(ModCommands::setHaunt)))
                                 .then(Commands.literal("add")
-                                        .then(Commands.argument("amount", IntegerArgumentType.integer(-6, 6))
+                                        .then(Commands.argument("amount", IntegerArgumentType.integer(-69, 69))
                                                 .executes(ModCommands::addHaunt)))
                                 .then(Commands.literal("player")
                                         .then(Commands.literal("get")
@@ -64,7 +64,7 @@ public final class ModCommands {
                                                         })
                                                         .executes(ModCommands::setPlayerHaunt)))
                                         .then(Commands.literal("add")
-                                                .then(Commands.argument("amount", IntegerArgumentType.integer(-6, 6))
+                                                .then(Commands.argument("amount", IntegerArgumentType.integer(-69, 69))
                                                         .executes(ModCommands::addPlayerHaunt))))
                                 .then(Commands.literal("tiers")
                                         .executes(ModCommands::listTiers)))
@@ -75,12 +75,15 @@ public final class ModCommands {
         CommandSourceStack source = context.getSource();
         ServerLevel level = source.getLevel();
         BlockPos pos = BlockPos.containing(source.getPosition());
-        HauntTier tier = HauntManager.getTier(level, pos);
+        int value = HauntManager.getValue(level, pos);
+        HauntTier tier = HauntTier.fromValue(value);
 
         source.sendSuccess(() -> Component.literal(
-                "Chunk haunt: " + tier.displayName() + " (" + tier.id() + ")"
+                "Chunk haunt: " + tier.displayName()
+                        + " | value " + value
+                        + " | range " + tier.minimumValue() + "-" + tier.maximumValue()
         ), false);
-        return tier.id();
+        return value;
     }
 
     private static int getNaturalHaunt(CommandContext<CommandSourceStack> context) {
@@ -91,10 +94,12 @@ public final class ModCommands {
 
         HauntTier tier = NaturalHauntGenerator.determineInitialTier(chunk);
 
+        int value = tier.midpointValue();
         source.sendSuccess(() -> Component.literal(
-                "Biome-derived natural haunt: " + tier.displayName() + " (" + tier.id() + ")"
+                "Biome-derived natural haunt: " + tier.displayName()
+                        + " | baseline value " + value
         ), false);
-        return tier.id();
+        return value;
     }
 
     private static int setHaunt(CommandContext<CommandSourceStack> context) {
@@ -119,12 +124,13 @@ public final class ModCommands {
         int amount = IntegerArgumentType.getInteger(context, "amount");
         ServerLevel level = source.getLevel();
         BlockPos pos = BlockPos.containing(source.getPosition());
-        HauntTier result = HauntManager.addLevels(level, pos, amount);
+        int value = HauntManager.addPoints(level, pos, amount);
+        HauntTier result = HauntTier.fromValue(value);
 
         source.sendSuccess(() -> Component.literal(
-                "Chunk haunt is now " + result.displayName() + " (" + result.id() + ")"
+                "Chunk haunt is now " + result.displayName() + " | value " + value
         ), true);
-        return result.id();
+        return value;
     }
 
     private static int getPlayerHaunt(CommandContext<CommandSourceStack> context) {
@@ -132,12 +138,15 @@ public final class ModCommands {
 
         try {
             ServerPlayer player = source.getPlayerOrException();
-            HauntTier tier = PlayerHauntManager.getTier(player);
+            int value = PlayerHauntManager.getValue(player);
+            HauntTier tier = HauntTier.fromValue(value);
 
             source.sendSuccess(() -> Component.literal(
-                    "Personal haunt: " + tier.displayName() + " (" + tier.id() + ")"
+                    "Personal haunt: " + tier.displayName()
+                            + " | value " + value
+                            + " | range " + tier.minimumValue() + "-" + tier.maximumValue()
             ), false);
-            return tier.id();
+            return value;
         } catch (Exception exception) {
             source.sendFailure(Component.literal("This command must be run by a player."));
             return 0;
@@ -173,11 +182,12 @@ public final class ModCommands {
 
         try {
             ServerPlayer player = source.getPlayerOrException();
-            HauntTier tier = PlayerHauntManager.addLevels(player, amount);
+            int value = PlayerHauntManager.addPoints(player, amount);
+            HauntTier tier = HauntTier.fromValue(value);
             source.sendSuccess(() -> Component.literal(
-                    "Personal haunt is now " + tier.displayName() + " (" + tier.id() + ")"
+                    "Personal haunt is now " + tier.displayName() + " | value " + value
             ), true);
-            return tier.id();
+            return value;
         } catch (Exception exception) {
             source.sendFailure(Component.literal("This command must be run by a player."));
             return 0;
@@ -186,7 +196,7 @@ public final class ModCommands {
 
     private static int listTiers(CommandContext<CommandSourceStack> context) {
         String tiers = Arrays.stream(HauntTier.values())
-                .map(t -> t.id() + "=" + t.displayName())
+                .map(t -> t.displayName() + "=" + t.minimumValue() + "-" + t.maximumValue())
                 .collect(Collectors.joining(", "));
 
         context.getSource().sendSuccess(() -> Component.literal(tiers), false);
