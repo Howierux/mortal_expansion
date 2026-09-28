@@ -23,5 +23,11 @@ public final class ModCapabilities {
                 ModBlockEntities.ECTOPLASMIC_GENERATOR.get(),
                 (blockEntity, side) -> blockEntity.getEnergyStorage()
         );
+
+        event.registerBlockEntity(
+                Capabilities.EnergyStorage.BLOCK,
+                ModBlockEntities.ENCHANTMENT_GENERATOR.get(),
+                (blockEntity, side) -> blockEntity.getEnergyStorage()
+        );
     }
 }
