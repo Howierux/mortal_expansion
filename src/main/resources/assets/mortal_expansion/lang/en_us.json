@@ -56,7 +56,7 @@
   "message.mortal_expansion.ectchantment_machine.charge": "Ectoplasmic charge: %s/%s | FE: %s/%s",
   "message.mortal_expansion.ectchantment_machine.success": "Demi-Tangible applied.",
   "message.mortal_expansion.ectchantment_machine.already_present": "This item is already Demi-Tangible.",
-  "message.mortal_expansion.ectchantment_machine.needs_fuel": "Need %s ectoplasmic charge or %s FE. Stored: %s ectoplasmic / %s FE",
+  "message.mortal_expansion.ectchantment_machine.needs_fuel": "Stored: %s ectoplasmic / %s needed | %s FE / %s needed",
   "message.mortal_expansion.ectchantment_machine.not_supported": "This item cannot receive Demi-Tangible.",
   "block.mortal_expansion.ectoplasmic_generator": "Ectoplasmic Generator",
   "message.mortal_expansion.ectoplasmic_generator.busy": "The Ectoplasmic Generator is already burning fuel.",
