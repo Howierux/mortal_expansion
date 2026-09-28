@@ -20,9 +20,7 @@ public final class PlayerHauntManager {
             player.setData(ModAttachments.PLAYER_HAUNT_PROGRESS, progress);
         }
 
-        return tier == HauntTier.VOID
-                ? 0
-                : tier.id() * HauntTier.POINTS_PER_TIER + progress;
+        return tier.id() * HauntTier.POINTS_PER_TIER + progress;
     }
 
     public static HauntTier setTier(Player player, HauntTier tier) {
