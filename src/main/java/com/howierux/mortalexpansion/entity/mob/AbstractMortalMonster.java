@@ -211,8 +211,7 @@ public abstract class AbstractMortalMonster extends Monster {
         return canPhaseHorizontally() ? false : super.isInWall();
     }
 
-    protected boolean canPhaseHorizontally() {
-        return this instanceof HorizontalPhasingMob phasing
-                && phasing.canPhaseHorizontally();
+    public boolean canPhaseHorizontally() {
+        return this instanceof HorizontalPhasingMob;
     }
 }
