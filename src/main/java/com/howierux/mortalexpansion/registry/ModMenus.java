@@ -3,6 +3,7 @@ package com.howierux.mortalexpansion.registry;
 import com.howierux.mortalexpansion.MortalExpansion;
 import com.howierux.mortalexpansion.menu.EctchantmentMachineMenu;
 import com.howierux.mortalexpansion.menu.EctoplasmicGeneratorMenu;
+import com.howierux.mortalexpansion.menu.EnchantmentGeneratorMenu;
 import net.minecraft.core.registries.Registries;
 import net.minecraft.world.flag.FeatureFlags;
 import net.minecraft.world.inventory.MenuType;
@@ -31,6 +32,15 @@ public final class ModMenus {
                     "ectoplasmic_generator",
                     () -> new MenuType<>(
                             EctoplasmicGeneratorMenu::new,
+                            FeatureFlags.DEFAULT_FLAGS
+                    )
+            );
+
+    public static final Supplier<MenuType<EnchantmentGeneratorMenu>> ENCHANTMENT_GENERATOR =
+            MENUS.register(
+                    "enchantment_generator",
+                    () -> new MenuType<>(
+                            EnchantmentGeneratorMenu::new,
                             FeatureFlags.DEFAULT_FLAGS
                     )
             );
