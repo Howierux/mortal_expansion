@@ -8,6 +8,8 @@ import net.neoforged.neoforge.attachment.AttachmentType;
 import net.neoforged.neoforge.registries.DeferredRegister;
 import net.neoforged.neoforge.registries.NeoForgeRegistries;
 
+import java.util.HashSet;
+import java.util.Set;
 import java.util.function.Supplier;
 
 /** Registers persistent NeoForge data attachments used by Mortal Expansion. */
@@ -58,6 +60,19 @@ public final class ModAttachments {
             "player_haunt_progress",
             () -> AttachmentType.builder(() -> -1)
                     .serialize(Codec.intRange(-1, HauntTier.POINTS_PER_TIER - 1))
+                    .copyOnDeath()
+                    .build()
+    );
+
+    /**
+     * Desert-pyramid encounter keys already triggered by this player.
+     * Persisted across death so each pyramid can summon Pharaohl only once
+     * for each individual player.
+     */
+    public static final Supplier<AttachmentType<Set<String>>> PHARAOHL_PYRAMIDS = ATTACHMENTS.register(
+            "pharaohl_pyramids",
+            () -> AttachmentType.builder(HashSet::new)
+                    .serialize(Codec.STRING.listOf().xmap(HashSet::new, set -> java.util.List.copyOf(set)))
                     .copyOnDeath()
                     .build()
     );
