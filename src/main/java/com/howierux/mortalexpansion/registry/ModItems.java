@@ -91,13 +91,13 @@ public final class ModItems {
     public static final DeferredItem<Item> RAW_ECTOPLASM = ITEMS.registerItem(
             "raw_ectoplasm",
             Item::new,
-            new Item.Properties()
+            new Item.Properties().fireResistant()
     );
 
     public static final DeferredItem<Item> PURE_ECTOPLASM = ITEMS.registerItem(
             "pure_ectoplasm",
             Item::new,
-            new Item.Properties()
+            new Item.Properties().fireResistant()
     );
 
     public static final DeferredItem<SwordItem> GRAVESTONE_SWORD = ITEMS.registerItem(
