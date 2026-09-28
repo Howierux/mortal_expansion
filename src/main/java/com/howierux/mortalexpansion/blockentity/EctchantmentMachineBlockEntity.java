@@ -13,16 +13,24 @@ import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.item.enchantment.Enchantment;
 import net.minecraft.world.level.block.entity.BlockEntity;
 import net.minecraft.world.level.block.state.BlockState;
+import net.neoforged.neoforge.energy.EnergyStorage;
+import net.neoforged.neoforge.energy.IEnergyStorage;
 
 public final class EctchantmentMachineBlockEntity extends BlockEntity {
     public static final int RAW_ECTOPLASM_CHARGE = 1_000;
     public static final int PURE_ECTOPLASM_CHARGE = 4_000;
     public static final int ENCHANTMENT_COST = 4_000;
     public static final int MAX_CHARGE = 16_000;
+    public static final int FE_ENCHANTMENT_COST = 40_000;
+    public static final int FE_CAPACITY = 160_000;
+    public static final int FE_MAX_RECEIVE = 4_000;
 
     private static final String CHARGE_TAG = "EctoplasmicCharge";
+    private static final String ENERGY_TAG = "Energy";
 
     private int ectoplasmicCharge;
+    private final MachineEnergyStorage energyStorage =
+            new MachineEnergyStorage(FE_CAPACITY, FE_MAX_RECEIVE);
 
     public EctchantmentMachineBlockEntity(BlockPos pos, BlockState state) {
         super(ModBlockEntities.ECTCHANTMENT_MACHINE.get(), pos, state);
@@ -30,6 +38,14 @@ public final class EctchantmentMachineBlockEntity extends BlockEntity {
 
     public int getEctoplasmicCharge() {
         return ectoplasmicCharge;
+    }
+
+    public IEnergyStorage getEnergyStorage() {
+        return energyStorage;
+    }
+
+    public int getEnergyStored() {
+        return energyStorage.getEnergyStored();
     }
 
     public boolean canAcceptFuel(ItemStack stack) {
@@ -61,14 +77,21 @@ public final class EctchantmentMachineBlockEntity extends BlockEntity {
             return EnchantResult.ALREADY_PRESENT;
         }
 
-        if (ectoplasmicCharge < ENCHANTMENT_COST) {
-            return EnchantResult.NEEDS_FUEL;
+        if (ectoplasmicCharge >= ENCHANTMENT_COST) {
+            stack.enchant(enchantment, 1);
+            ectoplasmicCharge -= ENCHANTMENT_COST;
+            setChanged();
+            return EnchantResult.SUCCESS;
         }
 
-        stack.enchant(enchantment, 1);
-        ectoplasmicCharge -= ENCHANTMENT_COST;
-        setChanged();
-        return EnchantResult.SUCCESS;
+        if (energyStorage.getEnergyStored() >= FE_ENCHANTMENT_COST) {
+            stack.enchant(enchantment, 1);
+            energyStorage.extractEnergy(FE_ENCHANTMENT_COST, false);
+            setChanged();
+            return EnchantResult.SUCCESS;
+        }
+
+        return EnchantResult.NEEDS_FUEL;
     }
 
     public static int getFuelValue(ItemStack stack) {
@@ -87,12 +110,36 @@ public final class EctchantmentMachineBlockEntity extends BlockEntity {
     public void loadAdditional(CompoundTag tag, HolderLookup.Provider registries) {
         super.loadAdditional(tag, registries);
         ectoplasmicCharge = Math.max(0, Math.min(MAX_CHARGE, tag.getInt(CHARGE_TAG)));
+        if (tag.contains(ENERGY_TAG)) {
+            energyStorage.deserializeNBT(registries, tag.get(ENERGY_TAG));
+        }
     }
 
     @Override
     protected void saveAdditional(CompoundTag tag, HolderLookup.Provider registries) {
         super.saveAdditional(tag, registries);
         tag.putInt(CHARGE_TAG, ectoplasmicCharge);
+        tag.put(ENERGY_TAG, energyStorage.serializeNBT(registries));
+    }
+
+    private final class MachineEnergyStorage extends EnergyStorage {
+        private MachineEnergyStorage(int capacity, int maxReceive) {
+            super(capacity, maxReceive, FE_ENCHANTMENT_COST);
+        }
+
+        @Override
+        public int receiveEnergy(int maxReceive, boolean simulate) {
+            int received = super.receiveEnergy(maxReceive, simulate);
+            if (received > 0 && !simulate) {
+                EctchantmentMachineBlockEntity.this.setChanged();
+            }
+            return received;
+        }
+
+        @Override
+        public boolean canExtract() {
+            return false;
+        }
     }
 
     public enum EnchantResult {
