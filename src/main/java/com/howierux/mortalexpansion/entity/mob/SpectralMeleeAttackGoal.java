@@ -33,7 +33,8 @@ public final class SpectralMeleeAttackGoal extends Goal {
         return canPhase()
                 && target != null
                 && target.isAlive()
-                && isSameLevel(target);
+                && isSameLevel(target)
+                && SpectralPhasingRules.canTrackThroughBlocks(mob, target);
     }
 
     @Override
