@@ -1,26 +1,43 @@
 package com.howierux.mortalexpansion.block;
 
+import com.howierux.mortalexpansion.blockentity.GraveBlockEntity;
+import com.howierux.mortalexpansion.haunt.HauntManager;
+import com.howierux.mortalexpansion.haunt.PlayerHauntManager;
 import com.mojang.serialization.MapCodec;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.Direction;
+import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.item.context.BlockPlaceContext;
 import net.minecraft.world.level.BlockGetter;
-import net.minecraft.world.level.block.HorizontalDirectionalBlock;
+import net.minecraft.world.level.Level;
+import net.minecraft.world.level.block.BaseEntityBlock;
+import net.minecraft.world.level.block.RenderShape;
+import net.minecraft.world.level.block.entity.BlockEntity;
 import net.minecraft.world.level.block.state.BlockBehaviour;
 import net.minecraft.world.level.block.state.BlockState;
 import net.minecraft.world.level.block.state.StateDefinition;
+import net.minecraft.world.level.block.state.properties.BlockStateProperties;
+import net.minecraft.world.level.block.state.properties.DirectionProperty;
 import net.minecraft.world.level.block.state.properties.IntegerProperty;
 import net.minecraft.world.phys.shapes.CollisionContext;
 import net.minecraft.world.phys.shapes.VoxelShape;
+import net.minecraft.server.level.ServerLevel;
+import net.neoforged.neoforge.common.util.FakePlayer;
+import org.jetbrains.annotations.Nullable;
 
 /**
  * Upright half-block grave marker.
  *
  * DEPTH controls where the vertical slab sits along its thickness axis:
  * 0 = low/north/west edge, 1 = centered, 2 = high/south/east edge.
+ *
+ * Each Grave also stores persistent provenance in a block entity:
+ * naturally generated Graves can raise Haunt when broken, while Graves placed
+ * by real players or fake players do not.
  */
-public final class GraveBlock extends HorizontalDirectionalBlock {
+public final class GraveBlock extends BaseEntityBlock {
     public static final MapCodec<GraveBlock> CODEC = simpleCodec(GraveBlock::new);
+    public static final DirectionProperty FACING = BlockStateProperties.HORIZONTAL_FACING;
     public static final IntegerProperty DEPTH = IntegerProperty.create("depth", 0, 2);
 
     private static final VoxelShape[] NORTH_SOUTH_SHAPES = {
@@ -45,8 +62,19 @@ public final class GraveBlock extends HorizontalDirectionalBlock {
     }
 
     @Override
-    protected MapCodec<? extends HorizontalDirectionalBlock> codec() {
+    protected MapCodec<? extends BaseEntityBlock> codec() {
         return CODEC;
+    }
+
+    @Override
+    protected RenderShape getRenderShape(BlockState state) {
+        return RenderShape.MODEL;
+    }
+
+    @Nullable
+    @Override
+    public BlockEntity newBlockEntity(BlockPos pos, BlockState state) {
+        return new GraveBlockEntity(pos, state);
     }
 
     @Override
@@ -65,6 +93,27 @@ public final class GraveBlock extends HorizontalDirectionalBlock {
         return this.defaultBlockState()
                 .setValue(FACING, facing)
                 .setValue(DEPTH, depth);
+    }
+
+    @Override
+    public BlockState playerWillDestroy(
+            Level level,
+            BlockPos pos,
+            BlockState state,
+            Player player
+    ) {
+        if (!level.isClientSide
+                && level instanceof ServerLevel serverLevel
+                && level.getBlockEntity(pos) instanceof GraveBlockEntity grave
+                && grave.isNaturallyGenerated()) {
+            if (player instanceof FakePlayer) {
+                HauntManager.addPoints(serverLevel, pos, 1);
+            } else {
+                PlayerHauntManager.addPoints(player, 1);
+            }
+        }
+
+        return super.playerWillDestroy(level, pos, state, player);
     }
 
     @Override
