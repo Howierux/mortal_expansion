@@ -11,11 +11,11 @@
       "item": "mortal_expansion:spiritwood_log"
     },
     "E": {
-      "item": "mortal_expansion:raw_ectoplasm"
+      "item": "mortal_expansion:pure_ectoplasm"
     }
   },
   "result": {
-    "id": "mortal_expansion:charged_spiritwood_log",
+    "id": "mortal_expansion:purified_spiritwood_log",
     "count": 8
   }
 }

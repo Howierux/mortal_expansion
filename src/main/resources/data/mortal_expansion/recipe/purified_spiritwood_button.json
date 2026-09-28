@@ -2,15 +2,15 @@
   "type": "minecraft:crafting_shaped",
   "category": "building",
   "pattern": [
-    "PPP"
+    "P"
   ],
   "key": {
     "P": {
-      "item": "mortal_expansion:charged_spiritwood_planks"
+      "item": "mortal_expansion:purified_spiritwood_planks"
     }
   },
   "result": {
-    "id": "mortal_expansion:charged_spiritwood_slab",
-    "count": 6
+    "id": "mortal_expansion:purified_spiritwood_button",
+    "count": 1
   }
 }

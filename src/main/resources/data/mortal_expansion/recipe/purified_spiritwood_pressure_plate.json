@@ -6,11 +6,11 @@
   ],
   "key": {
     "P": {
-      "item": "mortal_expansion:charged_spiritwood_planks"
+      "item": "mortal_expansion:purified_spiritwood_planks"
     }
   },
   "result": {
-    "id": "mortal_expansion:charged_spiritwood_pressure_plate",
+    "id": "mortal_expansion:purified_spiritwood_pressure_plate",
     "count": 1
   }
 }

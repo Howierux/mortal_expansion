@@ -7,14 +7,14 @@
   ],
   "key": {
     "P": {
-      "item": "mortal_expansion:charged_spiritwood_planks"
+      "item": "mortal_expansion:purified_spiritwood_planks"
     },
     "S": {
       "item": "minecraft:stick"
     }
   },
   "result": {
-    "id": "mortal_expansion:charged_spiritwood_fence_gate",
+    "id": "mortal_expansion:purified_spiritwood_fence_gate",
     "count": 1
   }
 }
