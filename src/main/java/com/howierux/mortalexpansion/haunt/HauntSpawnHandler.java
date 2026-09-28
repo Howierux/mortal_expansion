@@ -16,9 +16,9 @@ import net.neoforged.neoforge.event.entity.living.FinalizeSpawnEvent;
 /**
  * Applies Mortal Expansion's dynamic Haunt requirements to natural mob spawns.
  *
- * Only NATURAL spawns are modified. Spawners, commands, conversions, structures,
- * summons, boss mechanics and other explicit spawn sources keep their normal
- * behavior.
+ * NATURAL and CHUNK_GENERATION spawns are modified. Spawners, commands,
+ * conversions, structures, summons, boss mechanics and other explicit spawn
+ * sources keep their normal behavior.
  */
 public final class HauntSpawnHandler {
     private HauntSpawnHandler() {}
@@ -28,7 +28,7 @@ public final class HauntSpawnHandler {
 
     @SubscribeEvent
     public static void onFinalizeSpawn(FinalizeSpawnEvent event) {
-        if (event.getSpawnType() != MobSpawnType.NATURAL) {
+        if (!isWorldSpawn(event.getSpawnType())) {
             return;
         }
 
@@ -125,19 +125,37 @@ public final class HauntSpawnHandler {
      */
     @SubscribeEvent
     public static void onEntityJoin(EntityJoinLevelEvent event) {
-        if (!(event.getEntity() instanceof AbstractSkeleton skeleton)
-                || skeleton instanceof WitherSkeleton
-                || skeleton.getSpawnType() != MobSpawnType.NATURAL
+        if (!(event.getEntity() instanceof Mob mob)
+                || !isWorldSpawn(mob.getSpawnType())
                 || !(event.getLevel() instanceof ServerLevel level)
                 || !level.dimension().equals(ServerLevel.OVERWORLD)) {
             return;
         }
 
-        HauntTier tier = HauntManager.getTier(level, skeleton.blockPosition());
-        if (tier == HauntTier.SUPERNATURAL) {
+        HauntTier tier = HauntManager.getTier(level, mob.blockPosition());
+        EntityType<?> type = mob.getType();
+
+        // Safety net for Haunt-controlled Mortal Expansion mobs. This catches
+        // world-generation creature spawning even if it bypasses FinalizeSpawn.
+        if ((type == ModEntities.SPIRIT.get() && tier.id() < HauntTier.NATURAL.id())
+                || (type == ModEntities.GHOST.get() && tier.id() < HauntTier.DEAD_RISING.id())
+                || ((type == ModEntities.PHANTOM.get() || type == ModEntities.HAUNT.get())
+                && tier.id() < HauntTier.DEMONIC.id())) {
+            event.setCanceled(true);
+            return;
+        }
+
+        if (mob instanceof AbstractSkeleton skeleton
+                && !(skeleton instanceof WitherSkeleton)
+                && tier == HauntTier.SUPERNATURAL) {
             skeleton.setItemSlot(EquipmentSlot.MAINHAND, ItemStack.EMPTY);
             skeleton.setItemSlot(EquipmentSlot.OFFHAND, ItemStack.EMPTY);
         }
+    }
+
+    private static boolean isWorldSpawn(MobSpawnType spawnType) {
+        return spawnType == MobSpawnType.NATURAL
+                || spawnType == MobSpawnType.CHUNK_GENERATION;
     }
 
     private static void cancelBelow(
