@@ -65,11 +65,21 @@ public final class ModCreativeTabs {
                         output.accept(ModItems.PURIFIED_GRAVESTONE_SWORD.get());
                         output.accept(ModItems.PHARAOHL_SCEPTER.get());
 
+                        output.accept(ModItems.BLOODSTONE_HELMET.get());
+                        output.accept(ModItems.BLOODSTONE_CHESTPLATE.get());
+                        output.accept(ModItems.BLOODSTONE_LEGGINGS.get());
+                        output.accept(ModItems.BLOODSTONE_BOOTS.get());
+
                         output.accept(ModItems.BLOODSTONE_SWORD.get());
                         output.accept(ModItems.BLOODSTONE_PICKAXE.get());
                         output.accept(ModItems.BLOODSTONE_AXE.get());
                         output.accept(ModItems.BLOODSTONE_SHOVEL.get());
                         output.accept(ModItems.BLOODSTONE_HOE.get());
+
+                        output.accept(ModItems.SPECTRALITE_HELMET.get());
+                        output.accept(ModItems.SPECTRALITE_CHESTPLATE.get());
+                        output.accept(ModItems.SPECTRALITE_LEGGINGS.get());
+                        output.accept(ModItems.SPECTRALITE_BOOTS.get());
 
                         output.accept(ModItems.SPECTRALITE_SWORD.get());
                         output.accept(ModItems.SPECTRALITE_PICKAXE.get());
