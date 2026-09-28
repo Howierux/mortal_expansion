@@ -43,6 +43,23 @@ public final class GraveBlockEntity extends BlockEntity {
         return naturallyGenerated;
     }
 
+    @Override
+    public void onLoad() {
+        super.onLoad();
+
+        if (level != null) {
+            BlockState state = getBlockState();
+            if (state.hasProperty(GraveBlock.NATURAL)
+                    && state.getValue(GraveBlock.NATURAL) != naturallyGenerated) {
+                level.setBlock(
+                        worldPosition,
+                        state.setValue(GraveBlock.NATURAL, naturallyGenerated),
+                        3
+                );
+            }
+        }
+    }
+
     public void setNaturallyGenerated(boolean naturallyGenerated) {
         this.naturallyGenerated = naturallyGenerated;
         setChanged();
