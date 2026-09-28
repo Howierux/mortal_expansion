@@ -191,7 +191,7 @@ public abstract class AbstractMortalMonster extends Monster {
     }
 
     @Override
-    protected void addAdditionalSaveData(CompoundTag tag) {
+    public void addAdditionalSaveData(CompoundTag tag) {
         super.addAdditionalSaveData(tag);
         if (alliedOwner != null) {
             tag.putUUID("MortalExpansionAlliedOwner", alliedOwner);
@@ -199,7 +199,7 @@ public abstract class AbstractMortalMonster extends Monster {
     }
 
     @Override
-    protected void readAdditionalSaveData(CompoundTag tag) {
+    public void readAdditionalSaveData(CompoundTag tag) {
         super.readAdditionalSaveData(tag);
         alliedOwner = tag.hasUUID("MortalExpansionAlliedOwner")
                 ? tag.getUUID("MortalExpansionAlliedOwner")
