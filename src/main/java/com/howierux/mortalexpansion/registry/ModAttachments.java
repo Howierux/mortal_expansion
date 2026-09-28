@@ -71,8 +71,11 @@ public final class ModAttachments {
      */
     public static final Supplier<AttachmentType<Set<String>>> PHARAOHL_PYRAMIDS = ATTACHMENTS.register(
             "pharaohl_pyramids",
-            () -> AttachmentType.builder(HashSet::new)
-                    .serialize(Codec.STRING.listOf().xmap(HashSet::new, set -> java.util.List.copyOf(set)))
+            () -> AttachmentType.<Set<String>>builder(() -> new HashSet<String>())
+                    .serialize(Codec.STRING.listOf().xmap(
+                            list -> new HashSet<String>(list),
+                            set -> java.util.List.copyOf(set)
+                    ))
                     .copyOnDeath()
                     .build()
     );
