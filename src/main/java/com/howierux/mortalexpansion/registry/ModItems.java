@@ -175,6 +175,86 @@ public final class ModItems {
             new Item.Properties()
     );
 
+    public static final DeferredItem<ArmorItem> BLOODSTONE_HELMET = ITEMS.registerItem(
+            "bloodstone_helmet",
+            properties -> new ArmorItem(
+                    ModArmorMaterials.BLOODSTONE,
+                    ArmorItem.Type.HELMET,
+                    properties.durability(ArmorItem.Type.HELMET.getDurability(50))
+            ),
+            new Item.Properties()
+    );
+
+    public static final DeferredItem<ArmorItem> BLOODSTONE_CHESTPLATE = ITEMS.registerItem(
+            "bloodstone_chestplate",
+            properties -> new ArmorItem(
+                    ModArmorMaterials.BLOODSTONE,
+                    ArmorItem.Type.CHESTPLATE,
+                    properties.durability(ArmorItem.Type.CHESTPLATE.getDurability(50))
+            ),
+            new Item.Properties()
+    );
+
+    public static final DeferredItem<ArmorItem> BLOODSTONE_LEGGINGS = ITEMS.registerItem(
+            "bloodstone_leggings",
+            properties -> new ArmorItem(
+                    ModArmorMaterials.BLOODSTONE,
+                    ArmorItem.Type.LEGGINGS,
+                    properties.durability(ArmorItem.Type.LEGGINGS.getDurability(50))
+            ),
+            new Item.Properties()
+    );
+
+    public static final DeferredItem<ArmorItem> BLOODSTONE_BOOTS = ITEMS.registerItem(
+            "bloodstone_boots",
+            properties -> new ArmorItem(
+                    ModArmorMaterials.BLOODSTONE,
+                    ArmorItem.Type.BOOTS,
+                    properties.durability(ArmorItem.Type.BOOTS.getDurability(50))
+            ),
+            new Item.Properties()
+    );
+
+    public static final DeferredItem<ArmorItem> SPECTRALITE_HELMET = ITEMS.registerItem(
+            "spectralite_helmet",
+            properties -> new ArmorItem(
+                    ModArmorMaterials.SPECTRALITE,
+                    ArmorItem.Type.HELMET,
+                    properties.fireResistant().durability(ArmorItem.Type.HELMET.getDurability(65))
+            ),
+            new Item.Properties()
+    );
+
+    public static final DeferredItem<ArmorItem> SPECTRALITE_CHESTPLATE = ITEMS.registerItem(
+            "spectralite_chestplate",
+            properties -> new ArmorItem(
+                    ModArmorMaterials.SPECTRALITE,
+                    ArmorItem.Type.CHESTPLATE,
+                    properties.fireResistant().durability(ArmorItem.Type.CHESTPLATE.getDurability(65))
+            ),
+            new Item.Properties()
+    );
+
+    public static final DeferredItem<ArmorItem> SPECTRALITE_LEGGINGS = ITEMS.registerItem(
+            "spectralite_leggings",
+            properties -> new ArmorItem(
+                    ModArmorMaterials.SPECTRALITE,
+                    ArmorItem.Type.LEGGINGS,
+                    properties.fireResistant().durability(ArmorItem.Type.LEGGINGS.getDurability(65))
+            ),
+            new Item.Properties()
+    );
+
+    public static final DeferredItem<ArmorItem> SPECTRALITE_BOOTS = ITEMS.registerItem(
+            "spectralite_boots",
+            properties -> new ArmorItem(
+                    ModArmorMaterials.SPECTRALITE,
+                    ArmorItem.Type.BOOTS,
+                    properties.fireResistant().durability(ArmorItem.Type.BOOTS.getDurability(65))
+            ),
+            new Item.Properties()
+    );
+
     public static final DeferredItem<SwordItem> SPECTRALITE_SWORD = ITEMS.registerItem(
             "spectralite_sword",
             properties -> new SwordItem(
