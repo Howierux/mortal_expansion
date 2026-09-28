@@ -25,8 +25,8 @@ public final class GraveyardFenceStructure extends Structure {
     private static final int SAMPLE_STEP = 4;
     private static final int SAMPLE_RADIUS = 10; // 84x84 block search area
     private static final int GRID = SAMPLE_RADIUS * 2 + 1;
-    private static final int MIN_BLOCK_WIDTH = 12;
-    private static final int MIN_BLOCK_DEPTH = 12;
+    private static final int MIN_BLOCK_WIDTH = 36;
+    private static final int MIN_BLOCK_DEPTH = 36;
 
     public GraveyardFenceStructure(StructureSettings settings) {
         super(settings);
@@ -68,9 +68,27 @@ public final class GraveyardFenceStructure extends Structure {
         int maxZ = centerZ + (sampleRect.maxZ() - SAMPLE_RADIUS) * SAMPLE_STEP
                 + SAMPLE_STEP - 1;
 
-        if (maxX - minX + 1 < MIN_BLOCK_WIDTH
-                || maxZ - minZ + 1 < MIN_BLOCK_DEPTH) {
+        int width = maxX - minX + 1;
+        int depth = maxZ - minZ + 1;
+
+        if (width < MIN_BLOCK_WIDTH || depth < MIN_BLOCK_DEPTH) {
             return Optional.empty();
+        }
+
+        // Cap very large Graveyards to a cemetery-sized enclosure while
+        // keeping the rectangle centered inside the largest usable area.
+        final int maxFenceSize = 64;
+
+        if (width > maxFenceSize) {
+            int center = (minX + maxX) / 2;
+            minX = center - (maxFenceSize / 2);
+            maxX = minX + maxFenceSize - 1;
+        }
+
+        if (depth > maxFenceSize) {
+            int center = (minZ + maxZ) / 2;
+            minZ = center - (maxFenceSize / 2);
+            maxZ = minZ + maxFenceSize - 1;
         }
 
         BlockPos locator = new BlockPos(

@@ -49,9 +49,6 @@ public final class InlandBiomeRegionMapper {
     private static final List<ResourceKey<Biome>> GRAVEYARD_LAND_BIOMES = List.of(
             Biomes.PLAINS,
             Biomes.SUNFLOWER_PLAINS,
-            Biomes.FOREST,
-            Biomes.FLOWER_FOREST,
-            Biomes.BIRCH_FOREST,
             Biomes.MEADOW
     );
 
