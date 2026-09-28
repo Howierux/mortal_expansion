@@ -47,28 +47,28 @@ public final class ModItems {
     public static final DeferredItem<BlockItem> GRAVESTONE =
             ITEMS.registerSimpleBlockItem(ModBlocks.GRAVESTONE);
 
-    public static final DeferredItem<BlockItem> CHARGED_GRAVESTONE =
-            ITEMS.registerSimpleBlockItem(ModBlocks.CHARGED_GRAVESTONE);
-    public static final DeferredItem<BlockItem> CHARGED_SPIRITWOOD_LOG =
-            ITEMS.registerSimpleBlockItem(ModBlocks.CHARGED_SPIRITWOOD_LOG);
-    public static final DeferredItem<BlockItem> CHARGED_SPIRITWOOD_PLANKS =
-            ITEMS.registerSimpleBlockItem(ModBlocks.CHARGED_SPIRITWOOD_PLANKS);
-    public static final DeferredItem<BlockItem> CHARGED_SPIRITWOOD_STAIRS =
-            ITEMS.registerSimpleBlockItem(ModBlocks.CHARGED_SPIRITWOOD_STAIRS);
-    public static final DeferredItem<BlockItem> CHARGED_SPIRITWOOD_SLAB =
-            ITEMS.registerSimpleBlockItem(ModBlocks.CHARGED_SPIRITWOOD_SLAB);
-    public static final DeferredItem<BlockItem> CHARGED_SPIRITWOOD_FENCE =
-            ITEMS.registerSimpleBlockItem(ModBlocks.CHARGED_SPIRITWOOD_FENCE);
-    public static final DeferredItem<BlockItem> CHARGED_SPIRITWOOD_FENCE_GATE =
-            ITEMS.registerSimpleBlockItem(ModBlocks.CHARGED_SPIRITWOOD_FENCE_GATE);
-    public static final DeferredItem<BlockItem> CHARGED_SPIRITWOOD_DOOR =
-            ITEMS.registerSimpleBlockItem(ModBlocks.CHARGED_SPIRITWOOD_DOOR);
-    public static final DeferredItem<BlockItem> CHARGED_SPIRITWOOD_TRAPDOOR =
-            ITEMS.registerSimpleBlockItem(ModBlocks.CHARGED_SPIRITWOOD_TRAPDOOR);
-    public static final DeferredItem<BlockItem> CHARGED_SPIRITWOOD_PRESSURE_PLATE =
-            ITEMS.registerSimpleBlockItem(ModBlocks.CHARGED_SPIRITWOOD_PRESSURE_PLATE);
-    public static final DeferredItem<BlockItem> CHARGED_SPIRITWOOD_BUTTON =
-            ITEMS.registerSimpleBlockItem(ModBlocks.CHARGED_SPIRITWOOD_BUTTON);
+    public static final DeferredItem<BlockItem> PURIFIED_GRAVESTONE =
+            ITEMS.registerSimpleBlockItem(ModBlocks.PURIFIED_GRAVESTONE);
+    public static final DeferredItem<BlockItem> PURIFIED_SPIRITWOOD_LOG =
+            ITEMS.registerSimpleBlockItem(ModBlocks.PURIFIED_SPIRITWOOD_LOG);
+    public static final DeferredItem<BlockItem> PURIFIED_SPIRITWOOD_PLANKS =
+            ITEMS.registerSimpleBlockItem(ModBlocks.PURIFIED_SPIRITWOOD_PLANKS);
+    public static final DeferredItem<BlockItem> PURIFIED_SPIRITWOOD_STAIRS =
+            ITEMS.registerSimpleBlockItem(ModBlocks.PURIFIED_SPIRITWOOD_STAIRS);
+    public static final DeferredItem<BlockItem> PURIFIED_SPIRITWOOD_SLAB =
+            ITEMS.registerSimpleBlockItem(ModBlocks.PURIFIED_SPIRITWOOD_SLAB);
+    public static final DeferredItem<BlockItem> PURIFIED_SPIRITWOOD_FENCE =
+            ITEMS.registerSimpleBlockItem(ModBlocks.PURIFIED_SPIRITWOOD_FENCE);
+    public static final DeferredItem<BlockItem> PURIFIED_SPIRITWOOD_FENCE_GATE =
+            ITEMS.registerSimpleBlockItem(ModBlocks.PURIFIED_SPIRITWOOD_FENCE_GATE);
+    public static final DeferredItem<BlockItem> PURIFIED_SPIRITWOOD_DOOR =
+            ITEMS.registerSimpleBlockItem(ModBlocks.PURIFIED_SPIRITWOOD_DOOR);
+    public static final DeferredItem<BlockItem> PURIFIED_SPIRITWOOD_TRAPDOOR =
+            ITEMS.registerSimpleBlockItem(ModBlocks.PURIFIED_SPIRITWOOD_TRAPDOOR);
+    public static final DeferredItem<BlockItem> PURIFIED_SPIRITWOOD_PRESSURE_PLATE =
+            ITEMS.registerSimpleBlockItem(ModBlocks.PURIFIED_SPIRITWOOD_PRESSURE_PLATE);
+    public static final DeferredItem<BlockItem> PURIFIED_SPIRITWOOD_BUTTON =
+            ITEMS.registerSimpleBlockItem(ModBlocks.PURIFIED_SPIRITWOOD_BUTTON);
 
     public static final DeferredItem<BlockItem> GRAVE =
             ITEMS.registerSimpleBlockItem(ModBlocks.GRAVE);
@@ -88,6 +88,30 @@ public final class ModItems {
     public static final DeferredItem<Item> RAW_ECTOPLASM = ITEMS.registerItem(
             "raw_ectoplasm",
             Item::new,
+            new Item.Properties()
+    );
+
+    public static final DeferredItem<Item> PURE_ECTOPLASM = ITEMS.registerItem(
+            "pure_ectoplasm",
+            Item::new,
+            new Item.Properties()
+    );
+
+    public static final DeferredItem<SwordItem> GRAVESTONE_SWORD = ITEMS.registerItem(
+            "gravestone_sword",
+            properties -> new SwordItem(
+                    Tiers.STONE,
+                    properties.attributes(SwordItem.createAttributes(Tiers.STONE, 3, -2.4F))
+            ),
+            new Item.Properties()
+    );
+
+    public static final DeferredItem<SwordItem> PURIFIED_GRAVESTONE_SWORD = ITEMS.registerItem(
+            "purified_gravestone_sword",
+            properties -> new SwordItem(
+                    Tiers.STONE,
+                    properties.attributes(SwordItem.createAttributes(Tiers.STONE, 3, -2.4F))
+            ),
             new Item.Properties()
     );
 

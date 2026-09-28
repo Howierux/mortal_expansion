@@ -10,6 +10,8 @@
     "mortal_expansion:spectralite_pickaxe",
     "mortal_expansion:spectralite_axe",
     "mortal_expansion:spectralite_shovel",
-    "mortal_expansion:spectralite_hoe"
+    "mortal_expansion:spectralite_hoe",
+    "mortal_expansion:gravestone_sword",
+    "mortal_expansion:purified_gravestone_sword"
   ]
 }

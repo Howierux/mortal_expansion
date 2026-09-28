@@ -2,6 +2,8 @@ package com.howierux.mortalexpansion.combat;
 
 import com.howierux.mortalexpansion.entity.IntangibleEntities;
 import com.howierux.mortalexpansion.entity.mob.PharaohlEntity;
+import com.howierux.mortalexpansion.registry.ModItems;
+import net.minecraft.world.item.ItemStack;
 import net.neoforged.bus.api.SubscribeEvent;
 import net.neoforged.neoforge.event.entity.living.LivingIncomingDamageEvent;
 
@@ -30,6 +32,14 @@ public final class IntangibleCombatHandler {
 
         if (!DemiTangibleDamage.canDamageIntangible(event.getSource())) {
             event.setCanceled(true);
+            return;
+        }
+
+        ItemStack weapon = event.getSource().getWeaponItem();
+        if (weapon != null
+                && !weapon.isEmpty()
+                && weapon.is(ModItems.PURIFIED_GRAVESTONE_SWORD.get())) {
+            event.setAmount(event.getAmount() * 1.5F);
         }
     }
 }
