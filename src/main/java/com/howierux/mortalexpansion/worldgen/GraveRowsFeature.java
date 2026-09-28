@@ -1,6 +1,7 @@
 package com.howierux.mortalexpansion.worldgen;
 
 import com.howierux.mortalexpansion.block.GraveBlock;
+import com.howierux.mortalexpansion.blockentity.GraveBlockEntity;
 import com.howierux.mortalexpansion.registry.ModBlocks;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.Direction;
@@ -102,6 +103,10 @@ public final class GraveRowsFeature extends Feature<NoneFeatureConfiguration> {
                 .setValue(GraveBlock.DEPTH, depthToward(bodyDirection));
 
         level.setBlock(gravePos, graveState, 2);
+        if (level.getBlockEntity(gravePos) instanceof GraveBlockEntity grave) {
+            grave.setNaturallyGenerated(true);
+        }
+
         level.setBlock(dirtOneGround, Blocks.COARSE_DIRT.defaultBlockState(), 2);
         level.setBlock(dirtTwoGround, Blocks.COARSE_DIRT.defaultBlockState(), 2);
 
