@@ -60,5 +60,13 @@
   "message.mortal_expansion.ectchantment_machine.not_supported": "This item cannot receive Demi-Tangible.",
   "block.mortal_expansion.ectoplasmic_generator": "Ectoplasmic Generator",
   "message.mortal_expansion.ectoplasmic_generator.busy": "The Ectoplasmic Generator is already burning fuel.",
-  "message.mortal_expansion.ectoplasmic_generator.status": "Stored FE: %s/%s | Burn: %s ticks | Haunt: %s (%sx) | Output: %s FE/t"
+  "message.mortal_expansion.ectoplasmic_generator.status": "Stored FE: %s/%s | Burn: %s ticks | Haunt: %s (%sx) | Output: %s FE/t",
+  "gui.mortal_expansion.ectchantment_machine.title": "Ectchantment Machine",
+  "gui.mortal_expansion.ectchantment_machine.ecto": "Ectoplasmic Charge: %s / %s",
+  "gui.mortal_expansion.ectchantment_machine.fe": "FE: %s / %s",
+  "gui.mortal_expansion.ectoplasmic_generator.title": "Ectoplasmic Generator",
+  "gui.mortal_expansion.ectoplasmic_generator.fe": "Stored FE: %s / %s",
+  "gui.mortal_expansion.ectoplasmic_generator.burn": "Burn Time: %s ticks",
+  "gui.mortal_expansion.ectoplasmic_generator.haunt": "Haunt: %s (%sx)",
+  "gui.mortal_expansion.ectoplasmic_generator.output": "Current Output: %s FE/t"
 }
