@@ -1,5 +1,6 @@
 package com.howierux.mortalexpansion.combat;
 
+import com.howierux.mortalexpansion.registry.ModEnchantments;
 import net.minecraft.tags.DamageTypeTags;
 import net.minecraft.world.damagesource.DamageSource;
 import net.minecraft.world.entity.Entity;
@@ -19,7 +20,9 @@ public final class DemiTangibleDamage {
      * Current exceptions:
      * - any explosion;
      * - a Ghast's large fireball/direct reflected large-fireball hit;
-     * - attacks made with an item tagged mortal_expansion:demi_tangible.
+     * - spectral arrows;
+     * - attacks made with an item tagged mortal_expansion:demi_tangible;
+     * - attacks made with an item carrying the Demi-Tangible enchantment.
      */
     public static boolean canDamageIntangible(DamageSource source) {
         if (source.is(DamageTypeTags.IS_EXPLOSION)) {
@@ -34,8 +37,17 @@ public final class DemiTangibleDamage {
         }
 
         ItemStack weapon = source.getWeaponItem();
-        return weapon != null
-                && !weapon.isEmpty()
-                && weapon.is(ModCombatItemTags.DEMI_TANGIBLE);
+        if (weapon == null || weapon.isEmpty()) {
+            return false;
+        }
+
+        if (weapon.is(ModCombatItemTags.DEMI_TANGIBLE)) {
+            return true;
+        }
+
+        return weapon.getTagEnchantments()
+                .keySet()
+                .stream()
+                .anyMatch(enchantment -> enchantment.is(ModEnchantments.DEMI_TANGIBLE));
     }
 }
