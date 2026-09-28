@@ -1,7 +1,10 @@
 package com.howierux.mortalexpansion.client;
 
+import com.mojang.blaze3d.vertex.PoseStack;
 import net.minecraft.client.model.HumanoidModel;
 import net.minecraft.client.model.geom.ModelLayers;
+import net.minecraft.client.model.geom.ModelPart;
+import net.minecraft.client.renderer.MultiBufferSource;
 import net.minecraft.client.renderer.RenderType;
 import net.minecraft.client.renderer.entity.EntityRendererProvider;
 import net.minecraft.client.renderer.entity.MobRenderer;
@@ -9,25 +12,41 @@ import net.minecraft.resources.ResourceLocation;
 import net.minecraft.world.entity.Mob;
 
 import javax.annotation.Nullable;
+import java.util.function.Predicate;
 
 public final class PlaceholderHumanoidRenderer<T extends Mob>
-        extends MobRenderer<T, HumanoidModel<T>> {
+        extends MobRenderer<T, PlaceholderHumanoidRenderer.SpectralHumanoidModel<T>> {
+    private static final float SPECTRAL_ALPHA = 0.20F;
+
     private final ResourceLocation texture;
-    private final boolean translucent;
+    private final Predicate<T> spectral;
 
     public PlaceholderHumanoidRenderer(
             EntityRendererProvider.Context context,
             ResourceLocation texture,
-            boolean translucent,
+            Predicate<T> spectral,
             float shadowRadius
     ) {
         super(
                 context,
-                new HumanoidModel<>(context.bakeLayer(ModelLayers.ZOMBIE)),
+                new SpectralHumanoidModel<>(context.bakeLayer(ModelLayers.ZOMBIE)),
                 shadowRadius
         );
         this.texture = texture;
-        this.translucent = translucent;
+        this.spectral = spectral;
+    }
+
+    @Override
+    public void render(
+            T entity,
+            float entityYaw,
+            float partialTicks,
+            PoseStack poseStack,
+            MultiBufferSource buffer,
+            int packedLight
+    ) {
+        this.model.setSpectral(spectral.test(entity));
+        super.render(entity, entityYaw, partialTicks, poseStack, buffer, packedLight);
     }
 
     @Override
@@ -47,10 +66,56 @@ public final class PlaceholderHumanoidRenderer<T extends Mob>
             return RenderType.outline(texture);
         }
 
-        if (translucent) {
+        if (spectral.test(entity)) {
             return RenderType.entityTranslucent(texture);
         }
 
         return super.getRenderType(entity, bodyVisible, translucentFlag, glowing);
+    }
+
+    public static final class SpectralHumanoidModel<T extends Mob>
+            extends HumanoidModel<T> {
+        private boolean spectral;
+
+        public SpectralHumanoidModel(ModelPart root) {
+            super(root);
+        }
+
+        public void setSpectral(boolean spectral) {
+            this.spectral = spectral;
+        }
+
+        @Override
+        public void renderToBuffer(
+                PoseStack poseStack,
+                com.mojang.blaze3d.vertex.VertexConsumer vertexConsumer,
+                int packedLight,
+                int packedOverlay,
+                int color
+        ) {
+            if (!spectral) {
+                super.renderToBuffer(
+                        poseStack,
+                        vertexConsumer,
+                        packedLight,
+                        packedOverlay,
+                        color
+                );
+                return;
+            }
+
+            int currentAlpha = color >>> 24;
+            int spectralAlpha = Math.round(SPECTRAL_ALPHA * 255.0F);
+            int alpha = Math.min(currentAlpha, spectralAlpha);
+            int spectralColor = (color & 0x00FFFFFF) | (alpha << 24);
+
+            super.renderToBuffer(
+                    poseStack,
+                    vertexConsumer,
+                    packedLight,
+                    packedOverlay,
+                    spectralColor
+            );
+        }
     }
 }

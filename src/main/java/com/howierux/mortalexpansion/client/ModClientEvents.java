@@ -38,21 +38,26 @@ public final class ModClientEvents {
         ResourceLocation husk = ResourceLocation.withDefaultNamespace("textures/entity/zombie/husk.png");
 
         event.registerEntityRenderer(ModEntities.GHOST.get(),
-                ctx -> new PlaceholderHumanoidRenderer<>(ctx, zombie, true, 0.45F));
+                ctx -> new PlaceholderHumanoidRenderer<>(ctx, zombie, mob -> true, 0.45F));
         event.registerEntityRenderer(ModEntities.PHANTOM.get(),
-                ctx -> new PlaceholderHumanoidRenderer<>(ctx, zombie, false, 0.45F));
+                ctx -> new PlaceholderHumanoidRenderer<>(ctx, zombie, mob -> false, 0.45F));
         event.registerEntityRenderer(ModEntities.SPIRIT.get(),
-                ctx -> new PlaceholderHumanoidRenderer<>(ctx, zombie, true, 0.4F));
+                ctx -> new PlaceholderHumanoidRenderer<>(ctx, zombie, mob -> true, 0.4F));
         event.registerEntityRenderer(ModEntities.ELEMENTAL.get(),
-                ctx -> new PlaceholderHumanoidRenderer<>(ctx, zombie, true, 0.55F));
+                ctx -> new PlaceholderHumanoidRenderer<>(ctx, zombie, mob -> true, 0.55F));
         event.registerEntityRenderer(ModEntities.HAUNT.get(),
-                ctx -> new PlaceholderHumanoidRenderer<>(ctx, zombie, true, 0.6F));
+                ctx -> new PlaceholderHumanoidRenderer<>(ctx, zombie, mob -> true, 0.6F));
         event.registerEntityRenderer(ModEntities.HAINT.get(),
-                ctx -> new PlaceholderHumanoidRenderer<>(ctx, zombie, true, 0.75F));
+                ctx -> new PlaceholderHumanoidRenderer<>(ctx, zombie, mob -> true, 0.75F));
         event.registerEntityRenderer(ModEntities.MUMMY.get(),
-                ctx -> new PlaceholderHumanoidRenderer<>(ctx, husk, false, 0.5F));
+                ctx -> new PlaceholderHumanoidRenderer<>(ctx, husk, mob -> false, 0.5F));
         event.registerEntityRenderer(ModEntities.PHARAOHL.get(),
-                ctx -> new PlaceholderHumanoidRenderer<>(ctx, husk, false, 0.7F));
+                ctx -> new PlaceholderHumanoidRenderer<>(
+                        ctx,
+                        husk,
+                        mob -> mob.isCurrentlyIntangible(),
+                        0.7F
+                ));
     }
 
     @SubscribeEvent
