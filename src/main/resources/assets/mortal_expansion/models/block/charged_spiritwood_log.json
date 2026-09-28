@@ -1,7 +1,0 @@
-{
-  "parent": "minecraft:block/cube_column",
-  "textures": {
-    "end": "mortal_expansion:block/charged_spiritwood_log_top",
-    "side": "mortal_expansion:block/charged_spiritwood_log"
-  }
-}

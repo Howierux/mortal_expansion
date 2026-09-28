@@ -1,6 +1,0 @@
-{
-  "parent": "minecraft:block/fence_side",
-  "textures": {
-    "texture": "mortal_expansion:block/charged_spiritwood_planks"
-  }
-}

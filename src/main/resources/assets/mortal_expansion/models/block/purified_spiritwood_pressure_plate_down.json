@@ -1,6 +1,6 @@
 {
   "parent": "minecraft:block/pressure_plate_down",
   "textures": {
-    "texture": "mortal_expansion:block/charged_spiritwood_planks"
+    "texture": "mortal_expansion:block/purified_spiritwood_planks"
   }
 }
