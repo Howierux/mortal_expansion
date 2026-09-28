@@ -78,5 +78,12 @@
   "item.mortal_expansion.spectralite_helmet": "Spectralite Helmet",
   "item.mortal_expansion.spectralite_chestplate": "Spectralite Chestplate",
   "item.mortal_expansion.spectralite_leggings": "Spectralite Leggings",
-  "item.mortal_expansion.spectralite_boots": "Spectralite Boots"
+  "item.mortal_expansion.spectralite_boots": "Spectralite Boots",
+  "block.mortal_expansion.enchantment_generator": "Enchantment Generator",
+  "gui.mortal_expansion.enchantment_generator.title": "Enchantment Generator",
+  "gui.mortal_expansion.enchantment_generator.fe": "Stored FE: %s / %s",
+  "gui.mortal_expansion.enchantment_generator.remaining": "Remaining Enchantment Energy: %s FE",
+  "gui.mortal_expansion.enchantment_generator.output": "Current Output: %s FE/t",
+  "gui.mortal_expansion.enchantment_generator.ready": "Disenchanted item ready - empty-hand right-click to retrieve",
+  "message.mortal_expansion.enchantment_generator.started": "Enchantment extraction started: %s FE at %s FE/t"
 }
