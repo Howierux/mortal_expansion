@@ -2,6 +2,7 @@ package com.howierux.mortalexpansion.registry;
 
 import com.howierux.mortalexpansion.MortalExpansion;
 import com.howierux.mortalexpansion.block.EctchantmentMachineBlock;
+import com.howierux.mortalexpansion.block.EctoplasmicGeneratorBlock;
 import com.howierux.mortalexpansion.block.SpiritwoodSaplingBlock;
 import com.howierux.mortalexpansion.block.GraveBlock;
 import com.howierux.mortalexpansion.worldgen.ModTreeGrowers;
@@ -145,6 +146,12 @@ public final class ModBlocks {
     public static final DeferredBlock<EctchantmentMachineBlock> ECTCHANTMENT_MACHINE = BLOCKS.registerBlock(
             "ectchantment_machine",
             EctchantmentMachineBlock::new,
+            BlockBehaviour.Properties.ofFullCopy(Blocks.IRON_BLOCK)
+    );
+
+    public static final DeferredBlock<EctoplasmicGeneratorBlock> ECTOPLASMIC_GENERATOR = BLOCKS.registerBlock(
+            "ectoplasmic_generator",
+            EctoplasmicGeneratorBlock::new,
             BlockBehaviour.Properties.ofFullCopy(Blocks.IRON_BLOCK)
     );
 
