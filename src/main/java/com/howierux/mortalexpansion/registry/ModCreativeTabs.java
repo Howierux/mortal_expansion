@@ -17,6 +17,7 @@ public final class ModCreativeTabs {
             event.accept(ModItems.SPIRITWOOD_LEAVES.get());
             event.accept(ModItems.SPIRITWOOD_SAPLING.get());
             event.accept(ModItems.BLOODSTONE_ORE.get());
+            event.accept(ModItems.BLOODSTONE_ORE_STONE.get());
         }
 
         if (event.getTabKey() == CreativeModeTabs.INGREDIENTS) {
