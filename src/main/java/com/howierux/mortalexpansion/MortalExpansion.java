@@ -6,6 +6,7 @@ import com.howierux.mortalexpansion.haunt.HauntSimulationHandler;
 import com.howierux.mortalexpansion.loot.MobDropHandler;
 import com.howierux.mortalexpansion.combat.IntangibleCombatHandler;
 import com.howierux.mortalexpansion.registry.ModAttachments;
+import com.howierux.mortalexpansion.registry.ModBlockEntities;
 import com.howierux.mortalexpansion.registry.ModBlocks;
 import com.howierux.mortalexpansion.registry.ModCreativeTabs;
 import com.howierux.mortalexpansion.registry.ModEntities;
@@ -30,6 +31,7 @@ public final class MortalExpansion {
     public MortalExpansion(IEventBus modBus) {
         ModBlocks.register(modBus);
         ModItems.register(modBus);
+        ModBlockEntities.register(modBus);
         ModAttachments.register(modBus);
         ModEntities.register(modBus);
         ModFeatures.register(modBus);
