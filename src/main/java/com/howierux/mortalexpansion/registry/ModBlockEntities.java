@@ -3,6 +3,7 @@ package com.howierux.mortalexpansion.registry;
 import com.howierux.mortalexpansion.MortalExpansion;
 import com.howierux.mortalexpansion.blockentity.EctchantmentMachineBlockEntity;
 import com.howierux.mortalexpansion.blockentity.EctoplasmicGeneratorBlockEntity;
+import com.howierux.mortalexpansion.blockentity.GraveBlockEntity;
 import net.minecraft.core.registries.Registries;
 import net.minecraft.world.level.block.entity.BlockEntityType;
 import net.neoforged.bus.api.IEventBus;
@@ -31,6 +32,15 @@ public final class ModBlockEntities {
                     () -> BlockEntityType.Builder.of(
                             EctoplasmicGeneratorBlockEntity::new,
                             ModBlocks.ECTOPLASMIC_GENERATOR.get()
+                    ).build(null)
+            );
+
+    public static final Supplier<BlockEntityType<GraveBlockEntity>> GRAVE =
+            BLOCK_ENTITY_TYPES.register(
+                    "grave",
+                    () -> BlockEntityType.Builder.of(
+                            GraveBlockEntity::new,
+                            ModBlocks.GRAVE.get()
                     ).build(null)
             );
 
