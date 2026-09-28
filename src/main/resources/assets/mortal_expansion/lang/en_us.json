@@ -70,5 +70,13 @@
   "gui.mortal_expansion.ectoplasmic_generator.haunt": "Haunt: %s (%sx)",
   "gui.mortal_expansion.ectoplasmic_generator.output": "Current Output: %s FE/t",
   "block.mortal_expansion.bloodstone_ore_stone": "Bloodstone Ore",
-  "itemGroup.mortal_expansion": "Mortal Expansion"
+  "itemGroup.mortal_expansion": "Mortal Expansion",
+  "item.mortal_expansion.bloodstone_helmet": "Bloodstone Helmet",
+  "item.mortal_expansion.bloodstone_chestplate": "Bloodstone Chestplate",
+  "item.mortal_expansion.bloodstone_leggings": "Bloodstone Leggings",
+  "item.mortal_expansion.bloodstone_boots": "Bloodstone Boots",
+  "item.mortal_expansion.spectralite_helmet": "Spectralite Helmet",
+  "item.mortal_expansion.spectralite_chestplate": "Spectralite Chestplate",
+  "item.mortal_expansion.spectralite_leggings": "Spectralite Leggings",
+  "item.mortal_expansion.spectralite_boots": "Spectralite Boots"
 }
