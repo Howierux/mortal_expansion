@@ -1,5 +1,7 @@
 package com.howierux.mortalexpansion.entity.mob;
 
+import net.minecraft.core.BlockPos;
+import net.minecraft.tags.FluidTags;
 import net.minecraft.world.entity.EntityType;
 import net.minecraft.world.entity.MoverType;
 import net.minecraft.world.entity.ai.attributes.AttributeSupplier;
@@ -14,11 +16,15 @@ import net.minecraft.world.entity.ai.goal.target.NearestAttackableTargetGoal;
 import net.minecraft.world.entity.monster.Monster;
 import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.level.Level;
+import net.minecraft.world.level.pathfinder.PathType;
+import net.minecraft.world.phys.AABB;
 import net.minecraft.world.phys.Vec3;
 
 public abstract class AbstractMortalMonster extends Monster {
     protected AbstractMortalMonster(EntityType<? extends Monster> type, Level level) {
         super(type, level);
+        setPathfindingMalus(PathType.WATER, -1.0F);
+        setPathfindingMalus(PathType.WATER_BORDER, -1.0F);
     }
 
     protected static AttributeSupplier.Builder baseAttributes(double health, double speed, double damage) {
@@ -59,22 +65,47 @@ public abstract class AbstractMortalMonster extends Monster {
 
     @Override
     public void move(MoverType moverType, Vec3 movement) {
+        Vec3 safeMovement = avoidEnteringWater(movement);
+
         if (!canPhaseHorizontally()) {
-            super.move(moverType, movement);
+            super.move(moverType, safeMovement);
             return;
         }
 
         // Keep Minecraft's ordinary Y-axis collision so spectral mobs stand on
         // floors, but apply X/Z motion directly so walls do not block them.
-        super.move(moverType, new Vec3(0.0D, movement.y, 0.0D));
+        super.move(moverType, new Vec3(0.0D, safeMovement.y, 0.0D));
 
-        if (movement.x != 0.0D || movement.z != 0.0D) {
+        if (safeMovement.x != 0.0D || safeMovement.z != 0.0D) {
             setPos(
-                    getX() + movement.x,
+                    getX() + safeMovement.x,
                     getY(),
-                    getZ() + movement.z
+                    getZ() + safeMovement.z
             );
         }
+    }
+
+    private Vec3 avoidEnteringWater(Vec3 movement) {
+        if (movement.lengthSqr() == 0.0D || isTouchingWater(getBoundingBox())) {
+            return movement;
+        }
+
+        AABB destination = getBoundingBox()
+                .move(movement.x, movement.y, movement.z)
+                .expandTowards(0.0D, -0.15D, 0.0D);
+
+        if (!isTouchingWater(destination)) {
+            return movement;
+        }
+
+        // Reject horizontal/downward motion that would carry the mob onto or
+        // into water. Upward movement remains available for escaping ledges.
+        return new Vec3(0.0D, Math.max(0.0D, movement.y), 0.0D);
+    }
+
+    private boolean isTouchingWater(AABB box) {
+        return BlockPos.betweenClosedStream(box.deflate(1.0E-4D))
+                .anyMatch(pos -> level().getFluidState(pos).is(FluidTags.WATER));
     }
 
     @Override
