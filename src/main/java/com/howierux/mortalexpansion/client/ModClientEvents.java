@@ -4,6 +4,9 @@ import com.howierux.mortalexpansion.MortalExpansion;
 import com.howierux.mortalexpansion.registry.ModBlocks;
 import com.howierux.mortalexpansion.registry.ModItems;
 import com.howierux.mortalexpansion.registry.ModEntities;
+import com.howierux.mortalexpansion.registry.ModMenus;
+import com.howierux.mortalexpansion.client.screen.EctchantmentMachineScreen;
+import com.howierux.mortalexpansion.client.screen.EctoplasmicGeneratorScreen;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.client.renderer.BiomeColors;
 import net.minecraft.world.entity.EntityType;
@@ -12,6 +15,7 @@ import net.neoforged.api.distmarker.Dist;
 import net.neoforged.bus.api.SubscribeEvent;
 import net.neoforged.fml.common.EventBusSubscriber;
 import net.neoforged.neoforge.client.event.RegisterColorHandlersEvent;
+import net.neoforged.neoforge.client.event.RegisterMenuScreensEvent;
 import net.neoforged.neoforge.client.event.EntityRenderersEvent;
 
 @EventBusSubscriber(modid = MortalExpansion.MOD_ID, bus = EventBusSubscriber.Bus.MOD, value = Dist.CLIENT)
@@ -58,6 +62,12 @@ public final class ModClientEvents {
                         mob -> mob.isCurrentlyIntangible(),
                         0.7F
                 ));
+    }
+
+    @SubscribeEvent
+    public static void registerMenuScreens(RegisterMenuScreensEvent event) {
+        event.register(ModMenus.ECTCHANTMENT_MACHINE.get(), EctchantmentMachineScreen::new);
+        event.register(ModMenus.ECTOPLASMIC_GENERATOR.get(), EctoplasmicGeneratorScreen::new);
     }
 
     @SubscribeEvent
