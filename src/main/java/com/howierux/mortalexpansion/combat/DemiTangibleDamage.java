@@ -1,6 +1,7 @@
 package com.howierux.mortalexpansion.combat;
 
 import com.howierux.mortalexpansion.registry.ModEnchantments;
+import com.howierux.mortalexpansion.registry.ModDataComponents;
 import net.minecraft.tags.DamageTypeTags;
 import net.minecraft.world.damagesource.DamageSource;
 import net.minecraft.world.entity.Entity;
@@ -45,6 +46,12 @@ public final class DemiTangibleDamage {
             return true;
         }
 
+        if (Boolean.TRUE.equals(weapon.get(ModDataComponents.DEMI_TANGIBLE.get()))) {
+            return true;
+        }
+
+        // Backward compatibility for test items created before Demi-Tangible
+        // was moved off the vanilla enchantment system.
         return weapon.getTagEnchantments()
                 .keySet()
                 .stream()
