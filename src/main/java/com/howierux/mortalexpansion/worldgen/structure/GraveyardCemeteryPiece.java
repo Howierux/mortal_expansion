@@ -212,7 +212,8 @@ public final class GraveyardCemeteryPiece extends StructurePiece {
                     gravePos,
                     ModBlocks.GRAVE.get().defaultBlockState()
                             .setValue(GraveBlock.FACING, bodyDirection)
-                            .setValue(GraveBlock.DEPTH, depthToward(bodyDirection)),
+                            .setValue(GraveBlock.DEPTH, depthToward(bodyDirection))
+                            .setValue(GraveBlock.NATURAL, true),
                     2
             );
             markNaturalGrave(level, gravePos);
@@ -314,6 +315,7 @@ public final class GraveyardCemeteryPiece extends StructurePiece {
                 ModBlocks.GRAVE.get().defaultBlockState()
                         .setValue(GraveBlock.FACING, Direction.SOUTH)
                         .setValue(GraveBlock.DEPTH, 1)
+                        .setValue(GraveBlock.NATURAL, true)
         );
         if (chunkBB.isInside(interiorGravePos)) {
             markNaturalGrave(level, interiorGravePos);
@@ -333,7 +335,7 @@ public final class GraveyardCemeteryPiece extends StructurePiece {
 
     private static void markNaturalGrave(WorldGenLevel level, BlockPos pos) {
         if (level.getBlockEntity(pos) instanceof GraveBlockEntity grave) {
-            grave.setNaturallyGenerated(true);
+            grave.markNaturallyGeneratedFromWorldgen();
         }
     }
 
