@@ -6,12 +6,7 @@ import net.minecraft.server.level.ServerLevel;
 import net.minecraft.world.level.ChunkPos;
 import net.minecraft.world.level.chunk.LevelChunk;
 
-/**
- * Single authoritative API for chunk haunt state.
- *
- * Future machines, rituals, spawning, equipment bonuses, purification and
- * spreading should call this class rather than accessing the attachment directly.
- */
+/** Authoritative API for fine-grained chunk haunt state. */
 public final class HauntManager {
     private HauntManager() {}
 
@@ -20,8 +15,26 @@ public final class HauntManager {
     }
 
     public static HauntTier getTier(ServerLevel level, ChunkPos pos) {
+        return HauntTier.fromValue(getValue(level, pos));
+    }
+
+    public static int getValue(ServerLevel level, BlockPos pos) {
+        return getValue(level, new ChunkPos(pos));
+    }
+
+    public static int getValue(ServerLevel level, ChunkPos pos) {
         LevelChunk chunk = level.getChunk(pos.x, pos.z);
-        return HauntTier.fromId(chunk.getData(ModAttachments.HAUNT_TIER));
+        HauntTier tier = HauntTier.fromId(chunk.getData(ModAttachments.HAUNT_TIER));
+        int progress = chunk.getData(ModAttachments.HAUNT_PROGRESS);
+
+        if (progress < 0) {
+            progress = tier == HauntTier.VOID ? 0 : HauntTier.DEFAULT_PROGRESS;
+            chunk.setData(ModAttachments.HAUNT_PROGRESS, progress);
+        }
+
+        return tier == HauntTier.VOID
+                ? 0
+                : tier.id() * HauntTier.POINTS_PER_TIER + progress;
     }
 
     public static HauntTier setTier(ServerLevel level, BlockPos pos, HauntTier tier) {
@@ -29,26 +42,50 @@ public final class HauntManager {
     }
 
     public static HauntTier setTier(ServerLevel level, ChunkPos pos, HauntTier tier) {
-        LevelChunk chunk = level.getChunk(pos.x, pos.z);
-        chunk.setData(ModAttachments.HAUNT_TIER, tier.id());
+        setValue(level, pos, tier.midpointValue());
         return tier;
     }
 
+    public static int setValue(ServerLevel level, BlockPos pos, int value) {
+        return setValue(level, new ChunkPos(pos), value);
+    }
+
+    public static int setValue(ServerLevel level, ChunkPos pos, int value) {
+        int clamped = HauntTier.clampValue(value);
+        HauntTier tier = HauntTier.fromValue(clamped);
+        LevelChunk chunk = level.getChunk(pos.x, pos.z);
+
+        chunk.setData(ModAttachments.HAUNT_TIER, tier.id());
+        chunk.setData(
+                ModAttachments.HAUNT_PROGRESS,
+                HauntTier.progressFromValue(clamped)
+        );
+        return clamped;
+    }
+
+    public static int addPoints(ServerLevel level, BlockPos pos, int amount) {
+        return addPoints(level, new ChunkPos(pos), amount);
+    }
+
+    public static int addPoints(ServerLevel level, ChunkPos pos, int amount) {
+        return setValue(level, pos, getValue(level, pos) + amount);
+    }
+
+    /** Whole-tier adjustment retained for systems that truly mean a full tier. */
     public static HauntTier addLevels(ServerLevel level, BlockPos pos, int amount) {
-        ChunkPos chunkPos = new ChunkPos(pos);
-        HauntTier current = getTier(level, chunkPos);
-        return setTier(level, chunkPos, HauntTier.fromId(current.id() + amount));
+        addPoints(level, pos, amount * HauntTier.POINTS_PER_TIER);
+        return getTier(level, pos);
     }
 
-    public static HauntTier raise(ServerLevel level, BlockPos pos) {
-        return addLevels(level, pos, 1);
+    public static int raisePoint(ServerLevel level, BlockPos pos) {
+        return addPoints(level, pos, 1);
     }
 
-    public static HauntTier lower(ServerLevel level, BlockPos pos) {
-        return addLevels(level, pos, -1);
+    public static int lowerPoint(ServerLevel level, BlockPos pos) {
+        return addPoints(level, pos, -1);
     }
 
     public static boolean isAtLeast(ServerLevel level, BlockPos pos, HauntTier minimum) {
-        return getTier(level, pos).id() >= minimum.id();
+        return getValue(level, pos) >= minimum.minimumValue();
     }
 }
