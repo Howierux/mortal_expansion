@@ -1,6 +1,7 @@
 package com.howierux.mortalexpansion.registry;
 
 import com.howierux.mortalexpansion.MortalExpansion;
+import com.howierux.mortalexpansion.block.EctchantmentMachineBlock;
 import com.howierux.mortalexpansion.block.SpiritwoodSaplingBlock;
 import com.howierux.mortalexpansion.block.GraveBlock;
 import com.howierux.mortalexpansion.worldgen.ModTreeGrowers;
@@ -139,6 +140,12 @@ public final class ModBlocks {
             "purified_spiritwood_button",
             properties -> new ButtonBlock(BlockSetType.OAK, 30, properties),
             BlockBehaviour.Properties.ofFullCopy(Blocks.OAK_BUTTON)
+    );
+
+    public static final DeferredBlock<EctchantmentMachineBlock> ECTCHANTMENT_MACHINE = BLOCKS.registerBlock(
+            "ectchantment_machine",
+            EctchantmentMachineBlock::new,
+            BlockBehaviour.Properties.ofFullCopy(Blocks.IRON_BLOCK)
     );
 
     public static final DeferredBlock<GraveBlock> GRAVE = BLOCKS.registerBlock(
