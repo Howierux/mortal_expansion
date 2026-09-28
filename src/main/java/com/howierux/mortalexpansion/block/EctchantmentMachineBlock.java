@@ -1,9 +1,11 @@
 package com.howierux.mortalexpansion.block;
 
 import com.howierux.mortalexpansion.blockentity.EctchantmentMachineBlockEntity;
+import com.howierux.mortalexpansion.menu.EctchantmentMachineMenu;
 import com.mojang.serialization.MapCodec;
 import net.minecraft.core.BlockPos;
 import net.minecraft.network.chat.Component;
+import net.minecraft.world.SimpleMenuProvider;
 import net.minecraft.server.level.ServerLevel;
 import net.minecraft.world.InteractionHand;
 import net.minecraft.world.InteractionResult;
@@ -143,14 +145,15 @@ public final class EctchantmentMachineBlock extends BaseEntityBlock {
     ) {
         if (level.getBlockEntity(pos) instanceof EctchantmentMachineBlockEntity machine) {
             if (!level.isClientSide) {
-                player.displayClientMessage(
-                        Component.translatable(
-                                "message.mortal_expansion.ectchantment_machine.charge",
-                                machine.getEctoplasmicCharge(),
-                                EctchantmentMachineBlockEntity.MAX_CHARGE
-                        ),
-                        true
-                );
+                player.openMenu(new SimpleMenuProvider(
+                        (containerId, inventory, menuPlayer) ->
+                                new EctchantmentMachineMenu(
+                                        containerId,
+                                        inventory,
+                                        machine.createMenuData()
+                                ),
+                        Component.translatable("gui.mortal_expansion.ectchantment_machine.title")
+                ));
             }
             return InteractionResult.sidedSuccess(level.isClientSide);
         }
