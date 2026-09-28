@@ -1,7 +1,7 @@
 package com.howierux.mortalexpansion.blockentity;
 
+import com.howierux.mortalexpansion.haunt.HauntManager;
 import com.howierux.mortalexpansion.haunt.HauntTier;
-import com.howierux.mortalexpansion.registry.ModAttachments;
 import com.howierux.mortalexpansion.registry.ModBlockEntities;
 import com.howierux.mortalexpansion.registry.ModItems;
 import net.minecraft.core.BlockPos;
@@ -10,6 +10,7 @@ import net.minecraft.core.HolderLookup;
 import net.minecraft.nbt.CompoundTag;
 import net.minecraft.world.inventory.ContainerData;
 import net.minecraft.world.item.ItemStack;
+import net.minecraft.server.level.ServerLevel;
 import net.minecraft.world.level.Level;
 import net.minecraft.world.level.block.entity.BlockEntity;
 import net.minecraft.world.level.block.state.BlockState;
@@ -103,9 +104,11 @@ public final class EctoplasmicGeneratorBlockEntity extends BlockEntity {
             return HauntTier.VOID;
         }
 
-        return HauntTier.fromId(
-                level.getChunkAt(worldPosition).getData(ModAttachments.HAUNT_TIER)
-        );
+        if (level instanceof ServerLevel serverLevel) {
+            return HauntManager.getTier(serverLevel, worldPosition);
+        }
+
+        return HauntTier.VOID;
     }
 
     public double getHauntMultiplier() {
