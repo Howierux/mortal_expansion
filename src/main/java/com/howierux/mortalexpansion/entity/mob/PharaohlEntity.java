@@ -13,7 +13,7 @@ import net.minecraft.world.level.Level;
 
 import javax.annotation.Nullable;
 
-public final class PharaohlEntity extends AbstractMortalMonster implements DynamicIntangible {
+public final class PharaohlEntity extends AbstractMortalMonster implements DynamicIntangible, HorizontalPhasingMob {
     private static final int PHASE_TICKS = 160;
     private static final int SUMMON_INTERVAL = 240;
 
@@ -35,6 +35,11 @@ public final class PharaohlEntity extends AbstractMortalMonster implements Dynam
     @Override
     public boolean isCurrentlyIntangible() {
         return (tickCount / PHASE_TICKS) % 2 == 1;
+    }
+
+    @Override
+    public boolean canPhaseHorizontally() {
+        return isCurrentlyIntangible();
     }
 
     @Override

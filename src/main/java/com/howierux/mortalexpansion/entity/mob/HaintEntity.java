@@ -7,7 +7,7 @@ import net.minecraft.world.entity.EntityType;
 import net.minecraft.world.entity.ai.attributes.AttributeSupplier;
 import net.minecraft.world.level.Level;
 
-public final class HaintEntity extends AbstractMortalMonster {
+public final class HaintEntity extends AbstractMortalMonster implements HorizontalPhasingMob {
     public HaintEntity(EntityType<? extends HaintEntity> type, Level level) {
         super(type, level);
     }
