@@ -47,7 +47,7 @@ public final class EctoplasmicGeneratorBlock extends BaseEntityBlock {
 
     @Nullable
     @Override
-    protected <T extends BlockEntity> BlockEntityTicker<T> getTicker(
+    public <T extends BlockEntity> BlockEntityTicker<T> getTicker(
             Level level,
             BlockState state,
             BlockEntityType<T> type
