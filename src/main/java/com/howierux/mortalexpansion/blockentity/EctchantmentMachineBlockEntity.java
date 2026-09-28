@@ -9,6 +9,7 @@ import net.minecraft.core.HolderLookup;
 import net.minecraft.core.registries.Registries;
 import net.minecraft.nbt.CompoundTag;
 import net.minecraft.server.level.ServerLevel;
+import net.minecraft.world.inventory.ContainerData;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.item.enchantment.Enchantment;
 import net.minecraft.world.level.block.entity.BlockEntity;
@@ -46,6 +47,31 @@ public final class EctchantmentMachineBlockEntity extends BlockEntity {
 
     public int getEnergyStored() {
         return energyStorage.getEnergyStored();
+    }
+
+    public ContainerData createMenuData() {
+        return new ContainerData() {
+            @Override
+            public int get(int index) {
+                return switch (index) {
+                    case 0 -> ectoplasmicCharge;
+                    case 1 -> MAX_CHARGE;
+                    case 2 -> energyStorage.getEnergyStored() / 10;
+                    case 3 -> FE_CAPACITY / 10;
+                    default -> 0;
+                };
+            }
+
+            @Override
+            public void set(int index, int value) {
+                // Read-only machine status data.
+            }
+
+            @Override
+            public int getCount() {
+                return 4;
+            }
+        };
     }
 
     public boolean canAcceptFuel(ItemStack stack) {
