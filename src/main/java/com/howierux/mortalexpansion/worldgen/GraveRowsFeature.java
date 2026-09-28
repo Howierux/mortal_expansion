@@ -100,11 +100,12 @@ public final class GraveRowsFeature extends Feature<NoneFeatureConfiguration> {
         BlockState graveState = ModBlocks.GRAVE.get()
                 .defaultBlockState()
                 .setValue(GraveBlock.FACING, bodyDirection)
-                .setValue(GraveBlock.DEPTH, depthToward(bodyDirection));
+                .setValue(GraveBlock.DEPTH, depthToward(bodyDirection))
+                .setValue(GraveBlock.NATURAL, true);
 
         level.setBlock(gravePos, graveState, 2);
         if (level.getBlockEntity(gravePos) instanceof GraveBlockEntity grave) {
-            grave.setNaturallyGenerated(true);
+            grave.markNaturallyGeneratedFromWorldgen();
         }
 
         level.setBlock(dirtOneGround, Blocks.COARSE_DIRT.defaultBlockState(), 2);
