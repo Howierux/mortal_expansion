@@ -1,79 +1,86 @@
 package com.howierux.mortalexpansion.registry;
 
-import net.minecraft.world.item.CreativeModeTabs;
+import com.howierux.mortalexpansion.MortalExpansion;
+import net.minecraft.core.registries.Registries;
+import net.minecraft.network.chat.Component;
+import net.minecraft.world.item.CreativeModeTab;
+import net.minecraft.world.item.ItemStack;
 import net.neoforged.bus.api.IEventBus;
-import net.neoforged.neoforge.event.BuildCreativeModeTabContentsEvent;
+import net.neoforged.neoforge.registries.DeferredRegister;
+
+import java.util.function.Supplier;
 
 public final class ModCreativeTabs {
     private ModCreativeTabs() {}
 
+    public static final DeferredRegister<CreativeModeTab> CREATIVE_TABS =
+            DeferredRegister.create(Registries.CREATIVE_MODE_TAB, MortalExpansion.MOD_ID);
+
+    public static final Supplier<CreativeModeTab> MORTAL_EXPANSION = CREATIVE_TABS.register(
+            "mortal_expansion",
+            () -> CreativeModeTab.builder()
+                    .title(Component.translatable("itemGroup.mortal_expansion"))
+                    .icon(() -> new ItemStack(ModItems.RAW_ECTOPLASM.get()))
+                    .displayItems((parameters, output) -> {
+                        output.accept(ModItems.RAW_ECTOPLASM.get());
+                        output.accept(ModItems.PURE_ECTOPLASM.get());
+                        output.accept(ModItems.BLOODSTONE.get());
+
+                        output.accept(ModItems.BLOODSTONE_ORE_STONE.get());
+                        output.accept(ModItems.BLOODSTONE_ORE.get());
+
+                        output.accept(ModItems.GRAVESTONE.get());
+                        output.accept(ModItems.PURIFIED_GRAVESTONE.get());
+                        output.accept(ModItems.GRAVE.get());
+                        output.accept(ModItems.STONE_FENCE.get());
+
+                        output.accept(ModItems.SPIRITWOOD_LOG.get());
+                        output.accept(ModItems.SPIRITWOOD_PLANKS.get());
+                        output.accept(ModItems.SPIRITWOOD_STAIRS.get());
+                        output.accept(ModItems.SPIRITWOOD_SLAB.get());
+                        output.accept(ModItems.SPIRITWOOD_FENCE.get());
+                        output.accept(ModItems.SPIRITWOOD_FENCE_GATE.get());
+                        output.accept(ModItems.SPIRITWOOD_DOOR.get());
+                        output.accept(ModItems.SPIRITWOOD_TRAPDOOR.get());
+                        output.accept(ModItems.SPIRITWOOD_PRESSURE_PLATE.get());
+                        output.accept(ModItems.SPIRITWOOD_BUTTON.get());
+                        output.accept(ModItems.SPIRITWOOD_LEAVES.get());
+                        output.accept(ModItems.SPIRITWOOD_SAPLING.get());
+
+                        output.accept(ModItems.PURIFIED_SPIRITWOOD_LOG.get());
+                        output.accept(ModItems.PURIFIED_SPIRITWOOD_PLANKS.get());
+                        output.accept(ModItems.PURIFIED_SPIRITWOOD_STAIRS.get());
+                        output.accept(ModItems.PURIFIED_SPIRITWOOD_SLAB.get());
+                        output.accept(ModItems.PURIFIED_SPIRITWOOD_FENCE.get());
+                        output.accept(ModItems.PURIFIED_SPIRITWOOD_FENCE_GATE.get());
+                        output.accept(ModItems.PURIFIED_SPIRITWOOD_DOOR.get());
+                        output.accept(ModItems.PURIFIED_SPIRITWOOD_TRAPDOOR.get());
+                        output.accept(ModItems.PURIFIED_SPIRITWOOD_PRESSURE_PLATE.get());
+                        output.accept(ModItems.PURIFIED_SPIRITWOOD_BUTTON.get());
+
+                        output.accept(ModItems.ECTCHANTMENT_MACHINE.get());
+                        output.accept(ModItems.ECTOPLASMIC_GENERATOR.get());
+
+                        output.accept(ModItems.GRAVESTONE_SWORD.get());
+                        output.accept(ModItems.PURIFIED_GRAVESTONE_SWORD.get());
+                        output.accept(ModItems.PHARAOHL_SCEPTER.get());
+
+                        output.accept(ModItems.BLOODSTONE_SWORD.get());
+                        output.accept(ModItems.BLOODSTONE_PICKAXE.get());
+                        output.accept(ModItems.BLOODSTONE_AXE.get());
+                        output.accept(ModItems.BLOODSTONE_SHOVEL.get());
+                        output.accept(ModItems.BLOODSTONE_HOE.get());
+
+                        output.accept(ModItems.SPECTRALITE_SWORD.get());
+                        output.accept(ModItems.SPECTRALITE_PICKAXE.get());
+                        output.accept(ModItems.SPECTRALITE_AXE.get());
+                        output.accept(ModItems.SPECTRALITE_SHOVEL.get());
+                        output.accept(ModItems.SPECTRALITE_HOE.get());
+                    })
+                    .build()
+    );
+
     public static void register(IEventBus modBus) {
-        modBus.addListener(ModCreativeTabs::buildContents);
-    }
-
-    private static void buildContents(BuildCreativeModeTabContentsEvent event) {
-        if (event.getTabKey() == CreativeModeTabs.NATURAL_BLOCKS) {
-            event.accept(ModItems.SPIRITWOOD_LOG.get());
-            event.accept(ModItems.SPIRITWOOD_LEAVES.get());
-            event.accept(ModItems.SPIRITWOOD_SAPLING.get());
-            event.accept(ModItems.BLOODSTONE_ORE.get());
-            event.accept(ModItems.BLOODSTONE_ORE_STONE.get());
-        }
-
-        if (event.getTabKey() == CreativeModeTabs.INGREDIENTS) {
-            event.accept(ModItems.BLOODSTONE.get());
-            event.accept(ModItems.RAW_ECTOPLASM.get());
-            event.accept(ModItems.PURE_ECTOPLASM.get());
-        }
-
-        if (event.getTabKey() == CreativeModeTabs.TOOLS_AND_UTILITIES) {
-            event.accept(ModItems.BLOODSTONE_PICKAXE.get());
-            event.accept(ModItems.BLOODSTONE_SHOVEL.get());
-            event.accept(ModItems.BLOODSTONE_HOE.get());
-            event.accept(ModItems.SPECTRALITE_PICKAXE.get());
-            event.accept(ModItems.SPECTRALITE_SHOVEL.get());
-            event.accept(ModItems.SPECTRALITE_HOE.get());
-        }
-
-        if (event.getTabKey() == CreativeModeTabs.COMBAT) {
-            event.accept(ModItems.PHARAOHL_SCEPTER.get());
-            event.accept(ModItems.GRAVESTONE_SWORD.get());
-            event.accept(ModItems.PURIFIED_GRAVESTONE_SWORD.get());
-            event.accept(ModItems.BLOODSTONE_SWORD.get());
-            event.accept(ModItems.BLOODSTONE_AXE.get());
-            event.accept(ModItems.SPECTRALITE_SWORD.get());
-            event.accept(ModItems.SPECTRALITE_AXE.get());
-        }
-
-        if (event.getTabKey() == CreativeModeTabs.FUNCTIONAL_BLOCKS) {
-            event.accept(ModItems.ECTCHANTMENT_MACHINE.get());
-            event.accept(ModItems.ECTOPLASMIC_GENERATOR.get());
-        }
-
-        if (event.getTabKey() == CreativeModeTabs.BUILDING_BLOCKS) {
-            event.accept(ModItems.SPIRITWOOD_PLANKS.get());
-            event.accept(ModItems.PURIFIED_GRAVESTONE.get());
-            event.accept(ModItems.PURIFIED_SPIRITWOOD_LOG.get());
-            event.accept(ModItems.PURIFIED_SPIRITWOOD_PLANKS.get());
-            event.accept(ModItems.PURIFIED_SPIRITWOOD_STAIRS.get());
-            event.accept(ModItems.PURIFIED_SPIRITWOOD_SLAB.get());
-            event.accept(ModItems.PURIFIED_SPIRITWOOD_FENCE.get());
-            event.accept(ModItems.PURIFIED_SPIRITWOOD_FENCE_GATE.get());
-            event.accept(ModItems.PURIFIED_SPIRITWOOD_DOOR.get());
-            event.accept(ModItems.PURIFIED_SPIRITWOOD_TRAPDOOR.get());
-            event.accept(ModItems.PURIFIED_SPIRITWOOD_PRESSURE_PLATE.get());
-            event.accept(ModItems.PURIFIED_SPIRITWOOD_BUTTON.get());
-            event.accept(ModItems.SPIRITWOOD_STAIRS.get());
-            event.accept(ModItems.SPIRITWOOD_SLAB.get());
-            event.accept(ModItems.SPIRITWOOD_FENCE.get());
-            event.accept(ModItems.SPIRITWOOD_FENCE_GATE.get());
-            event.accept(ModItems.SPIRITWOOD_DOOR.get());
-            event.accept(ModItems.SPIRITWOOD_TRAPDOOR.get());
-            event.accept(ModItems.SPIRITWOOD_PRESSURE_PLATE.get());
-            event.accept(ModItems.SPIRITWOOD_BUTTON.get());
-            event.accept(ModItems.GRAVESTONE.get());
-            event.accept(ModItems.GRAVE.get());
-            event.accept(ModItems.STONE_FENCE.get());
-        }
+        CREATIVE_TABS.register(modBus);
     }
 }
