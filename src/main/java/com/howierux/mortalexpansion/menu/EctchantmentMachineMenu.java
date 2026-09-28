@@ -37,11 +37,11 @@ public final class EctchantmentMachineMenu extends AbstractContainerMenu {
     }
 
     public int getEnergyStored() {
-        return data.get(2);
+        return data.get(2) * 10;
     }
 
     public int getEnergyCapacity() {
-        return data.get(3);
+        return data.get(3) * 10;
     }
 
     @Override
