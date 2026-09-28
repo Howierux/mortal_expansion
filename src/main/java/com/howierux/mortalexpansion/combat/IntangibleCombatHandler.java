@@ -3,6 +3,7 @@ package com.howierux.mortalexpansion.combat;
 import com.howierux.mortalexpansion.entity.IntangibleEntities;
 import com.howierux.mortalexpansion.entity.mob.PharaohlEntity;
 import com.howierux.mortalexpansion.registry.ModItems;
+import net.minecraft.world.entity.Entity;
 import net.minecraft.world.item.ItemStack;
 import net.neoforged.bus.api.SubscribeEvent;
 import net.neoforged.neoforge.event.entity.living.LivingIncomingDamageEvent;
@@ -15,6 +16,8 @@ public final class IntangibleCombatHandler {
 
     @SubscribeEvent
     public static void onIncomingDamage(LivingIncomingDamageEvent event) {
+        applyIntangibleArmorProtection(event);
+
         ItemStack weapon = event.getSource().getWeaponItem();
         boolean purifiedGravestoneSword = weapon != null
                 && !weapon.isEmpty()
@@ -43,5 +46,35 @@ public final class IntangibleCombatHandler {
         if (purifiedGravestoneSword) {
             event.setAmount(event.getAmount() * 1.5F);
         }
+    }
+
+    private static void applyIntangibleArmorProtection(LivingIncomingDamageEvent event) {
+        Entity attacker = event.getSource().getEntity();
+        if (attacker == null || !IntangibleEntities.isIntangible(attacker)) {
+            return;
+        }
+
+        int qualifyingPieces = 0;
+        for (ItemStack armor : event.getEntity().getArmorSlots()) {
+            if (isSpectralArmor(armor)) {
+                qualifyingPieces++;
+            }
+        }
+
+        if (qualifyingPieces > 0) {
+            float multiplier = 1.0F - (0.05F * qualifyingPieces);
+            event.setAmount(event.getAmount() * multiplier);
+        }
+    }
+
+    private static boolean isSpectralArmor(ItemStack stack) {
+        return stack.is(ModItems.BLOODSTONE_HELMET.get())
+                || stack.is(ModItems.BLOODSTONE_CHESTPLATE.get())
+                || stack.is(ModItems.BLOODSTONE_LEGGINGS.get())
+                || stack.is(ModItems.BLOODSTONE_BOOTS.get())
+                || stack.is(ModItems.SPECTRALITE_HELMET.get())
+                || stack.is(ModItems.SPECTRALITE_CHESTPLATE.get())
+                || stack.is(ModItems.SPECTRALITE_LEGGINGS.get())
+                || stack.is(ModItems.SPECTRALITE_BOOTS.get());
     }
 }
