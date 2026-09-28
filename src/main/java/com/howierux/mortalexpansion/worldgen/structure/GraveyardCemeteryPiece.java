@@ -1,6 +1,7 @@
 package com.howierux.mortalexpansion.worldgen.structure;
 
 import com.howierux.mortalexpansion.block.GraveBlock;
+import com.howierux.mortalexpansion.blockentity.GraveBlockEntity;
 import com.howierux.mortalexpansion.registry.ModBlocks;
 import com.howierux.mortalexpansion.registry.ModStructures;
 import net.minecraft.core.BlockPos;
@@ -214,6 +215,7 @@ public final class GraveyardCemeteryPiece extends StructurePiece {
                             .setValue(GraveBlock.DEPTH, depthToward(bodyDirection)),
                     2
             );
+            markNaturalGrave(level, gravePos);
         }
 
         if (chunkBB.isInside(dirtOne.below())) {
@@ -304,14 +306,18 @@ public final class GraveyardCemeteryPiece extends StructurePiece {
                 ModBlocks.STONE_FENCE.get().defaultBlockState()
         );
 
+        BlockPos interiorGravePos = new BlockPos(centerX, floorY + 1, centerZ - 1);
         placeIfInside(
                 level,
                 chunkBB,
-                new BlockPos(centerX, floorY + 1, centerZ - 1),
+                interiorGravePos,
                 ModBlocks.GRAVE.get().defaultBlockState()
                         .setValue(GraveBlock.FACING, Direction.SOUTH)
                         .setValue(GraveBlock.DEPTH, 1)
         );
+        if (chunkBB.isInside(interiorGravePos)) {
+            markNaturalGrave(level, interiorGravePos);
+        }
     }
 
     private static void placeIfInside(
@@ -322,6 +328,12 @@ public final class GraveyardCemeteryPiece extends StructurePiece {
     ) {
         if (chunkBB.isInside(pos)) {
             level.setBlock(pos, state, 2);
+        }
+    }
+
+    private static void markNaturalGrave(WorldGenLevel level, BlockPos pos) {
+        if (level.getBlockEntity(pos) instanceof GraveBlockEntity grave) {
+            grave.setNaturallyGenerated(true);
         }
     }
 
