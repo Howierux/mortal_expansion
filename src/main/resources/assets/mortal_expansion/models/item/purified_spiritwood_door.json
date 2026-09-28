@@ -1,6 +1,6 @@
 {
   "parent": "minecraft:item/generated",
   "textures": {
-    "layer0": "mortal_expansion:item/charged_spiritwood_door"
+    "layer0": "mortal_expansion:item/purified_spiritwood_door"
   }
 }
