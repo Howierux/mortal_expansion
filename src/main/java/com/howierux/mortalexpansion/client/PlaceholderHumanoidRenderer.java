@@ -17,9 +17,6 @@ import java.util.function.Predicate;
 public final class PlaceholderHumanoidRenderer<T extends Mob>
         extends MobRenderer<T, PlaceholderHumanoidRenderer.SpectralHumanoidModel<T>> {
     private static final float SPECTRAL_ALPHA = 0.20F;
-    private static final float HOVER_BASE = 0.08F;
-    private static final float HOVER_AMPLITUDE = 0.035F;
-    private static final float HOVER_SPEED = 0.12F;
 
     private final ResourceLocation texture;
     private final Predicate<T> spectral;
@@ -48,21 +45,7 @@ public final class PlaceholderHumanoidRenderer<T extends Mob>
             MultiBufferSource buffer,
             int packedLight
     ) {
-        boolean isSpectral = spectral.test(entity);
-        this.model.setSpectral(isSpectral);
-
-        if (isSpectral) {
-            float age = entity.tickCount + partialTicks;
-            float hover = HOVER_BASE
-                    + (float)Math.sin(age * HOVER_SPEED) * HOVER_AMPLITUDE;
-
-            poseStack.pushPose();
-            poseStack.translate(0.0D, hover, 0.0D);
-            super.render(entity, entityYaw, partialTicks, poseStack, buffer, packedLight);
-            poseStack.popPose();
-            return;
-        }
-
+        this.model.setSpectral(spectral.test(entity));
         super.render(entity, entityYaw, partialTicks, poseStack, buffer, packedLight);
     }
 
