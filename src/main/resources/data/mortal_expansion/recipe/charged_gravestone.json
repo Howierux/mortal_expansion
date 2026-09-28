@@ -1,0 +1,21 @@
+{
+  "type": "minecraft:crafting_shaped",
+  "category": "building",
+  "pattern": [
+    "GGG",
+    "GEG",
+    "GGG"
+  ],
+  "key": {
+    "G": {
+      "item": "mortal_expansion:gravestone"
+    },
+    "E": {
+      "item": "mortal_expansion:raw_ectoplasm"
+    }
+  },
+  "result": {
+    "id": "mortal_expansion:charged_gravestone",
+    "count": 8
+  }
+}

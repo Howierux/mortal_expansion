@@ -1,1 +1,7 @@
-{"replace":false,"values":["mortal_expansion:spiritwood_log"]}
+{
+  "replace": false,
+  "values": [
+    "mortal_expansion:spiritwood_log",
+    "mortal_expansion:charged_spiritwood_log"
+  ]
+}

@@ -1,6 +1,7 @@
 {
   "replace": false,
   "values": [
-    "mortal_expansion:stone_fence"
+    "mortal_expansion:spiritwood_fence",
+    "mortal_expansion:charged_spiritwood_fence"
   ]
 }

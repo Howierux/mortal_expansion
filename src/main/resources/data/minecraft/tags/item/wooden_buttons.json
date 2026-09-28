@@ -1,6 +1,7 @@
 {
   "replace": false,
   "values": [
-    "mortal_expansion:spiritwood_button"
+    "mortal_expansion:spiritwood_button",
+    "mortal_expansion:charged_spiritwood_button"
   ]
 }

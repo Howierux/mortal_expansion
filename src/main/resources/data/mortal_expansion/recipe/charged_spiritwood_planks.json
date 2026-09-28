@@ -1,0 +1,13 @@
+{
+  "type": "minecraft:crafting_shapeless",
+  "category": "building",
+  "ingredients": [
+    {
+      "item": "mortal_expansion:charged_spiritwood_log"
+    }
+  ],
+  "result": {
+    "id": "mortal_expansion:charged_spiritwood_planks",
+    "count": 4
+  }
+}

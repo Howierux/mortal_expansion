@@ -1,0 +1,16 @@
+{
+  "type": "minecraft:crafting_shaped",
+  "category": "building",
+  "pattern": [
+    "P"
+  ],
+  "key": {
+    "P": {
+      "item": "mortal_expansion:charged_spiritwood_planks"
+    }
+  },
+  "result": {
+    "id": "mortal_expansion:charged_spiritwood_button",
+    "count": 1
+  }
+}
