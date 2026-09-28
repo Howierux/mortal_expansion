@@ -73,6 +73,9 @@ public final class ModItems {
     public static final DeferredItem<BlockItem> ECTCHANTMENT_MACHINE =
             ITEMS.registerSimpleBlockItem(ModBlocks.ECTCHANTMENT_MACHINE);
 
+    public static final DeferredItem<BlockItem> ECTOPLASMIC_GENERATOR =
+            ITEMS.registerSimpleBlockItem(ModBlocks.ECTOPLASMIC_GENERATOR);
+
     public static final DeferredItem<BlockItem> GRAVE =
             ITEMS.registerSimpleBlockItem(ModBlocks.GRAVE);
 
