@@ -1,0 +1,42 @@
+{
+  "parent": "minecraft:block/block",
+  "render_type": "translucent",
+  "textures": {
+    "texture": "mortal_expansion:item/pure_ectoplasm_shimmer",
+    "particle": "mortal_expansion:block/gravestone"
+  },
+  "elements": [
+    {
+      "from": [
+        -0.02,
+        -0.02,
+        7.98
+      ],
+      "to": [
+        16.02,
+        16.02,
+        16.02
+      ],
+      "faces": {
+        "down": {
+          "texture": "#texture"
+        },
+        "up": {
+          "texture": "#texture"
+        },
+        "north": {
+          "texture": "#texture"
+        },
+        "south": {
+          "texture": "#texture"
+        },
+        "west": {
+          "texture": "#texture"
+        },
+        "east": {
+          "texture": "#texture"
+        }
+      }
+    }
+  ]
+}
