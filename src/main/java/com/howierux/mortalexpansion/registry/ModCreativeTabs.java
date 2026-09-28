@@ -43,6 +43,17 @@ public final class ModCreativeTabs {
 
         if (event.getTabKey() == CreativeModeTabs.BUILDING_BLOCKS) {
             event.accept(ModItems.SPIRITWOOD_PLANKS.get());
+            event.accept(ModItems.CHARGED_GRAVESTONE.get());
+            event.accept(ModItems.CHARGED_SPIRITWOOD_LOG.get());
+            event.accept(ModItems.CHARGED_SPIRITWOOD_PLANKS.get());
+            event.accept(ModItems.CHARGED_SPIRITWOOD_STAIRS.get());
+            event.accept(ModItems.CHARGED_SPIRITWOOD_SLAB.get());
+            event.accept(ModItems.CHARGED_SPIRITWOOD_FENCE.get());
+            event.accept(ModItems.CHARGED_SPIRITWOOD_FENCE_GATE.get());
+            event.accept(ModItems.CHARGED_SPIRITWOOD_DOOR.get());
+            event.accept(ModItems.CHARGED_SPIRITWOOD_TRAPDOOR.get());
+            event.accept(ModItems.CHARGED_SPIRITWOOD_PRESSURE_PLATE.get());
+            event.accept(ModItems.CHARGED_SPIRITWOOD_BUTTON.get());
             event.accept(ModItems.SPIRITWOOD_STAIRS.get());
             event.accept(ModItems.SPIRITWOOD_SLAB.get());
             event.accept(ModItems.SPIRITWOOD_FENCE.get());

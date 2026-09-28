@@ -80,6 +80,67 @@ public final class ModBlocks {
             BlockBehaviour.Properties.ofFullCopy(Blocks.STONE)
     );
 
+    public static final DeferredBlock<Block> CHARGED_GRAVESTONE = BLOCKS.registerSimpleBlock(
+            "charged_gravestone",
+            BlockBehaviour.Properties.ofFullCopy(Blocks.STONE)
+    );
+
+    public static final DeferredBlock<RotatedPillarBlock> CHARGED_SPIRITWOOD_LOG = BLOCKS.registerBlock(
+            "charged_spiritwood_log", RotatedPillarBlock::new,
+            BlockBehaviour.Properties.ofFullCopy(Blocks.OAK_LOG)
+    );
+
+    public static final DeferredBlock<Block> CHARGED_SPIRITWOOD_PLANKS = BLOCKS.registerSimpleBlock(
+            "charged_spiritwood_planks",
+            BlockBehaviour.Properties.ofFullCopy(Blocks.OAK_PLANKS)
+    );
+
+    public static final DeferredBlock<StairBlock> CHARGED_SPIRITWOOD_STAIRS = BLOCKS.registerBlock(
+            "charged_spiritwood_stairs",
+            properties -> new StairBlock(CHARGED_SPIRITWOOD_PLANKS.get().defaultBlockState(), properties),
+            BlockBehaviour.Properties.ofFullCopy(Blocks.OAK_STAIRS)
+    );
+
+    public static final DeferredBlock<SlabBlock> CHARGED_SPIRITWOOD_SLAB = BLOCKS.registerBlock(
+            "charged_spiritwood_slab", SlabBlock::new,
+            BlockBehaviour.Properties.ofFullCopy(Blocks.OAK_SLAB)
+    );
+
+    public static final DeferredBlock<FenceBlock> CHARGED_SPIRITWOOD_FENCE = BLOCKS.registerBlock(
+            "charged_spiritwood_fence", FenceBlock::new,
+            BlockBehaviour.Properties.ofFullCopy(Blocks.OAK_FENCE)
+    );
+
+    public static final DeferredBlock<FenceGateBlock> CHARGED_SPIRITWOOD_FENCE_GATE = BLOCKS.registerBlock(
+            "charged_spiritwood_fence_gate",
+            properties -> new FenceGateBlock(WoodType.OAK, properties),
+            BlockBehaviour.Properties.ofFullCopy(Blocks.OAK_FENCE_GATE)
+    );
+
+    public static final DeferredBlock<DoorBlock> CHARGED_SPIRITWOOD_DOOR = BLOCKS.registerBlock(
+            "charged_spiritwood_door",
+            properties -> new DoorBlock(BlockSetType.OAK, properties),
+            BlockBehaviour.Properties.ofFullCopy(Blocks.OAK_DOOR)
+    );
+
+    public static final DeferredBlock<TrapDoorBlock> CHARGED_SPIRITWOOD_TRAPDOOR = BLOCKS.registerBlock(
+            "charged_spiritwood_trapdoor",
+            properties -> new TrapDoorBlock(BlockSetType.OAK, properties),
+            BlockBehaviour.Properties.ofFullCopy(Blocks.OAK_TRAPDOOR)
+    );
+
+    public static final DeferredBlock<PressurePlateBlock> CHARGED_SPIRITWOOD_PRESSURE_PLATE = BLOCKS.registerBlock(
+            "charged_spiritwood_pressure_plate",
+            properties -> new PressurePlateBlock(BlockSetType.OAK, properties),
+            BlockBehaviour.Properties.ofFullCopy(Blocks.OAK_PRESSURE_PLATE)
+    );
+
+    public static final DeferredBlock<ButtonBlock> CHARGED_SPIRITWOOD_BUTTON = BLOCKS.registerBlock(
+            "charged_spiritwood_button",
+            properties -> new ButtonBlock(BlockSetType.OAK, 30, properties),
+            BlockBehaviour.Properties.ofFullCopy(Blocks.OAK_BUTTON)
+    );
+
     public static final DeferredBlock<GraveBlock> GRAVE = BLOCKS.registerBlock(
             "grave",
             GraveBlock::new,

@@ -35,5 +35,16 @@
   "entity.mortal_expansion.mummy": "Mummy",
   "entity.mortal_expansion.pharaohl": "Pharaohl",
   "item.mortal_expansion.raw_ectoplasm": "Ectoplasm",
-  "item.mortal_expansion.pharaohl_scepter": "Pharaohl's Scepter"
+  "item.mortal_expansion.pharaohl_scepter": "Pharaohl's Scepter",
+  "block.mortal_expansion.charged_gravestone": "Charged Gravestone",
+  "block.mortal_expansion.charged_spiritwood_log": "Charged Spiritwood Log",
+  "block.mortal_expansion.charged_spiritwood_planks": "Charged Spiritwood Planks",
+  "block.mortal_expansion.charged_spiritwood_stairs": "Charged Spiritwood Stairs",
+  "block.mortal_expansion.charged_spiritwood_slab": "Charged Spiritwood Slab",
+  "block.mortal_expansion.charged_spiritwood_fence": "Charged Spiritwood Fence",
+  "block.mortal_expansion.charged_spiritwood_fence_gate": "Charged Spiritwood Fence Gate",
+  "block.mortal_expansion.charged_spiritwood_door": "Charged Spiritwood Door",
+  "block.mortal_expansion.charged_spiritwood_trapdoor": "Charged Spiritwood Trapdoor",
+  "block.mortal_expansion.charged_spiritwood_pressure_plate": "Charged Spiritwood Pressure Plate",
+  "block.mortal_expansion.charged_spiritwood_button": "Charged Spiritwood Button"
 }
