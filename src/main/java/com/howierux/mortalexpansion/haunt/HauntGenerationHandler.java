@@ -10,7 +10,8 @@ import net.neoforged.neoforge.event.level.ChunkEvent;
 /**
  * Initializes biome-derived haunt when a brand-new Overworld chunk is first loaded.
  *
- * Existing chunks are deliberately left unchanged.
+ * Existing chunks are deliberately left unchanged. Older tier-only chunks are
+ * migrated lazily to the midpoint of their existing tier by HauntManager.
  */
 public final class HauntGenerationHandler {
     private HauntGenerationHandler() {}
@@ -34,9 +35,12 @@ public final class HauntGenerationHandler {
         }
 
         HauntTier initialTier = NaturalHauntGenerator.determineInitialTier(chunk);
+        int initialValue = initialTier.midpointValue();
 
-        if (initialTier != HauntTier.VOID) {
-            chunk.setData(ModAttachments.HAUNT_TIER, initialTier.id());
-        }
+        chunk.setData(ModAttachments.HAUNT_TIER, initialTier.id());
+        chunk.setData(
+                ModAttachments.HAUNT_PROGRESS,
+                HauntTier.progressFromValue(initialValue)
+        );
     }
 }
