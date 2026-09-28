@@ -14,8 +14,8 @@ import java.util.function.Consumer;
 /**
  * Independent TerraBlender region for Spiritwood Forest.
  *
- * Once selected, Spiritwood persists across ordinary inland land-climate
- * changes instead of ending immediately at a Forest/Plains/etc. boundary.
+ * Spiritwood may continue across rivers on the far side because its region is
+ * intentionally broader than Graveyard's.
  */
 public final class SpiritwoodOverworldRegion extends Region {
     public SpiritwoodOverworldRegion(ResourceLocation name, int weight) {
@@ -28,7 +28,7 @@ public final class SpiritwoodOverworldRegion extends Region {
             Consumer<Pair<Climate.ParameterPoint, ResourceKey<Biome>>> mapper
     ) {
         this.addModifiedVanillaOverworldBiomes(mapper, builder ->
-                InlandBiomeRegionMapper.replaceInlandLand(
+                InlandBiomeRegionMapper.replaceSpiritwoodLand(
                         builder,
                         ModBiomes.SPIRITWOOD_FOREST
                 )

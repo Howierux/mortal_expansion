@@ -10,14 +10,11 @@ import terrablender.worldgen.RegionUtils;
 import java.util.List;
 
 /**
- * Shared climate mapping for Mortal Expansion's minimum-size biome regions.
+ * Shared climate mapping for Mortal Expansion biomes.
  *
- * When one of our low-weight TerraBlender regions is selected, it is allowed
- * to continue across ordinary inland land-biome climate changes rather than
- * disappearing as soon as Forest changes to Plains (or vice versa).
- *
- * Ocean, beach, river, and other water/coastal biomes are intentionally not
- * included.
+ * Spiritwood is intentionally allowed across a broad inland land envelope.
+ * Graveyard uses a narrower cemetery-friendly envelope so it remains a
+ * moderate patch and is more likely to terminate at rivers and terrain changes.
  */
 public final class InlandBiomeRegionMapper {
     private InlandBiomeRegionMapper() {}
@@ -25,7 +22,7 @@ public final class InlandBiomeRegionMapper {
     private static final long INLAND_MIN =
             Climate.quantizeCoord(-0.11F);
 
-    private static final List<ResourceKey<Biome>> INLAND_LAND_BIOMES = List.of(
+    private static final List<ResourceKey<Biome>> SPIRITWOOD_LAND_BIOMES = List.of(
             Biomes.PLAINS,
             Biomes.SUNFLOWER_PLAINS,
             Biomes.FOREST,
@@ -43,30 +40,41 @@ public final class InlandBiomeRegionMapper {
             Biomes.JUNGLE,
             Biomes.SPARSE_JUNGLE,
             Biomes.BAMBOO_JUNGLE,
-            Biomes.DESERT,
-            Biomes.SWAMP,
-            Biomes.MANGROVE_SWAMP,
-            Biomes.BADLANDS,
-            Biomes.ERODED_BADLANDS,
-            Biomes.WOODED_BADLANDS,
             Biomes.MEADOW,
             Biomes.CHERRY_GROVE,
             Biomes.GROVE,
-            Biomes.SNOWY_PLAINS,
-            Biomes.ICE_SPIKES,
-            Biomes.WINDSWEPT_HILLS,
-            Biomes.WINDSWEPT_GRAVELLY_HILLS,
-            Biomes.WINDSWEPT_FOREST,
-            Biomes.STONY_PEAKS,
-            Biomes.JAGGED_PEAKS,
-            Biomes.FROZEN_PEAKS
+            Biomes.WINDSWEPT_FOREST
     );
 
-    public static void replaceInlandLand(
+    private static final List<ResourceKey<Biome>> GRAVEYARD_LAND_BIOMES = List.of(
+            Biomes.PLAINS,
+            Biomes.SUNFLOWER_PLAINS,
+            Biomes.FOREST,
+            Biomes.FLOWER_FOREST,
+            Biomes.BIRCH_FOREST,
+            Biomes.MEADOW
+    );
+
+    public static void replaceSpiritwoodLand(
             ModifiedVanillaOverworldBuilder builder,
             ResourceKey<Biome> replacement
     ) {
-        for (ResourceKey<Biome> vanillaBiome : INLAND_LAND_BIOMES) {
+        replace(builder, replacement, SPIRITWOOD_LAND_BIOMES);
+    }
+
+    public static void replaceGraveyardLand(
+            ModifiedVanillaOverworldBuilder builder,
+            ResourceKey<Biome> replacement
+    ) {
+        replace(builder, replacement, GRAVEYARD_LAND_BIOMES);
+    }
+
+    private static void replace(
+            ModifiedVanillaOverworldBuilder builder,
+            ResourceKey<Biome> replacement,
+            List<ResourceKey<Biome>> vanillaBiomes
+    ) {
+        for (ResourceKey<Biome> vanillaBiome : vanillaBiomes) {
             RegionUtils.getVanillaParameterPoints(vanillaBiome).stream()
                     .filter(point -> point.continentalness().min() >= INLAND_MIN)
                     .forEach(point -> builder.replaceBiome(point, replacement));

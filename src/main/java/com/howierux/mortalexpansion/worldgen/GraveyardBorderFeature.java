@@ -17,14 +17,16 @@ import java.util.HashSet;
 import java.util.Set;
 
 /**
- * Finds the largest axis-aligned rectangle of usable Graveyard terrain inside
- * the generating chunk and fences that rectangle instead of tracing the
- * irregular biome edge.
+ * Builds one main rectangular cemetery enclosure per 64x64 worldgen cell.
+ *
+ * All chunks in the cell calculate the same largest usable Graveyard
+ * rectangle, but only the chunk containing that rectangle's center is allowed
+ * to place it. This avoids the previous one-rectangle-per-chunk grid.
  */
 public final class GraveyardBorderFeature extends Feature<NoneFeatureConfiguration> {
-    private static final int CHUNK_SIZE = 16;
-    private static final int MIN_WIDTH = 5;
-    private static final int MIN_DEPTH = 5;
+    private static final int CELL_SIZE = 64;
+    private static final int MIN_WIDTH = 8;
+    private static final int MIN_DEPTH = 8;
 
     public GraveyardBorderFeature() {
         super(NoneFeatureConfiguration.CODEC);
@@ -35,14 +37,18 @@ public final class GraveyardBorderFeature extends Feature<NoneFeatureConfigurati
         WorldGenLevel level = context.level();
         BlockPos origin = context.origin();
 
-        int minX = origin.getX() & ~15;
-        int minZ = origin.getZ() & ~15;
+        int cellMinX = Math.floorDiv(origin.getX(), CELL_SIZE) * CELL_SIZE;
+        int cellMinZ = Math.floorDiv(origin.getZ(), CELL_SIZE) * CELL_SIZE;
 
-        boolean[][] usable = new boolean[CHUNK_SIZE][CHUNK_SIZE];
+        boolean[][] usable = new boolean[CELL_SIZE][CELL_SIZE];
 
-        for (int z = 0; z < CHUNK_SIZE; z++) {
-            for (int x = 0; x < CHUNK_SIZE; x++) {
-                usable[z][x] = isUsableGraveyardColumn(level, minX + x, minZ + z);
+        for (int z = 0; z < CELL_SIZE; z++) {
+            for (int x = 0; x < CELL_SIZE; x++) {
+                usable[z][x] = isUsableGraveyardColumn(
+                        level,
+                        cellMinX + x,
+                        cellMinZ + z
+                );
             }
         }
 
@@ -53,19 +59,48 @@ public final class GraveyardBorderFeature extends Feature<NoneFeatureConfigurati
             return false;
         }
 
+        int rectangleCenterX =
+                cellMinX + (rectangle.minX() + rectangle.maxX()) / 2;
+        int rectangleCenterZ =
+                cellMinZ + (rectangle.minZ() + rectangle.maxZ()) / 2;
+
+        int ownerChunkX = Math.floorDiv(rectangleCenterX, 16);
+        int ownerChunkZ = Math.floorDiv(rectangleCenterZ, 16);
+        int currentChunkX = Math.floorDiv(origin.getX(), 16);
+        int currentChunkZ = Math.floorDiv(origin.getZ(), 16);
+
+        if (currentChunkX != ownerChunkX || currentChunkZ != ownerChunkZ) {
+            return false;
+        }
+
         Set<BlockPos> border = new HashSet<>();
 
         for (int x = rectangle.minX(); x <= rectangle.maxX(); x++) {
-            border.add(surfaceAir(level, minX + x, minZ + rectangle.minZ()));
-            border.add(surfaceAir(level, minX + x, minZ + rectangle.maxZ()));
+            border.add(surfaceAir(
+                    level,
+                    cellMinX + x,
+                    cellMinZ + rectangle.minZ()
+            ));
+            border.add(surfaceAir(
+                    level,
+                    cellMinX + x,
+                    cellMinZ + rectangle.maxZ()
+            ));
         }
 
         for (int z = rectangle.minZ() + 1; z < rectangle.maxZ(); z++) {
-            border.add(surfaceAir(level, minX + rectangle.minX(), minZ + z));
-            border.add(surfaceAir(level, minX + rectangle.maxX(), minZ + z));
+            border.add(surfaceAir(
+                    level,
+                    cellMinX + rectangle.minX(),
+                    cellMinZ + z
+            ));
+            border.add(surfaceAir(
+                    level,
+                    cellMinX + rectangle.maxX(),
+                    cellMinZ + z
+            ));
         }
 
-        // Gravestone foundation first.
         for (BlockPos surface : border) {
             if (level.getBlockState(surface).canBeReplaced()) {
                 level.setBlock(
@@ -76,8 +111,6 @@ public final class GraveyardBorderFeature extends Feature<NoneFeatureConfigurati
             }
         }
 
-        // Then Stone Fence with explicit connections. This avoids depending on
-        // worldgen neighbor-update order.
         for (BlockPos surface : border) {
             if (!level.getBlockState(surface).canBeReplaced()) {
                 continue;
@@ -90,22 +123,24 @@ public final class GraveyardBorderFeature extends Feature<NoneFeatureConfigurati
             );
         }
 
-        // Re-evaluate once all fence blocks are present.
         for (BlockPos surface : border) {
             if (level.getBlockState(surface).is(ModBlocks.STONE_FENCE.get())) {
-                level.setBlock(surface, fenceStateFor(level, border, surface), 2);
+                level.setBlock(
+                        surface,
+                        fenceStateFor(level, border, surface),
+                        2
+                );
             }
         }
 
         return true;
     }
 
-    /**
-     * Graveyard cells on water, sand, sandstone, or gravel-like beach terrain
-     * are excluded even if a modded worldgen combination produces an unusual
-     * coastal overlap.
-     */
-    private static boolean isUsableGraveyardColumn(WorldGenLevel level, int x, int z) {
+    private static boolean isUsableGraveyardColumn(
+            WorldGenLevel level,
+            int x,
+            int z
+    ) {
         BlockPos surface = surfaceAir(level, x, z);
         BlockState ground = level.getBlockState(surface.below());
 
@@ -131,32 +166,34 @@ public final class GraveyardBorderFeature extends Feature<NoneFeatureConfigurati
                 || ground.is(ModBlocks.GRAVESTONE.get());
     }
 
-    /**
-     * O(width * depth) histogram algorithm for the maximum all-true rectangle.
-     */
     private static Rectangle largestRectangle(boolean[][] grid) {
-        int[] heights = new int[CHUNK_SIZE];
+        int widthLimit = grid[0].length;
+        int depthLimit = grid.length;
+        int[] heights = new int[widthLimit];
+
         Rectangle best = null;
         int bestArea = 0;
 
-        for (int z = 0; z < CHUNK_SIZE; z++) {
-            for (int x = 0; x < CHUNK_SIZE; x++) {
+        for (int z = 0; z < depthLimit; z++) {
+            for (int x = 0; x < widthLimit; x++) {
                 heights[x] = grid[z][x] ? heights[x] + 1 : 0;
             }
 
-            int[] stack = new int[CHUNK_SIZE + 1];
+            int[] stack = new int[widthLimit + 1];
             int stackSize = 0;
 
-            for (int x = 0; x <= CHUNK_SIZE; x++) {
-                int currentHeight = x == CHUNK_SIZE ? 0 : heights[x];
+            for (int x = 0; x <= widthLimit; x++) {
+                int currentHeight = x == widthLimit ? 0 : heights[x];
 
                 while (stackSize > 0
                         && heights[stack[stackSize - 1]] > currentHeight) {
                     int index = stack[--stackSize];
                     int height = heights[index];
-                    int left = stackSize == 0 ? 0 : stack[stackSize - 1] + 1;
-                    int width = x - left;
-                    int area = width * height;
+                    int left = stackSize == 0
+                            ? 0
+                            : stack[stackSize - 1] + 1;
+                    int rectangleWidth = x - left;
+                    int area = rectangleWidth * height;
 
                     if (area > bestArea) {
                         bestArea = area;
@@ -169,7 +206,7 @@ public final class GraveyardBorderFeature extends Feature<NoneFeatureConfigurati
                     }
                 }
 
-                if (x < CHUNK_SIZE) {
+                if (x < widthLimit) {
                     stack[stackSize++] = x;
                 }
             }
@@ -184,10 +221,22 @@ public final class GraveyardBorderFeature extends Feature<NoneFeatureConfigurati
             BlockPos pos
     ) {
         return ModBlocks.STONE_FENCE.get().defaultBlockState()
-                .setValue(FenceBlock.NORTH, connects(level, planned, pos, Direction.NORTH))
-                .setValue(FenceBlock.EAST, connects(level, planned, pos, Direction.EAST))
-                .setValue(FenceBlock.SOUTH, connects(level, planned, pos, Direction.SOUTH))
-                .setValue(FenceBlock.WEST, connects(level, planned, pos, Direction.WEST));
+                .setValue(
+                        FenceBlock.NORTH,
+                        connects(level, planned, pos, Direction.NORTH)
+                )
+                .setValue(
+                        FenceBlock.EAST,
+                        connects(level, planned, pos, Direction.EAST)
+                )
+                .setValue(
+                        FenceBlock.SOUTH,
+                        connects(level, planned, pos, Direction.SOUTH)
+                )
+                .setValue(
+                        FenceBlock.WEST,
+                        connects(level, planned, pos, Direction.WEST)
+                );
     }
 
     private static boolean connects(
@@ -198,10 +247,15 @@ public final class GraveyardBorderFeature extends Feature<NoneFeatureConfigurati
     ) {
         BlockPos neighbor = pos.relative(direction);
         return planned.contains(neighbor)
-                || level.getBlockState(neighbor).is(ModBlocks.STONE_FENCE.get());
+                || level.getBlockState(neighbor)
+                        .is(ModBlocks.STONE_FENCE.get());
     }
 
-    private static BlockPos surfaceAir(WorldGenLevel level, int x, int z) {
+    private static BlockPos surfaceAir(
+            WorldGenLevel level,
+            int x,
+            int z
+    ) {
         int y = level.getHeight(
                 Heightmap.Types.MOTION_BLOCKING_NO_LEAVES,
                 x,
@@ -210,7 +264,12 @@ public final class GraveyardBorderFeature extends Feature<NoneFeatureConfigurati
         return new BlockPos(x, y, z);
     }
 
-    private record Rectangle(int minX, int minZ, int maxX, int maxZ) {
+    private record Rectangle(
+            int minX,
+            int minZ,
+            int maxX,
+            int maxZ
+    ) {
         int width() {
             return maxX - minX + 1;
         }

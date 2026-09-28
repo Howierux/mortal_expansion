@@ -14,9 +14,9 @@ import java.util.function.Consumer;
 /**
  * Independent TerraBlender region for Graveyards.
  *
- * Once this low-weight region is selected, Graveyard is allowed to persist
- * across normal inland land-climate changes. TerraBlender's zoomed region
- * selection therefore supplies a practical minimum contiguous biome size.
+ * Graveyards use a narrower inland climate envelope than Spiritwood so they
+ * remain moderate in size and are more likely to terminate at rivers and
+ * major terrain transitions.
  */
 public final class MortalExpansionOverworldRegion extends Region {
     public MortalExpansionOverworldRegion(ResourceLocation name, int weight) {
@@ -29,7 +29,7 @@ public final class MortalExpansionOverworldRegion extends Region {
             Consumer<Pair<Climate.ParameterPoint, ResourceKey<Biome>>> mapper
     ) {
         this.addModifiedVanillaOverworldBiomes(mapper, builder ->
-                InlandBiomeRegionMapper.replaceInlandLand(
+                InlandBiomeRegionMapper.replaceGraveyardLand(
                         builder,
                         ModBiomes.GRAVEYARD
                 )
