@@ -57,6 +57,10 @@ public final class PharaohlPyramidHandler {
             return;
         }
 
+        if (hasActivePharaohl(level, pyramidKey)) {
+            return;
+        }
+
         BlockPos spawnPos = findCentralTerracotta(level, box);
         if (spawnPos == null) {
             return;
@@ -67,6 +71,7 @@ public final class PharaohlPyramidHandler {
             return;
         }
 
+        pharaohl.setPyramidKey(pyramidKey);
         pharaohl.moveTo(
                 spawnPos.getX() + 0.5D,
                 spawnPos.getY() + 1.0D,
@@ -82,6 +87,18 @@ public final class PharaohlPyramidHandler {
         Set<String> updated = new HashSet<>(triggered);
         updated.add(pyramidKey);
         player.setData(ModAttachments.PHARAOHL_PYRAMIDS, updated);
+    }
+
+    private static boolean hasActivePharaohl(ServerLevel level, String pyramidKey) {
+        for (net.minecraft.world.entity.Entity entity : level.getAllEntities()) {
+            if (entity instanceof PharaohlEntity pharaohl
+                    && pharaohl.isAlive()
+                    && pyramidKey.equals(pharaohl.getPyramidKey())) {
+                return true;
+            }
+        }
+
+        return false;
     }
 
     private static String createPyramidKey(ServerLevel level, BoundingBox box) {
