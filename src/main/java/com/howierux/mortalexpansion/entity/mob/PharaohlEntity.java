@@ -3,6 +3,7 @@ package com.howierux.mortalexpansion.entity.mob;
 import com.howierux.mortalexpansion.entity.DynamicIntangible;
 import com.howierux.mortalexpansion.registry.ModEntities;
 import net.minecraft.network.chat.Component;
+import net.minecraft.nbt.CompoundTag;
 import net.minecraft.server.level.ServerBossEvent;
 import net.minecraft.server.level.ServerLevel;
 import net.minecraft.server.level.ServerPlayer;
@@ -18,6 +19,10 @@ import javax.annotation.Nullable;
 public final class PharaohlEntity extends AbstractMortalMonster implements DynamicIntangible, HorizontalPhasingMob {
     private static final int PHASE_TICKS = 160;
     private static final int SUMMON_INTERVAL = 240;
+    private static final String PYRAMID_KEY_TAG = "MortalExpansionPyramidKey";
+
+    @Nullable
+    private String pyramidKey;
 
     private final ServerBossEvent bossEvent = new ServerBossEvent(
             this.getDisplayName(),
@@ -28,6 +33,31 @@ public final class PharaohlEntity extends AbstractMortalMonster implements Dynam
     public PharaohlEntity(EntityType<? extends PharaohlEntity> type, Level level) {
         super(type, level);
         xpReward = 50;
+    }
+
+    public void setPyramidKey(String pyramidKey) {
+        this.pyramidKey = pyramidKey;
+    }
+
+    @Nullable
+    public String getPyramidKey() {
+        return pyramidKey;
+    }
+
+    @Override
+    public void addAdditionalSaveData(CompoundTag tag) {
+        super.addAdditionalSaveData(tag);
+        if (pyramidKey != null && !pyramidKey.isEmpty()) {
+            tag.putString(PYRAMID_KEY_TAG, pyramidKey);
+        }
+    }
+
+    @Override
+    public void readAdditionalSaveData(CompoundTag tag) {
+        super.readAdditionalSaveData(tag);
+        pyramidKey = tag.contains(PYRAMID_KEY_TAG)
+                ? tag.getString(PYRAMID_KEY_TAG)
+                : null;
     }
 
     public static AttributeSupplier.Builder createAttributes() {
