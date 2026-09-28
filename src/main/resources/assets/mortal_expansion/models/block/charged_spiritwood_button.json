@@ -1,0 +1,6 @@
+{
+  "parent": "minecraft:block/button",
+  "textures": {
+    "texture": "mortal_expansion:block/charged_spiritwood_planks"
+  }
+}
