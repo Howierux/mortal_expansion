@@ -1,0 +1,7 @@
+{
+  "type": "mortal_expansion:graveyard_cemetery",
+  "biomes": "#mortal_expansion:has_structure/graveyard_cemetery",
+  "spawn_overrides": {},
+  "step": "surface_structures",
+  "terrain_adaptation": "none"
+}

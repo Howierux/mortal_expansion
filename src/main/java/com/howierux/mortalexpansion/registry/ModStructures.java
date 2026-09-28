@@ -1,8 +1,8 @@
 package com.howierux.mortalexpansion.registry;
 
 import com.howierux.mortalexpansion.MortalExpansion;
-import com.howierux.mortalexpansion.worldgen.structure.GraveyardFencePiece;
-import com.howierux.mortalexpansion.worldgen.structure.GraveyardFenceStructure;
+import com.howierux.mortalexpansion.worldgen.structure.GraveyardCemeteryPiece;
+import com.howierux.mortalexpansion.worldgen.structure.GraveyardCemeteryStructure;
 import net.minecraft.core.registries.Registries;
 import net.minecraft.world.level.levelgen.structure.StructureType;
 import net.minecraft.world.level.levelgen.structure.pieces.StructurePieceType;
@@ -19,16 +19,16 @@ public final class ModStructures {
     public static final DeferredRegister<StructurePieceType> STRUCTURE_PIECES =
             DeferredRegister.create(Registries.STRUCTURE_PIECE, MortalExpansion.MOD_ID);
 
-    public static final DeferredHolder<StructureType<?>, StructureType<GraveyardFenceStructure>>
-            GRAVEYARD_FENCE = STRUCTURE_TYPES.register(
-                    "graveyard_fence",
-                    () -> () -> GraveyardFenceStructure.CODEC
+    public static final DeferredHolder<StructureType<?>, StructureType<GraveyardCemeteryStructure>>
+            GRAVEYARD_CEMETERY = STRUCTURE_TYPES.register(
+                    "graveyard_cemetery",
+                    () -> () -> GraveyardCemeteryStructure.CODEC
             );
 
     public static final DeferredHolder<StructurePieceType, StructurePieceType>
-            GRAVEYARD_FENCE_PIECE = STRUCTURE_PIECES.register(
-                    "graveyard_fence",
-                    () -> GraveyardFencePiece::new
+            GRAVEYARD_CEMETERY_PIECE = STRUCTURE_PIECES.register(
+                    "graveyard_cemetery",
+                    () -> GraveyardCemeteryPiece::new
             );
 
     public static void register(IEventBus modBus) {
