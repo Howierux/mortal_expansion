@@ -67,7 +67,9 @@ public final class EctchantmentMachineBlock extends BaseEntityBlock {
                         Component.translatable(
                                 "message.mortal_expansion.ectchantment_machine.full",
                                 machine.getEctoplasmicCharge(),
-                                EctchantmentMachineBlockEntity.MAX_CHARGE
+                                EctchantmentMachineBlockEntity.MAX_CHARGE,
+                                machine.getEnergyStored(),
+                                EctchantmentMachineBlockEntity.FE_CAPACITY
                         ),
                         true
                 );
