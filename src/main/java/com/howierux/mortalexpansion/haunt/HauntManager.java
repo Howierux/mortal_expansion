@@ -32,9 +32,7 @@ public final class HauntManager {
             chunk.setData(ModAttachments.HAUNT_PROGRESS, progress);
         }
 
-        return tier == HauntTier.VOID
-                ? 0
-                : tier.id() * HauntTier.POINTS_PER_TIER + progress;
+        return tier.id() * HauntTier.POINTS_PER_TIER + progress;
     }
 
     public static HauntTier setTier(ServerLevel level, BlockPos pos, HauntTier tier) {
