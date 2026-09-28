@@ -71,11 +71,19 @@ public abstract class AbstractSpiritMob extends PathfinderMob
         super.move(moverType, new Vec3(0.0D, safeMovement.y, 0.0D));
 
         if (safeMovement.x != 0.0D || safeMovement.z != 0.0D) {
-            setPos(
-                    getX() + safeMovement.x,
-                    getY(),
-                    getZ() + safeMovement.z
+            AABB destination = getBoundingBox().move(
+                    safeMovement.x,
+                    0.0D,
+                    safeMovement.z
             );
+
+            if (SpectralPhasingRules.canEnterHorizontally(this, destination)) {
+                setPos(
+                        getX() + safeMovement.x,
+                        getY(),
+                        getZ() + safeMovement.z
+                );
+            }
         }
     }
 
