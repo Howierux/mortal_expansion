@@ -46,10 +46,10 @@ public final class GraveyardFencePiece extends StructurePiece {
             CompoundTag tag
     ) {
         super(ModStructures.GRAVEYARD_FENCE_PIECE.get(), tag);
-        this.minX = tag.getIntOr("MinX", this.boundingBox.minX());
-        this.minZ = tag.getIntOr("MinZ", this.boundingBox.minZ());
-        this.maxX = tag.getIntOr("MaxX", this.boundingBox.maxX());
-        this.maxZ = tag.getIntOr("MaxZ", this.boundingBox.maxZ());
+        this.minX = tag.contains("MinX") ? tag.getInt("MinX") : this.boundingBox.minX();
+        this.minZ = tag.contains("MinZ") ? tag.getInt("MinZ") : this.boundingBox.minZ();
+        this.maxX = tag.contains("MaxX") ? tag.getInt("MaxX") : this.boundingBox.maxX();
+        this.maxZ = tag.contains("MaxZ") ? tag.getInt("MaxZ") : this.boundingBox.maxZ();
     }
 
     @Override
