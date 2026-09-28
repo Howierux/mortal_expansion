@@ -4,6 +4,7 @@ import com.howierux.mortalexpansion.registry.ModAttachments;
 import com.howierux.mortalexpansion.registry.ModBlocks;
 import net.minecraft.core.BlockPos;
 import net.minecraft.server.level.ServerLevel;
+import net.minecraft.server.level.ServerPlayer;
 import net.minecraft.util.RandomSource;
 import net.minecraft.world.level.ChunkPos;
 import net.minecraft.world.level.Level;
@@ -44,6 +45,18 @@ public final class HauntSimulationHandler {
 
     /** 10% daily chance to lose one tier: 90% chance to remain unchanged. */
     private static final float DECAY_CHANCE = 0.10F;
+
+    /**
+     * Player haunt leakage is checked every 200 ticks (10 seconds).
+     *
+     * Each personal haunt tier contributes 0.25% leak chance per check:
+     * Natural 0.25%, Supernatural 0.50%, ... Eldritch 1.50%.
+     *
+     * A leak raises only the player's current chunk by one tier, and can never
+     * raise world haunt above that player's personal haunt tier.
+     */
+    private static final long PLAYER_LEAK_CHECK_INTERVAL = 200L;
+    private static final float PLAYER_LEAK_CHANCE_PER_TIER = 0.0025F;
 
     /**
      * 0.25% daily conversion roll for each loaded chunk that starts the day
@@ -100,6 +113,8 @@ public final class HauntSimulationHandler {
             return;
         }
 
+        runPlayerHauntLeakChecks(level);
+
         long currentDay = Math.floorDiv(level.getDayTime(), TICKS_PER_DAY);
         Long previousDay = LAST_DAY.put(level, currentDay);
 
@@ -110,6 +125,46 @@ public final class HauntSimulationHandler {
         }
 
         runDailySimulation(level);
+    }
+
+    /**
+     * Gives personal haunt a small chance to leak into the world throughout
+     * the day while a player is actively present in the Overworld.
+     *
+     * Leakage is intentionally one-way here: the player's tier is not consumed
+     * or reduced by contaminating a chunk.
+     */
+    private static void runPlayerHauntLeakChecks(ServerLevel level) {
+        if (level.getGameTime() % PLAYER_LEAK_CHECK_INTERVAL != 0L) {
+            return;
+        }
+
+        RandomSource random = level.getRandom();
+
+        for (ServerPlayer player : level.players()) {
+            HauntTier playerTier = PlayerHauntManager.getTier(player);
+            if (playerTier == HauntTier.VOID) {
+                continue;
+            }
+
+            BlockPos pos = player.blockPosition();
+            HauntTier chunkTier = HauntManager.getTier(level, pos);
+
+            if (chunkTier.id() >= playerTier.id()) {
+                continue;
+            }
+
+            float leakChance = PLAYER_LEAK_CHANCE_PER_TIER * playerTier.id();
+            if (random.nextFloat() >= leakChance) {
+                continue;
+            }
+
+            HauntManager.setTier(
+                    level,
+                    pos,
+                    HauntTier.fromId(chunkTier.id() + 1)
+            );
+        }
     }
 
     /**
