@@ -34,22 +34,28 @@ public final class GraveyardCemeteryStructure extends Structure {
         int centerZ = context.chunkPos().getMiddleBlockZ();
         Climate.Sampler sampler = context.randomState().sampler();
 
-        // Require the center plus an inner ring to be Graveyard. We deliberately
-        // do not require every corner: the structure is allowed to occupy most
-        // of a small Graveyard patch without needing the biome to be huge.
-        int[] offsets = {0, -18, 18};
+        int minX = centerX - HALF;
+        int minZ = centerZ - HALF;
+        int maxX = minX + SIZE - 1;
+        int maxZ = minZ + SIZE - 1;
 
-        for (int dx : offsets) {
-            for (int dz : offsets) {
-                if (Math.abs(dx) == 18 && Math.abs(dz) == 18) {
-                    continue;
-                }
+        // The cemetery perimeter is the maximum allowed edge of the structure.
+        // Every quart cell touched by the 56x56 footprint must still belong to
+        // the Graveyard biome. This prevents the rectangular cemetery/fence
+        // from spilling into oceans or neighboring biomes.
+        int minQuartX = QuartPos.fromBlock(minX);
+        int maxQuartX = QuartPos.fromBlock(maxX);
+        int minQuartZ = QuartPos.fromBlock(minZ);
+        int maxQuartZ = QuartPos.fromBlock(maxZ);
+        int quartY = QuartPos.fromBlock(64);
 
+        for (int quartX = minQuartX; quartX <= maxQuartX; quartX++) {
+            for (int quartZ = minQuartZ; quartZ <= maxQuartZ; quartZ++) {
                 if (!context.biomeSource()
                         .getNoiseBiome(
-                                QuartPos.fromBlock(centerX + dx),
-                                QuartPos.fromBlock(64),
-                                QuartPos.fromBlock(centerZ + dz),
+                                quartX,
+                                quartY,
+                                quartZ,
                                 sampler
                         )
                         .is(ModBiomes.GRAVEYARD)) {
@@ -57,9 +63,6 @@ public final class GraveyardCemeteryStructure extends Structure {
                 }
             }
         }
-
-        int minX = centerX - HALF;
-        int minZ = centerZ - HALF;
 
         BlockPos locator = new BlockPos(centerX, 64, centerZ);
 
