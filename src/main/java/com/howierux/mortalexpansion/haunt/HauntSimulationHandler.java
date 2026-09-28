@@ -1,6 +1,5 @@
 package com.howierux.mortalexpansion.haunt;
 
-import com.howierux.mortalexpansion.registry.ModAttachments;
 import com.howierux.mortalexpansion.registry.ModBlocks;
 import net.minecraft.core.BlockPos;
 import net.minecraft.server.level.ServerLevel;
@@ -25,42 +24,35 @@ import java.util.WeakHashMap;
 /**
  * Slow, loaded-chunk-only haunt simulation.
  *
- * Once per Minecraft day:
- * - haunted loaded chunks have a small chance to spread one level of haunt to
- *   one loaded cardinal neighbor;
- * - haunted chunks have a 10% chance to decay by one tier;
- * - source chunks never decay below their source baseline.
+ * Haunt is stored as fine-grained points inside named tier bands:
+ * Void 0-9, Natural 10-19, ... Eldritch 60-69.
  *
- * Biome-derived haunt is the first source type. Point-of-interest source
- * baselines can be added to determineSourceFloor() later without changing the
- * spread/decay algorithm.
+ * World simulation now moves individual haunt points rather than whole tiers.
  */
 public final class HauntSimulationHandler {
     private HauntSimulationHandler() {}
 
     private static final long TICKS_PER_DAY = 24_000L;
 
-    /** 7.5% daily chance for each haunted loaded chunk to attempt one spread. */
+    /** 7.5% daily chance for each haunted loaded chunk to spread one haunt point. */
     private static final float SPREAD_CHANCE = 0.075F;
 
-    /** 10% daily chance to lose one tier: 90% chance to remain unchanged. */
+    /** 10% daily chance to lose one haunt point: 90% chance to remain unchanged. */
     private static final float DECAY_CHANCE = 0.10F;
 
     /**
      * Player haunt leakage is checked every 200 ticks (10 seconds).
      *
-     * Each personal haunt tier contributes 0.25% leak chance per check:
-     * Natural 0.25%, Supernatural 0.50%, ... Eldritch 1.50%.
-     *
-     * A leak raises only the player's current chunk by one tier, and can never
-     * raise world haunt above that player's personal haunt tier.
+     * Each named personal haunt tier contributes 0.25% leak chance per check.
+     * A successful leak transfers exactly one haunt point from the player into
+     * the current chunk.
      */
     private static final long PLAYER_LEAK_CHECK_INTERVAL = 200L;
     private static final float PLAYER_LEAK_CHANCE_PER_TIER = 0.0025F;
 
     /**
-     * 0.25% daily conversion roll for each loaded chunk that starts the day
-     * at Dead Rising (3) or higher.
+     * 0.25% daily conversion roll for each loaded chunk at Dead Rising or above.
+     * A successful Bloodstone conversion consumes one haunt point.
      */
     private static final float BLOODSTONE_CONVERSION_CHANCE = 0.0025F;
 
@@ -71,13 +63,7 @@ public final class HauntSimulationHandler {
             {0, -1}
     };
 
-    /**
-     * We track chunk positions from load/unload events so simulation never
-     * requests or generates chunks merely to inspect haunt.
-     */
     private static final Map<ServerLevel, Set<Long>> LOADED_CHUNKS = new WeakHashMap<>();
-
-    /** Last observed Minecraft day for each loaded ServerLevel. */
     private static final Map<ServerLevel, Long> LAST_DAY = new WeakHashMap<>();
 
     @SubscribeEvent
@@ -118,8 +104,6 @@ public final class HauntSimulationHandler {
         long currentDay = Math.floorDiv(level.getDayTime(), TICKS_PER_DAY);
         Long previousDay = LAST_DAY.put(level, currentDay);
 
-        // Establish the baseline after a server/world load; don't run an
-        // artificial "new day" pass immediately on startup.
         if (previousDay == null || previousDay == currentDay) {
             return;
         }
@@ -128,12 +112,11 @@ public final class HauntSimulationHandler {
     }
 
     /**
-     * Gives personal haunt a small chance to leak into the world throughout
-     * the day while a player is actively present in the Overworld.
+     * Transfers one point of personal haunt into the chunk on a successful roll.
      *
-     * Leakage transfers one haunt tier from the player into the world:
-     * a successful leak raises the current chunk by one tier and lowers the
-     * player's personal haunt by one tier.
+     * Example: a Natural player initialized at value 15 standing in a Void-0
+     * chunk can leak three times and become Natural-12 while the chunk becomes
+     * Void-3. Neither named tier changes during those three transfers.
      */
     private static void runPlayerHauntLeakChecks(ServerLevel level) {
         if (level.getGameTime() % PLAYER_LEAK_CHECK_INTERVAL != 0L) {
@@ -143,15 +126,18 @@ public final class HauntSimulationHandler {
         RandomSource random = level.getRandom();
 
         for (ServerPlayer player : level.players()) {
-            HauntTier playerTier = PlayerHauntManager.getTier(player);
+            int playerValue = PlayerHauntManager.getValue(player);
+            HauntTier playerTier = HauntTier.fromValue(playerValue);
+
             if (playerTier == HauntTier.VOID) {
                 continue;
             }
 
             BlockPos pos = player.blockPosition();
-            HauntTier chunkTier = HauntManager.getTier(level, pos);
+            int chunkValue = HauntManager.getValue(level, pos);
 
-            if (chunkTier.id() >= playerTier.id()) {
+            // Haunt flows only from the more-haunted player into the less-haunted world.
+            if (chunkValue >= playerValue) {
                 continue;
             }
 
@@ -160,19 +146,15 @@ public final class HauntSimulationHandler {
                 continue;
             }
 
-            HauntManager.setTier(
-                    level,
-                    pos,
-                    HauntTier.fromId(chunkTier.id() + 1)
-            );
-            PlayerHauntManager.lower(player);
+            HauntManager.addPoints(level, pos, 1);
+            PlayerHauntManager.addPoints(player, -1);
         }
     }
 
     /**
-     * Runs one daily pass against a snapshot of the currently loaded chunks.
-     * Changes are collected first, then applied, preventing same-day chain
-     * reactions where newly spread haunt immediately spreads again.
+     * Runs one daily pass against a snapshot of currently loaded chunks.
+     * Planned changes are applied only after all rolls, preventing same-day
+     * chain reactions.
      */
     public static void runDailySimulation(ServerLevel level) {
         Set<Long> tracked = LOADED_CHUNKS.get(level);
@@ -197,105 +179,69 @@ public final class HauntSimulationHandler {
             return;
         }
 
-        // Snapshot all tiers before making any rolls.
-        Map<Long, HauntTier> startingTiers = new HashMap<>();
+        Map<Long, Integer> startingValues = new HashMap<>();
         for (LevelChunk chunk : loadedChunks) {
-            startingTiers.put(
+            startingValues.put(
                     chunk.getPos().toLong(),
-                    HauntTier.fromId(chunk.getData(ModAttachments.HAUNT_TIER))
+                    HauntManager.getValue(level, chunk.getPos())
             );
         }
 
-        Map<Long, HauntTier> resultingTiers = new HashMap<>(startingTiers);
+        Map<Long, Integer> resultingValues = new HashMap<>(startingValues);
         RandomSource random = level.getRandom();
 
         for (LevelChunk chunk : loadedChunks) {
             long sourceKey = chunk.getPos().toLong();
-            HauntTier sourceTier = startingTiers.getOrDefault(sourceKey, HauntTier.VOID);
+            int sourceValue = startingValues.getOrDefault(sourceKey, 0);
+            HauntTier sourceTier = HauntTier.fromValue(sourceValue);
 
-            if (sourceTier == HauntTier.VOID) {
-                continue;
-            }
-
-            // Slow outward spread. Only one cardinal neighbor is attempted,
-            // and the target must already be loaded.
-            if (random.nextFloat() < SPREAD_CHANCE) {
+            if (sourceValue > 0 && random.nextFloat() < SPREAD_CHANCE) {
                 int[] offset = CARDINAL_OFFSETS[random.nextInt(CARDINAL_OFFSETS.length)];
                 ChunkPos sourcePos = chunk.getPos();
                 ChunkPos targetPos = new ChunkPos(sourcePos.x + offset[0], sourcePos.z + offset[1]);
                 long targetKey = targetPos.toLong();
-                LevelChunk targetChunk = chunksByPos.get(targetKey);
 
-                if (targetChunk != null) {
-                    HauntTier targetTier = startingTiers.getOrDefault(targetKey, HauntTier.VOID);
+                if (chunksByPos.containsKey(targetKey)) {
+                    int targetValue = startingValues.getOrDefault(targetKey, 0);
+                    int planned = resultingValues.getOrDefault(targetKey, targetValue);
 
-                    // Any haunted chunk can add haunt pressure to a neighbor,
-                    // even when the target is already at or above the source's
-                    // current tier. This lets a stable source such as a
-                    // Supernatural Spiritwood Forest very slowly push nearby
-                    // ordinary chunks into higher tiers over long periods.
-                    //
-                    // A target can still gain at most one tier in a daily pass,
-                    // and Eldritch remains the hard maximum.
-                    HauntTier alreadyPlanned = resultingTiers.getOrDefault(targetKey, targetTier);
-                    HauntTier spreadTier = HauntTier.fromId(targetTier.id() + 1);
-
-                    if (spreadTier.id() > alreadyPlanned.id()) {
-                        resultingTiers.put(targetKey, spreadTier);
+                    if (planned < HauntTier.MAX_VALUE) {
+                        resultingValues.put(targetKey, planned + 1);
                     }
                 }
             }
 
-            // Slow decay. Sources have a floor; ordinary spread-created haunt
-            // can eventually dissipate completely.
             if (random.nextFloat() < DECAY_CHANCE) {
-                HauntTier floor = determineSourceFloor(chunk);
-                HauntTier planned = resultingTiers.getOrDefault(sourceKey, sourceTier);
+                int floorValue = determineSourceFloorValue(chunk);
+                int planned = resultingValues.getOrDefault(sourceKey, sourceValue);
 
-                if (planned.id() > floor.id()) {
-                    resultingTiers.put(
-                            sourceKey,
-                            HauntTier.fromId(Math.max(floor.id(), planned.id() - 1))
-                    );
+                if (planned > floorValue) {
+                    resultingValues.put(sourceKey, Math.max(floorValue, planned - 1));
                 }
             }
 
-            // At Dead Rising (3) or above, haunt can very rarely crystallize
-            // one loaded diamond ore block into Bloodstone Ore. A successful
-            // conversion consumes one haunt tier from this chunk.
             if (sourceTier.id() >= HauntTier.DEAD_RISING.id()
                     && random.nextFloat() < BLOODSTONE_CONVERSION_CHANCE
                     && tryConvertDiamondOre(level, chunk, random)) {
-                HauntTier floor = determineSourceFloor(chunk);
-                HauntTier planned = resultingTiers.getOrDefault(sourceKey, sourceTier);
+                int floorValue = determineSourceFloorValue(chunk);
+                int planned = resultingValues.getOrDefault(sourceKey, sourceValue);
 
-                resultingTiers.put(
-                        sourceKey,
-                        HauntTier.fromId(Math.max(floor.id(), planned.id() - 1))
-                );
+                if (planned > floorValue) {
+                    resultingValues.put(sourceKey, Math.max(floorValue, planned - 1));
+                }
             }
         }
 
-        for (Map.Entry<Long, HauntTier> entry : resultingTiers.entrySet()) {
-            HauntTier original = startingTiers.get(entry.getKey());
-            HauntTier result = entry.getValue();
+        for (Map.Entry<Long, Integer> entry : resultingValues.entrySet()) {
+            int original = startingValues.getOrDefault(entry.getKey(), 0);
+            int result = entry.getValue();
 
-            if (original != null && result != original) {
-                LevelChunk chunk = chunksByPos.get(entry.getKey());
-                if (chunk != null) {
-                    chunk.setData(ModAttachments.HAUNT_TIER, result.id());
-                }
+            if (result != original && chunksByPos.containsKey(entry.getKey())) {
+                HauntManager.setValue(level, new ChunkPos(entry.getKey()), result);
             }
         }
     }
 
-    /**
-     * Selects one diamond ore block uniformly from this loaded chunk and
-     * replaces it with Bloodstone Ore.
-     *
-     * The full chunk scan only occurs after the extremely rare conversion
-     * roll, keeping average simulation overhead low.
-     */
     private static boolean tryConvertDiamondOre(
             ServerLevel level,
             LevelChunk chunk,
@@ -340,13 +286,13 @@ public final class HauntSimulationHandler {
         );
     }
 
-    /**
-     * Minimum haunt supplied by permanent world sources.
-     *
-     * Currently biome-derived sources are implemented. Future haunted POIs
-     * should raise this floor here rather than being special-cased in decay.
-     */
+    /** Midpoint baseline supplied by permanent biome-derived haunt sources. */
+    public static int determineSourceFloorValue(LevelChunk chunk) {
+        return NaturalHauntGenerator.determineInitialTier(chunk).midpointValue();
+    }
+
+    /** Named version retained for callers interested only in the tier band. */
     public static HauntTier determineSourceFloor(LevelChunk chunk) {
-        return NaturalHauntGenerator.determineInitialTier(chunk);
+        return HauntTier.fromValue(determineSourceFloorValue(chunk));
     }
 }
