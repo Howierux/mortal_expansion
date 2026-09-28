@@ -1,0 +1,14 @@
+{
+  "structures": [
+    {
+      "structure": "mortal_expansion:graveyard_fence",
+      "weight": 1
+    }
+  ],
+  "placement": {
+    "type": "minecraft:random_spread",
+    "salt": 18470631,
+    "spacing": 6,
+    "separation": 3
+  }
+}
