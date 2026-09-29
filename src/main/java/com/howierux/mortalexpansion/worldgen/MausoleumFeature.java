@@ -213,7 +213,7 @@ public final class MausoleumFeature extends Feature<NoneFeatureConfiguration> {
                         MultifaceBlock.getFaceProperty(supportDirection),
                         true
                 ),
-                3
+                2
         );
     }
 
