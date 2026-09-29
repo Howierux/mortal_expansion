@@ -390,7 +390,8 @@ public final class GraveyardCemeteryPiece extends StructurePiece {
         }
 
         BlockPos supportPos = mossPos.relative(supportDirection);
-        if (!level.getBlockState(supportPos).is(ModBlocks.GRAVESTONE.get())) {
+        if (!chunkBB.isInside(supportPos)
+                || !level.getBlockState(supportPos).is(ModBlocks.GRAVESTONE.get())) {
             return;
         }
 
