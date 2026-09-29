@@ -92,5 +92,10 @@
   "gui.mortal_expansion.grave_name.save": "Engrave",
   "gui.mortal_expansion.grave_name.skip": "Skip",
   "block.mortal_expansion.grave_moss": "Grave Moss",
-  "block.mortal_expansion.purification_ward": "Purification Ward"
+  "block.mortal_expansion.purification_ward": "Purification Ward",
+  "block.mortal_expansion.purification_station": "Purification Station",
+  "gui.mortal_expansion.purification_station.title": "Purification Station",
+  "gui.mortal_expansion.purification_station.water": "Water: %s / %s mB",
+  "gui.mortal_expansion.purification_station.fe": "FE: %s / %s",
+  "gui.mortal_expansion.purification_station.progress": "Purifying: %s / %s"
 }
