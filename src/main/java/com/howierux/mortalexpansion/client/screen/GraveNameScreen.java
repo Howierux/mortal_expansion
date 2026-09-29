@@ -7,7 +7,7 @@ import net.minecraft.client.gui.components.EditBox;
 import net.minecraft.client.gui.screens.Screen;
 import net.minecraft.core.BlockPos;
 import net.minecraft.network.chat.Component;
-import net.neoforged.neoforge.client.network.ClientPacketDistributor;
+import net.neoforged.neoforge.network.PacketDistributor;
 
 public final class GraveNameScreen extends Screen {
     private static final int MAX_NAME_LENGTH = 32;
@@ -51,7 +51,7 @@ public final class GraveNameScreen extends Screen {
     private void saveAndClose() {
         String value = nameBox.getValue().trim();
         if (!value.isEmpty()) {
-            ClientPacketDistributor.sendToServer(
+            PacketDistributor.sendToServer(
                     new GraveNamePayloads.SetGraveName(gravePos, value)
             );
         }
