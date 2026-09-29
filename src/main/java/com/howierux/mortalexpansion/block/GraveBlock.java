@@ -17,6 +17,7 @@ import com.howierux.mortalexpansion.network.GraveNamePayloads;
 import net.minecraft.world.item.context.BlockPlaceContext;
 import net.minecraft.world.level.BlockGetter;
 import net.minecraft.world.level.Level;
+import net.minecraft.world.level.Explosion;
 import net.minecraft.world.level.block.BaseEntityBlock;
 import net.minecraft.world.level.block.RenderShape;
 import net.minecraft.world.level.block.entity.BlockEntity;
@@ -34,6 +35,8 @@ import net.minecraft.world.phys.shapes.VoxelShape;
 import net.minecraft.server.level.ServerLevel;
 import net.neoforged.neoforge.common.util.FakePlayer;
 import org.jetbrains.annotations.Nullable;
+
+import java.util.function.BiConsumer;
 
 /**
  * Upright half-block grave marker.
@@ -192,6 +195,17 @@ public final class GraveBlock extends BaseEntityBlock {
         }
 
         return super.playerWillDestroy(level, pos, state, player);
+    }
+
+    @Override
+    protected void onExplosionHit(
+            BlockState state,
+            Level level,
+            BlockPos pos,
+            Explosion explosion,
+            BiConsumer<ItemStack, BlockPos> dropConsumer
+    ) {
+        // Graves are intentionally immune to explosion destruction.
     }
 
     @Override
