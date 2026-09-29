@@ -97,5 +97,12 @@
   "gui.mortal_expansion.purification_station.title": "Purification Station",
   "gui.mortal_expansion.purification_station.water": "Water: %s / %s mB",
   "gui.mortal_expansion.purification_station.fe": "FE: %s / %s",
-  "gui.mortal_expansion.purification_station.progress": "Purifying: %s / %s"
+  "gui.mortal_expansion.purification_station.progress": "Purifying: %s / %s",
+  "item.mortal_expansion.liquid_ectoplasm_bucket": "Liquid Ectoplasm Bucket",
+  "item.mortal_expansion.holy_water_bucket": "Holy Water Bucket",
+  "item.mortal_expansion.purified_ectoplasm_bucket": "Purified Ectoplasm Bucket",
+  "block.mortal_expansion.holy_salt": "Holy Salt",
+  "block.mortal_expansion.liquid_ectoplasm_cauldron": "Liquid Ectoplasm Cauldron",
+  "block.mortal_expansion.holy_water_cauldron": "Holy Water Cauldron",
+  "block.mortal_expansion.purified_ectoplasm_cauldron": "Purified Ectoplasm Cauldron"
 }
