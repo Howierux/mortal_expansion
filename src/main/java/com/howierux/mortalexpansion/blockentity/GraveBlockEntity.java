@@ -22,11 +22,16 @@ import net.minecraft.world.level.block.state.BlockState;
  */
 public final class GraveBlockEntity extends BlockEntity {
     private static final String NATURALLY_GENERATED_TAG = "NaturallyGenerated";
+    private static final String INSCRIPTION_TAG = "Inscription";
+    private static final String NAMING_OWNER_TAG = "NamingOwner";
 
     /** Low daily chance for a qualifying placed Grave to become natural. */
     private static final float NATURALIZATION_CHANCE = 0.05F;
 
     private boolean naturallyGenerated;
+    private String inscription = "";
+    @javax.annotation.Nullable
+    private java.util.UUID namingOwner;
 
     /**
      * Intentionally not persisted. A newly loaded Grave records the current
@@ -41,6 +46,62 @@ public final class GraveBlockEntity extends BlockEntity {
 
     public boolean isNaturallyGenerated() {
         return naturallyGenerated;
+    }
+
+    public String getInscription() {
+        return inscription;
+    }
+
+    public boolean hasInscription() {
+        return !inscription.isBlank();
+    }
+
+    public void beginNaming(net.minecraft.server.level.ServerPlayer player) {
+        if (naturallyGenerated || hasInscription()) {
+            return;
+        }
+
+        namingOwner = player.getUUID();
+        setChanged();
+    }
+
+    public boolean canPlayerName(net.minecraft.server.level.ServerPlayer player) {
+        return !naturallyGenerated
+                && !hasInscription()
+                && namingOwner != null
+                && namingOwner.equals(player.getUUID());
+    }
+
+    public boolean trySetInscription(
+            net.minecraft.server.level.ServerPlayer player,
+            String requestedName
+    ) {
+        if (!canPlayerName(player)) {
+            return false;
+        }
+
+        String cleaned = requestedName == null
+                ? ""
+                : requestedName.strip();
+
+        if (cleaned.isEmpty()) {
+            return false;
+        }
+
+        if (cleaned.length() > 32) {
+            cleaned = cleaned.substring(0, 32);
+        }
+
+        inscription = cleaned;
+        namingOwner = null;
+        setChanged();
+
+        if (level != null) {
+            BlockState state = getBlockState();
+            level.sendBlockUpdated(worldPosition, state, state, 3);
+        }
+
+        return true;
     }
 
     /**
@@ -159,11 +220,33 @@ public final class GraveBlockEntity extends BlockEntity {
     public void loadAdditional(CompoundTag tag, HolderLookup.Provider registries) {
         super.loadAdditional(tag, registries);
         naturallyGenerated = tag.getBoolean(NATURALLY_GENERATED_TAG);
+        inscription = tag.getString(INSCRIPTION_TAG);
+        namingOwner = tag.hasUUID(NAMING_OWNER_TAG)
+                ? tag.getUUID(NAMING_OWNER_TAG)
+                : null;
     }
 
     @Override
     protected void saveAdditional(CompoundTag tag, HolderLookup.Provider registries) {
         super.saveAdditional(tag, registries);
         tag.putBoolean(NATURALLY_GENERATED_TAG, naturallyGenerated);
+
+        if (!inscription.isBlank()) {
+            tag.putString(INSCRIPTION_TAG, inscription);
+        }
+
+        if (namingOwner != null) {
+            tag.putUUID(NAMING_OWNER_TAG, namingOwner);
+        }
+    }
+
+    @Override
+    public CompoundTag getUpdateTag(HolderLookup.Provider registries) {
+        return saveWithoutMetadata(registries);
+    }
+
+    @Override
+    public net.minecraft.network.protocol.game.ClientboundBlockEntityDataPacket getUpdatePacket() {
+        return net.minecraft.network.protocol.game.ClientboundBlockEntityDataPacket.create(this);
     }
 }
