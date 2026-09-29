@@ -188,6 +188,24 @@ public final class HauntSimulationHandler {
         }
 
         Map<Long, Integer> resultingValues = new HashMap<>(startingValues);
+        Set<Long> wardProtectedChunks = PurificationWardTracker.protectedLoadedChunks(
+                level,
+                chunksByPos.keySet()
+        );
+
+        // A Ward cleanses each affected loaded chunk exactly once per day.
+        // Multiple overlapping Wards do not stack their daily point reduction.
+        for (long protectedKey : wardProtectedChunks) {
+            int value = resultingValues.getOrDefault(
+                    protectedKey,
+                    startingValues.getOrDefault(protectedKey, 0)
+            );
+
+            if (value > HauntTier.MIN_VALUE) {
+                resultingValues.put(protectedKey, value - 1);
+            }
+        }
+
         RandomSource random = level.getRandom();
 
         for (LevelChunk chunk : loadedChunks) {
@@ -195,13 +213,18 @@ public final class HauntSimulationHandler {
             int sourceValue = startingValues.getOrDefault(sourceKey, 0);
             HauntTier sourceTier = HauntTier.fromValue(sourceValue);
 
-            if (sourceValue > 0 && random.nextFloat() < SPREAD_CHANCE) {
+            boolean sourceWardProtected = wardProtectedChunks.contains(sourceKey);
+
+            if (!sourceWardProtected
+                    && sourceValue > 0
+                    && random.nextFloat() < SPREAD_CHANCE) {
                 int[] offset = CARDINAL_OFFSETS[random.nextInt(CARDINAL_OFFSETS.length)];
                 ChunkPos sourcePos = chunk.getPos();
                 ChunkPos targetPos = new ChunkPos(sourcePos.x + offset[0], sourcePos.z + offset[1]);
                 long targetKey = targetPos.toLong();
 
-                if (chunksByPos.containsKey(targetKey)) {
+                if (chunksByPos.containsKey(targetKey)
+                        && !wardProtectedChunks.contains(targetKey)) {
                     int targetValue = startingValues.getOrDefault(targetKey, 0);
                     int planned = resultingValues.getOrDefault(targetKey, targetValue);
 
@@ -211,12 +234,16 @@ public final class HauntSimulationHandler {
                 }
             }
 
-            if (random.nextFloat() < DECAY_CHANCE) {
+            if (!sourceWardProtected && random.nextFloat() < DECAY_CHANCE) {
                 int floorValue = determineSourceFloorValue(chunk);
                 int planned = resultingValues.getOrDefault(sourceKey, sourceValue);
 
                 if (planned > floorValue) {
                     resultingValues.put(sourceKey, Math.max(floorValue, planned - 1));
+                } else if (planned < floorValue) {
+                    // Once Ward coverage is gone, biome influence slowly restores
+                    // a cleansed chunk toward its ordinary floor.
+                    resultingValues.put(sourceKey, Math.min(floorValue, planned + 1));
                 }
             }
 
