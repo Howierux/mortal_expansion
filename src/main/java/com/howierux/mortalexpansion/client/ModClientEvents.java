@@ -5,11 +5,13 @@ import com.howierux.mortalexpansion.registry.ModBlocks;
 import com.howierux.mortalexpansion.registry.ModItems;
 import com.howierux.mortalexpansion.registry.ModEntities;
 import com.howierux.mortalexpansion.registry.ModMenus;
+import com.howierux.mortalexpansion.registry.ModFluids;
 import com.howierux.mortalexpansion.client.screen.EctchantmentMachineScreen;
 import com.howierux.mortalexpansion.client.screen.EctoplasmicGeneratorScreen;
 import com.howierux.mortalexpansion.client.screen.EnchantmentGeneratorScreen;
 import com.howierux.mortalexpansion.client.screen.PurificationStationScreen;
 import net.minecraft.resources.ResourceLocation;
+import net.minecraft.world.level.block.RedStoneWireBlock;
 import net.minecraft.client.renderer.BiomeColors;
 import net.minecraft.world.entity.EntityType;
 import net.minecraft.world.level.FoliageColor;
@@ -19,10 +21,59 @@ import net.neoforged.fml.common.EventBusSubscriber;
 import net.neoforged.neoforge.client.event.RegisterColorHandlersEvent;
 import net.neoforged.neoforge.client.event.RegisterMenuScreensEvent;
 import net.neoforged.neoforge.client.event.EntityRenderersEvent;
+import net.neoforged.neoforge.client.extensions.common.IClientFluidTypeExtensions;
+import net.neoforged.neoforge.client.extensions.common.RegisterClientExtensionsEvent;
 
 @EventBusSubscriber(modid = MortalExpansion.MOD_ID, bus = EventBusSubscriber.Bus.MOD, value = Dist.CLIENT)
 public final class ModClientEvents {
     private ModClientEvents() {}
+
+    private static final ResourceLocation WATER_STILL =
+            ResourceLocation.withDefaultNamespace("block/water_still");
+    private static final ResourceLocation WATER_FLOW =
+            ResourceLocation.withDefaultNamespace("block/water_flow");
+    private static final ResourceLocation WATER_OVERLAY =
+            ResourceLocation.withDefaultNamespace("block/water_overlay");
+
+    private static IClientFluidTypeExtensions fluidVisuals(int tint) {
+        return new IClientFluidTypeExtensions() {
+            @Override
+            public int getTintColor() {
+                return tint;
+            }
+
+            @Override
+            public ResourceLocation getStillTexture() {
+                return WATER_STILL;
+            }
+
+            @Override
+            public ResourceLocation getFlowingTexture() {
+                return WATER_FLOW;
+            }
+
+            @Override
+            public ResourceLocation getOverlayTexture() {
+                return WATER_OVERLAY;
+            }
+        };
+    }
+
+    @SubscribeEvent
+    public static void registerFluidVisuals(RegisterClientExtensionsEvent event) {
+        event.registerFluidType(
+                fluidVisuals(0xFF42A83B),
+                ModFluids.LIQUID_ECTOPLASM_TYPE.get()
+        );
+        event.registerFluidType(
+                fluidVisuals(0xA8DDEEFF),
+                ModFluids.HOLY_WATER_TYPE.get()
+        );
+        event.registerFluidType(
+                fluidVisuals(0xFFC6F4FF),
+                ModFluids.PURIFIED_ECTOPLASM_TYPE.get()
+        );
+    }
 
     private static int coolFoliage(int color) {
         int r = (color >> 16) & 0xFF;
@@ -105,6 +156,27 @@ public final class ModClientEvents {
                 (state, level, pos, tintIndex) -> 0xFF3FA63A,
                 ModBlocks.GRAVE_MOSS.get()
         );
+
+        event.register(
+                (state, level, pos, tintIndex) -> 0xFF42A83B,
+                ModBlocks.LIQUID_ECTOPLASM_CAULDRON.get()
+        );
+        event.register(
+                (state, level, pos, tintIndex) -> 0xA8DDEEFF,
+                ModBlocks.HOLY_WATER_CAULDRON.get()
+        );
+        event.register(
+                (state, level, pos, tintIndex) -> 0xFFC6F4FF,
+                ModBlocks.PURIFIED_ECTOPLASM_CAULDRON.get()
+        );
+        event.register(
+                (state, level, pos, tintIndex) -> {
+                    int power = state.getValue(RedStoneWireBlock.POWER);
+                    int shade = 150 + (int)(105.0F * power / 15.0F);
+                    return 0xFF000000 | (shade << 16) | (shade << 8) | shade;
+                },
+                ModBlocks.HOLY_SALT.get()
+        );
     }
 
     @SubscribeEvent
@@ -127,6 +199,11 @@ public final class ModClientEvents {
         event.register(
                 (stack, tintIndex) -> 0xFF3FA63A,
                 ModItems.GRAVE_MOSS.get()
+        );
+
+        event.register(
+                (stack, tintIndex) -> 0xFFFFFFFF,
+                ModItems.HOLY_SALT.get()
         );
     }
 }
