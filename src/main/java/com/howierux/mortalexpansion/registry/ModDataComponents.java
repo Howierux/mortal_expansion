@@ -3,6 +3,7 @@ package com.howierux.mortalexpansion.registry;
 import com.howierux.mortalexpansion.MortalExpansion;
 import com.mojang.serialization.Codec;
 import net.minecraft.core.component.DataComponentType;
+import net.minecraft.nbt.CompoundTag;
 import net.minecraft.core.registries.Registries;
 import net.minecraft.network.codec.ByteBufCodecs;
 import net.neoforged.bus.api.IEventBus;
@@ -24,6 +25,12 @@ public final class ModDataComponents {
                     builder -> builder
                             .persistent(Codec.BOOL)
                             .networkSynchronized(ByteBufCodecs.BOOL)
+            );
+
+    public static final DeferredHolder<DataComponentType<?>, DataComponentType<CompoundTag>> PURIFICATION_STATION_DATA =
+            DATA_COMPONENTS.registerComponentType(
+                    "purification_station_data",
+                    builder -> builder.persistent(CompoundTag.CODEC)
             );
 
     public static void register(IEventBus modBus) {
