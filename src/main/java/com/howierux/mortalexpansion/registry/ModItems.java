@@ -88,6 +88,36 @@ public final class ModItems {
     public static final DeferredItem<BlockItem> PURIFICATION_STATION =
             ITEMS.registerSimpleBlockItem(ModBlocks.PURIFICATION_STATION);
 
+    public static final DeferredItem<BucketItem> LIQUID_ECTOPLASM_BUCKET = ITEMS.registerItem(
+            "liquid_ectoplasm_bucket",
+            properties -> new BucketItem(
+                    ModFluids.LIQUID_ECTOPLASM.get(),
+                    properties.craftRemainder(Items.BUCKET).stacksTo(1)
+            ),
+            new Item.Properties()
+    );
+
+    public static final DeferredItem<BucketItem> HOLY_WATER_BUCKET = ITEMS.registerItem(
+            "holy_water_bucket",
+            properties -> new BucketItem(
+                    ModFluids.HOLY_WATER.get(),
+                    properties.craftRemainder(Items.BUCKET).stacksTo(1)
+            ),
+            new Item.Properties()
+    );
+
+    public static final DeferredItem<BucketItem> PURIFIED_ECTOPLASM_BUCKET = ITEMS.registerItem(
+            "purified_ectoplasm_bucket",
+            properties -> new BucketItem(
+                    ModFluids.PURIFIED_ECTOPLASM.get(),
+                    properties.craftRemainder(Items.BUCKET).stacksTo(1)
+            ),
+            new Item.Properties()
+    );
+
+    public static final DeferredItem<BlockItem> HOLY_SALT =
+            ITEMS.registerSimpleBlockItem(ModBlocks.HOLY_SALT);
+
     public static final DeferredItem<BlockItem> GRAVE =
             ITEMS.registerSimpleBlockItem(ModBlocks.GRAVE);
 
