@@ -24,6 +24,7 @@ public final class GraveBlockEntity extends BlockEntity {
     private static final String NATURALLY_GENERATED_TAG = "NaturallyGenerated";
     private static final String INSCRIPTION_TAG = "Inscription";
     private static final String NAMING_OWNER_TAG = "NamingOwner";
+    private static final String RESPAWN_OWNER_TAG = "RespawnOwner";
 
     /** Low daily chance for a qualifying placed Grave to become natural. */
     private static final float NATURALIZATION_CHANCE = 0.05F;
@@ -32,6 +33,8 @@ public final class GraveBlockEntity extends BlockEntity {
     private String inscription = "";
     @javax.annotation.Nullable
     private java.util.UUID namingOwner;
+    @javax.annotation.Nullable
+    private java.util.UUID respawnOwner;
 
     /**
      * Intentionally not persisted. A newly loaded Grave records the current
@@ -94,6 +97,15 @@ public final class GraveBlockEntity extends BlockEntity {
 
         inscription = cleaned;
         namingOwner = null;
+
+        if (cleaned.equalsIgnoreCase(player.getGameProfile().getName())) {
+            respawnOwner = player.getUUID();
+            player.setData(
+                    com.howierux.mortalexpansion.registry.ModAttachments.GRAVE_RESPAWN_POINT,
+                    encodeRespawnPoint(player.serverLevel(), worldPosition)
+            );
+        }
+
         setChanged();
 
         if (level != null) {
@@ -102,6 +114,17 @@ public final class GraveBlockEntity extends BlockEntity {
         }
 
         return true;
+    }
+
+    public boolean isRespawnGraveFor(java.util.UUID playerId) {
+        return respawnOwner != null && respawnOwner.equals(playerId);
+    }
+
+    private static String encodeRespawnPoint(ServerLevel level, BlockPos pos) {
+        return level.dimension().location()
+                + "|" + pos.getX()
+                + "|" + pos.getY()
+                + "|" + pos.getZ();
     }
 
     /**
@@ -224,6 +247,9 @@ public final class GraveBlockEntity extends BlockEntity {
         namingOwner = tag.hasUUID(NAMING_OWNER_TAG)
                 ? tag.getUUID(NAMING_OWNER_TAG)
                 : null;
+        respawnOwner = tag.hasUUID(RESPAWN_OWNER_TAG)
+                ? tag.getUUID(RESPAWN_OWNER_TAG)
+                : null;
     }
 
     @Override
@@ -237,6 +263,10 @@ public final class GraveBlockEntity extends BlockEntity {
 
         if (namingOwner != null) {
             tag.putUUID(NAMING_OWNER_TAG, namingOwner);
+        }
+
+        if (respawnOwner != null) {
+            tag.putUUID(RESPAWN_OWNER_TAG, respawnOwner);
         }
     }
 
