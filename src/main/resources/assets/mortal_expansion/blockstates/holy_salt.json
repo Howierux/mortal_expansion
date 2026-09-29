@@ -1,0 +1,7 @@
+{
+  "multipart": [
+    {
+      "apply": { "model": "mortal_expansion:block/holy_salt" }
+    }
+  ]
+}
