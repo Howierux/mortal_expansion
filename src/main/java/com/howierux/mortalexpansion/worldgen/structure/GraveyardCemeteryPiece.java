@@ -79,10 +79,18 @@ public final class GraveyardCemeteryPiece extends StructurePiece {
         buildPerimeter(level, chunkBB);
 
         // Four mausoleums, deliberately inset from the perimeter.
-        buildMausoleum(level, chunkBB, random, minX + 10, minZ + 10);
-        buildMausoleum(level, chunkBB, random, minX + 45, minZ + 10);
-        buildMausoleum(level, chunkBB, random, minX + 10, minZ + 45);
-        buildMausoleum(level, chunkBB, random, minX + 45, minZ + 45);
+        // Centers are nudged so every mausoleum fits entirely inside one
+        // chunk. This prevents structure generation from synchronously
+        // reading/writing neighboring chunks.
+        BlockPos mausoleumNW = safeMausoleumCenter(minX + 10, minZ + 10);
+        BlockPos mausoleumNE = safeMausoleumCenter(minX + 45, minZ + 10);
+        BlockPos mausoleumSW = safeMausoleumCenter(minX + 10, minZ + 45);
+        BlockPos mausoleumSE = safeMausoleumCenter(minX + 45, minZ + 45);
+
+        buildMausoleum(level, chunkBB, random, mausoleumNW.getX(), mausoleumNW.getZ());
+        buildMausoleum(level, chunkBB, random, mausoleumNE.getX(), mausoleumNE.getZ());
+        buildMausoleum(level, chunkBB, random, mausoleumSW.getX(), mausoleumSW.getZ());
+        buildMausoleum(level, chunkBB, random, mausoleumSE.getX(), mausoleumSE.getZ());
 
         // Six grave-row sections through the central cemetery.
         buildGraveSection(level, chunkBB, minX + 16, minZ + 17, Direction.SOUTH);
@@ -111,10 +119,11 @@ public final class GraveyardCemeteryPiece extends StructurePiece {
             int x,
             int z
     ) {
-        BlockPos fencePos = surfaceAir(level, x, z);
-        if (!chunkBB.isInside(fencePos)) {
+        if (!containsXZ(chunkBB, x, z)) {
             return;
         }
+
+        BlockPos fencePos = surfaceAir(level, x, z);
 
         level.setBlock(
                 fencePos.below(),
@@ -124,10 +133,10 @@ public final class GraveyardCemeteryPiece extends StructurePiece {
 
         BlockState fence = ModBlocks.STONE_FENCE.get()
                 .defaultBlockState()
-                .setValue(FenceBlock.NORTH, fenceConnects(level, x, z - 1))
-                .setValue(FenceBlock.EAST, fenceConnects(level, x + 1, z))
-                .setValue(FenceBlock.SOUTH, fenceConnects(level, x, z + 1))
-                .setValue(FenceBlock.WEST, fenceConnects(level, x - 1, z));
+                .setValue(FenceBlock.NORTH, fenceConnects(x, z - 1))
+                .setValue(FenceBlock.EAST, fenceConnects(x + 1, z))
+                .setValue(FenceBlock.SOUTH, fenceConnects(x, z + 1))
+                .setValue(FenceBlock.WEST, fenceConnects(x - 1, z));
 
         level.setBlock(fencePos, fence, 2);
         level.getChunk(fencePos).markPosForPostprocessing(fencePos);
@@ -142,25 +151,10 @@ public final class GraveyardCemeteryPiece extends StructurePiece {
                 && (x == minX || x == maxX || z == minZ || z == maxZ);
     }
 
-    private boolean fenceConnects(WorldGenLevel level, int x, int z) {
-        if (isPerimeter(x, z)) {
-            return true;
-        }
-
-        int y = level.getHeight(
-                Heightmap.Types.MOTION_BLOCKING_NO_LEAVES,
-                x,
-                z
-        );
-
-        for (int dy = -2; dy <= 2; dy++) {
-            if (level.getBlockState(new BlockPos(x, y + dy, z))
-                    .is(ModBlocks.GRAVESTONE.get())) {
-                return true;
-            }
-        }
-
-        return false;
+    private boolean fenceConnects(int x, int z) {
+        // Perimeter connectivity is fully known from the cemetery geometry.
+        // Never inspect another chunk while a structure piece is generating.
+        return isPerimeter(x, z);
     }
 
     private void buildGraveSection(
@@ -195,19 +189,8 @@ public final class GraveyardCemeteryPiece extends StructurePiece {
             int headZ,
             Direction bodyDirection
     ) {
-        BlockPos gravePos = surfaceAir(level, headX, headZ);
-        BlockPos dirtOne = surfaceAir(
-                level,
-                headX + bodyDirection.getStepX(),
-                headZ + bodyDirection.getStepZ()
-        );
-        BlockPos dirtTwo = surfaceAir(
-                level,
-                headX + bodyDirection.getStepX() * 2,
-                headZ + bodyDirection.getStepZ() * 2
-        );
-
-        if (chunkBB.isInside(gravePos)) {
+        if (containsXZ(chunkBB, headX, headZ)) {
+            BlockPos gravePos = surfaceAir(level, headX, headZ);
             level.setBlock(
                     gravePos,
                     ModBlocks.GRAVE.get().defaultBlockState()
@@ -219,7 +202,10 @@ public final class GraveyardCemeteryPiece extends StructurePiece {
             markNaturalGrave(level, gravePos);
         }
 
-        if (chunkBB.isInside(dirtOne.below())) {
+        int dirtOneX = headX + bodyDirection.getStepX();
+        int dirtOneZ = headZ + bodyDirection.getStepZ();
+        if (containsXZ(chunkBB, dirtOneX, dirtOneZ)) {
+            BlockPos dirtOne = surfaceAir(level, dirtOneX, dirtOneZ);
             level.setBlock(
                     dirtOne.below(),
                     Blocks.COARSE_DIRT.defaultBlockState(),
@@ -227,7 +213,10 @@ public final class GraveyardCemeteryPiece extends StructurePiece {
             );
         }
 
-        if (chunkBB.isInside(dirtTwo.below())) {
+        int dirtTwoX = headX + bodyDirection.getStepX() * 2;
+        int dirtTwoZ = headZ + bodyDirection.getStepZ() * 2;
+        if (containsXZ(chunkBB, dirtTwoX, dirtTwoZ)) {
+            BlockPos dirtTwo = surfaceAir(level, dirtTwoX, dirtTwoZ);
             level.setBlock(
                     dirtTwo.below(),
                     Blocks.COARSE_DIRT.defaultBlockState(),
@@ -243,6 +232,10 @@ public final class GraveyardCemeteryPiece extends StructurePiece {
             int centerX,
             int centerZ
     ) {
+        if (!containsXZ(chunkBB, centerX, centerZ)) {
+            return;
+        }
+
         int surfaceY = level.getHeight(
                 Heightmap.Types.MOTION_BLOCKING_NO_LEAVES,
                 centerX,
@@ -321,6 +314,26 @@ public final class GraveyardCemeteryPiece extends StructurePiece {
         if (chunkBB.isInside(interiorGravePos)) {
             markNaturalGrave(level, interiorGravePos);
         }
+    }
+
+    private static BlockPos safeMausoleumCenter(int x, int z) {
+        ChunkPos chunk = new ChunkPos(new BlockPos(x, 0, z));
+        int safeX = Math.max(
+                chunk.getMinBlockX() + 3,
+                Math.min(chunk.getMaxBlockX() - 3, x)
+        );
+        int safeZ = Math.max(
+                chunk.getMinBlockZ() + 3,
+                Math.min(chunk.getMaxBlockZ() - 3, z)
+        );
+        return new BlockPos(safeX, 0, safeZ);
+    }
+
+    private static boolean containsXZ(BoundingBox box, int x, int z) {
+        return x >= box.minX()
+                && x <= box.maxX()
+                && z >= box.minZ()
+                && z <= box.maxZ();
     }
 
     private static void placeIfInside(
