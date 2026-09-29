@@ -152,7 +152,9 @@ public final class PurificationStationBlockEntity extends BlockEntity {
         }
 
         if (station.progress == 0) {
-            station.tryStartCraft();
+            if (station.tryStartCraft()) {
+                return;
+            }
         }
 
         if (station.progress <= 0) {
@@ -195,7 +197,7 @@ public final class PurificationStationBlockEntity extends BlockEntity {
         }
     }
 
-    private void tryStartCraft() {
+    private boolean tryStartCraft() {
         ItemStack raw = items.getStackInSlot(SLOT_RAW_ECTOPLASM);
         ItemStack moss = items.getStackInSlot(SLOT_GRAVE_MOSS);
         ItemStack output = items.getStackInSlot(SLOT_OUTPUT);
@@ -208,7 +210,7 @@ public final class PurificationStationBlockEntity extends BlockEntity {
                 || !moss.is(ModItems.GRAVE_MOSS.get())
                 || waterTank.getFluidAmount() < WATER_PER_CRAFT
                 || !outputSpace) {
-            return;
+            return false;
         }
 
         items.extractItem(SLOT_RAW_ECTOPLASM, 1, false);
@@ -218,6 +220,7 @@ public final class PurificationStationBlockEntity extends BlockEntity {
         progress = 1;
         feUsed = 0;
         setChanged();
+        return true;
     }
 
     public void dropUnprocessedInventory(ServerLevel level) {
