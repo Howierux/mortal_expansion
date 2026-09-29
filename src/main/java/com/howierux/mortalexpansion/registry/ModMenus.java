@@ -4,6 +4,8 @@ import com.howierux.mortalexpansion.MortalExpansion;
 import com.howierux.mortalexpansion.menu.EctchantmentMachineMenu;
 import com.howierux.mortalexpansion.menu.EctoplasmicGeneratorMenu;
 import com.howierux.mortalexpansion.menu.EnchantmentGeneratorMenu;
+import com.howierux.mortalexpansion.menu.PurificationStationMenu;
+import net.neoforged.neoforge.common.extensions.IMenuTypeExtension;
 import net.minecraft.core.registries.Registries;
 import net.minecraft.world.flag.FeatureFlags;
 import net.minecraft.world.inventory.MenuType;
@@ -42,6 +44,14 @@ public final class ModMenus {
                     () -> new MenuType<>(
                             EnchantmentGeneratorMenu::new,
                             FeatureFlags.DEFAULT_FLAGS
+                    )
+            );
+
+    public static final Supplier<MenuType<PurificationStationMenu>> PURIFICATION_STATION =
+            MENUS.register(
+                    "purification_station",
+                    () -> IMenuTypeExtension.create(
+                            PurificationStationMenu::new
                     )
             );
 
