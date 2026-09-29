@@ -134,6 +134,14 @@ public final class HauntSimulationHandler {
             }
 
             BlockPos pos = player.blockPosition();
+
+            if (PurificationWardTracker.isChunkProtected(
+                    level,
+                    new ChunkPos(pos)
+            )) {
+                continue;
+            }
+
             int chunkValue = HauntManager.getValue(level, pos);
 
             // Haunt flows only from the more-haunted player into the less-haunted world.
