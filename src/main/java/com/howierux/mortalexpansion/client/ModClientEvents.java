@@ -98,6 +98,11 @@ public final class ModClientEvents {
                 (state, level, pos, tintIndex) -> 0xFFE8FFE8,
                 ModBlocks.SPIRITWOOD_SAPLING.get()
         );
+
+        event.register(
+                (state, level, pos, tintIndex) -> 0xFF3FA63A,
+                ModBlocks.GRAVE_MOSS.get()
+        );
     }
 
     @SubscribeEvent
@@ -115,6 +120,11 @@ public final class ModClientEvents {
         event.register(
                 (stack, tintIndex) -> 0xFFE8FFE8,
                 ModItems.SPIRITWOOD_SAPLING.get()
+        );
+
+        event.register(
+                (stack, tintIndex) -> 0xFF3FA63A,
+                ModItems.GRAVE_MOSS.get()
         );
     }
 }
