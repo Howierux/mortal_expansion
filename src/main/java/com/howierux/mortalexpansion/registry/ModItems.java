@@ -85,6 +85,9 @@ public final class ModItems {
     public static final DeferredItem<BlockItem> PURIFICATION_WARD =
             ITEMS.registerSimpleBlockItem(ModBlocks.PURIFICATION_WARD);
 
+    public static final DeferredItem<BlockItem> PURIFICATION_STATION =
+            ITEMS.registerSimpleBlockItem(ModBlocks.PURIFICATION_STATION);
+
     public static final DeferredItem<BlockItem> GRAVE =
             ITEMS.registerSimpleBlockItem(ModBlocks.GRAVE);
 
