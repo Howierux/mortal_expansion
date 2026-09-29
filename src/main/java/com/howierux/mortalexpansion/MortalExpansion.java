@@ -6,6 +6,7 @@ import com.howierux.mortalexpansion.haunt.HauntSimulationHandler;
 import com.howierux.mortalexpansion.haunt.HauntSpawnHandler;
 import com.howierux.mortalexpansion.haunt.HaintWitchHutSpawnHandler;
 import com.howierux.mortalexpansion.loot.MobDropHandler;
+import com.howierux.mortalexpansion.network.GraveNamePayloads;
 import com.howierux.mortalexpansion.combat.IntangibleCombatHandler;
 import com.howierux.mortalexpansion.entity.PharaohlPyramidHandler;
 import com.howierux.mortalexpansion.registry.ModAttachments;
@@ -37,6 +38,7 @@ public final class MortalExpansion {
 
     public MortalExpansion(IEventBus modBus) {
         ModDataComponents.register(modBus);
+        GraveNamePayloads.register(modBus);
         ModArmorMaterials.register(modBus);
         ModBlocks.register(modBus);
         ModItems.register(modBus);
