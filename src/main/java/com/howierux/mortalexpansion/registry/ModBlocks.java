@@ -6,6 +6,7 @@ import com.howierux.mortalexpansion.block.EctoplasmicGeneratorBlock;
 import com.howierux.mortalexpansion.block.EnchantmentGeneratorBlock;
 import com.howierux.mortalexpansion.block.SpiritwoodSaplingBlock;
 import com.howierux.mortalexpansion.block.GraveBlock;
+import com.howierux.mortalexpansion.block.PurificationWardBlock;
 import com.howierux.mortalexpansion.worldgen.ModTreeGrowers;
 import net.minecraft.util.valueproviders.UniformInt;
 import net.minecraft.world.level.block.*;
@@ -167,6 +168,12 @@ public final class ModBlocks {
             "enchantment_generator",
             EnchantmentGeneratorBlock::new,
             BlockBehaviour.Properties.ofFullCopy(Blocks.IRON_BLOCK)
+    );
+
+    public static final DeferredBlock<PurificationWardBlock> PURIFICATION_WARD = BLOCKS.registerBlock(
+            "purification_ward",
+            PurificationWardBlock::new,
+            BlockBehaviour.Properties.ofFullCopy(Blocks.BEACON)
     );
 
     public static final DeferredBlock<GraveBlock> GRAVE = BLOCKS.registerBlock(
