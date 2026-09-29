@@ -1,0 +1,8 @@
+{
+  "type": "minecraft:smelting",
+  "category": "misc",
+  "ingredient": { "item": "mortal_expansion:liquid_ectoplasm_bucket" },
+  "result": { "id": "mortal_expansion:raw_ectoplasm" },
+  "experience": 0.0,
+  "cookingtime": 200
+}
