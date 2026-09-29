@@ -8,6 +8,9 @@ import com.howierux.mortalexpansion.block.SpiritwoodSaplingBlock;
 import com.howierux.mortalexpansion.block.GraveBlock;
 import com.howierux.mortalexpansion.block.PurificationWardBlock;
 import com.howierux.mortalexpansion.block.PurificationStationBlock;
+import com.howierux.mortalexpansion.block.HolyWaterLiquidBlock;
+import com.howierux.mortalexpansion.block.EctoCauldronBlock;
+import com.howierux.mortalexpansion.block.HolySaltWireBlock;
 import com.howierux.mortalexpansion.worldgen.ModTreeGrowers;
 import net.minecraft.util.valueproviders.UniformInt;
 import net.minecraft.world.level.block.*;
@@ -181,6 +184,57 @@ public final class ModBlocks {
             "purification_station",
             PurificationStationBlock::new,
             BlockBehaviour.Properties.ofFullCopy(Blocks.IRON_BLOCK)
+    );
+
+    public static final DeferredBlock<LiquidBlock> LIQUID_ECTOPLASM_BLOCK = BLOCKS.registerBlock(
+            "liquid_ectoplasm",
+            properties -> new LiquidBlock(
+                    ModFluids.LIQUID_ECTOPLASM.get(),
+                    properties.noCollision().strength(100.0F).noLootTable()
+            ),
+            BlockBehaviour.Properties.ofFullCopy(Blocks.WATER)
+    );
+
+    public static final DeferredBlock<HolyWaterLiquidBlock> HOLY_WATER_BLOCK = BLOCKS.registerBlock(
+            "holy_water",
+            properties -> new HolyWaterLiquidBlock(
+                    ModFluids.HOLY_WATER.get(),
+                    properties.noCollision().strength(100.0F).noLootTable()
+            ),
+            BlockBehaviour.Properties.ofFullCopy(Blocks.WATER)
+    );
+
+    public static final DeferredBlock<LiquidBlock> PURIFIED_ECTOPLASM_BLOCK = BLOCKS.registerBlock(
+            "purified_ectoplasm_fluid",
+            properties -> new LiquidBlock(
+                    ModFluids.PURIFIED_ECTOPLASM.get(),
+                    properties.noCollision().strength(100.0F).noLootTable()
+            ),
+            BlockBehaviour.Properties.ofFullCopy(Blocks.WATER)
+    );
+
+    public static final DeferredBlock<EctoCauldronBlock> LIQUID_ECTOPLASM_CAULDRON = BLOCKS.registerBlock(
+            "liquid_ectoplasm_cauldron",
+            properties -> new EctoCauldronBlock(properties, false),
+            BlockBehaviour.Properties.ofFullCopy(Blocks.CAULDRON)
+    );
+
+    public static final DeferredBlock<EctoCauldronBlock> HOLY_WATER_CAULDRON = BLOCKS.registerBlock(
+            "holy_water_cauldron",
+            properties -> new EctoCauldronBlock(properties, true),
+            BlockBehaviour.Properties.ofFullCopy(Blocks.CAULDRON)
+    );
+
+    public static final DeferredBlock<EctoCauldronBlock> PURIFIED_ECTOPLASM_CAULDRON = BLOCKS.registerBlock(
+            "purified_ectoplasm_cauldron",
+            properties -> new EctoCauldronBlock(properties, false),
+            BlockBehaviour.Properties.ofFullCopy(Blocks.CAULDRON)
+    );
+
+    public static final DeferredBlock<HolySaltWireBlock> HOLY_SALT = BLOCKS.registerBlock(
+            "holy_salt",
+            HolySaltWireBlock::new,
+            BlockBehaviour.Properties.ofFullCopy(Blocks.REDSTONE_WIRE)
     );
 
     public static final DeferredBlock<GraveBlock> GRAVE = BLOCKS.registerBlock(
