@@ -8,6 +8,10 @@ import com.howierux.mortalexpansion.registry.ModMenus;
 import com.howierux.mortalexpansion.client.screen.EctchantmentMachineScreen;
 import com.howierux.mortalexpansion.client.screen.EctoplasmicGeneratorScreen;
 import com.howierux.mortalexpansion.client.screen.EnchantmentGeneratorScreen;
+import com.howierux.mortalexpansion.client.screen.GraveNameScreen;
+import com.howierux.mortalexpansion.network.GraveNamePayloads;
+import net.minecraft.client.Minecraft;
+import net.neoforged.neoforge.client.network.event.RegisterClientPayloadHandlersEvent;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.client.renderer.BiomeColors;
 import net.minecraft.world.entity.EntityType;
@@ -63,6 +67,21 @@ public final class ModClientEvents {
                         mob -> mob.isCurrentlyIntangible(),
                         0.7F
                 ));
+
+        event.registerBlockEntityRenderer(
+                com.howierux.mortalexpansion.registry.ModBlockEntities.GRAVE.get(),
+                GraveBlockEntityRenderer::new
+        );
+    }
+
+    @SubscribeEvent
+    public static void registerClientPayloads(RegisterClientPayloadHandlersEvent event) {
+        event.register(
+                GraveNamePayloads.OpenGraveName.TYPE,
+                (payload, context) -> Minecraft.getInstance().setScreen(
+                        new GraveNameScreen(payload.pos())
+                )
+        );
     }
 
     @SubscribeEvent
