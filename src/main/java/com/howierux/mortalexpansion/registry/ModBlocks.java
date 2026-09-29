@@ -83,9 +83,9 @@ public final class ModBlocks {
             BlockBehaviour.Properties.ofFullCopy(Blocks.STONE)
     );
 
-    public static final DeferredBlock<MultifaceBlock> GRAVE_MOSS = BLOCKS.registerBlock(
+    public static final DeferredBlock<GlowLichenBlock> GRAVE_MOSS = BLOCKS.registerBlock(
             "grave_moss",
-            MultifaceBlock::new,
+            GlowLichenBlock::new,
             BlockBehaviour.Properties.ofFullCopy(Blocks.GLOW_LICHEN)
                     .lightLevel(state -> 0)
     );
