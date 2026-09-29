@@ -82,6 +82,9 @@ public final class ModItems {
     public static final DeferredItem<BlockItem> ENCHANTMENT_GENERATOR =
             ITEMS.registerSimpleBlockItem(ModBlocks.ENCHANTMENT_GENERATOR);
 
+    public static final DeferredItem<BlockItem> PURIFICATION_WARD =
+            ITEMS.registerSimpleBlockItem(ModBlocks.PURIFICATION_WARD);
+
     public static final DeferredItem<BlockItem> GRAVE =
             ITEMS.registerSimpleBlockItem(ModBlocks.GRAVE);
 
