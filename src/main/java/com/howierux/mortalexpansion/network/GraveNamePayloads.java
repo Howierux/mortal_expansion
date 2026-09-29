@@ -2,6 +2,7 @@ package com.howierux.mortalexpansion.network;
 
 import com.howierux.mortalexpansion.MortalExpansion;
 import com.howierux.mortalexpansion.blockentity.GraveBlockEntity;
+import com.howierux.mortalexpansion.client.GraveNameClientPayloadHandler;
 import io.netty.buffer.ByteBuf;
 import net.minecraft.core.BlockPos;
 import net.minecraft.network.codec.ByteBufCodecs;
@@ -70,7 +71,8 @@ public final class GraveNamePayloads {
 
         registrar.playToClient(
                 OpenGraveName.TYPE,
-                OpenGraveName.STREAM_CODEC
+                OpenGraveName.STREAM_CODEC,
+                GraveNameClientPayloadHandler::handle
         );
 
         registrar.playToServer(
