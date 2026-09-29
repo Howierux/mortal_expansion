@@ -190,7 +190,7 @@ public final class ModBlocks {
             "liquid_ectoplasm",
             properties -> new LiquidBlock(
                     ModFluids.LIQUID_ECTOPLASM.get(),
-                    properties.noCollision().strength(100.0F).noLootTable()
+                    properties
             ),
             BlockBehaviour.Properties.ofFullCopy(Blocks.WATER)
     );
@@ -199,7 +199,7 @@ public final class ModBlocks {
             "holy_water",
             properties -> new HolyWaterLiquidBlock(
                     ModFluids.HOLY_WATER.get(),
-                    properties.noCollision().strength(100.0F).noLootTable()
+                    properties
             ),
             BlockBehaviour.Properties.ofFullCopy(Blocks.WATER)
     );
@@ -208,7 +208,7 @@ public final class ModBlocks {
             "purified_ectoplasm_fluid",
             properties -> new LiquidBlock(
                     ModFluids.PURIFIED_ECTOPLASM.get(),
-                    properties.noCollision().strength(100.0F).noLootTable()
+                    properties
             ),
             BlockBehaviour.Properties.ofFullCopy(Blocks.WATER)
     );
