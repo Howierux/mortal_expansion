@@ -29,5 +29,23 @@ public final class ModCapabilities {
                 ModBlockEntities.ENCHANTMENT_GENERATOR.get(),
                 (blockEntity, side) -> blockEntity.getEnergyStorage()
         );
+
+        event.registerBlockEntity(
+                Capabilities.EnergyStorage.BLOCK,
+                ModBlockEntities.PURIFICATION_STATION.get(),
+                (blockEntity, side) -> blockEntity.getEnergyStorage()
+        );
+
+        event.registerBlockEntity(
+                Capabilities.ItemHandler.BLOCK,
+                ModBlockEntities.PURIFICATION_STATION.get(),
+                (blockEntity, side) -> blockEntity.getAutomationItems()
+        );
+
+        event.registerBlockEntity(
+                Capabilities.FluidHandler.BLOCK,
+                ModBlockEntities.PURIFICATION_STATION.get(),
+                (blockEntity, side) -> blockEntity.getWaterTank()
+        );
     }
 }
