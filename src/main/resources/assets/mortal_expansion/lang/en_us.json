@@ -91,5 +91,6 @@
   "gui.mortal_expansion.grave_name.prompt": "Write the name to appear on this grave.",
   "gui.mortal_expansion.grave_name.save": "Engrave",
   "gui.mortal_expansion.grave_name.skip": "Skip",
-  "block.mortal_expansion.grave_moss": "Grave Moss"
+  "block.mortal_expansion.grave_moss": "Grave Moss",
+  "block.mortal_expansion.purification_ward": "Purification Ward"
 }
