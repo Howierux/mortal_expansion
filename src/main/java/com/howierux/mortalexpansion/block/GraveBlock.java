@@ -6,7 +6,14 @@ import com.howierux.mortalexpansion.haunt.PlayerHauntManager;
 import com.mojang.serialization.MapCodec;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.Direction;
+import net.minecraft.world.entity.LivingEntity;
 import net.minecraft.world.entity.player.Player;
+import net.minecraft.world.item.ItemStack;
+import net.minecraft.world.InteractionResult;
+import net.minecraft.world.phys.BlockHitResult;
+import net.minecraft.server.level.ServerPlayer;
+import net.neoforged.neoforge.network.PacketDistributor;
+import com.howierux.mortalexpansion.network.GraveNamePayloads;
 import net.minecraft.world.item.context.BlockPlaceContext;
 import net.minecraft.world.level.BlockGetter;
 import net.minecraft.world.level.Level;
@@ -114,6 +121,56 @@ public final class GraveBlock extends BaseEntityBlock {
         return this.defaultBlockState()
                 .setValue(FACING, facing)
                 .setValue(DEPTH, depth);
+    }
+
+    @Override
+    public void setPlacedBy(
+            Level level,
+            BlockPos pos,
+            BlockState state,
+            @Nullable LivingEntity placer,
+            ItemStack stack
+    ) {
+        super.setPlacedBy(level, pos, state, placer, stack);
+
+        if (level.isClientSide
+                || !(placer instanceof ServerPlayer player)
+                || player instanceof FakePlayer
+                || !(level.getBlockEntity(pos) instanceof GraveBlockEntity grave)) {
+            return;
+        }
+
+        grave.beginNaming(player);
+        PacketDistributor.sendToPlayer(
+                player,
+                new GraveNamePayloads.OpenGraveName(pos)
+        );
+    }
+
+    @Override
+    protected InteractionResult useWithoutItem(
+            BlockState state,
+            Level level,
+            BlockPos pos,
+            Player player,
+            BlockHitResult hitResult
+    ) {
+        if (level.isClientSide) {
+            return InteractionResult.SUCCESS;
+        }
+
+        if (player instanceof ServerPlayer serverPlayer
+                && !(serverPlayer instanceof FakePlayer)
+                && level.getBlockEntity(pos) instanceof GraveBlockEntity grave
+                && grave.canPlayerName(serverPlayer)) {
+            PacketDistributor.sendToPlayer(
+                    serverPlayer,
+                    new GraveNamePayloads.OpenGraveName(pos)
+            );
+            return InteractionResult.SUCCESS;
+        }
+
+        return InteractionResult.PASS;
     }
 
     @Override
