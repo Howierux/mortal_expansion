@@ -80,6 +80,18 @@ public final class ModAttachments {
                     .build()
     );
 
+    /**
+     * The player's currently selected named-Grave respawn anchor.
+     * Encoded as dimension|x|y|z. Empty means no Grave anchor.
+     */
+    public static final Supplier<AttachmentType<String>> GRAVE_RESPAWN_POINT = ATTACHMENTS.register(
+            "grave_respawn_point",
+            () -> AttachmentType.builder(() -> "")
+                    .serialize(Codec.STRING)
+                    .copyOnDeath()
+                    .build()
+    );
+
     public static void register(IEventBus modBus) {
         ATTACHMENTS.register(modBus);
     }
