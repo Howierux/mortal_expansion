@@ -17,6 +17,7 @@ import net.neoforged.neoforge.energy.EnergyStorage;
 import net.neoforged.neoforge.energy.IEnergyStorage;
 import net.neoforged.neoforge.fluids.FluidStack;
 import net.neoforged.neoforge.fluids.capability.templates.FluidTank;
+import net.neoforged.neoforge.items.IItemHandler;
 import net.neoforged.neoforge.items.ItemStackHandler;
 
 public final class PurificationStationBlockEntity extends BlockEntity {
@@ -66,6 +67,44 @@ public final class PurificationStationBlockEntity extends BlockEntity {
     private final StationEnergyStorage energy =
             new StationEnergyStorage(FE_CAPACITY, FE_MAX_RECEIVE);
 
+    private final IItemHandler automationItems = new IItemHandler() {
+        @Override
+        public int getSlots() {
+            return items.getSlots();
+        }
+
+        @Override
+        public ItemStack getStackInSlot(int slot) {
+            return items.getStackInSlot(slot);
+        }
+
+        @Override
+        public ItemStack insertItem(int slot, ItemStack stack, boolean simulate) {
+            if (slot == SLOT_OUTPUT) {
+                return stack;
+            }
+            return items.insertItem(slot, stack, simulate);
+        }
+
+        @Override
+        public ItemStack extractItem(int slot, int amount, boolean simulate) {
+            if (slot != SLOT_OUTPUT) {
+                return ItemStack.EMPTY;
+            }
+            return items.extractItem(slot, amount, simulate);
+        }
+
+        @Override
+        public int getSlotLimit(int slot) {
+            return items.getSlotLimit(slot);
+        }
+
+        @Override
+        public boolean isItemValid(int slot, ItemStack stack) {
+            return slot != SLOT_OUTPUT && items.isItemValid(slot, stack);
+        }
+    };
+
     private int progress;
     private int feUsed;
 
@@ -74,6 +113,7 @@ public final class PurificationStationBlockEntity extends BlockEntity {
     }
 
     public ItemStackHandler getItems() { return items; }
+    public IItemHandler getAutomationItems() { return automationItems; }
     public FluidTank getWaterTank() { return waterTank; }
     public IEnergyStorage getEnergyStorage() { return energy; }
     public int getProgress() { return progress; }
