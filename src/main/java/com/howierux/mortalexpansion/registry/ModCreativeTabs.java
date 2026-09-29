@@ -30,6 +30,7 @@ public final class ModCreativeTabs {
                         output.accept(ModItems.BLOODSTONE_ORE.get());
 
                         output.accept(ModItems.GRAVESTONE.get());
+                        output.accept(ModItems.GRAVE_MOSS.get());
                         output.accept(ModItems.PURIFIED_GRAVESTONE.get());
                         output.accept(ModItems.GRAVE.get());
                         output.accept(ModItems.STONE_FENCE.get());
