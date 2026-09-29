@@ -1,0 +1,264 @@
+package com.howierux.mortalexpansion.blockentity;
+
+import com.howierux.mortalexpansion.haunt.HauntManager;
+import com.howierux.mortalexpansion.registry.ModBlockEntities;
+import com.howierux.mortalexpansion.registry.ModItems;
+import net.minecraft.core.BlockPos;
+import net.minecraft.core.HolderLookup;
+import net.minecraft.nbt.CompoundTag;
+import net.minecraft.server.level.ServerLevel;
+import net.minecraft.world.inventory.ContainerData;
+import net.minecraft.world.item.ItemStack;
+import net.minecraft.world.level.Level;
+import net.minecraft.world.level.block.entity.BlockEntity;
+import net.minecraft.world.level.block.state.BlockState;
+import net.minecraft.world.level.material.Fluids;
+import net.neoforged.neoforge.energy.EnergyStorage;
+import net.neoforged.neoforge.energy.IEnergyStorage;
+import net.neoforged.neoforge.fluids.FluidStack;
+import net.neoforged.neoforge.fluids.capability.templates.FluidTank;
+import net.neoforged.neoforge.items.ItemStackHandler;
+
+public final class PurificationStationBlockEntity extends BlockEntity {
+    public static final int WATER_PER_CRAFT = 1000;
+    public static final int WATER_CAPACITY = WATER_PER_CRAFT * 10;
+    public static final int FE_PER_CRAFT = 100_000;
+    public static final int PROCESS_TICKS = 60;
+    public static final int FE_CAPACITY = 400_000;
+    public static final int FE_MAX_RECEIVE = 10_000;
+
+    public static final int SLOT_RAW_ECTOPLASM = 0;
+    public static final int SLOT_GRAVE_MOSS = 1;
+    public static final int SLOT_OUTPUT = 2;
+
+    private static final String ITEMS_TAG = "Items";
+    private static final String WATER_TAG = "Water";
+    private static final String ENERGY_TAG = "Energy";
+    private static final String PROGRESS_TAG = "Progress";
+    private static final String FE_USED_TAG = "FeUsed";
+
+    private final ItemStackHandler items = new ItemStackHandler(3) {
+        @Override
+        public boolean isItemValid(int slot, ItemStack stack) {
+            return switch (slot) {
+                case SLOT_RAW_ECTOPLASM -> stack.is(ModItems.RAW_ECTOPLASM.get());
+                case SLOT_GRAVE_MOSS -> stack.is(ModItems.GRAVE_MOSS.get());
+                default -> false;
+            };
+        }
+
+        @Override
+        protected void onContentsChanged(int slot) {
+            setChanged();
+        }
+    };
+
+    private final FluidTank waterTank = new FluidTank(
+            WATER_CAPACITY,
+            stack -> stack.getFluid() == Fluids.WATER
+    ) {
+        @Override
+        protected void onContentsChanged() {
+            setChanged();
+        }
+    };
+
+    private final StationEnergyStorage energy =
+            new StationEnergyStorage(FE_CAPACITY, FE_MAX_RECEIVE);
+
+    private int progress;
+    private int feUsed;
+
+    public PurificationStationBlockEntity(BlockPos pos, BlockState state) {
+        super(ModBlockEntities.PURIFICATION_STATION.get(), pos, state);
+    }
+
+    public ItemStackHandler getItems() { return items; }
+    public FluidTank getWaterTank() { return waterTank; }
+    public IEnergyStorage getEnergyStorage() { return energy; }
+    public int getProgress() { return progress; }
+    public int getFeUsed() { return feUsed; }
+    public boolean isProcessing() { return progress > 0; }
+
+    public ContainerData createMenuData() {
+        return new ContainerData() {
+            @Override
+            public int get(int index) {
+                return switch (index) {
+                    case 0 -> waterTank.getFluidAmount();
+                    case 1 -> WATER_CAPACITY;
+                    case 2 -> energy.getEnergyStored() / 10;
+                    case 3 -> FE_CAPACITY / 10;
+                    case 4 -> progress;
+                    case 5 -> PROCESS_TICKS;
+                    case 6 -> feUsed / 10;
+                    default -> 0;
+                };
+            }
+
+            @Override public void set(int index, int value) {}
+            @Override public int getCount() { return 7; }
+        };
+    }
+
+    public static void serverTick(
+            Level level,
+            BlockPos pos,
+            BlockState state,
+            PurificationStationBlockEntity station
+    ) {
+        if (!(level instanceof ServerLevel serverLevel)) {
+            return;
+        }
+
+        if (station.progress == 0) {
+            station.tryStartCraft();
+        }
+
+        if (station.progress <= 0) {
+            return;
+        }
+
+        int targetUsed = (int)Math.ceil(
+                (double)FE_PER_CRAFT * (station.progress + 1) / PROCESS_TICKS
+        );
+        int neededThisTick = Math.max(0, targetUsed - station.feUsed);
+
+        if (neededThisTick > 0) {
+            int extracted = station.energy.extractEnergy(neededThisTick, false);
+            station.feUsed += extracted;
+
+            if (extracted < neededThisTick) {
+                station.setChanged();
+                return;
+            }
+        }
+
+        station.progress++;
+
+        if (station.progress >= PROCESS_TICKS) {
+            ItemStack output = station.items.getStackInSlot(SLOT_OUTPUT);
+            if (output.isEmpty()) {
+                station.items.setStackInSlot(
+                        SLOT_OUTPUT,
+                        new ItemStack(ModItems.PURE_ECTOPLASM.get())
+                );
+            } else {
+                output.grow(1);
+                station.items.setStackInSlot(SLOT_OUTPUT, output);
+            }
+
+            HauntManager.addPoints(serverLevel, pos, 1);
+            station.progress = 0;
+            station.feUsed = 0;
+            station.setChanged();
+        }
+    }
+
+    private void tryStartCraft() {
+        ItemStack raw = items.getStackInSlot(SLOT_RAW_ECTOPLASM);
+        ItemStack moss = items.getStackInSlot(SLOT_GRAVE_MOSS);
+        ItemStack output = items.getStackInSlot(SLOT_OUTPUT);
+
+        boolean outputSpace = output.isEmpty()
+                || (output.is(ModItems.PURE_ECTOPLASM.get())
+                && output.getCount() < output.getMaxStackSize());
+
+        if (!raw.is(ModItems.RAW_ECTOPLASM.get())
+                || !moss.is(ModItems.GRAVE_MOSS.get())
+                || waterTank.getFluidAmount() < WATER_PER_CRAFT
+                || !outputSpace) {
+            return;
+        }
+
+        items.extractItem(SLOT_RAW_ECTOPLASM, 1, false);
+        items.extractItem(SLOT_GRAVE_MOSS, 1, false);
+        waterTank.drain(WATER_PER_CRAFT, net.neoforged.neoforge.fluids.capability.IFluidHandler.FluidAction.EXECUTE);
+
+        progress = 1;
+        feUsed = 0;
+        setChanged();
+    }
+
+    public void dropUnprocessedInventory(ServerLevel level) {
+        for (int slot : new int[]{SLOT_RAW_ECTOPLASM, SLOT_GRAVE_MOSS, SLOT_OUTPUT}) {
+            ItemStack stack = items.getStackInSlot(slot);
+            if (!stack.isEmpty()) {
+                net.minecraft.world.Containers.dropItemStack(
+                        level,
+                        worldPosition.getX() + 0.5,
+                        worldPosition.getY() + 0.5,
+                        worldPosition.getZ() + 0.5,
+                        stack.copy()
+                );
+                items.setStackInSlot(slot, ItemStack.EMPTY);
+            }
+        }
+    }
+
+    public CompoundTag savePortableData(HolderLookup.Provider registries) {
+        CompoundTag tag = new CompoundTag();
+        tag.putInt("StoredWater", waterTank.getFluidAmount());
+        tag.putInt("StoredEnergy", energy.getEnergyStored());
+        return tag;
+    }
+
+    public void loadPortableData(CompoundTag tag) {
+        int water = Math.max(0, Math.min(WATER_CAPACITY, tag.getInt("StoredWater")));
+        if (water > 0) {
+            waterTank.setFluid(new FluidStack(Fluids.WATER, water));
+        }
+
+        int storedEnergy = Math.max(0, Math.min(FE_CAPACITY, tag.getInt("StoredEnergy")));
+        energy.setEnergy(storedEnergy);
+        setChanged();
+    }
+
+    @Override
+    public void loadAdditional(CompoundTag tag, HolderLookup.Provider registries) {
+        super.loadAdditional(tag, registries);
+        items.deserializeNBT(registries, tag.getCompound(ITEMS_TAG));
+        waterTank.readFromNBT(registries, tag.getCompound(WATER_TAG));
+        if (tag.contains(ENERGY_TAG)) {
+            energy.deserializeNBT(registries, tag.get(ENERGY_TAG));
+        }
+        progress = Math.max(0, Math.min(PROCESS_TICKS, tag.getInt(PROGRESS_TAG)));
+        feUsed = Math.max(0, Math.min(FE_PER_CRAFT, tag.getInt(FE_USED_TAG)));
+    }
+
+    @Override
+    protected void saveAdditional(CompoundTag tag, HolderLookup.Provider registries) {
+        super.saveAdditional(tag, registries);
+        tag.put(ITEMS_TAG, items.serializeNBT(registries));
+        CompoundTag waterTag = new CompoundTag();
+        waterTank.writeToNBT(registries, waterTag);
+        tag.put(WATER_TAG, waterTag);
+        tag.put(ENERGY_TAG, energy.serializeNBT(registries));
+        tag.putInt(PROGRESS_TAG, progress);
+        tag.putInt(FE_USED_TAG, feUsed);
+    }
+
+    private final class StationEnergyStorage extends EnergyStorage {
+        StationEnergyStorage(int capacity, int maxReceive) {
+            super(capacity, maxReceive, FE_PER_CRAFT);
+        }
+
+        void setEnergy(int amount) {
+            this.energy = Math.max(0, Math.min(capacity, amount));
+        }
+
+        @Override
+        public int receiveEnergy(int maxReceive, boolean simulate) {
+            int received = super.receiveEnergy(maxReceive, simulate);
+            if (received > 0 && !simulate) {
+                PurificationStationBlockEntity.this.setChanged();
+            }
+            return received;
+        }
+
+        @Override
+        public boolean canExtract() {
+            return false;
+        }
+    }
+}
