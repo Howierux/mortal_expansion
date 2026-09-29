@@ -47,6 +47,9 @@ public final class ModItems {
     public static final DeferredItem<BlockItem> GRAVESTONE =
             ITEMS.registerSimpleBlockItem(ModBlocks.GRAVESTONE);
 
+    public static final DeferredItem<BlockItem> GRAVE_MOSS =
+            ITEMS.registerSimpleBlockItem(ModBlocks.GRAVE_MOSS);
+
     public static final DeferredItem<BlockItem> PURIFIED_GRAVESTONE =
             ITEMS.registerSimpleBlockItem(ModBlocks.PURIFIED_GRAVESTONE);
     public static final DeferredItem<BlockItem> PURIFIED_SPIRITWOOD_LOG =
