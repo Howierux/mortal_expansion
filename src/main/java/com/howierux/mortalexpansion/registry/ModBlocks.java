@@ -192,7 +192,10 @@ public final class ModBlocks {
                     ModFluids.LIQUID_ECTOPLASM.get(),
                     properties
             ),
-            BlockBehaviour.Properties.ofFullCopy(Blocks.WATER)
+            BlockBehaviour.Properties.of()
+                    .noCollission()
+                    .strength(100.0F)
+                    .noLootTable()
     );
 
     public static final DeferredBlock<HolyWaterLiquidBlock> HOLY_WATER_BLOCK = BLOCKS.registerBlock(
@@ -201,7 +204,10 @@ public final class ModBlocks {
                     ModFluids.HOLY_WATER.get(),
                     properties
             ),
-            BlockBehaviour.Properties.ofFullCopy(Blocks.WATER)
+            BlockBehaviour.Properties.of()
+                    .noCollission()
+                    .strength(100.0F)
+                    .noLootTable()
     );
 
     public static final DeferredBlock<LiquidBlock> PURIFIED_ECTOPLASM_BLOCK = BLOCKS.registerBlock(
@@ -210,7 +216,10 @@ public final class ModBlocks {
                     ModFluids.PURIFIED_ECTOPLASM.get(),
                     properties
             ),
-            BlockBehaviour.Properties.ofFullCopy(Blocks.WATER)
+            BlockBehaviour.Properties.of()
+                    .noCollission()
+                    .strength(100.0F)
+                    .noLootTable()
     );
 
     public static final DeferredBlock<EctoCauldronBlock> LIQUID_ECTOPLASM_CAULDRON = BLOCKS.registerBlock(
