@@ -13,7 +13,6 @@ import net.minecraft.world.level.StructureManager;
 import net.minecraft.world.level.WorldGenLevel;
 import net.minecraft.world.level.block.Blocks;
 import net.minecraft.world.level.block.FenceBlock;
-import net.minecraft.world.level.block.MultifaceBlock;
 import net.minecraft.world.level.block.state.BlockState;
 import net.minecraft.world.level.chunk.ChunkGenerator;
 import net.minecraft.world.level.levelgen.Heightmap;
@@ -309,15 +308,6 @@ public final class GraveyardCemeteryPiece extends StructurePiece {
                 ModBlocks.STONE_FENCE.get().defaultBlockState()
         );
 
-        decorateMausoleumWithGraveMoss(
-                level,
-                chunkBB,
-                random,
-                centerX,
-                centerZ,
-                floorY
-        );
-
         BlockPos interiorGravePos = new BlockPos(centerX, floorY + 1, centerZ - 1);
         placeIfInside(
                 level,
@@ -331,87 +321,6 @@ public final class GraveyardCemeteryPiece extends StructurePiece {
         if (chunkBB.isInside(interiorGravePos)) {
             markNaturalGrave(level, interiorGravePos);
         }
-    }
-
-    private static void decorateMausoleumWithGraveMoss(
-            WorldGenLevel level,
-            BoundingBox chunkBB,
-            RandomSource random,
-            int centerX,
-            int centerZ,
-            int floorY
-    ) {
-        for (int dy = 1; dy <= 3; dy++) {
-            for (int offset = -2; offset <= 2; offset++) {
-                tryPlaceGraveMoss(
-                        level, chunkBB, random,
-                        new BlockPos(centerX - 3, floorY + dy, centerZ + offset),
-                        Direction.EAST, 0.22F
-                );
-                tryPlaceGraveMoss(
-                        level, chunkBB, random,
-                        new BlockPos(centerX + 3, floorY + dy, centerZ + offset),
-                        Direction.WEST, 0.22F
-                );
-                tryPlaceGraveMoss(
-                        level, chunkBB, random,
-                        new BlockPos(centerX + offset, floorY + dy, centerZ - 3),
-                        Direction.SOUTH, 0.22F
-                );
-                tryPlaceGraveMoss(
-                        level, chunkBB, random,
-                        new BlockPos(centerX + offset, floorY + dy, centerZ + 3),
-                        Direction.NORTH, 0.22F
-                );
-            }
-        }
-
-        for (int dx = -2; dx <= 2; dx++) {
-            for (int dz = -2; dz <= 2; dz++) {
-                tryPlaceGraveMoss(
-                        level, chunkBB, random,
-                        new BlockPos(centerX + dx, floorY + 5, centerZ + dz),
-                        Direction.DOWN, 0.28F
-                );
-            }
-        }
-    }
-
-    private static void tryPlaceGraveMoss(
-            WorldGenLevel level,
-            BoundingBox chunkBB,
-            RandomSource random,
-            BlockPos mossPos,
-            Direction supportDirection,
-            float chance
-    ) {
-        if (!chunkBB.isInside(mossPos) || random.nextFloat() >= chance) {
-            return;
-        }
-
-        BlockPos supportPos = mossPos.relative(supportDirection);
-        if (!chunkBB.isInside(supportPos)
-                || !level.getBlockState(supportPos).is(ModBlocks.GRAVESTONE.get())) {
-            return;
-        }
-
-        BlockState existing = level.getBlockState(mossPos);
-        if (!existing.isAir() && !existing.is(ModBlocks.GRAVE_MOSS.get())) {
-            return;
-        }
-
-        BlockState mossState = existing.is(ModBlocks.GRAVE_MOSS.get())
-                ? existing
-                : ModBlocks.GRAVE_MOSS.get().defaultBlockState();
-
-        level.setBlock(
-                mossPos,
-                mossState.setValue(
-                        MultifaceBlock.getFaceProperty(supportDirection),
-                        true
-                ),
-                2
-        );
     }
 
     private static void placeIfInside(
