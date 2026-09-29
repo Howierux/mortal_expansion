@@ -63,6 +63,7 @@ public final class ModCreativeTabs {
                         output.accept(ModItems.ECTOPLASMIC_GENERATOR.get());
                         output.accept(ModItems.ENCHANTMENT_GENERATOR.get());
                         output.accept(ModItems.PURIFICATION_WARD.get());
+                        output.accept(ModItems.PURIFICATION_STATION.get());
 
                         output.accept(ModItems.GRAVESTONE_SWORD.get());
                         output.accept(ModItems.PURIFIED_GRAVESTONE_SWORD.get());
