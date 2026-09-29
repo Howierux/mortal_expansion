@@ -1,0 +1,13 @@
+{
+  "type": "minecraft:crafting_shapeless",
+  "category": "misc",
+  "ingredients": [
+    { "item": "mortal_expansion:raw_ectoplasm" },
+    { "item": "mortal_expansion:grave_moss" },
+    { "item": "minecraft:water_bucket" }
+  ],
+  "result": {
+    "id": "mortal_expansion:pure_ectoplasm",
+    "count": 1
+  }
+}
