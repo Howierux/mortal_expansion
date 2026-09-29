@@ -85,5 +85,10 @@
   "gui.mortal_expansion.enchantment_generator.remaining": "Remaining Enchantment Energy: %s FE",
   "gui.mortal_expansion.enchantment_generator.output": "Current Output: %s FE/t",
   "gui.mortal_expansion.enchantment_generator.ready": "Disenchanted item ready - empty-hand right-click to retrieve",
-  "message.mortal_expansion.enchantment_generator.started": "Enchantment extraction started: %s FE at %s FE/t"
+  "message.mortal_expansion.enchantment_generator.started": "Enchantment extraction started: %s FE at %s FE/t",
+  "gui.mortal_expansion.grave_name.title": "Grave Inscription",
+  "gui.mortal_expansion.grave_name.field": "Name",
+  "gui.mortal_expansion.grave_name.prompt": "Write the name to appear on this grave.",
+  "gui.mortal_expansion.grave_name.save": "Engrave",
+  "gui.mortal_expansion.grave_name.skip": "Skip"
 }
