@@ -4,36 +4,29 @@ import com.howierux.mortalexpansion.blockentity.GraveBlockEntity;
 import com.howierux.mortalexpansion.haunt.PlayerHauntManager;
 import com.howierux.mortalexpansion.registry.ModAttachments;
 import net.minecraft.core.BlockPos;
-import net.minecraft.core.GlobalPos;
 import net.minecraft.core.registries.Registries;
 import net.minecraft.resources.ResourceKey;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.server.level.ServerLevel;
 import net.minecraft.server.level.ServerPlayer;
 import net.minecraft.world.level.Level;
-import net.minecraft.world.level.storage.LevelData;
+import net.minecraft.world.level.portal.DimensionTransition;
+import net.minecraft.world.phys.Vec3;
 import net.neoforged.bus.api.SubscribeEvent;
-import net.neoforged.neoforge.event.entity.player.PlayerEvent;
-import net.neoforged.neoforge.event.tick.PlayerTickEvent;
+import net.neoforged.neoforge.event.entity.player.PlayerRespawnPositionEvent;
 
 import javax.annotation.Nullable;
-import java.util.HashMap;
-import java.util.Map;
-import java.util.UUID;
 
 public final class GraveRespawnHandler {
     private GraveRespawnHandler() {}
 
-    private static final Map<UUID, RestoreSpawn> RESTORE_SPAWNS = new HashMap<>();
-
-    private record RestoreSpawn(@Nullable ServerPlayer.RespawnConfig config) {}
-
     @SubscribeEvent
-    public static void onPlayerRespawn(PlayerEvent.PlayerRespawnEvent event) {
-        if (event.isEndConquered() || !(event.getEntity() instanceof ServerPlayer player)) {
+    public static void onRespawnPosition(PlayerRespawnPositionEvent event) {
+        if (event.isFromEndFight()) {
             return;
         }
 
+        ServerPlayer player = (ServerPlayer) event.getEntity();
         String encoded = player.getData(ModAttachments.GRAVE_RESPAWN_POINT);
         GraveTarget target = GraveTarget.parse(encoded);
         if (target == null) {
@@ -42,6 +35,7 @@ public final class GraveRespawnHandler {
 
         ServerLevel targetLevel = player.getServer().getLevel(target.dimension());
         if (targetLevel == null) {
+            player.setData(ModAttachments.GRAVE_RESPAWN_POINT, "");
             return;
         }
 
@@ -51,38 +45,27 @@ public final class GraveRespawnHandler {
             return;
         }
 
-        ServerPlayer.RespawnConfig previous = player.getRespawnConfig();
-        RESTORE_SPAWNS.put(player.getUUID(), new RestoreSpawn(previous));
+        BlockPos spawnPos = target.pos().above();
 
-        BlockPos respawnPos = target.pos().above();
-        player.setRespawnPosition(
-                new ServerPlayer.RespawnConfig(
-                        new LevelData.RespawnData(
-                                GlobalPos.of(target.dimension(), respawnPos),
-                                player.getYRot(),
-                                0
-                        ),
-                        true
-                ),
-                false
+        event.setDimensionTransition(
+                new DimensionTransition(
+                        targetLevel,
+                        Vec3.atBottomCenterOf(spawnPos),
+                        Vec3.ZERO,
+                        player.getYRot(),
+                        player.getXRot(),
+                        false,
+                        DimensionTransition.DO_NOTHING
+                )
         );
+
+        // Preserve the player's ordinary bed/world spawn for future fallback.
+        event.setCopyOriginalSpawnPosition(true);
 
         if (!grave.isNaturallyGenerated()) {
             PlayerHauntManager.addPoints(player, 1);
             targetLevel.destroyBlock(target.pos(), false);
             player.setData(ModAttachments.GRAVE_RESPAWN_POINT, "");
-        }
-    }
-
-    @SubscribeEvent
-    public static void onPlayerTick(PlayerTickEvent.Post event) {
-        if (!(event.getEntity() instanceof ServerPlayer player)) {
-            return;
-        }
-
-        RestoreSpawn restore = RESTORE_SPAWNS.remove(player.getUUID());
-        if (restore != null) {
-            player.setRespawnPosition(restore.config(), false);
         }
     }
 
