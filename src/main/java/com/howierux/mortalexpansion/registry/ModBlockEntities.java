@@ -5,6 +5,7 @@ import com.howierux.mortalexpansion.blockentity.EctchantmentMachineBlockEntity;
 import com.howierux.mortalexpansion.blockentity.EctoplasmicGeneratorBlockEntity;
 import com.howierux.mortalexpansion.blockentity.EnchantmentGeneratorBlockEntity;
 import com.howierux.mortalexpansion.blockentity.GraveBlockEntity;
+import com.howierux.mortalexpansion.blockentity.PurificationWardBlockEntity;
 import net.minecraft.core.registries.Registries;
 import net.minecraft.world.level.block.entity.BlockEntityType;
 import net.neoforged.bus.api.IEventBus;
@@ -42,6 +43,15 @@ public final class ModBlockEntities {
                     () -> BlockEntityType.Builder.of(
                             EnchantmentGeneratorBlockEntity::new,
                             ModBlocks.ENCHANTMENT_GENERATOR.get()
+                    ).build(null)
+            );
+
+    public static final Supplier<BlockEntityType<PurificationWardBlockEntity>> PURIFICATION_WARD =
+            BLOCK_ENTITY_TYPES.register(
+                    "purification_ward",
+                    () -> BlockEntityType.Builder.of(
+                            PurificationWardBlockEntity::new,
+                            ModBlocks.PURIFICATION_WARD.get()
                     ).build(null)
             );
 
