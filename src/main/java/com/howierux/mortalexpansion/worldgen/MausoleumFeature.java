@@ -1,6 +1,7 @@
 package com.howierux.mortalexpansion.worldgen;
 
 import com.howierux.mortalexpansion.block.GraveBlock;
+import com.howierux.mortalexpansion.blockentity.GraveBlockEntity;
 import com.howierux.mortalexpansion.registry.ModBlocks;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.Direction;
@@ -126,13 +127,18 @@ public final class MausoleumFeature extends Feature<NoneFeatureConfiguration> {
 
         // One Grave marker against the rear interior wall.
         Direction facing = random.nextBoolean() ? Direction.SOUTH : Direction.NORTH;
+        BlockPos gravePos = new BlockPos(centerX, floorY + 1, centerZ - 1);
         level.setBlock(
-                new BlockPos(centerX, floorY + 1, centerZ - 1),
+                gravePos,
                 ModBlocks.GRAVE.get().defaultBlockState()
                         .setValue(GraveBlock.FACING, facing)
-                        .setValue(GraveBlock.DEPTH, 1),
-                3
+                        .setValue(GraveBlock.DEPTH, 1)
+                        .setValue(GraveBlock.NATURAL, true),
+                2
         );
+        if (level.getBlockEntity(gravePos) instanceof GraveBlockEntity grave) {
+            grave.markNaturallyGeneratedFromWorldgen();
+        }
 
         return true;
     }
