@@ -14,7 +14,7 @@ import net.minecraft.world.item.ItemStack;
 import net.neoforged.neoforge.items.SlotItemHandler;
 
 public final class PurificationStationMenu extends AbstractContainerMenu {
-    public static final int DATA_COUNT = 7;
+    public static final int DATA_COUNT = 8;
     private static final int MACHINE_SLOTS = 4;
 
     private final ContainerData data;
@@ -115,6 +115,7 @@ public final class PurificationStationMenu extends AbstractContainerMenu {
     public int getProgress() { return data.get(4); }
     public int getMaxProgress() { return data.get(5); }
     public int getFeUsed() { return data.get(6) * 10; }
+    public int getRecentFeInput() { return data.get(7); }
 
     @Override
     public ItemStack quickMoveStack(Player player, int index) {
