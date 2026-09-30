@@ -10,6 +10,7 @@ import net.minecraft.world.entity.player.Inventory;
 public final class PurificationStationScreen
         extends AbstractContainerScreen<PurificationStationMenu> {
 
+    private static final int MACHINE_HEIGHT = 112;
     private static final ResourceLocation INVENTORY_BACKGROUND =
             ResourceLocation.withDefaultNamespace(
                     "textures/gui/container/generic_54.png"
@@ -22,8 +23,8 @@ public final class PurificationStationScreen
     ) {
         super(menu, inventory, title);
         this.imageWidth = 176;
-        this.imageHeight = 178;
-        this.inventoryLabelY = 84;
+        this.imageHeight = 208;
+        this.inventoryLabelY = 114;
     }
 
     @Override
@@ -36,55 +37,37 @@ public final class PurificationStationScreen
         int x = leftPos;
         int y = topPos;
 
-        graphics.fill(x, y, x + imageWidth, y + 82, 0xFF20282D);
-        graphics.fill(x + 5, y + 5, x + imageWidth - 5, y + 81, 0xFF35434A);
+        graphics.fill(x, y, x + imageWidth, y + MACHINE_HEIGHT, 0xFF20282D);
+        graphics.fill(x + 5, y + 5, x + imageWidth - 5, y + MACHINE_HEIGHT - 1, 0xFF35434A);
 
         graphics.blit(
                 INVENTORY_BACKGROUND,
                 x,
-                y + 82,
+                y + MACHINE_HEIGHT,
                 0,
                 126,
                 imageWidth,
                 96
         );
 
-        slotFrame(graphics, x + 43, y + 34);
-        slotFrame(graphics, x + 43, y + 58);
-        slotFrame(graphics, x + 115, y + 46);
-        slotFrame(graphics, x + 67, y + 28);
+        slotFrame(graphics, x + 43, y + 49);
+        slotFrame(graphics, x + 43, y + 73);
+        slotFrame(graphics, x + 115, y + 61);
+        slotFrame(graphics, x + 67, y + 43);
 
         drawVerticalBar(
-                graphics,
-                x + 15,
-                y + 28,
-                14,
-                48,
-                menu.getWater(),
-                menu.getWaterCapacity(),
-                0xFF4D8DFF
+                graphics, x + 15, y + 35, 14, 50,
+                menu.getWater(), menu.getWaterCapacity(), 0xFF4D8DFF
         );
 
         drawVerticalBar(
-                graphics,
-                x + 147,
-                y + 28,
-                14,
-                48,
-                menu.getEnergy(),
-                menu.getEnergyCapacity(),
-                0xFFD34BFF
+                graphics, x + 147, y + 35, 14, 50,
+                menu.getEnergy(), menu.getEnergyCapacity(), 0xFFD34BFF
         );
 
         drawHorizontalBar(
-                graphics,
-                x + 68,
-                y + 48,
-                35,
-                10,
-                menu.getProgress(),
-                menu.getMaxProgress(),
-                0xFFE8F7F2
+                graphics, x + 68, y + 99, 35, 8,
+                menu.getProgress(), menu.getMaxProgress(), 0xFFE8F7F2
         );
     }
 
@@ -99,10 +82,7 @@ public final class PurificationStationScreen
                         menu.getWater(),
                         menu.getWaterCapacity()
                 ),
-                8,
-                18,
-                0xFFFFFF,
-                false
+                8, 20, 0xFFFFFF, false
         );
 
         graphics.drawString(
@@ -112,10 +92,7 @@ public final class PurificationStationScreen
                         menu.getEnergy(),
                         menu.getEnergyCapacity()
                 ),
-                92,
-                18,
-                0xFFFFFF,
-                false
+                92, 20, 0xFFFFFF, false
         );
 
         graphics.drawString(
@@ -125,10 +102,7 @@ public final class PurificationStationScreen
                         menu.getProgress(),
                         menu.getMaxProgress()
                 ),
-                62,
-                64,
-                0xFFFFFF,
-                false
+                62, 88, 0xFFFFFF, false
         );
 
         graphics.drawString(
