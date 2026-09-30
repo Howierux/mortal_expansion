@@ -11,6 +11,7 @@ import net.minecraft.world.entity.player.Inventory;
 public final class EctchantmentMachineScreen
         extends AbstractContainerScreen<EctchantmentMachineMenu> {
 
+    private static final int MACHINE_HEIGHT = 112;
     private static final ResourceLocation INVENTORY_BACKGROUND =
             ResourceLocation.withDefaultNamespace(
                     "textures/gui/container/generic_54.png"
@@ -23,8 +24,8 @@ public final class EctchantmentMachineScreen
     ) {
         super(menu, inventory, title);
         this.imageWidth = 176;
-        this.imageHeight = 178;
-        this.inventoryLabelY = 84;
+        this.imageHeight = 208;
+        this.inventoryLabelY = 114;
     }
 
     @Override
@@ -37,27 +38,27 @@ public final class EctchantmentMachineScreen
         int x = leftPos;
         int y = topPos;
 
-        graphics.fill(x, y, x + imageWidth, y + 82, 0xFF20242A);
-        graphics.fill(x + 5, y + 5, x + imageWidth - 5, y + 81, 0xFF343A40);
+        graphics.fill(x, y, x + imageWidth, y + MACHINE_HEIGHT, 0xFF20242A);
+        graphics.fill(x + 5, y + 5, x + imageWidth - 5, y + MACHINE_HEIGHT - 1, 0xFF343A40);
 
         graphics.blit(
                 INVENTORY_BACKGROUND,
                 x,
-                y + 82,
+                y + MACHINE_HEIGHT,
                 0,
                 126,
                 imageWidth,
                 96
         );
 
-        slotFrame(graphics, x + 43, y + 42);
-        slotFrame(graphics, x + 79, y + 42);
-        slotFrame(graphics, x + 115, y + 42);
+        slotFrame(graphics, x + 43, y + 57);
+        slotFrame(graphics, x + 79, y + 57);
+        slotFrame(graphics, x + 115, y + 57);
 
         drawBar(
                 graphics,
                 x + 14,
-                y + 22,
+                y + 31,
                 148,
                 8,
                 menu.getEctoplasmicCharge(),
@@ -68,7 +69,7 @@ public final class EctchantmentMachineScreen
         drawBar(
                 graphics,
                 x + 14,
-                y + 70,
+                y + 102,
                 148,
                 8,
                 menu.getEnergyStored(),
@@ -88,47 +89,26 @@ public final class EctchantmentMachineScreen
                         menu.getEctoplasmicCharge(),
                         menu.getMaxEctoplasmicCharge()
                 ),
-                14,
-                14,
-                0xFFFFFF,
-                false
+                14, 20, 0xFFFFFF, false
         );
 
         graphics.drawString(
                 font,
                 Component.translatable("gui.mortal_expansion.ectchantment_machine.input"),
-                39,
-                33,
-                0xFFFFFF,
-                false
+                39, 46, 0xFFFFFF, false
         );
-
         graphics.drawString(
                 font,
                 Component.translatable("gui.mortal_expansion.ectchantment_machine.ecto_slot"),
-                76,
-                33,
-                0xFFFFFF,
-                false
+                76, 46, 0xFFFFFF, false
         );
-
         graphics.drawString(
                 font,
                 Component.translatable("gui.mortal_expansion.ectchantment_machine.output"),
-                109,
-                33,
-                0xFFFFFF,
-                false
+                109, 46, 0xFFFFFF, false
         );
 
-        graphics.drawString(
-                font,
-                statusText(),
-                14,
-                61,
-                0xFFFFFF,
-                false
-        );
+        graphics.drawString(font, statusText(), 14, 80, 0xFFFFFF, false);
 
         graphics.drawString(
                 font,
@@ -137,10 +117,7 @@ public final class EctchantmentMachineScreen
                         menu.getEnergyStored(),
                         menu.getEnergyCapacity()
                 ),
-                14,
-                80,
-                0x404040,
-                false
+                14, 91, 0xFFFFFF, false
         );
 
         graphics.drawString(
@@ -190,21 +167,9 @@ public final class EctchantmentMachineScreen
             int fillColor
     ) {
         graphics.fill(x, y, x + width, y + height, 0xFF15181C);
+        if (max <= 0 || value <= 0) return;
 
-        if (max <= 0 || value <= 0) {
-            return;
-        }
-
-        int filled = Math.min(
-                width,
-                Math.max(0, (int)((long)width * value / max))
-        );
-        graphics.fill(
-                x + 1,
-                y + 1,
-                x + filled - 1,
-                y + height - 1,
-                fillColor
-        );
+        int filled = Math.min(width, Math.max(0, (int)((long)width * value / max)));
+        graphics.fill(x + 1, y + 1, x + filled - 1, y + height - 1, fillColor);
     }
 }
