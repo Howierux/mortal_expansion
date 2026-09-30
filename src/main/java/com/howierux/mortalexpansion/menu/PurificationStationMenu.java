@@ -93,8 +93,8 @@ public final class PurificationStationMenu extends AbstractContainerMenu {
         addSlot(new SlotItemHandler(
                 station.getItems(),
                 PurificationStationBlockEntity.SLOT_WATER_BUCKET,
-                68,
-                44
+                13,
+                88
         ));
 
         for (int row = 0; row < 3; row++) {
