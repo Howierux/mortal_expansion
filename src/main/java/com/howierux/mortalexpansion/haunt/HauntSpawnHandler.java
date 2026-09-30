@@ -16,9 +16,11 @@ import net.neoforged.neoforge.event.entity.living.FinalizeSpawnEvent;
 /**
  * Applies Mortal Expansion's dynamic Haunt requirements to natural mob spawns.
  *
- * NATURAL and CHUNK_GENERATION spawns are modified. Spawners, commands,
- * conversions, structures, summons, boss mechanics and other explicit spawn
- * sources keep their normal behavior.
+ * NATURAL runtime spawns are modified. CHUNK_GENERATION is deliberately
+ * excluded because querying persistent chunk Haunt through ServerLevel while
+ * that chunk is still in the worldgen pipeline can recursively request chunk
+ * generation and stall spawn-region creation. Spawners, commands, structures,
+ * summons and other explicit spawn sources keep their normal behavior.
  */
 public final class HauntSpawnHandler {
     private HauntSpawnHandler() {}
@@ -154,8 +156,7 @@ public final class HauntSpawnHandler {
     }
 
     private static boolean isWorldSpawn(MobSpawnType spawnType) {
-        return spawnType == MobSpawnType.NATURAL
-                || spawnType == MobSpawnType.CHUNK_GENERATION;
+        return spawnType == MobSpawnType.NATURAL;
     }
 
     private static void cancelBelow(
