@@ -9,7 +9,7 @@ import net.minecraft.world.inventory.SimpleContainerData;
 import net.minecraft.world.item.ItemStack;
 
 public final class EctchantmentMachineMenu extends AbstractContainerMenu {
-    public static final int DATA_COUNT = 4;
+    public static final int DATA_COUNT = 5;
 
     private final ContainerData data;
 
@@ -42,6 +42,10 @@ public final class EctchantmentMachineMenu extends AbstractContainerMenu {
 
     public int getEnergyCapacity() {
         return data.get(3) * 10;
+    }
+
+    public int getRecentFeInput() {
+        return data.get(4);
     }
 
     @Override
