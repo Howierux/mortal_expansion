@@ -106,5 +106,12 @@
   "block.mortal_expansion.holy_water_cauldron": "Holy Water Cauldron",
   "block.mortal_expansion.purified_ectoplasm_cauldron": "Purified Ectoplasm Cauldron",
   "gui.mortal_expansion.machine.fe_input": "Input: %s FE/t",
-  "message.mortal_expansion.ectchantment_machine.transmuted": "Ectchanted into %s"
+  "message.mortal_expansion.ectchantment_machine.transmuted": "Ectchanted into %s",
+  "gui.mortal_expansion.ectchantment_machine.input": "Input",
+  "gui.mortal_expansion.ectchantment_machine.fuel": "Fuel",
+  "gui.mortal_expansion.ectchantment_machine.output": "Output",
+  "gui.mortal_expansion.ectchantment_machine.status.idle": "Ready",
+  "gui.mortal_expansion.ectchantment_machine.status.needs_resource": "Needs ectoplasmic charge or 40,000 FE",
+  "gui.mortal_expansion.ectchantment_machine.status.invalid": "Invalid or already ectchanted input",
+  "gui.mortal_expansion.ectchantment_machine.status.output_ready": "Output ready"
 }
