@@ -11,7 +11,6 @@ import com.howierux.mortalexpansion.client.screen.EctoplasmicGeneratorScreen;
 import com.howierux.mortalexpansion.client.screen.EnchantmentGeneratorScreen;
 import com.howierux.mortalexpansion.client.screen.PurificationStationScreen;
 import net.minecraft.resources.ResourceLocation;
-import net.minecraft.world.level.block.RedStoneWireBlock;
 import net.minecraft.client.renderer.BiomeColors;
 import net.minecraft.world.entity.EntityType;
 import net.minecraft.world.level.FoliageColor;
@@ -170,14 +169,6 @@ public final class ModClientEvents {
                 (state, level, pos, tintIndex) -> 0xFFC6F4FF,
                 ModBlocks.PURIFIED_ECTOPLASM_CAULDRON.get()
         );
-        event.register(
-                (state, level, pos, tintIndex) -> {
-                    int power = state.getValue(RedStoneWireBlock.POWER);
-                    int shade = 150 + (int)(105.0F * power / 15.0F);
-                    return (shade << 16) | (shade << 8) | shade;
-                },
-                ModBlocks.HOLY_SALT.get()
-        );
     }
 
     @SubscribeEvent
@@ -202,10 +193,6 @@ public final class ModClientEvents {
                 ModItems.GRAVE_MOSS.get()
         );
 
-        event.register(
-                (stack, tintIndex) -> 0xFFFFFFFF,
-                ModItems.HOLY_SALT.get()
-        );
 
         DynamicFluidContainerModel.Colors fluidBucketColors =
                 new DynamicFluidContainerModel.Colors();
