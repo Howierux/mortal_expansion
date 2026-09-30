@@ -116,6 +116,8 @@ public final class PurificationStationBlockEntity extends BlockEntity {
 
     private int progress;
     private int feUsed;
+    private int recentFeInput;
+    private long recentFeInputTick = Long.MIN_VALUE;
 
     public PurificationStationBlockEntity(BlockPos pos, BlockState state) {
         super(ModBlockEntities.PURIFICATION_STATION.get(), pos, state);
@@ -127,6 +129,14 @@ public final class PurificationStationBlockEntity extends BlockEntity {
     public IEnergyStorage getEnergyStorage() { return energy; }
     public int getProgress() { return progress; }
     public int getFeUsed() { return feUsed; }
+    public int getRecentFeInput() {
+        if (level == null || recentFeInputTick == Long.MIN_VALUE) {
+            return 0;
+        }
+        return level.getGameTime() - recentFeInputTick <= 2L
+                ? recentFeInput
+                : 0;
+    }
     public boolean isProcessing() { return progress > 0; }
 
     public ContainerData createMenuData() {
@@ -141,12 +151,13 @@ public final class PurificationStationBlockEntity extends BlockEntity {
                     case 4 -> progress;
                     case 5 -> PROCESS_TICKS;
                     case 6 -> feUsed / 10;
+                    case 7 -> getRecentFeInput();
                     default -> 0;
                 };
             }
 
             @Override public void set(int index, int value) {}
-            @Override public int getCount() { return 7; }
+            @Override public int getCount() { return 8; }
         };
     }
 
@@ -326,6 +337,11 @@ public final class PurificationStationBlockEntity extends BlockEntity {
         public int receiveEnergy(int maxReceive, boolean simulate) {
             int received = super.receiveEnergy(maxReceive, simulate);
             if (received > 0 && !simulate) {
+                PurificationStationBlockEntity.this.recentFeInput = received;
+                if (PurificationStationBlockEntity.this.level != null) {
+                    PurificationStationBlockEntity.this.recentFeInputTick =
+                            PurificationStationBlockEntity.this.level.getGameTime();
+                }
                 PurificationStationBlockEntity.this.setChanged();
             }
             return received;
