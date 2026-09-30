@@ -2,7 +2,6 @@ package com.howierux.mortalexpansion.entity.mob;
 
 import net.minecraft.core.BlockPos;
 import net.minecraft.nbt.CompoundTag;
-import com.howierux.mortalexpansion.entity.IntangibleEntities;
 import net.minecraft.tags.FluidTags;
 import net.minecraft.world.entity.EntityType;
 import net.minecraft.world.entity.MoverType;
@@ -27,33 +26,12 @@ import javax.annotation.Nullable;
 import java.util.UUID;
 
 public abstract class AbstractMortalMonster extends Monster {
-    private static final double HOVER_BASE = 0.08D;
-    private static final double HOVER_AMPLITUDE = 0.035D;
-    private static final double HOVER_SPEED = 0.12D;
-
-    private double appliedHoverOffset;
     @Nullable
     private UUID alliedOwner;
     protected AbstractMortalMonster(EntityType<? extends Monster> type, Level level) {
         super(type, level);
         setPathfindingMalus(PathType.WATER, -1.0F);
         setPathfindingMalus(PathType.WATER_BORDER, -1.0F);
-    }
-
-    @Override
-    public void aiStep() {
-        if (!level().isClientSide && appliedHoverOffset != 0.0D) {
-            setPos(getX(), getY() - appliedHoverOffset, getZ());
-            appliedHoverOffset = 0.0D;
-        }
-
-        super.aiStep();
-
-        if (!level().isClientSide && IntangibleEntities.isIntangible(this)) {
-            appliedHoverOffset = HOVER_BASE
-                    + Math.sin(tickCount * HOVER_SPEED) * HOVER_AMPLITUDE;
-            setPos(getX(), getY() + appliedHoverOffset, getZ());
-        }
     }
 
     protected static AttributeSupplier.Builder baseAttributes(double health, double speed, double damage) {
