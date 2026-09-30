@@ -13,6 +13,8 @@ import net.minecraft.nbt.CompoundTag;
 import net.minecraft.server.level.ServerLevel;
 import net.minecraft.world.inventory.ContainerData;
 import net.minecraft.world.item.ItemStack;
+import net.minecraft.world.item.Items;
+import net.minecraft.tags.ItemTags;
 import net.minecraft.world.item.enchantment.Enchantment;
 import net.minecraft.world.level.block.entity.BlockEntity;
 import net.minecraft.world.level.block.state.BlockState;
@@ -104,6 +106,50 @@ public final class EctchantmentMachineBlockEntity extends BlockEntity {
         return value;
     }
 
+    public ItemStack getTransmutationResult(ItemStack stack) {
+        if (stack.is(Items.DIAMOND)) {
+            return new ItemStack(ModItems.BLOODSTONE.get());
+        }
+
+        if (stack.is(Items.STONE)) {
+            return new ItemStack(ModItems.GRAVESTONE.get());
+        }
+
+        if (stack.is(ItemTags.LOGS)
+                && !stack.is(ModItems.SPIRITWOOD_LOG.get())) {
+            return new ItemStack(ModItems.SPIRITWOOD_LOG.get());
+        }
+
+        if (stack.is(ItemTags.SAPLINGS)
+                && !stack.is(ModItems.SPIRITWOOD_SAPLING.get())) {
+            return new ItemStack(ModItems.SPIRITWOOD_SAPLING.get());
+        }
+
+        if (stack.is(Items.VINE)
+                || stack.is(Items.MOSS_BLOCK)
+                || stack.is(Items.GLOW_LICHEN)) {
+            return new ItemStack(ModItems.GRAVE_MOSS.get());
+        }
+
+        return ItemStack.EMPTY;
+    }
+
+    public boolean consumeEctchantmentCost() {
+        if (ectoplasmicCharge >= ENCHANTMENT_COST) {
+            ectoplasmicCharge -= ENCHANTMENT_COST;
+            setChanged();
+            return true;
+        }
+
+        if (energyStorage.getEnergyStored() >= FE_ENCHANTMENT_COST) {
+            energyStorage.extractEnergy(FE_ENCHANTMENT_COST, false);
+            setChanged();
+            return true;
+        }
+
+        return false;
+    }
+
     public EnchantResult tryApplyDemiTangible(ItemStack stack, ServerLevel level) {
         Holder<Enchantment> enchantment = level.registryAccess()
                 .lookupOrThrow(Registries.ENCHANTMENT)
@@ -118,23 +164,13 @@ public final class EctchantmentMachineBlockEntity extends BlockEntity {
             return EnchantResult.ALREADY_PRESENT;
         }
 
-        if (ectoplasmicCharge >= ENCHANTMENT_COST) {
-            stack.set(ModDataComponents.DEMI_TANGIBLE.get(), true);
-            stack.set(DataComponents.ENCHANTMENT_GLINT_OVERRIDE, true);
-            ectoplasmicCharge -= ENCHANTMENT_COST;
-            setChanged();
-            return EnchantResult.SUCCESS;
+        if (!consumeEctchantmentCost()) {
+            return EnchantResult.NEEDS_FUEL;
         }
 
-        if (energyStorage.getEnergyStored() >= FE_ENCHANTMENT_COST) {
-            stack.set(ModDataComponents.DEMI_TANGIBLE.get(), true);
-            stack.set(DataComponents.ENCHANTMENT_GLINT_OVERRIDE, true);
-            energyStorage.extractEnergy(FE_ENCHANTMENT_COST, false);
-            setChanged();
-            return EnchantResult.SUCCESS;
-        }
-
-        return EnchantResult.NEEDS_FUEL;
+        stack.set(ModDataComponents.DEMI_TANGIBLE.get(), true);
+        stack.set(DataComponents.ENCHANTMENT_GLINT_OVERRIDE, true);
+        return EnchantResult.SUCCESS;
     }
 
     public static int getFuelValue(ItemStack stack) {
