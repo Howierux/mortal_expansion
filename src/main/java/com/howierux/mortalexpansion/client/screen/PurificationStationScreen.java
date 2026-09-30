@@ -4,10 +4,16 @@ import com.howierux.mortalexpansion.menu.PurificationStationMenu;
 import net.minecraft.client.gui.GuiGraphics;
 import net.minecraft.client.gui.screens.inventory.AbstractContainerScreen;
 import net.minecraft.network.chat.Component;
+import net.minecraft.resources.ResourceLocation;
 import net.minecraft.world.entity.player.Inventory;
 
 public final class PurificationStationScreen
         extends AbstractContainerScreen<PurificationStationMenu> {
+
+    private static final ResourceLocation INVENTORY_BACKGROUND =
+            ResourceLocation.withDefaultNamespace(
+                    "textures/gui/container/generic_54.png"
+            );
 
     public PurificationStationScreen(
             PurificationStationMenu menu,
@@ -30,16 +36,24 @@ public final class PurificationStationScreen
         int x = leftPos;
         int y = topPos;
 
-        graphics.fill(x, y, x + imageWidth, y + imageHeight, 0xFF20282D);
-        graphics.fill(x + 5, y + 5, x + imageWidth - 5, y + 83, 0xFF35434A);
+        graphics.fill(x, y, x + imageWidth, y + 82, 0xFF20282D);
+        graphics.fill(x + 5, y + 5, x + imageWidth - 5, y + 81, 0xFF35434A);
 
-        // Machine slot frames.
+        graphics.blit(
+                INVENTORY_BACKGROUND,
+                x,
+                y + 82,
+                0,
+                126,
+                imageWidth,
+                96
+        );
+
         slotFrame(graphics, x + 43, y + 34);
         slotFrame(graphics, x + 43, y + 58);
         slotFrame(graphics, x + 115, y + 46);
         slotFrame(graphics, x + 67, y + 28);
 
-        // Water tank.
         drawVerticalBar(
                 graphics,
                 x + 15,
@@ -51,7 +65,6 @@ public final class PurificationStationScreen
                 0xFF4D8DFF
         );
 
-        // FE.
         drawVerticalBar(
                 graphics,
                 x + 147,
@@ -63,7 +76,6 @@ public final class PurificationStationScreen
                 0xFFD34BFF
         );
 
-        // Process bar.
         drawHorizontalBar(
                 graphics,
                 x + 68,
@@ -121,13 +133,10 @@ public final class PurificationStationScreen
 
         graphics.drawString(
                 font,
-                Component.translatable(
-                        "gui.mortal_expansion.machine.fe_input",
-                        menu.getRecentFeInput()
-                ),
-                92,
-                72,
-                menu.getRecentFeInput() > 0 ? 0xFFD98CFF : 0xFFB0B0B0,
+                playerInventoryTitle,
+                inventoryLabelX,
+                inventoryLabelY,
+                0x404040,
                 false
         );
     }
