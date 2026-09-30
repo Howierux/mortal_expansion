@@ -84,6 +84,18 @@ public final class EctchantmentMachineScreen
                 0xFFFFFF,
                 false
         );
+
+        graphics.drawString(
+                font,
+                Component.translatable(
+                        "gui.mortal_expansion.machine.fe_input",
+                        menu.getRecentFeInput()
+                ),
+                14,
+                96,
+                menu.getRecentFeInput() > 0 ? 0xFFD98CFF : 0xFFB0B0B0,
+                false
+        );
     }
 
     private static void drawBar(
