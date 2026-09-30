@@ -23,6 +23,7 @@ import net.neoforged.neoforge.client.event.RegisterMenuScreensEvent;
 import net.neoforged.neoforge.client.event.EntityRenderersEvent;
 import net.neoforged.neoforge.client.extensions.common.IClientFluidTypeExtensions;
 import net.neoforged.neoforge.client.extensions.common.RegisterClientExtensionsEvent;
+import net.neoforged.neoforge.client.model.DynamicFluidContainerModel;
 
 @EventBusSubscriber(modid = MortalExpansion.MOD_ID, bus = EventBusSubscriber.Bus.MOD, value = Dist.CLIENT)
 public final class ModClientEvents {
@@ -204,6 +205,15 @@ public final class ModClientEvents {
         event.register(
                 (stack, tintIndex) -> 0xFFFFFFFF,
                 ModItems.HOLY_SALT.get()
+        );
+
+        DynamicFluidContainerModel.Colors fluidBucketColors =
+                new DynamicFluidContainerModel.Colors();
+        event.register(
+                fluidBucketColors,
+                ModItems.LIQUID_ECTOPLASM_BUCKET.get(),
+                ModItems.HOLY_WATER_BUCKET.get(),
+                ModItems.PURIFIED_ECTOPLASM_BUCKET.get()
         );
     }
 }
