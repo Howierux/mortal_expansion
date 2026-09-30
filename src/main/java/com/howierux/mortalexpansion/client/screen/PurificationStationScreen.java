@@ -37,6 +37,7 @@ public final class PurificationStationScreen
         slotFrame(graphics, x + 43, y + 34);
         slotFrame(graphics, x + 43, y + 58);
         slotFrame(graphics, x + 115, y + 46);
+        slotFrame(graphics, x + 67, y + 28);
 
         // Water tank.
         drawVerticalBar(
