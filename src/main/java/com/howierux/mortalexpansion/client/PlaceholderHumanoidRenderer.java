@@ -45,8 +45,19 @@ public final class PlaceholderHumanoidRenderer<T extends Mob>
             MultiBufferSource buffer,
             int packedLight
     ) {
-        this.model.setSpectral(spectral.test(entity));
+        boolean spectralNow = spectral.test(entity);
+        this.model.setSpectral(spectralNow);
+
+        poseStack.pushPose();
+        if (spectralNow) {
+            double hover = 0.08D
+                    + Math.sin((entity.tickCount + partialTicks) * 0.12D)
+                    * 0.035D;
+            poseStack.translate(0.0D, hover, 0.0D);
+        }
+
         super.render(entity, entityYaw, partialTicks, poseStack, buffer, packedLight);
+        poseStack.popPose();
     }
 
     @Override
