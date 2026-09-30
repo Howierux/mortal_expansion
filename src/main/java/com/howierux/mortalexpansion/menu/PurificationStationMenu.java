@@ -15,7 +15,7 @@ import net.neoforged.neoforge.items.SlotItemHandler;
 
 public final class PurificationStationMenu extends AbstractContainerMenu {
     public static final int DATA_COUNT = 7;
-    private static final int MACHINE_SLOTS = 3;
+    private static final int MACHINE_SLOTS = 4;
 
     private final ContainerData data;
 
@@ -79,6 +79,13 @@ public final class PurificationStationMenu extends AbstractContainerMenu {
             }
         });
 
+        addSlot(new SlotItemHandler(
+                station.getItems(),
+                PurificationStationBlockEntity.SLOT_WATER_BUCKET,
+                68,
+                29
+        ));
+
         // Player inventory.
         for (int row = 0; row < 3; row++) {
             for (int col = 0; col < 9; col++) {
@@ -131,7 +138,7 @@ public final class PurificationStationMenu extends AbstractContainerMenu {
                 return ItemStack.EMPTY;
             }
         } else {
-            if (!moveItemStackTo(stack, 0, 2, false)) {
+            if (!moveItemStackTo(stack, 0, MACHINE_SLOTS, false)) {
                 return ItemStack.EMPTY;
             }
         }
