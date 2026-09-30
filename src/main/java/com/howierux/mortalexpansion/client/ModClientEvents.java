@@ -174,7 +174,7 @@ public final class ModClientEvents {
                 (state, level, pos, tintIndex) -> {
                     int power = state.getValue(RedStoneWireBlock.POWER);
                     int shade = 150 + (int)(105.0F * power / 15.0F);
-                    return 0xFF000000 | (shade << 16) | (shade << 8) | shade;
+                    return (shade << 16) | (shade << 8) | shade;
                 },
                 ModBlocks.HOLY_SALT.get()
         );
