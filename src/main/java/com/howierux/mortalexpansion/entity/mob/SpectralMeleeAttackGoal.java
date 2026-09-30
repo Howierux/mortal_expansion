@@ -1,8 +1,6 @@
 package com.howierux.mortalexpansion.entity.mob;
 
-import net.minecraft.util.Mth;
 import net.minecraft.world.entity.LivingEntity;
-import net.minecraft.world.entity.ai.attributes.Attributes;
 import net.minecraft.world.entity.ai.goal.Goal;
 
 import java.util.EnumSet;
@@ -45,11 +43,18 @@ public final class SpectralMeleeAttackGoal extends Goal {
     @Override
     public void start() {
         attackCooldown = 0;
+        mob.getNavigation().stop();
     }
 
     @Override
     public void stop() {
-        mob.setZza(0.0F);
+        mob.getNavigation().stop();
+        mob.getMoveControl().setWantedPosition(
+                mob.getX(),
+                mob.getY(),
+                mob.getZ(),
+                0.0D
+        );
     }
 
     @Override
@@ -61,20 +66,12 @@ public final class SpectralMeleeAttackGoal extends Goal {
 
         mob.getLookControl().setLookAt(target, 30.0F, 30.0F);
 
-        double dx = target.getX() - mob.getX();
-        double dz = target.getZ() - mob.getZ();
-        if (dx * dx + dz * dz > 1.0E-6D) {
-            float wantedYaw = (float)(Mth.atan2(dz, dx)
-                    * (180.0D / Math.PI)) - 90.0F;
-            mob.setYRot(Mth.rotLerp(0.35F, mob.getYRot(), wantedYaw));
-            mob.yBodyRot = mob.getYRot();
-            mob.setSpeed((float)(
-                    speedModifier * mob.getAttributeValue(Attributes.MOVEMENT_SPEED)
-            ));
-            mob.setZza(1.0F);
-        } else {
-            mob.setZza(0.0F);
-        }
+        mob.getMoveControl().setWantedPosition(
+                target.getX(),
+                mob.getY(),
+                target.getZ(),
+                speedModifier
+        );
 
         if (attackCooldown > 0) {
             attackCooldown--;
