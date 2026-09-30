@@ -31,9 +31,8 @@ public final class ModMenus {
     public static final Supplier<MenuType<EctoplasmicGeneratorMenu>> ECTOPLASMIC_GENERATOR =
             MENUS.register(
                     "ectoplasmic_generator",
-                    () -> new MenuType<>(
-                            EctoplasmicGeneratorMenu::new,
-                            FeatureFlags.DEFAULT_FLAGS
+                    () -> IMenuTypeExtension.create(
+                            EctoplasmicGeneratorMenu::new
                     )
             );
 
