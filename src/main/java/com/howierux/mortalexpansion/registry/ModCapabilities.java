@@ -15,7 +15,7 @@ public final class ModCapabilities {
         event.registerBlockEntity(
                 Capabilities.EnergyStorage.BLOCK,
                 ModBlockEntities.ECTCHANTMENT_MACHINE.get(),
-                (blockEntity, side) -> blockEntity.getEnergyStorage()
+                (blockEntity, side) -> blockEntity.getInputOnlyEnergyCapability()
         );
 
         event.registerBlockEntity(
@@ -45,7 +45,7 @@ public final class ModCapabilities {
         event.registerBlockEntity(
                 Capabilities.EnergyStorage.BLOCK,
                 ModBlockEntities.PURIFICATION_STATION.get(),
-                (blockEntity, side) -> blockEntity.getEnergyStorage()
+                (blockEntity, side) -> blockEntity.getInputOnlyEnergyCapability()
         );
 
         event.registerBlockEntity(
