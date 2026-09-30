@@ -7,6 +7,7 @@ import net.minecraft.world.level.material.Fluid;
 import net.neoforged.bus.api.IEventBus;
 import net.neoforged.neoforge.fluids.BaseFlowingFluid;
 import net.neoforged.neoforge.fluids.FluidType;
+import net.neoforged.neoforge.fluids.RegisterCauldronFluidContentEvent;
 import net.neoforged.neoforge.registries.DeferredHolder;
 import net.neoforged.neoforge.registries.DeferredRegister;
 import net.neoforged.neoforge.registries.NeoForgeRegistries;
@@ -131,8 +132,32 @@ public final class ModFluids {
                 .levelDecreasePerBlock(1);
     }
 
+    private static void registerCauldronFluids(
+            RegisterCauldronFluidContentEvent event
+    ) {
+        event.register(
+                ModBlocks.LIQUID_ECTOPLASM_CAULDRON.get(),
+                LIQUID_ECTOPLASM.get(),
+                FluidType.BUCKET_VOLUME,
+                null
+        );
+        event.register(
+                ModBlocks.HOLY_WATER_CAULDRON.get(),
+                HOLY_WATER.get(),
+                FluidType.BUCKET_VOLUME,
+                null
+        );
+        event.register(
+                ModBlocks.PURIFIED_ECTOPLASM_CAULDRON.get(),
+                PURIFIED_ECTOPLASM.get(),
+                FluidType.BUCKET_VOLUME,
+                null
+        );
+    }
+
     public static void register(IEventBus modBus) {
         FLUID_TYPES.register(modBus);
         FLUIDS.register(modBus);
+        modBus.addListener(ModFluids::registerCauldronFluids);
     }
 }
