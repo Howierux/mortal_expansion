@@ -32,6 +32,8 @@ public final class EctchantmentMachineBlockEntity extends BlockEntity {
     private static final String ENERGY_TAG = "Energy";
 
     private int ectoplasmicCharge;
+    private int recentFeInput;
+    private long recentFeInputTick = Long.MIN_VALUE;
     private final MachineEnergyStorage energyStorage =
             new MachineEnergyStorage(FE_CAPACITY, FE_MAX_RECEIVE);
 
@@ -51,6 +53,15 @@ public final class EctchantmentMachineBlockEntity extends BlockEntity {
         return energyStorage.getEnergyStored();
     }
 
+    public int getRecentFeInput() {
+        if (level == null || recentFeInputTick == Long.MIN_VALUE) {
+            return 0;
+        }
+        return level.getGameTime() - recentFeInputTick <= 2L
+                ? recentFeInput
+                : 0;
+    }
+
     public ContainerData createMenuData() {
         return new ContainerData() {
             @Override
@@ -60,6 +71,7 @@ public final class EctchantmentMachineBlockEntity extends BlockEntity {
                     case 1 -> MAX_CHARGE;
                     case 2 -> energyStorage.getEnergyStored() / 10;
                     case 3 -> FE_CAPACITY / 10;
+                    case 4 -> getRecentFeInput();
                     default -> 0;
                 };
             }
@@ -71,7 +83,7 @@ public final class EctchantmentMachineBlockEntity extends BlockEntity {
 
             @Override
             public int getCount() {
-                return 4;
+                return 5;
             }
         };
     }
@@ -162,6 +174,11 @@ public final class EctchantmentMachineBlockEntity extends BlockEntity {
         public int receiveEnergy(int maxReceive, boolean simulate) {
             int received = super.receiveEnergy(maxReceive, simulate);
             if (received > 0 && !simulate) {
+                EctchantmentMachineBlockEntity.this.recentFeInput = received;
+                if (EctchantmentMachineBlockEntity.this.level != null) {
+                    EctchantmentMachineBlockEntity.this.recentFeInputTick =
+                            EctchantmentMachineBlockEntity.this.level.getGameTime();
+                }
                 EctchantmentMachineBlockEntity.this.setChanged();
             }
             return received;
