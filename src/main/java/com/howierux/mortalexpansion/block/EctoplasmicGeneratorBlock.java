@@ -1,17 +1,15 @@
 package com.howierux.mortalexpansion.block;
 
 import com.howierux.mortalexpansion.blockentity.EctoplasmicGeneratorBlockEntity;
-import com.howierux.mortalexpansion.registry.ModBlockEntities;
 import com.howierux.mortalexpansion.menu.EctoplasmicGeneratorMenu;
+import com.howierux.mortalexpansion.registry.ModBlockEntities;
 import com.mojang.serialization.MapCodec;
 import net.minecraft.core.BlockPos;
 import net.minecraft.network.chat.Component;
-import net.minecraft.world.SimpleMenuProvider;
-import net.minecraft.world.InteractionHand;
+import net.minecraft.server.level.ServerLevel;
 import net.minecraft.world.InteractionResult;
-import net.minecraft.world.ItemInteractionResult;
+import net.minecraft.world.SimpleMenuProvider;
 import net.minecraft.world.entity.player.Player;
-import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.level.Level;
 import net.minecraft.world.level.block.BaseEntityBlock;
 import net.minecraft.world.level.block.RenderShape;
@@ -64,45 +62,6 @@ public final class EctoplasmicGeneratorBlock extends BaseEntityBlock {
     }
 
     @Override
-    protected ItemInteractionResult useItemOn(
-            ItemStack stack,
-            BlockState state,
-            Level level,
-            BlockPos pos,
-            Player player,
-            InteractionHand hand,
-            BlockHitResult hitResult
-    ) {
-        if (!(level.getBlockEntity(pos) instanceof EctoplasmicGeneratorBlockEntity generator)) {
-            return ItemInteractionResult.PASS_TO_DEFAULT_BLOCK_INTERACTION;
-        }
-
-        if (!stack.is(com.howierux.mortalexpansion.registry.ModItems.RAW_ECTOPLASM.get())
-                && !stack.is(com.howierux.mortalexpansion.registry.ModItems.PURE_ECTOPLASM.get())) {
-            return ItemInteractionResult.PASS_TO_DEFAULT_BLOCK_INTERACTION;
-        }
-
-        if (level.isClientSide) {
-            return ItemInteractionResult.SUCCESS;
-        }
-
-        if (!generator.addFuel(stack)) {
-            player.displayClientMessage(
-                    Component.translatable("message.mortal_expansion.ectoplasmic_generator.busy"),
-                    true
-            );
-            return ItemInteractionResult.SUCCESS;
-        }
-
-        if (!player.getAbilities().instabuild) {
-            stack.shrink(1);
-        }
-
-        showStatus(player, generator);
-        return ItemInteractionResult.SUCCESS;
-    }
-
-    @Override
     protected InteractionResult useWithoutItem(
             BlockState state,
             Level level,
@@ -110,36 +69,44 @@ public final class EctoplasmicGeneratorBlock extends BaseEntityBlock {
             Player player,
             BlockHitResult hitResult
     ) {
-        if (level.getBlockEntity(pos) instanceof EctoplasmicGeneratorBlockEntity generator) {
-            if (!level.isClientSide) {
-                player.openMenu(new SimpleMenuProvider(
-                        (containerId, inventory, menuPlayer) ->
-                                new EctoplasmicGeneratorMenu(
-                                        containerId,
-                                        inventory,
-                                        generator.createMenuData()
-                                ),
-                        Component.translatable("gui.mortal_expansion.ectoplasmic_generator.title")
-                ));
-            }
-            return InteractionResult.sidedSuccess(level.isClientSide);
+        if (!(level.getBlockEntity(pos) instanceof EctoplasmicGeneratorBlockEntity generator)) {
+            return InteractionResult.PASS;
         }
 
-        return InteractionResult.PASS;
+        if (!level.isClientSide) {
+            player.openMenu(
+                    new SimpleMenuProvider(
+                            (containerId, inventory, menuPlayer) ->
+                                    new EctoplasmicGeneratorMenu(
+                                            containerId,
+                                            inventory,
+                                            generator
+                                    ),
+                            Component.translatable(
+                                    "gui.mortal_expansion.ectoplasmic_generator.title"
+                            )
+                    ),
+                    pos
+            );
+        }
+
+        return InteractionResult.sidedSuccess(level.isClientSide);
     }
 
-    private static void showStatus(Player player, EctoplasmicGeneratorBlockEntity generator) {
-        player.displayClientMessage(
-                Component.translatable(
-                        "message.mortal_expansion.ectoplasmic_generator.status",
-                        generator.getEnergyStored(),
-                        EctoplasmicGeneratorBlockEntity.ENERGY_CAPACITY,
-                        generator.getBurnTicksRemaining(),
-                        generator.getLocalHauntTier().displayName(),
-                        String.format("%.2f", generator.getHauntMultiplier()),
-                        generator.getCurrentGenerationPerTick()
-                ),
-                false
-        );
+    @Override
+    protected void onRemove(
+            BlockState state,
+            Level level,
+            BlockPos pos,
+            BlockState newState,
+            boolean movedByPiston
+    ) {
+        if (!state.is(newState.getBlock())
+                && level instanceof ServerLevel serverLevel
+                && level.getBlockEntity(pos) instanceof EctoplasmicGeneratorBlockEntity generator) {
+            generator.dropInventory(serverLevel);
+        }
+
+        super.onRemove(state, level, pos, newState, movedByPiston);
     }
 }
