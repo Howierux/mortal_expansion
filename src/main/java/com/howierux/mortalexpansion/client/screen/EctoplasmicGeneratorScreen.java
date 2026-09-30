@@ -11,6 +11,7 @@ import net.minecraft.world.entity.player.Inventory;
 public final class EctoplasmicGeneratorScreen
         extends AbstractContainerScreen<EctoplasmicGeneratorMenu> {
 
+    private static final int MACHINE_HEIGHT = 112;
     private static final ResourceLocation INVENTORY_BACKGROUND =
             ResourceLocation.withDefaultNamespace(
                     "textures/gui/container/generic_54.png"
@@ -23,8 +24,8 @@ public final class EctoplasmicGeneratorScreen
     ) {
         super(menu, inventory, title);
         this.imageWidth = 176;
-        this.imageHeight = 178;
-        this.inventoryLabelY = 84;
+        this.imageHeight = 208;
+        this.inventoryLabelY = 114;
     }
 
     @Override
@@ -37,29 +38,27 @@ public final class EctoplasmicGeneratorScreen
         int x = leftPos;
         int y = topPos;
 
-        // Machine panel only.
-        graphics.fill(x, y, x + imageWidth, y + 82, 0xFF201D2A);
-        graphics.fill(x + 5, y + 5, x + imageWidth - 5, y + 81, 0xFF383247);
+        graphics.fill(x, y, x + imageWidth, y + MACHINE_HEIGHT, 0xFF201D2A);
+        graphics.fill(x + 5, y + 5, x + imageWidth - 5, y + MACHINE_HEIGHT - 1, 0xFF383247);
 
-        // Native Minecraft player inventory/hotbar section.
         graphics.blit(
                 INVENTORY_BACKGROUND,
                 x,
-                y + 82,
+                y + MACHINE_HEIGHT,
                 0,
                 126,
                 imageWidth,
                 96
         );
 
-        slotFrame(graphics, x + 79, y + 42);
+        slotFrame(graphics, x + 79, y + 57);
 
         drawBar(
                 graphics,
                 x + 14,
-                y + 25,
+                y + 31,
                 148,
-                10,
+                8,
                 menu.getEnergyStored(),
                 menu.getEnergyCapacity(),
                 0xFFD94CFF
@@ -71,7 +70,6 @@ public final class EctoplasmicGeneratorScreen
         HauntTier tier = HauntTier.fromId(menu.getHauntTierId());
 
         graphics.drawString(font, title, 8, 8, 0xFFFFFF, false);
-
         graphics.drawString(
                 font,
                 Component.translatable(
@@ -79,35 +77,21 @@ public final class EctoplasmicGeneratorScreen
                         menu.getEnergyStored(),
                         menu.getEnergyCapacity()
                 ),
-                14,
-                16,
-                0xFFFFFF,
-                false
+                14, 20, 0xFFFFFF, false
         );
-
         graphics.drawString(
                 font,
-                Component.translatable(
-                        "gui.mortal_expansion.ectoplasmic_generator.ecto"
-                ),
-                76,
-                34,
-                0xFFFFFF,
-                false
+                Component.translatable("gui.mortal_expansion.ectoplasmic_generator.ecto"),
+                76, 46, 0xFFFFFF, false
         );
-
         graphics.drawString(
                 font,
                 Component.translatable(
                         "gui.mortal_expansion.ectoplasmic_generator.burn",
                         menu.getBurnTicksRemaining()
                 ),
-                14,
-                48,
-                0xFFFFFF,
-                false
+                14, 79, 0xFFFFFF, false
         );
-
         graphics.drawString(
                 font,
                 Component.translatable(
@@ -115,22 +99,15 @@ public final class EctoplasmicGeneratorScreen
                         tier.displayName(),
                         menu.getHauntMultiplierPercent() / 100.0D
                 ),
-                14,
-                60,
-                0xFFFFFF,
-                false
+                14, 90, 0xFFFFFF, false
         );
-
         graphics.drawString(
                 font,
                 Component.translatable(
                         "gui.mortal_expansion.ectoplasmic_generator.output",
                         menu.getGenerationPerTick()
                 ),
-                14,
-                72,
-                0xFFFFFF,
-                false
+                14, 101, 0xFFFFFF, false
         );
 
         graphics.drawString(
@@ -159,21 +136,9 @@ public final class EctoplasmicGeneratorScreen
             int fillColor
     ) {
         graphics.fill(x, y, x + width, y + height, 0xFF15131C);
+        if (max <= 0 || value <= 0) return;
 
-        if (max <= 0 || value <= 0) {
-            return;
-        }
-
-        int filled = Math.min(
-                width,
-                Math.max(0, (int)((long)width * value / max))
-        );
-        graphics.fill(
-                x + 1,
-                y + 1,
-                x + filled - 1,
-                y + height - 1,
-                fillColor
-        );
+        int filled = Math.min(width, Math.max(0, (int)((long)width * value / max)));
+        graphics.fill(x + 1, y + 1, x + filled - 1, y + height - 1, fillColor);
     }
 }
