@@ -17,6 +17,9 @@ import net.minecraft.world.level.block.state.BlockState;
 import net.neoforged.neoforge.capabilities.Capabilities;
 import net.neoforged.neoforge.energy.EnergyStorage;
 import net.neoforged.neoforge.energy.IEnergyStorage;
+import net.neoforged.neoforge.items.IItemHandler;
+import net.neoforged.neoforge.items.ItemStackHandler;
+import net.minecraft.world.Containers;
 
 public final class EctoplasmicGeneratorBlockEntity extends BlockEntity {
     public static final int ENERGY_CAPACITY = 200_000;
@@ -31,8 +34,37 @@ public final class EctoplasmicGeneratorBlockEntity extends BlockEntity {
     private static final String BURN_TICKS_TAG = "BurnTicks";
     private static final String BASE_GENERATION_TAG = "BaseGeneration";
 
+    public static final int SLOT_ECTO = 0;
+
     private final GeneratorEnergyStorage energyStorage =
             new GeneratorEnergyStorage(ENERGY_CAPACITY, MAX_OUTPUT_PER_TICK);
+
+    private final ItemStackHandler items = new ItemStackHandler(1) {
+        @Override
+        public boolean isItemValid(int slot, ItemStack stack) {
+            return slot == SLOT_ECTO && getBurnTicks(stack) > 0;
+        }
+
+        @Override
+        protected void onContentsChanged(int slot) {
+            setChanged();
+        }
+    };
+
+    private final IItemHandler automationItems = new IItemHandler() {
+        @Override public int getSlots() { return items.getSlots(); }
+        @Override public ItemStack getStackInSlot(int slot) { return items.getStackInSlot(slot); }
+        @Override public ItemStack insertItem(int slot, ItemStack stack, boolean simulate) {
+            return items.insertItem(slot, stack, simulate);
+        }
+        @Override public ItemStack extractItem(int slot, int amount, boolean simulate) {
+            return ItemStack.EMPTY;
+        }
+        @Override public int getSlotLimit(int slot) { return items.getSlotLimit(slot); }
+        @Override public boolean isItemValid(int slot, ItemStack stack) {
+            return items.isItemValid(slot, stack);
+        }
+    };
 
     private int burnTicksRemaining;
     private int baseGenerationPerTick;
@@ -43,6 +75,14 @@ public final class EctoplasmicGeneratorBlockEntity extends BlockEntity {
 
     public IEnergyStorage getEnergyStorage() {
         return energyStorage;
+    }
+
+    public ItemStackHandler getItems() {
+        return items;
+    }
+
+    public IItemHandler getAutomationItems() {
+        return automationItems;
     }
 
     public int getEnergyStored() {
@@ -125,6 +165,15 @@ public final class EctoplasmicGeneratorBlockEntity extends BlockEntity {
             BlockState state,
             EctoplasmicGeneratorBlockEntity blockEntity
     ) {
+        blockEntity.tryConsumeEctoSlot();
+
+        // Push only energy that was already buffered at the beginning of the
+        // tick. Newly generated FE remains visible in the internal buffer for
+        // at least one tick instead of being generated and immediately erased
+        // from the display by same-tick output.
+        int bufferedBeforeGeneration = blockEntity.energyStorage.getEnergyStored();
+        blockEntity.pushEnergy(level, pos, bufferedBeforeGeneration);
+
         if (blockEntity.burnTicksRemaining > 0) {
             int generation = blockEntity.getCurrentGenerationPerTick();
             int accepted = blockEntity.energyStorage.generate(generation);
@@ -137,14 +186,28 @@ public final class EctoplasmicGeneratorBlockEntity extends BlockEntity {
                 blockEntity.setChanged();
             }
         }
-
-        blockEntity.pushEnergy(level, pos);
     }
 
-    private void pushEnergy(Level level, BlockPos pos) {
+    private void tryConsumeEctoSlot() {
+        if (isBurning()) {
+            return;
+        }
+
+        ItemStack ecto = items.getStackInSlot(SLOT_ECTO);
+        if (getBurnTicks(ecto) <= 0) {
+            return;
+        }
+
+        burnTicksRemaining = getBurnTicks(ecto);
+        baseGenerationPerTick = getBaseGeneration(ecto);
+        items.extractItem(SLOT_ECTO, 1, false);
+        setChanged();
+    }
+
+    private void pushEnergy(Level level, BlockPos pos, int availableAtTickStart) {
         int remainingOutput = Math.min(
                 MAX_OUTPUT_PER_TICK,
-                energyStorage.getEnergyStored()
+                Math.min(availableAtTickStart, energyStorage.getEnergyStored())
         );
 
         if (remainingOutput <= 0) {
@@ -163,7 +226,7 @@ public final class EctoplasmicGeneratorBlockEntity extends BlockEntity {
                     direction.getOpposite()
             );
 
-            if (target == null || !target.canReceive()) {
+            if (target == null) {
                 continue;
             }
 
@@ -190,6 +253,20 @@ public final class EctoplasmicGeneratorBlockEntity extends BlockEntity {
         return 0;
     }
 
+    public void dropInventory(ServerLevel level) {
+        ItemStack ecto = items.getStackInSlot(SLOT_ECTO);
+        if (!ecto.isEmpty()) {
+            Containers.dropItemStack(
+                    level,
+                    worldPosition.getX() + 0.5D,
+                    worldPosition.getY() + 0.5D,
+                    worldPosition.getZ() + 0.5D,
+                    ecto.copy()
+            );
+            items.setStackInSlot(SLOT_ECTO, ItemStack.EMPTY);
+        }
+    }
+
     private static int getBaseGeneration(ItemStack stack) {
         if (stack.is(ModItems.PURE_ECTOPLASM.get())) {
             return PURE_BASE_FE_PER_TICK;
@@ -206,6 +283,9 @@ public final class EctoplasmicGeneratorBlockEntity extends BlockEntity {
         if (tag.contains(ENERGY_TAG)) {
             energyStorage.deserializeNBT(registries, tag.get(ENERGY_TAG));
         }
+        if (tag.contains("Items")) {
+            items.deserializeNBT(registries, tag.getCompound("Items"));
+        }
         burnTicksRemaining = Math.max(0, tag.getInt(BURN_TICKS_TAG));
         baseGenerationPerTick = Math.max(0, tag.getInt(BASE_GENERATION_TAG));
     }
@@ -214,6 +294,7 @@ public final class EctoplasmicGeneratorBlockEntity extends BlockEntity {
     protected void saveAdditional(CompoundTag tag, HolderLookup.Provider registries) {
         super.saveAdditional(tag, registries);
         tag.put(ENERGY_TAG, energyStorage.serializeNBT(registries));
+        tag.put("Items", items.serializeNBT(registries));
         tag.putInt(BURN_TICKS_TAG, burnTicksRemaining);
         tag.putInt(BASE_GENERATION_TAG, baseGenerationPerTick);
     }
@@ -227,6 +308,7 @@ public final class EctoplasmicGeneratorBlockEntity extends BlockEntity {
             int accepted = Math.min(capacity - energy, Math.max(0, amount));
             if (accepted > 0) {
                 energy += accepted;
+                EctoplasmicGeneratorBlockEntity.this.setChanged();
             }
             return accepted;
         }
