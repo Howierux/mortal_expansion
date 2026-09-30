@@ -108,6 +108,38 @@ public final class EctchantmentMachineBlockEntity extends BlockEntity {
     private final MachineEnergyStorage energyStorage =
             new MachineEnergyStorage(FE_CAPACITY, FE_MAX_RECEIVE);
 
+    private final IEnergyStorage inputOnlyEnergyCapability = new IEnergyStorage() {
+        @Override
+        public int receiveEnergy(int maxReceive, boolean simulate) {
+            return energyStorage.receiveEnergy(maxReceive, simulate);
+        }
+
+        @Override
+        public int extractEnergy(int maxExtract, boolean simulate) {
+            return 0;
+        }
+
+        @Override
+        public int getEnergyStored() {
+            return energyStorage.getEnergyStored();
+        }
+
+        @Override
+        public int getMaxEnergyStored() {
+            return energyStorage.getMaxEnergyStored();
+        }
+
+        @Override
+        public boolean canExtract() {
+            return false;
+        }
+
+        @Override
+        public boolean canReceive() {
+            return true;
+        }
+    };
+
     public EctchantmentMachineBlockEntity(BlockPos pos, BlockState state) {
         super(ModBlockEntities.ECTCHANTMENT_MACHINE.get(), pos, state);
     }
@@ -126,6 +158,10 @@ public final class EctchantmentMachineBlockEntity extends BlockEntity {
 
     public IEnergyStorage getEnergyStorage() {
         return energyStorage;
+    }
+
+    public IEnergyStorage getInputOnlyEnergyCapability() {
+        return inputOnlyEnergyCapability;
     }
 
     public int getEnergyStored() {
