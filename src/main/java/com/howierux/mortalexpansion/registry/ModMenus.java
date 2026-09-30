@@ -23,9 +23,8 @@ public final class ModMenus {
     public static final Supplier<MenuType<EctchantmentMachineMenu>> ECTCHANTMENT_MACHINE =
             MENUS.register(
                     "ectchantment_machine",
-                    () -> new MenuType<>(
-                            EctchantmentMachineMenu::new,
-                            FeatureFlags.DEFAULT_FLAGS
+                    () -> IMenuTypeExtension.create(
+                            EctchantmentMachineMenu::new
                     )
             );
 
