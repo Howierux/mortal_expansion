@@ -1,0 +1,18 @@
+{
+  "ambientocclusion": false,
+  "textures": {
+    "particle": "mortal_expansion:block/holy_salt_dot",
+    "salt": "mortal_expansion:block/holy_salt_line"
+  },
+  "elements": [
+    {
+      "from": [0, 0, 0.25],
+      "to": [16, 16, 0.25],
+      "shade": false,
+      "faces": {
+        "south": { "uv": [0, 0, 16, 16], "texture": "#salt" },
+        "north": { "uv": [16, 0, 0, 16], "texture": "#salt" }
+      }
+    }
+  ]
+}
