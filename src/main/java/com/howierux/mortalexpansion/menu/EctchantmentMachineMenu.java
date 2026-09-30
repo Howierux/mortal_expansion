@@ -8,6 +8,7 @@ import net.minecraft.world.entity.player.Inventory;
 import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.inventory.AbstractContainerMenu;
 import net.minecraft.world.inventory.ContainerData;
+import net.minecraft.world.inventory.SimpleContainerData;
 import net.minecraft.world.inventory.Slot;
 import net.minecraft.world.item.ItemStack;
 import net.neoforged.neoforge.items.SlotItemHandler;
@@ -26,7 +27,8 @@ public final class EctchantmentMachineMenu extends AbstractContainerMenu {
         this(
                 containerId,
                 inventory,
-                getMachine(inventory, extraData.readBlockPos())
+                getMachine(inventory, extraData.readBlockPos()),
+                new SimpleContainerData(DATA_COUNT)
         );
     }
 
@@ -47,9 +49,18 @@ public final class EctchantmentMachineMenu extends AbstractContainerMenu {
             Inventory inventory,
             EctchantmentMachineBlockEntity machine
     ) {
+        this(containerId, inventory, machine, machine.createMenuData());
+    }
+
+    private EctchantmentMachineMenu(
+            int containerId,
+            Inventory inventory,
+            EctchantmentMachineBlockEntity machine,
+            ContainerData data
+    ) {
         super(ModMenus.ECTCHANTMENT_MACHINE.get(), containerId);
 
-        this.data = machine.createMenuData();
+        this.data = data;
         checkContainerDataCount(data, DATA_COUNT);
         addDataSlots(data);
 
@@ -57,21 +68,21 @@ public final class EctchantmentMachineMenu extends AbstractContainerMenu {
                 machine.getItems(),
                 EctchantmentMachineBlockEntity.SLOT_INPUT,
                 44,
-                43
+                58
         ));
 
         addSlot(new SlotItemHandler(
                 machine.getItems(),
                 EctchantmentMachineBlockEntity.SLOT_FUEL,
                 80,
-                43
+                58
         ));
 
         addSlot(new SlotItemHandler(
                 machine.getItems(),
                 EctchantmentMachineBlockEntity.SLOT_OUTPUT,
                 116,
-                43
+                58
         ) {
             @Override
             public boolean mayPlace(ItemStack stack) {
@@ -85,7 +96,7 @@ public final class EctchantmentMachineMenu extends AbstractContainerMenu {
                         inventory,
                         col + row * 9 + 9,
                         8 + col * 18,
-                        96 + row * 18
+                        125 + row * 18
                 ));
             }
         }
@@ -95,7 +106,7 @@ public final class EctchantmentMachineMenu extends AbstractContainerMenu {
                     inventory,
                     col,
                     8 + col * 18,
-                    154
+                    183
             ));
         }
     }
