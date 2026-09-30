@@ -247,7 +247,7 @@ public final class EctchantmentMachineBlockEntity extends BlockEntity {
         if (ectoplasmicCharge >= ENCHANTMENT_COST) {
             ectoplasmicCharge -= ENCHANTMENT_COST;
         } else {
-            energyStorage.extractEnergy(FE_ENCHANTMENT_COST, false);
+            energyStorage.consumeInternal(FE_ENCHANTMENT_COST);
         }
         setChanged();
     }
@@ -355,6 +355,20 @@ public final class EctchantmentMachineBlockEntity extends BlockEntity {
     private final class MachineEnergyStorage extends EnergyStorage {
         private MachineEnergyStorage(int capacity, int maxReceive) {
             super(capacity, maxReceive, FE_ENCHANTMENT_COST);
+        }
+
+        int consumeInternal(int amount) {
+            int consumed = Math.min(
+                    Math.max(0, amount),
+                    this.energy
+            );
+
+            if (consumed > 0) {
+                this.energy -= consumed;
+                EctchantmentMachineBlockEntity.this.setChanged();
+            }
+
+            return consumed;
         }
 
         @Override
