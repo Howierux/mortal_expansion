@@ -70,6 +70,38 @@ public final class PurificationStationBlockEntity extends BlockEntity {
     private final StationEnergyStorage energy =
             new StationEnergyStorage(FE_CAPACITY, FE_MAX_RECEIVE);
 
+    private final IEnergyStorage inputOnlyEnergyCapability = new IEnergyStorage() {
+        @Override
+        public int receiveEnergy(int maxReceive, boolean simulate) {
+            return energy.receiveEnergy(maxReceive, simulate);
+        }
+
+        @Override
+        public int extractEnergy(int maxExtract, boolean simulate) {
+            return 0;
+        }
+
+        @Override
+        public int getEnergyStored() {
+            return energy.getEnergyStored();
+        }
+
+        @Override
+        public int getMaxEnergyStored() {
+            return energy.getMaxEnergyStored();
+        }
+
+        @Override
+        public boolean canExtract() {
+            return false;
+        }
+
+        @Override
+        public boolean canReceive() {
+            return true;
+        }
+    };
+
     private final IItemHandler automationItems = new IItemHandler() {
         @Override
         public int getSlots() {
@@ -127,6 +159,7 @@ public final class PurificationStationBlockEntity extends BlockEntity {
     public IItemHandler getAutomationItems() { return automationItems; }
     public FluidTank getWaterTank() { return waterTank; }
     public IEnergyStorage getEnergyStorage() { return energy; }
+    public IEnergyStorage getInputOnlyEnergyCapability() { return inputOnlyEnergyCapability; }
     public int getProgress() { return progress; }
     public int getFeUsed() { return feUsed; }
     public int getRecentFeInput() {
