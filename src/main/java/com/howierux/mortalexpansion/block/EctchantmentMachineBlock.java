@@ -2,27 +2,28 @@ package com.howierux.mortalexpansion.block;
 
 import com.howierux.mortalexpansion.blockentity.EctchantmentMachineBlockEntity;
 import com.howierux.mortalexpansion.menu.EctchantmentMachineMenu;
+import com.howierux.mortalexpansion.registry.ModBlockEntities;
 import com.mojang.serialization.MapCodec;
 import net.minecraft.core.BlockPos;
 import net.minecraft.network.chat.Component;
-import net.minecraft.world.SimpleMenuProvider;
 import net.minecraft.server.level.ServerLevel;
-import net.minecraft.world.InteractionHand;
 import net.minecraft.world.InteractionResult;
-import net.minecraft.world.ItemInteractionResult;
+import net.minecraft.world.SimpleMenuProvider;
 import net.minecraft.world.entity.player.Player;
-import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.level.Level;
 import net.minecraft.world.level.block.BaseEntityBlock;
 import net.minecraft.world.level.block.RenderShape;
 import net.minecraft.world.level.block.entity.BlockEntity;
+import net.minecraft.world.level.block.entity.BlockEntityTicker;
+import net.minecraft.world.level.block.entity.BlockEntityType;
 import net.minecraft.world.level.block.state.BlockBehaviour;
 import net.minecraft.world.level.block.state.BlockState;
 import net.minecraft.world.phys.BlockHitResult;
 import org.jetbrains.annotations.Nullable;
 
 public final class EctchantmentMachineBlock extends BaseEntityBlock {
-    public static final MapCodec<EctchantmentMachineBlock> CODEC = simpleCodec(EctchantmentMachineBlock::new);
+    public static final MapCodec<EctchantmentMachineBlock> CODEC =
+            simpleCodec(EctchantmentMachineBlock::new);
 
     public EctchantmentMachineBlock(BlockBehaviour.Properties properties) {
         super(properties);
@@ -44,135 +45,18 @@ public final class EctchantmentMachineBlock extends BaseEntityBlock {
         return new EctchantmentMachineBlockEntity(pos, state);
     }
 
+    @Nullable
     @Override
-    protected ItemInteractionResult useItemOn(
-            ItemStack stack,
-            BlockState state,
+    public <T extends BlockEntity> BlockEntityTicker<T> getTicker(
             Level level,
-            BlockPos pos,
-            Player player,
-            InteractionHand hand,
-            BlockHitResult hitResult
+            BlockState state,
+            BlockEntityType<T> type
     ) {
-        if (!(level.getBlockEntity(pos) instanceof EctchantmentMachineBlockEntity machine)) {
-            return ItemInteractionResult.PASS_TO_DEFAULT_BLOCK_INTERACTION;
-        }
-
-        int fuelValue = EctchantmentMachineBlockEntity.getFuelValue(stack);
-        if (fuelValue > 0) {
-            if (level.isClientSide) {
-                return ItemInteractionResult.SUCCESS;
-            }
-
-            if (!machine.canAcceptFuel(stack)) {
-                player.displayClientMessage(
-                        Component.translatable(
-                                "message.mortal_expansion.ectchantment_machine.full",
-                                machine.getEctoplasmicCharge(),
-                                EctchantmentMachineBlockEntity.MAX_CHARGE,
-                                machine.getEnergyStored(),
-                                EctchantmentMachineBlockEntity.FE_CAPACITY
-                        ),
-                        true
-                );
-                return ItemInteractionResult.SUCCESS;
-            }
-
-            machine.addFuel(stack);
-            if (!player.getAbilities().instabuild) {
-                stack.shrink(1);
-            }
-
-            player.displayClientMessage(
-                    Component.translatable(
-                            "message.mortal_expansion.ectchantment_machine.charge",
-                            machine.getEctoplasmicCharge(),
-                            EctchantmentMachineBlockEntity.MAX_CHARGE,
-                            machine.getEnergyStored(),
-                            EctchantmentMachineBlockEntity.FE_CAPACITY
-                    ),
-                    true
-            );
-            return ItemInteractionResult.SUCCESS;
-        }
-
-        ItemStack transmuted = machine.getTransmutationResult(stack);
-        if (!transmuted.isEmpty()) {
-            if (level.isClientSide) {
-                return ItemInteractionResult.SUCCESS;
-            }
-
-            if (!machine.consumeEctchantmentCost()) {
-                player.displayClientMessage(
-                        Component.translatable(
-                                "message.mortal_expansion.ectchantment_machine.needs_fuel",
-                                machine.getEctoplasmicCharge(),
-                                EctchantmentMachineBlockEntity.ENCHANTMENT_COST,
-                                machine.getEnergyStored(),
-                                EctchantmentMachineBlockEntity.FE_ENCHANTMENT_COST
-                        ),
-                        true
-                );
-                return ItemInteractionResult.SUCCESS;
-            }
-
-            if (!player.getAbilities().instabuild) {
-                stack.shrink(1);
-            }
-
-            if (stack.isEmpty()) {
-                player.setItemInHand(hand, transmuted);
-            } else if (!player.addItem(transmuted)) {
-                player.drop(transmuted, false);
-            }
-
-            player.displayClientMessage(
-                    Component.translatable(
-                            "message.mortal_expansion.ectchantment_machine.transmuted",
-                            transmuted.getHoverName()
-                    ),
-                    true
-            );
-            return ItemInteractionResult.SUCCESS;
-        }
-
-        if (level.isClientSide) {
-            return ItemInteractionResult.SUCCESS;
-        }
-
-        if (!(level instanceof ServerLevel serverLevel)) {
-            return ItemInteractionResult.PASS_TO_DEFAULT_BLOCK_INTERACTION;
-        }
-
-        EctchantmentMachineBlockEntity.EnchantResult result =
-                machine.tryApplyDemiTangible(stack, serverLevel);
-
-        switch (result) {
-            case SUCCESS -> player.displayClientMessage(
-                    Component.translatable("message.mortal_expansion.ectchantment_machine.success"),
-                    true
-            );
-            case ALREADY_PRESENT -> player.displayClientMessage(
-                    Component.translatable("message.mortal_expansion.ectchantment_machine.already_present"),
-                    true
-            );
-            case NEEDS_FUEL -> player.displayClientMessage(
-                    Component.translatable(
-                            "message.mortal_expansion.ectchantment_machine.needs_fuel",
-                            machine.getEctoplasmicCharge(),
-                            EctchantmentMachineBlockEntity.ENCHANTMENT_COST,
-                            machine.getEnergyStored(),
-                            EctchantmentMachineBlockEntity.FE_ENCHANTMENT_COST
-                    ),
-                    true
-            );
-            case NOT_SUPPORTED -> player.displayClientMessage(
-                    Component.translatable("message.mortal_expansion.ectchantment_machine.not_supported"),
-                    true
-            );
-        }
-
-        return ItemInteractionResult.SUCCESS;
+        return level.isClientSide ? null : createTickerHelper(
+                type,
+                ModBlockEntities.ECTCHANTMENT_MACHINE.get(),
+                EctchantmentMachineBlockEntity::serverTick
+        );
     }
 
     @Override
@@ -183,21 +67,44 @@ public final class EctchantmentMachineBlock extends BaseEntityBlock {
             Player player,
             BlockHitResult hitResult
     ) {
-        if (level.getBlockEntity(pos) instanceof EctchantmentMachineBlockEntity machine) {
-            if (!level.isClientSide) {
-                player.openMenu(new SimpleMenuProvider(
-                        (containerId, inventory, menuPlayer) ->
-                                new EctchantmentMachineMenu(
-                                        containerId,
-                                        inventory,
-                                        machine.createMenuData()
-                                ),
-                        Component.translatable("gui.mortal_expansion.ectchantment_machine.title")
-                ));
-            }
-            return InteractionResult.sidedSuccess(level.isClientSide);
+        if (!(level.getBlockEntity(pos) instanceof EctchantmentMachineBlockEntity machine)) {
+            return InteractionResult.PASS;
         }
 
-        return InteractionResult.PASS;
+        if (!level.isClientSide) {
+            player.openMenu(
+                    new SimpleMenuProvider(
+                            (containerId, inventory, menuPlayer) ->
+                                    new EctchantmentMachineMenu(
+                                            containerId,
+                                            inventory,
+                                            machine
+                                    ),
+                            Component.translatable(
+                                    "gui.mortal_expansion.ectchantment_machine.title"
+                            )
+                    ),
+                    pos
+            );
+        }
+
+        return InteractionResult.sidedSuccess(level.isClientSide);
+    }
+
+    @Override
+    protected void onRemove(
+            BlockState state,
+            Level level,
+            BlockPos pos,
+            BlockState newState,
+            boolean movedByPiston
+    ) {
+        if (!state.is(newState.getBlock())
+                && level instanceof ServerLevel serverLevel
+                && level.getBlockEntity(pos) instanceof EctchantmentMachineBlockEntity machine) {
+            machine.dropInventory(serverLevel);
+        }
+
+        super.onRemove(state, level, pos, newState, movedByPiston);
     }
 }
