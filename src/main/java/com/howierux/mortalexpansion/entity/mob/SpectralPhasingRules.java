@@ -53,6 +53,14 @@ public final class SpectralPhasingRules {
             double t = (double)i / (double)steps;
             Vec3 sample = start.add(delta.scale(t));
             BlockPos pos = BlockPos.containing(sample);
+            if (HolySaltBarrierTracker.hasSaltColumn(
+                    level,
+                    pos.getX(),
+                    pos.getZ()
+            )) {
+                return false;
+            }
+
             BlockState state = level.getBlockState(pos);
 
             if (state.is(INTANGIBLE_SOLID)) {
@@ -77,6 +85,13 @@ public final class SpectralPhasingRules {
     public static boolean canEnterHorizontally(Entity mob, AABB destination) {
         Level level = mob.level();
         return BlockPos.betweenClosedStream(destination.deflate(1.0E-4D))
-                .noneMatch(pos -> level.getBlockState(pos).is(INTANGIBLE_SOLID));
+                .noneMatch(pos ->
+                        HolySaltBarrierTracker.hasSaltColumn(
+                                level,
+                                pos.getX(),
+                                pos.getZ()
+                        )
+                                || level.getBlockState(pos).is(INTANGIBLE_SOLID)
+                );
     }
 }
