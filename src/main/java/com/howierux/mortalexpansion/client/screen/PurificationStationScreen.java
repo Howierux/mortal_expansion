@@ -53,7 +53,7 @@ public final class PurificationStationScreen
         slotFrame(graphics, x + 43, y + 49);
         slotFrame(graphics, x + 43, y + 73);
         slotFrame(graphics, x + 115, y + 61);
-        slotFrame(graphics, x + 67, y + 43);
+        slotFrame(graphics, x + 12, y + 87);
 
         drawVerticalBar(
                 graphics, x + 15, y + 35, 14, 50,
