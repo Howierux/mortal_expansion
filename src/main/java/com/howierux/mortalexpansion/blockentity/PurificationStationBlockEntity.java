@@ -139,6 +139,21 @@ public final class PurificationStationBlockEntity extends BlockEntity {
     }
     public boolean isProcessing() { return progress > 0; }
 
+    private boolean hasCompleteRecipeReady() {
+        ItemStack raw = items.getStackInSlot(SLOT_RAW_ECTOPLASM);
+        ItemStack moss = items.getStackInSlot(SLOT_GRAVE_MOSS);
+        ItemStack output = items.getStackInSlot(SLOT_OUTPUT);
+
+        boolean outputSpace = output.isEmpty()
+                || (output.is(ModItems.PURE_ECTOPLASM.get())
+                && output.getCount() < output.getMaxStackSize());
+
+        return raw.is(ModItems.RAW_ECTOPLASM.get())
+                && moss.is(ModItems.GRAVE_MOSS.get())
+                && waterTank.getFluidAmount() >= WATER_PER_CRAFT
+                && outputSpace;
+    }
+
     public ContainerData createMenuData() {
         return new ContainerData() {
             @Override
@@ -236,18 +251,7 @@ public final class PurificationStationBlockEntity extends BlockEntity {
     }
 
     private boolean tryStartCraft() {
-        ItemStack raw = items.getStackInSlot(SLOT_RAW_ECTOPLASM);
-        ItemStack moss = items.getStackInSlot(SLOT_GRAVE_MOSS);
-        ItemStack output = items.getStackInSlot(SLOT_OUTPUT);
-
-        boolean outputSpace = output.isEmpty()
-                || (output.is(ModItems.PURE_ECTOPLASM.get())
-                && output.getCount() < output.getMaxStackSize());
-
-        if (!raw.is(ModItems.RAW_ECTOPLASM.get())
-                || !moss.is(ModItems.GRAVE_MOSS.get())
-                || waterTank.getFluidAmount() < WATER_PER_CRAFT
-                || !outputSpace) {
+        if (!hasCompleteRecipeReady()) {
             return false;
         }
 
@@ -335,6 +339,11 @@ public final class PurificationStationBlockEntity extends BlockEntity {
 
         @Override
         public int receiveEnergy(int maxReceive, boolean simulate) {
+            if (!PurificationStationBlockEntity.this.isProcessing()
+                    && !PurificationStationBlockEntity.this.hasCompleteRecipeReady()) {
+                return 0;
+            }
+
             int received = super.receiveEnergy(maxReceive, simulate);
             if (received > 0 && !simulate) {
                 PurificationStationBlockEntity.this.recentFeInput = received;
@@ -345,6 +354,13 @@ public final class PurificationStationBlockEntity extends BlockEntity {
                 PurificationStationBlockEntity.this.setChanged();
             }
             return received;
+        }
+
+        @Override
+        public boolean canReceive() {
+            return (PurificationStationBlockEntity.this.isProcessing()
+                    || PurificationStationBlockEntity.this.hasCompleteRecipeReady())
+                    && super.canReceive();
         }
 
         @Override
