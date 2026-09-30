@@ -108,10 +108,12 @@
   "gui.mortal_expansion.machine.fe_input": "Input: %s FE/t",
   "message.mortal_expansion.ectchantment_machine.transmuted": "Ectchanted into %s",
   "gui.mortal_expansion.ectchantment_machine.input": "Input",
-  "gui.mortal_expansion.ectchantment_machine.fuel": "Fuel",
   "gui.mortal_expansion.ectchantment_machine.output": "Output",
   "gui.mortal_expansion.ectchantment_machine.status.idle": "Ready",
   "gui.mortal_expansion.ectchantment_machine.status.needs_resource": "Needs ectoplasmic charge or 40,000 FE",
   "gui.mortal_expansion.ectchantment_machine.status.invalid": "Invalid or already ectchanted input",
-  "gui.mortal_expansion.ectchantment_machine.status.output_ready": "Output ready"
+  "gui.mortal_expansion.ectchantment_machine.status.output_ready": "Output ready",
+  "gui.mortal_expansion.ectchantment_machine.ecto_charge": "Ectoplasmic Charge: %s / %s",
+  "gui.mortal_expansion.ectchantment_machine.ecto_slot": "Ecto",
+  "gui.mortal_expansion.ectoplasmic_generator.ecto": "Ecto"
 }
