@@ -204,10 +204,10 @@ public final class PurificationStationBlockEntity extends BlockEntity {
         int neededThisTick = Math.max(0, targetUsed - station.feUsed);
 
         if (neededThisTick > 0) {
-            int extracted = station.energy.extractEnergy(neededThisTick, false);
-            station.feUsed += extracted;
+            int consumed = station.energy.consumeInternal(neededThisTick);
+            station.feUsed += consumed;
 
-            if (extracted < neededThisTick) {
+            if (consumed < neededThisTick) {
                 station.setChanged();
                 return;
             }
@@ -335,6 +335,20 @@ public final class PurificationStationBlockEntity extends BlockEntity {
 
         void setEnergy(int amount) {
             this.energy = Math.max(0, Math.min(capacity, amount));
+        }
+
+        int consumeInternal(int amount) {
+            int consumed = Math.min(
+                    Math.max(0, amount),
+                    this.energy
+            );
+
+            if (consumed > 0) {
+                this.energy -= consumed;
+                PurificationStationBlockEntity.this.setChanged();
+            }
+
+            return consumed;
         }
 
         @Override
