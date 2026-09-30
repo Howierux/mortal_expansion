@@ -9,6 +9,7 @@ import net.minecraft.nbt.CompoundTag;
 import net.minecraft.server.level.ServerLevel;
 import net.minecraft.world.inventory.ContainerData;
 import net.minecraft.world.item.ItemStack;
+import net.minecraft.world.item.Items;
 import net.minecraft.world.level.Level;
 import net.minecraft.world.level.block.entity.BlockEntity;
 import net.minecraft.world.level.block.state.BlockState;
@@ -31,6 +32,7 @@ public final class PurificationStationBlockEntity extends BlockEntity {
     public static final int SLOT_RAW_ECTOPLASM = 0;
     public static final int SLOT_GRAVE_MOSS = 1;
     public static final int SLOT_OUTPUT = 2;
+    public static final int SLOT_WATER_BUCKET = 3;
 
     private static final String ITEMS_TAG = "Items";
     private static final String WATER_TAG = "Water";
@@ -38,12 +40,13 @@ public final class PurificationStationBlockEntity extends BlockEntity {
     private static final String PROGRESS_TAG = "Progress";
     private static final String FE_USED_TAG = "FeUsed";
 
-    private final ItemStackHandler items = new ItemStackHandler(3) {
+    private final ItemStackHandler items = new ItemStackHandler(4) {
         @Override
         public boolean isItemValid(int slot, ItemStack stack) {
             return switch (slot) {
                 case SLOT_RAW_ECTOPLASM -> stack.is(ModItems.RAW_ECTOPLASM.get());
                 case SLOT_GRAVE_MOSS -> stack.is(ModItems.GRAVE_MOSS.get());
+                case SLOT_WATER_BUCKET -> stack.is(Items.WATER_BUCKET);
                 default -> false;
             };
         }
@@ -88,10 +91,16 @@ public final class PurificationStationBlockEntity extends BlockEntity {
 
         @Override
         public ItemStack extractItem(int slot, int amount, boolean simulate) {
-            if (slot != SLOT_OUTPUT) {
-                return ItemStack.EMPTY;
+            if (slot == SLOT_OUTPUT) {
+                return items.extractItem(slot, amount, simulate);
             }
-            return items.extractItem(slot, amount, simulate);
+
+            if (slot == SLOT_WATER_BUCKET
+                    && items.getStackInSlot(slot).is(Items.BUCKET)) {
+                return items.extractItem(slot, amount, simulate);
+            }
+
+            return ItemStack.EMPTY;
         }
 
         @Override
@@ -151,6 +160,8 @@ public final class PurificationStationBlockEntity extends BlockEntity {
             return;
         }
 
+        station.tryDrainWaterBucket();
+
         if (station.progress == 0) {
             if (station.tryStartCraft()) {
                 return;
@@ -197,6 +208,22 @@ public final class PurificationStationBlockEntity extends BlockEntity {
         }
     }
 
+    private void tryDrainWaterBucket() {
+        ItemStack bucket = items.getStackInSlot(SLOT_WATER_BUCKET);
+
+        if (!bucket.is(Items.WATER_BUCKET)
+                || waterTank.getFluidAmount() > WATER_CAPACITY - WATER_PER_CRAFT) {
+            return;
+        }
+
+        waterTank.fill(
+                new FluidStack(Fluids.WATER, WATER_PER_CRAFT),
+                net.neoforged.neoforge.fluids.capability.IFluidHandler.FluidAction.EXECUTE
+        );
+        items.setStackInSlot(SLOT_WATER_BUCKET, new ItemStack(Items.BUCKET));
+        setChanged();
+    }
+
     private boolean tryStartCraft() {
         ItemStack raw = items.getStackInSlot(SLOT_RAW_ECTOPLASM);
         ItemStack moss = items.getStackInSlot(SLOT_GRAVE_MOSS);
@@ -224,7 +251,12 @@ public final class PurificationStationBlockEntity extends BlockEntity {
     }
 
     public void dropUnprocessedInventory(ServerLevel level) {
-        for (int slot : new int[]{SLOT_RAW_ECTOPLASM, SLOT_GRAVE_MOSS, SLOT_OUTPUT}) {
+        for (int slot : new int[]{
+                SLOT_RAW_ECTOPLASM,
+                SLOT_GRAVE_MOSS,
+                SLOT_OUTPUT,
+                SLOT_WATER_BUCKET
+        }) {
             ItemStack stack = items.getStackInSlot(slot);
             if (!stack.isEmpty()) {
                 net.minecraft.world.Containers.dropItemStack(
