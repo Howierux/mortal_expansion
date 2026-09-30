@@ -96,6 +96,46 @@ public final class EctchantmentMachineBlock extends BaseEntityBlock {
             return ItemInteractionResult.SUCCESS;
         }
 
+        ItemStack transmuted = machine.getTransmutationResult(stack);
+        if (!transmuted.isEmpty()) {
+            if (level.isClientSide) {
+                return ItemInteractionResult.SUCCESS;
+            }
+
+            if (!machine.consumeEctchantmentCost()) {
+                player.displayClientMessage(
+                        Component.translatable(
+                                "message.mortal_expansion.ectchantment_machine.needs_fuel",
+                                machine.getEctoplasmicCharge(),
+                                EctchantmentMachineBlockEntity.ENCHANTMENT_COST,
+                                machine.getEnergyStored(),
+                                EctchantmentMachineBlockEntity.FE_ENCHANTMENT_COST
+                        ),
+                        true
+                );
+                return ItemInteractionResult.SUCCESS;
+            }
+
+            if (!player.getAbilities().instabuild) {
+                stack.shrink(1);
+            }
+
+            if (stack.isEmpty()) {
+                player.setItemInHand(hand, transmuted);
+            } else if (!player.addItem(transmuted)) {
+                player.drop(transmuted, false);
+            }
+
+            player.displayClientMessage(
+                    Component.translatable(
+                            "message.mortal_expansion.ectchantment_machine.transmuted",
+                            transmuted.getHoverName()
+                    ),
+                    true
+            );
+            return ItemInteractionResult.SUCCESS;
+        }
+
         if (level.isClientSide) {
             return ItemInteractionResult.SUCCESS;
         }
