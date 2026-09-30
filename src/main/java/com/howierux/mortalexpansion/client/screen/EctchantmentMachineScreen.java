@@ -5,10 +5,16 @@ import com.howierux.mortalexpansion.menu.EctchantmentMachineMenu;
 import net.minecraft.client.gui.GuiGraphics;
 import net.minecraft.client.gui.screens.inventory.AbstractContainerScreen;
 import net.minecraft.network.chat.Component;
+import net.minecraft.resources.ResourceLocation;
 import net.minecraft.world.entity.player.Inventory;
 
 public final class EctchantmentMachineScreen
         extends AbstractContainerScreen<EctchantmentMachineMenu> {
+
+    private static final ResourceLocation INVENTORY_BACKGROUND =
+            ResourceLocation.withDefaultNamespace(
+                    "textures/gui/container/generic_54.png"
+            );
 
     public EctchantmentMachineScreen(
             EctchantmentMachineMenu menu,
@@ -31,8 +37,18 @@ public final class EctchantmentMachineScreen
         int x = leftPos;
         int y = topPos;
 
-        graphics.fill(x, y, x + imageWidth, y + imageHeight, 0xFF20242A);
-        graphics.fill(x + 5, y + 5, x + imageWidth - 5, y + 83, 0xFF343A40);
+        graphics.fill(x, y, x + imageWidth, y + 82, 0xFF20242A);
+        graphics.fill(x + 5, y + 5, x + imageWidth - 5, y + 81, 0xFF343A40);
+
+        graphics.blit(
+                INVENTORY_BACKGROUND,
+                x,
+                y + 82,
+                0,
+                126,
+                imageWidth,
+                96
+        );
 
         slotFrame(graphics, x + 43, y + 42);
         slotFrame(graphics, x + 79, y + 42);
@@ -68,7 +84,7 @@ public final class EctchantmentMachineScreen
         graphics.drawString(
                 font,
                 Component.translatable(
-                        "gui.mortal_expansion.ectchantment_machine.ecto",
+                        "gui.mortal_expansion.ectchantment_machine.ecto_charge",
                         menu.getEctoplasmicCharge(),
                         menu.getMaxEctoplasmicCharge()
                 ),
@@ -89,8 +105,8 @@ public final class EctchantmentMachineScreen
 
         graphics.drawString(
                 font,
-                Component.translatable("gui.mortal_expansion.ectchantment_machine.fuel"),
-                77,
+                Component.translatable("gui.mortal_expansion.ectchantment_machine.ecto_slot"),
+                76,
                 33,
                 0xFFFFFF,
                 false
@@ -123,19 +139,16 @@ public final class EctchantmentMachineScreen
                 ),
                 14,
                 80,
-                0xFFFFFF,
+                0x404040,
                 false
         );
 
         graphics.drawString(
                 font,
-                Component.translatable(
-                        "gui.mortal_expansion.machine.fe_input",
-                        menu.getRecentFeInput()
-                ),
-                98,
-                80,
-                menu.getRecentFeInput() > 0 ? 0xFFD98CFF : 0xFFB0B0B0,
+                playerInventoryTitle,
+                inventoryLabelX,
+                inventoryLabelY,
+                0x404040,
                 false
         );
     }
