@@ -8,6 +8,7 @@ import net.minecraft.world.entity.player.Inventory;
 import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.inventory.AbstractContainerMenu;
 import net.minecraft.world.inventory.ContainerData;
+import net.minecraft.world.inventory.SimpleContainerData;
 import net.minecraft.world.inventory.Slot;
 import net.minecraft.world.item.ItemStack;
 import net.neoforged.neoforge.items.SlotItemHandler;
@@ -26,7 +27,8 @@ public final class EctoplasmicGeneratorMenu extends AbstractContainerMenu {
         this(
                 containerId,
                 inventory,
-                getGenerator(inventory, extraData.readBlockPos())
+                getGenerator(inventory, extraData.readBlockPos()),
+                new SimpleContainerData(DATA_COUNT)
         );
     }
 
@@ -47,9 +49,18 @@ public final class EctoplasmicGeneratorMenu extends AbstractContainerMenu {
             Inventory inventory,
             EctoplasmicGeneratorBlockEntity generator
     ) {
+        this(containerId, inventory, generator, generator.createMenuData());
+    }
+
+    private EctoplasmicGeneratorMenu(
+            int containerId,
+            Inventory inventory,
+            EctoplasmicGeneratorBlockEntity generator,
+            ContainerData data
+    ) {
         super(ModMenus.ECTOPLASMIC_GENERATOR.get(), containerId);
 
-        this.data = generator.createMenuData();
+        this.data = data;
         checkContainerDataCount(data, DATA_COUNT);
         addDataSlots(data);
 
@@ -57,7 +68,7 @@ public final class EctoplasmicGeneratorMenu extends AbstractContainerMenu {
                 generator.getItems(),
                 EctoplasmicGeneratorBlockEntity.SLOT_ECTO,
                 80,
-                43
+                58
         ));
 
         for (int row = 0; row < 3; row++) {
@@ -66,7 +77,7 @@ public final class EctoplasmicGeneratorMenu extends AbstractContainerMenu {
                         inventory,
                         col + row * 9 + 9,
                         8 + col * 18,
-                        96 + row * 18
+                        125 + row * 18
                 ));
             }
         }
@@ -76,7 +87,7 @@ public final class EctoplasmicGeneratorMenu extends AbstractContainerMenu {
                     inventory,
                     col,
                     8 + col * 18,
-                    154
+                    183
             ));
         }
     }
