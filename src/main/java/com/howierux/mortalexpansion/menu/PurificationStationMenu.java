@@ -27,7 +27,8 @@ public final class PurificationStationMenu extends AbstractContainerMenu {
         this(
                 containerId,
                 inventory,
-                getStation(inventory, extraData.readBlockPos())
+                getStation(inventory, extraData.readBlockPos()),
+                new SimpleContainerData(DATA_COUNT)
         );
     }
 
@@ -48,8 +49,18 @@ public final class PurificationStationMenu extends AbstractContainerMenu {
             Inventory inventory,
             PurificationStationBlockEntity station
     ) {
+        this(containerId, inventory, station, station.createMenuData());
+    }
+
+    private PurificationStationMenu(
+            int containerId,
+            Inventory inventory,
+            PurificationStationBlockEntity station,
+            ContainerData data
+    ) {
         super(ModMenus.PURIFICATION_STATION.get(), containerId);
-        this.data = station.createMenuData();
+
+        this.data = data;
         checkContainerDataCount(data, DATA_COUNT);
         addDataSlots(data);
 
@@ -57,21 +68,21 @@ public final class PurificationStationMenu extends AbstractContainerMenu {
                 station.getItems(),
                 PurificationStationBlockEntity.SLOT_RAW_ECTOPLASM,
                 44,
-                35
+                50
         ));
 
         addSlot(new SlotItemHandler(
                 station.getItems(),
                 PurificationStationBlockEntity.SLOT_GRAVE_MOSS,
                 44,
-                59
+                74
         ));
 
         addSlot(new SlotItemHandler(
                 station.getItems(),
                 PurificationStationBlockEntity.SLOT_OUTPUT,
                 116,
-                47
+                62
         ) {
             @Override
             public boolean mayPlace(ItemStack stack) {
@@ -83,17 +94,16 @@ public final class PurificationStationMenu extends AbstractContainerMenu {
                 station.getItems(),
                 PurificationStationBlockEntity.SLOT_WATER_BUCKET,
                 68,
-                29
+                44
         ));
 
-        // Player inventory.
         for (int row = 0; row < 3; row++) {
             for (int col = 0; col < 9; col++) {
                 addSlot(new Slot(
                         inventory,
                         col + row * 9 + 9,
                         8 + col * 18,
-                        96 + row * 18
+                        125 + row * 18
                 ));
             }
         }
@@ -103,7 +113,7 @@ public final class PurificationStationMenu extends AbstractContainerMenu {
                     inventory,
                     col,
                     8 + col * 18,
-                    154
+                    183
             ));
         }
     }
@@ -119,11 +129,10 @@ public final class PurificationStationMenu extends AbstractContainerMenu {
 
     @Override
     public ItemStack quickMoveStack(Player player, int index) {
-        ItemStack empty = ItemStack.EMPTY;
         Slot slot = slots.get(index);
 
         if (!slot.hasItem()) {
-            return empty;
+            return ItemStack.EMPTY;
         }
 
         ItemStack stack = slot.getItem();
