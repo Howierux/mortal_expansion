@@ -32,6 +32,7 @@ public final class EctchantmentMachineBlockEntity extends BlockEntity {
     private static final String ENERGY_TAG = "Energy";
 
     private int ectoplasmicCharge;
+    private boolean feRequested;
     private int recentFeInput;
     private long recentFeInputTick = Long.MIN_VALUE;
     private final MachineEnergyStorage energyStorage =
@@ -119,6 +120,7 @@ public final class EctchantmentMachineBlockEntity extends BlockEntity {
         }
 
         if (ectoplasmicCharge >= ENCHANTMENT_COST) {
+            feRequested = false;
             stack.set(ModDataComponents.DEMI_TANGIBLE.get(), true);
             stack.set(DataComponents.ENCHANTMENT_GLINT_OVERRIDE, true);
             ectoplasmicCharge -= ENCHANTMENT_COST;
@@ -127,6 +129,7 @@ public final class EctchantmentMachineBlockEntity extends BlockEntity {
         }
 
         if (energyStorage.getEnergyStored() >= FE_ENCHANTMENT_COST) {
+            feRequested = false;
             stack.set(ModDataComponents.DEMI_TANGIBLE.get(), true);
             stack.set(DataComponents.ENCHANTMENT_GLINT_OVERRIDE, true);
             energyStorage.extractEnergy(FE_ENCHANTMENT_COST, false);
@@ -134,6 +137,8 @@ public final class EctchantmentMachineBlockEntity extends BlockEntity {
             return EnchantResult.SUCCESS;
         }
 
+        feRequested = true;
+        setChanged();
         return EnchantResult.NEEDS_FUEL;
     }
 
@@ -172,7 +177,23 @@ public final class EctchantmentMachineBlockEntity extends BlockEntity {
 
         @Override
         public int receiveEnergy(int maxReceive, boolean simulate) {
-            int received = super.receiveEnergy(maxReceive, simulate);
+            if (!EctchantmentMachineBlockEntity.this.feRequested) {
+                return 0;
+            }
+
+            int remainingNeeded = Math.max(
+                    0,
+                    FE_ENCHANTMENT_COST - getEnergyStored()
+            );
+            if (remainingNeeded <= 0) {
+                EctchantmentMachineBlockEntity.this.feRequested = false;
+                return 0;
+            }
+
+            int received = super.receiveEnergy(
+                    Math.min(maxReceive, remainingNeeded),
+                    simulate
+            );
             if (received > 0 && !simulate) {
                 EctchantmentMachineBlockEntity.this.recentFeInput = received;
                 if (EctchantmentMachineBlockEntity.this.level != null) {
@@ -181,7 +202,18 @@ public final class EctchantmentMachineBlockEntity extends BlockEntity {
                 }
                 EctchantmentMachineBlockEntity.this.setChanged();
             }
+            if (!simulate && getEnergyStored() >= FE_ENCHANTMENT_COST) {
+                EctchantmentMachineBlockEntity.this.feRequested = false;
+            }
+
             return received;
+        }
+
+        @Override
+        public boolean canReceive() {
+            return EctchantmentMachineBlockEntity.this.feRequested
+                    && getEnergyStored() < FE_ENCHANTMENT_COST
+                    && super.canReceive();
         }
 
         @Override
