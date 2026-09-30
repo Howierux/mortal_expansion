@@ -104,5 +104,6 @@
   "block.mortal_expansion.holy_salt": "Holy Salt",
   "block.mortal_expansion.liquid_ectoplasm_cauldron": "Liquid Ectoplasm Cauldron",
   "block.mortal_expansion.holy_water_cauldron": "Holy Water Cauldron",
-  "block.mortal_expansion.purified_ectoplasm_cauldron": "Purified Ectoplasm Cauldron"
+  "block.mortal_expansion.purified_ectoplasm_cauldron": "Purified Ectoplasm Cauldron",
+  "gui.mortal_expansion.machine.fe_input": "Input: %s FE/t"
 }
