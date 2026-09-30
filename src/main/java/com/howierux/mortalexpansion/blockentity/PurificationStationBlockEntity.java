@@ -339,11 +339,6 @@ public final class PurificationStationBlockEntity extends BlockEntity {
 
         @Override
         public int receiveEnergy(int maxReceive, boolean simulate) {
-            if (!PurificationStationBlockEntity.this.isProcessing()
-                    && !PurificationStationBlockEntity.this.hasCompleteRecipeReady()) {
-                return 0;
-            }
-
             int received = super.receiveEnergy(maxReceive, simulate);
             if (received > 0 && !simulate) {
                 PurificationStationBlockEntity.this.recentFeInput = received;
@@ -354,13 +349,6 @@ public final class PurificationStationBlockEntity extends BlockEntity {
                 PurificationStationBlockEntity.this.setChanged();
             }
             return received;
-        }
-
-        @Override
-        public boolean canReceive() {
-            return (PurificationStationBlockEntity.this.isProcessing()
-                    || PurificationStationBlockEntity.this.hasCompleteRecipeReady())
-                    && super.canReceive();
         }
 
         @Override
