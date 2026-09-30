@@ -9,6 +9,7 @@ import com.howierux.mortalexpansion.block.GraveBlock;
 import com.howierux.mortalexpansion.block.PurificationWardBlock;
 import com.howierux.mortalexpansion.block.PurificationStationBlock;
 import com.howierux.mortalexpansion.block.HolyWaterLiquidBlock;
+import com.howierux.mortalexpansion.block.PurifiedEctoplasmLiquidBlock;
 import com.howierux.mortalexpansion.block.EctoCauldronBlock;
 import com.howierux.mortalexpansion.block.HolySaltWireBlock;
 import com.howierux.mortalexpansion.worldgen.ModTreeGrowers;
@@ -193,6 +194,8 @@ public final class ModBlocks {
                     properties
             ),
             BlockBehaviour.Properties.of()
+                    .replaceable()
+                    .liquid()
                     .noCollission()
                     .strength(100.0F)
                     .noLootTable()
@@ -205,18 +208,22 @@ public final class ModBlocks {
                     properties
             ),
             BlockBehaviour.Properties.of()
+                    .replaceable()
+                    .liquid()
                     .noCollission()
                     .strength(100.0F)
                     .noLootTable()
     );
 
-    public static final DeferredBlock<LiquidBlock> PURIFIED_ECTOPLASM_BLOCK = BLOCKS.registerBlock(
+    public static final DeferredBlock<PurifiedEctoplasmLiquidBlock> PURIFIED_ECTOPLASM_BLOCK = BLOCKS.registerBlock(
             "purified_ectoplasm_fluid",
-            properties -> new LiquidBlock(
+            properties -> new PurifiedEctoplasmLiquidBlock(
                     ModFluids.PURIFIED_ECTOPLASM.get(),
                     properties
             ),
             BlockBehaviour.Properties.of()
+                    .replaceable()
+                    .liquid()
                     .noCollission()
                     .strength(100.0F)
                     .noLootTable()
