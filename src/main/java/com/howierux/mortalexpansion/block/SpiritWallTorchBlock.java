@@ -1,5 +1,6 @@
 package com.howierux.mortalexpansion.block;
 
+import com.howierux.mortalexpansion.entity.mob.SpiritTorchBarrierTracker;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.Direction;
 import net.minecraft.util.RandomSource;
@@ -20,6 +21,18 @@ public final class SpiritWallTorchBlock extends RedstoneWallTorchBlock {
     protected boolean hasNeighborSignal(Level level, BlockPos pos, BlockState state) {
         return super.hasNeighborSignal(level, pos, state) || SpiritSignals.saltPowersSupport(level,
                 pos.relative(state.getValue(FACING).getOpposite()));
+    }
+    @Override
+    protected void onPlace(BlockState state, Level level, BlockPos pos,
+            BlockState oldState, boolean moved) {
+        super.onPlace(state, level, pos, oldState, moved);
+        if (!oldState.is(state.getBlock())) SpiritTorchBarrierTracker.addTorch(level, pos);
+    }
+    @Override
+    protected void onRemove(BlockState state, Level level, BlockPos pos,
+            BlockState newState, boolean moved) {
+        if (!state.is(newState.getBlock())) SpiritTorchBarrierTracker.removeTorch(level, pos);
+        super.onRemove(state, level, pos, newState, moved);
     }
     @Override
     public void animateTick(BlockState state, Level level, BlockPos pos, RandomSource random) {

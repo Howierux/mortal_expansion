@@ -59,6 +59,7 @@ public final class MortalExpansion {
         ModTerraBlender.registerRegions();
 
         NeoForge.EVENT_BUS.register(com.howierux.mortalexpansion.sanctification.SanctifiedAreaHandler.class);
+        NeoForge.EVENT_BUS.register(com.howierux.mortalexpansion.entity.mob.SpiritTorchBarrierTracker.class);
         NeoForge.EVENT_BUS.register(ModCommands.class);
         NeoForge.EVENT_BUS.register(HauntGenerationHandler.class);
         NeoForge.EVENT_BUS.register(HauntSimulationHandler.class);

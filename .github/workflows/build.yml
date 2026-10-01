@@ -31,6 +31,11 @@ jobs:
           javac -d build/daylight-checks src/main/java/com/howierux/mortalexpansion/haunt/HauntDaylightWindow.java tests/java/com/howierux/mortalexpansion/haunt/HauntDaylightWindowTest.java
           java -ea -cp build/daylight-checks com.howierux.mortalexpansion.haunt.HauntDaylightWindowTest
 
+      - name: Check spirit torch links
+        run: |
+          javac -d build/torch-checks src/main/java/com/howierux/mortalexpansion/entity/mob/SpiritTorchLinks.java tests/java/com/howierux/mortalexpansion/entity/mob/SpiritTorchLinksTest.java
+          java -ea -cp build/torch-checks com.howierux.mortalexpansion.entity.mob.SpiritTorchLinksTest
+
       - name: Build with Gradle
         run: ./gradlew build
 

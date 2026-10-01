@@ -57,7 +57,7 @@ public final class SpectralPhasingRules {
                     level,
                     pos.getX(),
                     pos.getZ()
-            )) {
+            ) || SpiritTorchBarrierTracker.hasBarrierColumn(level, pos.getX(), pos.getZ())) {
                 return false;
             }
 
@@ -91,6 +91,7 @@ public final class SpectralPhasingRules {
                                 pos.getX(),
                                 pos.getZ()
                         )
+                                || SpiritTorchBarrierTracker.hasBarrierColumn(level, pos.getX(), pos.getZ())
                                 || level.getBlockState(pos).is(INTANGIBLE_SOLID)
                 );
     }
