@@ -22,6 +22,7 @@ public final class ModCreativeTabs {
                     .title(Component.translatable("itemGroup.mortal_expansion"))
                     .icon(() -> new ItemStack(ModItems.RAW_ECTOPLASM.get()))
                     .displayItems((parameters, output) -> {
+                        output.accept(ModItems.BOOK_OF_ECTCETERA.get());
                         output.accept(ModItems.RAW_ECTOPLASM.get());
                         output.accept(ModItems.PURE_ECTOPLASM.get());
                         output.accept(ModItems.BLOODSTONE.get());

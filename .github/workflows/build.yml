@@ -51,6 +51,9 @@ jobs:
           javac -d build/torch-enclosure-checks src/main/java/com/howierux/mortalexpansion/sanctification/SaltEnclosure.java src/main/java/com/howierux/mortalexpansion/entity/mob/SpiritTorchLinks.java tests/java/com/howierux/mortalexpansion/sanctification/SpiritTorchEnclosureTest.java
           java -ea -cp build/torch-enclosure-checks com.howierux.mortalexpansion.sanctification.SpiritTorchEnclosureTest
 
+      - name: Check Book of Ectcetera content
+        run: python3 tools/check_ectcetera.py
+
       - name: Build with Gradle
         run: ./gradlew build
 

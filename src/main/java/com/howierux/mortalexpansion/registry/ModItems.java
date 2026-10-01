@@ -2,6 +2,7 @@ package com.howierux.mortalexpansion.registry;
 
 import com.howierux.mortalexpansion.MortalExpansion;
 import com.howierux.mortalexpansion.item.SpiritwoodSaplingItem;
+import com.howierux.mortalexpansion.item.BookOfEctceteraItem;
 import com.howierux.mortalexpansion.item.PharaohlScepterItem;
 import com.howierux.mortalexpansion.item.SpectralArmorItem;
 import net.minecraft.world.item.*;
@@ -362,6 +363,8 @@ public final class ModItems {
     public static final DeferredItem<BlockItem> HAINT_FURNACE =
             ITEMS.registerSimpleBlockItem(ModBlocks.HAINT_FURNACE);
 
+    public static final DeferredItem<BookOfEctceteraItem> BOOK_OF_ECTCETERA = ITEMS.registerItem(
+            "book_of_ectcetera", BookOfEctceteraItem::new, new Item.Properties().stacksTo(1));
     public static void register(IEventBus modBus) {
         ITEMS.register(modBus);
     }
