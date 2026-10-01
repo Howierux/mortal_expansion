@@ -34,8 +34,17 @@ public final class HauntSimulationHandler {
 
     private static final long TICKS_PER_DAY = 24_000L;
 
-    /** 7.5% daily chance for each haunted loaded chunk to spread one haunt point. */
-    private static final float SPREAD_CHANCE = 0.075F;
+    /** 7.5 percentage points per named tier above Void's residual spread chance. */
+    private static final float SPREAD_CHANCE_PER_TIER = 0.075F;
+
+    /**
+     * Zero Haunt cannot spread. Residual Void Haunt spreads at 7.5%, Natural at
+     * 15%, Supernatural at 22.5%, and so on through Eldritch at 52.5% per day.
+     */
+    private static float spreadChance(int value) {
+        return value <= HauntTier.MIN_VALUE ? 0.0F
+                : SPREAD_CHANCE_PER_TIER * (HauntTier.fromValue(value).id() + 1);
+    }
 
     /** 10% daily chance to lose one haunt point: 90% chance to remain unchanged. */
     private static final float DECAY_CHANCE = 0.10F;
@@ -225,7 +234,7 @@ public final class HauntSimulationHandler {
 
             if (!sourceWardProtected
                     && sourceValue > 0
-                    && random.nextFloat() < SPREAD_CHANCE) {
+                    && random.nextFloat() < spreadChance(sourceValue)) {
                 int[] offset = CARDINAL_OFFSETS[random.nextInt(CARDINAL_OFFSETS.length)];
                 ChunkPos sourcePos = chunk.getPos();
                 ChunkPos targetPos = new ChunkPos(sourcePos.x + offset[0], sourcePos.z + offset[1]);
