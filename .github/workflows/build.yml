@@ -28,3 +28,7 @@ jobs:
 
       - name: Build with Gradle
         run: ./gradlew build
+
+      - name: Verify mod loading with data generation
+        timeout-minutes: 5
+        run: ./gradlew runData
