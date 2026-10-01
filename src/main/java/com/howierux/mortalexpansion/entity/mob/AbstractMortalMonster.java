@@ -3,6 +3,7 @@ package com.howierux.mortalexpansion.entity.mob;
 import net.minecraft.core.BlockPos;
 import net.minecraft.nbt.CompoundTag;
 import net.minecraft.tags.FluidTags;
+import net.minecraft.world.entity.Entity;
 import net.minecraft.world.entity.EntityType;
 import net.minecraft.world.entity.MoverType;
 import net.minecraft.world.entity.ai.attributes.AttributeSupplier;
@@ -59,12 +60,9 @@ public abstract class AbstractMortalMonster extends Monster {
                         this,
                         Player.class,
                         10,
+                        true,
                         false,
-                        false,
-                        target -> !isAllied()
-                                && this instanceof HorizontalPhasingMob phasing
-                                && phasing.canPhaseHorizontally()
-                                && SpectralPhasingRules.canTrackThroughBlocks(this, target)
+                        target -> !isAllied() && canObserveThroughBlocks()
                 )
         );
         targetSelector.addGoal(
@@ -192,6 +190,22 @@ public abstract class AbstractMortalMonster extends Monster {
         alliedOwner = tag.hasUUID("MortalExpansionAlliedOwner")
                 ? tag.getUUID("MortalExpansionAlliedOwner")
                 : null;
+    }
+
+    /**
+     * Phantom shares spectral perception while retaining its normal physical movement.
+     * Dynamic intangible mobs use this perception only during intangible phases.
+     */
+    private boolean canObserveThroughBlocks() {
+        return canPhaseHorizontally() || this instanceof EmpoweredPhantomEntity;
+    }
+
+    @Override
+    public boolean hasLineOfSight(Entity entity) {
+        if (entity instanceof Player && canObserveThroughBlocks()) {
+            return SpectralPhasingRules.canTrackThroughBlocks(this, entity);
+        }
+        return super.hasLineOfSight(entity);
     }
 
     @Override

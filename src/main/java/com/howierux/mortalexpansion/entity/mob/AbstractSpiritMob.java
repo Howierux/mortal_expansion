@@ -2,6 +2,7 @@ package com.howierux.mortalexpansion.entity.mob;
 
 import net.minecraft.core.BlockPos;
 import net.minecraft.tags.FluidTags;
+import net.minecraft.world.entity.Entity;
 import net.minecraft.world.entity.EntityType;
 import net.minecraft.world.entity.MoverType;
 import net.minecraft.world.entity.PathfinderMob;
@@ -85,6 +86,14 @@ public abstract class AbstractSpiritMob extends PathfinderMob
     private boolean isTouchingWater(AABB box) {
         return BlockPos.betweenClosedStream(box.deflate(1.0E-4D))
                 .anyMatch(pos -> level().getFluidState(pos).is(FluidTags.WATER));
+    }
+
+    @Override
+    public boolean hasLineOfSight(Entity entity) {
+        if (entity instanceof Player && canPhaseHorizontally()) {
+            return SpectralPhasingRules.canTrackThroughBlocks(this, entity);
+        }
+        return super.hasLineOfSight(entity);
     }
 
     @Override
