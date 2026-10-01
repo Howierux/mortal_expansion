@@ -3,6 +3,7 @@ package com.howierux.mortalexpansion.registry;
 import com.howierux.mortalexpansion.MortalExpansion;
 import com.howierux.mortalexpansion.item.SpiritwoodSaplingItem;
 import com.howierux.mortalexpansion.item.PharaohlScepterItem;
+import com.howierux.mortalexpansion.item.SpectralArmorItem;
 import net.minecraft.world.item.*;
 import net.neoforged.bus.api.IEventBus;
 import net.neoforged.neoforge.registries.DeferredItem;
@@ -224,7 +225,7 @@ public final class ModItems {
 
     public static final DeferredItem<ArmorItem> BLOODSTONE_HELMET = ITEMS.registerItem(
             "bloodstone_helmet",
-            properties -> new ArmorItem(
+            properties -> new SpectralArmorItem(
                     ModArmorMaterials.BLOODSTONE,
                     ArmorItem.Type.HELMET,
                     properties.durability(ArmorItem.Type.HELMET.getDurability(50))
@@ -234,7 +235,7 @@ public final class ModItems {
 
     public static final DeferredItem<ArmorItem> BLOODSTONE_CHESTPLATE = ITEMS.registerItem(
             "bloodstone_chestplate",
-            properties -> new ArmorItem(
+            properties -> new SpectralArmorItem(
                     ModArmorMaterials.BLOODSTONE,
                     ArmorItem.Type.CHESTPLATE,
                     properties.durability(ArmorItem.Type.CHESTPLATE.getDurability(50))
@@ -244,7 +245,7 @@ public final class ModItems {
 
     public static final DeferredItem<ArmorItem> BLOODSTONE_LEGGINGS = ITEMS.registerItem(
             "bloodstone_leggings",
-            properties -> new ArmorItem(
+            properties -> new SpectralArmorItem(
                     ModArmorMaterials.BLOODSTONE,
                     ArmorItem.Type.LEGGINGS,
                     properties.durability(ArmorItem.Type.LEGGINGS.getDurability(50))
@@ -254,7 +255,7 @@ public final class ModItems {
 
     public static final DeferredItem<ArmorItem> BLOODSTONE_BOOTS = ITEMS.registerItem(
             "bloodstone_boots",
-            properties -> new ArmorItem(
+            properties -> new SpectralArmorItem(
                     ModArmorMaterials.BLOODSTONE,
                     ArmorItem.Type.BOOTS,
                     properties.durability(ArmorItem.Type.BOOTS.getDurability(50))
@@ -264,7 +265,7 @@ public final class ModItems {
 
     public static final DeferredItem<ArmorItem> SPECTRALITE_HELMET = ITEMS.registerItem(
             "spectralite_helmet",
-            properties -> new ArmorItem(
+            properties -> new SpectralArmorItem(
                     ModArmorMaterials.SPECTRALITE,
                     ArmorItem.Type.HELMET,
                     properties.fireResistant().durability(ArmorItem.Type.HELMET.getDurability(65))
@@ -274,7 +275,7 @@ public final class ModItems {
 
     public static final DeferredItem<ArmorItem> SPECTRALITE_CHESTPLATE = ITEMS.registerItem(
             "spectralite_chestplate",
-            properties -> new ArmorItem(
+            properties -> new SpectralArmorItem(
                     ModArmorMaterials.SPECTRALITE,
                     ArmorItem.Type.CHESTPLATE,
                     properties.fireResistant().durability(ArmorItem.Type.CHESTPLATE.getDurability(65))
@@ -284,7 +285,7 @@ public final class ModItems {
 
     public static final DeferredItem<ArmorItem> SPECTRALITE_LEGGINGS = ITEMS.registerItem(
             "spectralite_leggings",
-            properties -> new ArmorItem(
+            properties -> new SpectralArmorItem(
                     ModArmorMaterials.SPECTRALITE,
                     ArmorItem.Type.LEGGINGS,
                     properties.fireResistant().durability(ArmorItem.Type.LEGGINGS.getDurability(65))
@@ -294,7 +295,7 @@ public final class ModItems {
 
     public static final DeferredItem<ArmorItem> SPECTRALITE_BOOTS = ITEMS.registerItem(
             "spectralite_boots",
-            properties -> new ArmorItem(
+            properties -> new SpectralArmorItem(
                     ModArmorMaterials.SPECTRALITE,
                     ArmorItem.Type.BOOTS,
                     properties.fireResistant().durability(ArmorItem.Type.BOOTS.getDurability(65))

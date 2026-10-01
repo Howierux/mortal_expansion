@@ -232,24 +232,36 @@ public final class EctchantmentMachineBlockEntity extends BlockEntity {
     }
 
     private void tryProcessInput(ServerLevel level) {
-        if (!items.getStackInSlot(SLOT_OUTPUT).isEmpty()) {
-            return;
-        }
-
         ItemStack input = items.getStackInSlot(SLOT_INPUT);
         if (input.isEmpty()) {
             return;
         }
 
         ItemStack result = createOperationResult(input, level);
-        if (result.isEmpty() || !hasEctchantmentCost()) {
+        if (result.isEmpty() || !canAcceptOutput(result) || !hasEctchantmentCost()) {
             return;
         }
 
         consumeEctchantmentCost();
         items.extractItem(SLOT_INPUT, 1, false);
-        items.setStackInSlot(SLOT_OUTPUT, result);
+        ItemStack output = items.getStackInSlot(SLOT_OUTPUT);
+        if (output.isEmpty()) {
+            items.setStackInSlot(SLOT_OUTPUT, result);
+        } else {
+            ItemStack merged = output.copy();
+            merged.grow(result.getCount());
+            items.setStackInSlot(SLOT_OUTPUT, merged);
+        }
         setChanged();
+    }
+
+    private boolean canAcceptOutput(ItemStack result) {
+        if (result.isEmpty()) return false;
+        ItemStack output = items.getStackInSlot(SLOT_OUTPUT);
+        int limit = Math.min(64, Math.min(items.getSlotLimit(SLOT_OUTPUT), result.getMaxStackSize()));
+        if (output.isEmpty()) return result.getCount() <= limit;
+        return ItemStack.isSameItemSameComponents(output, result)
+                && output.getCount() <= limit - result.getCount();
     }
 
     private ItemStack createOperationResult(ItemStack input, ServerLevel level) {
@@ -289,13 +301,9 @@ public final class EctchantmentMachineBlockEntity extends BlockEntity {
     }
 
     private int getStatus() {
-        if (!items.getStackInSlot(SLOT_OUTPUT).isEmpty()) {
-            return STATUS_OUTPUT_READY;
-        }
-
         ItemStack input = items.getStackInSlot(SLOT_INPUT);
         if (input.isEmpty()) {
-            return STATUS_IDLE;
+            return items.getStackInSlot(SLOT_OUTPUT).isEmpty() ? STATUS_IDLE : STATUS_OUTPUT_READY;
         }
 
         if (!(level instanceof ServerLevel serverLevel)) {
@@ -304,8 +312,12 @@ public final class EctchantmentMachineBlockEntity extends BlockEntity {
                     : STATUS_NEEDS_RESOURCE;
         }
 
-        if (createOperationResult(input, serverLevel).isEmpty()) {
+        ItemStack result = createOperationResult(input, serverLevel);
+        if (result.isEmpty()) {
             return STATUS_INVALID_INPUT;
+        }
+        if (!canAcceptOutput(result)) {
+            return STATUS_OUTPUT_READY;
         }
 
         return hasEctchantmentCost()

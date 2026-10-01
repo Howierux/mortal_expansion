@@ -14,6 +14,9 @@ import net.neoforged.neoforge.event.entity.living.LivingIncomingDamageEvent;
 public final class IntangibleCombatHandler {
     private IntangibleCombatHandler() {}
 
+    public static final float ARMOR_REDUCTION_PER_PIECE = 0.05F;
+    public static final int MAX_PROTECTIVE_ARMOR_PIECES = 4;
+
     @SubscribeEvent
     public static void onIncomingDamage(LivingIncomingDamageEvent event) {
         applyIntangibleArmorProtection(event);
@@ -62,7 +65,7 @@ public final class IntangibleCombatHandler {
         }
 
         if (qualifyingPieces > 0) {
-            float multiplier = 1.0F - (0.05F * qualifyingPieces);
+            float multiplier = 1.0F - (ARMOR_REDUCTION_PER_PIECE * qualifyingPieces);
             event.setAmount(event.getAmount() * multiplier);
         }
     }

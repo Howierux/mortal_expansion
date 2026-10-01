@@ -119,5 +119,8 @@
   "block.mortal_expansion.spirit_torch": "Spirit Torch",
   "effect.mortal_expansion.sanctified": "Sanctified",
   "death.attack.sanctification": "%1$s was cleansed by sanctification",
-  "death.attack.sanctification.player": "%1$s was cleansed by sanctification while fighting %2$s"
+  "death.attack.sanctification.player": "%1$s was cleansed by sanctification while fighting %2$s",
+  "tooltip.mortal_expansion.armor.spectral_protection": "%s%% less damage from intangible attackers",
+  "tooltip.mortal_expansion.armor.spectral_set": "Stacks across Bloodstone and Spectralite armor (up to %s%%)",
+  "tooltip.mortal_expansion.armor.fireproof_item": "Dropped item resists fire and lava"
 }
