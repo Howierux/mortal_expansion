@@ -20,7 +20,7 @@ public final class EctceteraBookScreen {
     }
 
     public static void open() {
-        List<FormattedText> pages = new ArrayList<>();
+        List<Component> pages = new ArrayList<>();
         pages.add(Component.translatable(PREFIX + "cover").append("\n\n")
                 .append(link(Component.translatable(PREFIX + "contents"), 1)));
         for (int contents = 0; contents < EctceteraGuide.contentsPages(); contents++) {
