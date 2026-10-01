@@ -25,11 +25,15 @@ public final class HauntBiomeTags {
 
     /**
      * Biomes that naturally begin at the Supernatural haunt tier.
-     *
-     * Spiritwood Forest is intended to be added to this tag when that biome is implemented.
      */
     public static final TagKey<Biome> SUPERNATURAL_HAUNT = TagKey.create(
             Registries.BIOME,
             ResourceLocation.fromNamespaceAndPath(MortalExpansion.MOD_ID, "supernatural_haunt")
+    );
+
+    /** Biomes with a Dead Rising starting tier and natural simulation floor. */
+    public static final TagKey<Biome> DEAD_RISING_HAUNT = TagKey.create(
+            Registries.BIOME,
+            ResourceLocation.fromNamespaceAndPath(MortalExpansion.MOD_ID, "dead_rising_haunt")
     );
 }

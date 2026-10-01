@@ -48,9 +48,7 @@ public final class NaturalHauntGenerator {
                 if (sampleTier.id() > highest.id()) {
                     highest = sampleTier;
 
-                    if (highest == HauntTier.SUPERNATURAL) {
-                        return highest;
-                    }
+                    // Check every sample: a later Graveyard sample outranks Spiritwood.
                 }
             }
         }
@@ -59,6 +57,10 @@ public final class NaturalHauntGenerator {
     }
 
     private static HauntTier tierForBiome(Holder<Biome> biome) {
+        if (biome.is(HauntBiomeTags.DEAD_RISING_HAUNT)) {
+            return HauntTier.DEAD_RISING;
+        }
+
         if (biome.is(HauntBiomeTags.SUPERNATURAL_HAUNT)) {
             return HauntTier.SUPERNATURAL;
         }
