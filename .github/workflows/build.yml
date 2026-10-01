@@ -36,6 +36,11 @@ jobs:
           javac -d build/torch-checks src/main/java/com/howierux/mortalexpansion/entity/mob/SpiritTorchLinks.java tests/java/com/howierux/mortalexpansion/entity/mob/SpiritTorchLinksTest.java
           java -ea -cp build/torch-checks com.howierux.mortalexpansion.entity.mob.SpiritTorchLinksTest
 
+      - name: Check fractional player Haunt
+        run: |
+          javac -d build/fraction-checks src/main/java/com/howierux/mortalexpansion/haunt/HauntTier.java src/main/java/com/howierux/mortalexpansion/haunt/FractionalHaunt.java tests/java/com/howierux/mortalexpansion/haunt/FractionalHauntTest.java
+          java -ea -cp build/fraction-checks com.howierux.mortalexpansion.haunt.FractionalHauntTest
+
       - name: Build with Gradle
         run: ./gradlew build
 

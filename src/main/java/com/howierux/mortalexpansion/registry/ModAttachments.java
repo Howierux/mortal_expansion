@@ -64,6 +64,15 @@ public final class ModAttachments {
                     .build()
     );
 
+    /** Hundredths of a personal Haunt point, retained across logout and death. */
+    public static final Supplier<AttachmentType<Integer>> PLAYER_HAUNT_FRACTION = ATTACHMENTS.register(
+            "player_haunt_fraction",
+            () -> AttachmentType.builder(() -> 0)
+                    .serialize(Codec.intRange(0, 99))
+                    .copyOnDeath()
+                    .build()
+    );
+
     /**
      * Desert-pyramid encounter keys already triggered by this player.
      * Persisted across death so each pyramid can summon Pharaohl only once

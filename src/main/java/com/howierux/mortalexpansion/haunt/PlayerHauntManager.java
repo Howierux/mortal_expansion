@@ -29,6 +29,11 @@ public final class PlayerHauntManager {
     }
 
     public static int setValue(Player player, int value) {
+        player.setData(ModAttachments.PLAYER_HAUNT_FRACTION, 0);
+        return storeWholeValue(player, value);
+    }
+
+    private static int storeWholeValue(Player player, int value) {
         int clamped = HauntTier.clampValue(value);
         HauntTier tier = HauntTier.fromValue(clamped);
 
@@ -41,7 +46,26 @@ public final class PlayerHauntManager {
     }
 
     public static int addPoints(Player player, int amount) {
-        return setValue(player, getValue(player) + amount);
+        addHundredths(player, (long)amount * FractionalHaunt.UNITS_PER_POINT);
+        return getValue(player);
+    }
+
+    /** Decimal personal value for display; named tier rules still use whole points. */
+    public static double getPreciseValue(Player player) {
+        return (double)getHundredths(player) / FractionalHaunt.UNITS_PER_POINT;
+    }
+
+    private static int getHundredths(Player player) {
+        return getValue(player) * FractionalHaunt.UNITS_PER_POINT
+                + player.getData(ModAttachments.PLAYER_HAUNT_FRACTION);
+    }
+
+    /** Fixed-point arithmetic avoids decimal drift and preserves fractions during whole-point changes. */
+    public static void addHundredths(Player player, long amount) {
+        int result = FractionalHaunt.add(getHundredths(player), amount);
+        storeWholeValue(player, result / FractionalHaunt.UNITS_PER_POINT);
+        player.setData(ModAttachments.PLAYER_HAUNT_FRACTION,
+                result % FractionalHaunt.UNITS_PER_POINT);
     }
 
     /** Whole-tier adjustment retained for explicit tier-changing effects. */

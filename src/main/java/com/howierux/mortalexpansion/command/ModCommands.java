@@ -143,7 +143,7 @@ public final class ModCommands {
 
             source.sendSuccess(() -> Component.literal(
                     "Personal haunt: " + tier.displayName()
-                            + " | value " + value
+                            + " | value " + formatPlayerHaunt(player)
                             + " | range " + tier.minimumValue() + "-" + tier.maximumValue()
             ), false);
             return value;
@@ -185,13 +185,17 @@ public final class ModCommands {
             int value = PlayerHauntManager.addPoints(player, amount);
             HauntTier tier = HauntTier.fromValue(value);
             source.sendSuccess(() -> Component.literal(
-                    "Personal haunt is now " + tier.displayName() + " | value " + value
+                    "Personal haunt is now " + tier.displayName() + " | value " + formatPlayerHaunt(player)
             ), true);
             return value;
         } catch (Exception exception) {
             source.sendFailure(Component.literal("This command must be run by a player."));
             return 0;
         }
+    }
+
+    private static String formatPlayerHaunt(ServerPlayer player) {
+        return String.format(java.util.Locale.ROOT, "%.2f", PlayerHauntManager.getPreciseValue(player));
     }
 
     private static int listTiers(CommandContext<CommandSourceStack> context) {
