@@ -92,11 +92,11 @@ public final class ModCommands {
         BlockPos pos = BlockPos.containing(source.getPosition());
         LevelChunk chunk = level.getChunkAt(pos);
 
-        HauntTier tier = NaturalHauntGenerator.determineInitialTier(chunk);
+        HauntTier tier = NaturalHauntGenerator.determineInitialTier(level, chunk);
 
         int value = tier.midpointValue();
         source.sendSuccess(() -> Component.literal(
-                "Biome-derived natural haunt: " + tier.displayName()
+                "Natural haunt baseline: " + tier.displayName()
                         + " | baseline value " + value
         ), false);
         return value;

@@ -3,6 +3,7 @@ package com.howierux.mortalexpansion.haunt;
 import net.minecraft.core.Holder;
 import net.minecraft.core.QuartPos;
 import net.minecraft.world.level.ChunkPos;
+import net.minecraft.world.level.Level;
 import net.minecraft.world.level.biome.Biome;
 import net.minecraft.world.level.chunk.ChunkAccess;
 
@@ -28,6 +29,20 @@ public final class NaturalHauntGenerator {
      * classification without requesting other chunks.
      */
     private static final int SAMPLE_Y = 64;
+
+    /** Vanilla dimensions participate in the persistent Haunt simulation. */
+    public static boolean supportsDimension(Level level) {
+        return level.dimension().equals(Level.OVERWORLD)
+                || level.dimension().equals(Level.NETHER)
+                || level.dimension().equals(Level.END);
+    }
+
+    /** Dimension-wide baselines outrank biome classification outside the Overworld. */
+    public static HauntTier determineInitialTier(Level level, ChunkAccess chunk) {
+        if (level.dimension().equals(Level.NETHER)) return HauntTier.DEMONIC;
+        if (level.dimension().equals(Level.END)) return HauntTier.ELDRITCH;
+        return determineInitialTier(chunk);
+    }
 
     public static HauntTier determineInitialTier(ChunkAccess chunk) {
         ChunkPos chunkPos = chunk.getPos();

@@ -78,7 +78,7 @@ public final class HauntSimulationHandler {
     @SubscribeEvent
     public static void onChunkLoad(ChunkEvent.Load event) {
         if (!(event.getLevel() instanceof ServerLevel level)
-                || !level.dimension().equals(Level.OVERWORLD)
+                || !NaturalHauntGenerator.supportsDimension(level)
                 || !(event.getChunk() instanceof LevelChunk chunk)) {
             return;
         }
@@ -91,7 +91,7 @@ public final class HauntSimulationHandler {
     @SubscribeEvent
     public static void onChunkUnload(ChunkEvent.Unload event) {
         if (!(event.getLevel() instanceof ServerLevel level)
-                || !level.dimension().equals(Level.OVERWORLD)) {
+                || !NaturalHauntGenerator.supportsDimension(level)) {
             return;
         }
 
@@ -104,7 +104,7 @@ public final class HauntSimulationHandler {
     @SubscribeEvent
     public static void onLevelTick(LevelTickEvent.Post event) {
         if (!(event.getLevel() instanceof ServerLevel level)
-                || !level.dimension().equals(Level.OVERWORLD)) {
+                || !NaturalHauntGenerator.supportsDimension(level)) {
             return;
         }
 
@@ -332,7 +332,7 @@ public final class HauntSimulationHandler {
 
     /** Midpoint baseline supplied by permanent biome-derived haunt sources. */
     public static int determineSourceFloorValue(LevelChunk chunk) {
-        return NaturalHauntGenerator.determineInitialTier(chunk).midpointValue();
+        return NaturalHauntGenerator.determineInitialTier(chunk.getLevel(), chunk).midpointValue();
     }
 
     /** Named version retained for callers interested only in the tier band. */

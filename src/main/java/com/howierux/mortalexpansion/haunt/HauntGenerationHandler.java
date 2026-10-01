@@ -8,25 +8,21 @@ import net.neoforged.bus.api.SubscribeEvent;
 import net.neoforged.neoforge.event.level.ChunkEvent;
 
 /**
- * Initializes biome-derived haunt when a brand-new Overworld chunk is first loaded.
+ * Initializes natural Haunt for new chunks in the Overworld, Nether and End.
  *
- * Existing chunks are deliberately left unchanged. Older tier-only chunks are
- * migrated lazily to the midpoint of their existing tier by HauntManager.
+ * Existing saved Haunt is retained. Previously uninitialized Nether and End
+ * chunks receive their dimension baseline on first load.
  */
 public final class HauntGenerationHandler {
     private HauntGenerationHandler() {}
 
     @SubscribeEvent
     public static void onChunkLoad(ChunkEvent.Load event) {
-        if (!event.isNewChunk()) {
-            return;
-        }
-
         if (!(event.getLevel() instanceof ServerLevel level)) {
             return;
         }
 
-        if (!level.dimension().equals(Level.OVERWORLD)) {
+        if (!NaturalHauntGenerator.supportsDimension(level)) {
             return;
         }
 
@@ -34,7 +30,14 @@ public final class HauntGenerationHandler {
             return;
         }
 
-        HauntTier initialTier = NaturalHauntGenerator.determineInitialTier(chunk);
+        if (!event.isNewChunk()) {
+            // Preserve older tier-only data as well as points and Ward purification.
+            if (level.dimension().equals(Level.OVERWORLD)
+                    || chunk.hasData(ModAttachments.HAUNT_TIER)
+                    || chunk.hasData(ModAttachments.HAUNT_PROGRESS)) return;
+        }
+
+        HauntTier initialTier = NaturalHauntGenerator.determineInitialTier(level, chunk);
         int initialValue = initialTier.midpointValue();
 
         chunk.setData(ModAttachments.HAUNT_TIER, initialTier.id());
