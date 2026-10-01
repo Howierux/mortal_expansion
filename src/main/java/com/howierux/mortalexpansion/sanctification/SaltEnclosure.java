@@ -5,7 +5,7 @@ import java.util.HashSet;
 import java.util.Set;
 import java.util.function.LongPredicate;
 
-/** Bounded planar flood fill. Salt columns alone form walls; unloaded space is exterior. */
+/** Bounded planar flood fill. Salt or torch-link columns form walls; unloaded space is exterior. */
 public final class SaltEnclosure {
     private SaltEnclosure() {}
     public static final int MAX_AREA = 4096;

@@ -46,6 +46,11 @@ jobs:
           javac -d build/furnace-checks src/main/java/com/howierux/mortalexpansion/haunt/HauntTier.java src/main/java/com/howierux/mortalexpansion/haunt/HauntFurnaceTiming.java tests/java/com/howierux/mortalexpansion/haunt/HauntFurnaceTimingTest.java
           java -ea -cp build/furnace-checks com.howierux.mortalexpansion.haunt.HauntFurnaceTimingTest
 
+      - name: Check spirit torch sanctification
+        run: |
+          javac -d build/torch-enclosure-checks src/main/java/com/howierux/mortalexpansion/sanctification/SaltEnclosure.java src/main/java/com/howierux/mortalexpansion/entity/mob/SpiritTorchLinks.java tests/java/com/howierux/mortalexpansion/sanctification/SpiritTorchEnclosureTest.java
+          java -ea -cp build/torch-enclosure-checks com.howierux.mortalexpansion.sanctification.SpiritTorchEnclosureTest
+
       - name: Build with Gradle
         run: ./gradlew build
 

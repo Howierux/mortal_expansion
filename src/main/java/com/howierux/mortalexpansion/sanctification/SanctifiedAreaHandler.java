@@ -1,5 +1,6 @@
 package com.howierux.mortalexpansion.sanctification;
 
+import com.howierux.mortalexpansion.entity.mob.SpiritTorchBarrierTracker;
 import com.howierux.mortalexpansion.registry.ModBlocks;
 import com.howierux.mortalexpansion.registry.ModEffects;
 import net.minecraft.core.BlockPos;
@@ -32,6 +33,12 @@ public final class SanctifiedAreaHandler {
 
     private static long chunkKey(int x, int z) { return SaltEnclosure.key(x >> 4, z >> 4); }
     private static Index index(Level level) { return INDEXES.computeIfAbsent(level, l -> new Index()); }
+
+    /** Torch link changes invalidate the same enclosure cache used by salt. */
+    public static void invalidateAreas(Level level) {
+        Index index = INDEXES.get(level);
+        if (index != null) index.areas.clear();
+    }
 
     public static void addSalt(Level level, BlockPos pos) {
         if (!(level instanceof ServerLevel)) return;
@@ -99,11 +106,13 @@ public final class SanctifiedAreaHandler {
         if (!(event.getEntity() instanceof Mob mob) || !mob.isAlive()
                 || !(mob.level() instanceof ServerLevel level) || mob.tickCount % 10 != 0) return;
         Index index = index(level);
-        if (index.columns.isEmpty()) return;
+        if (index.columns.isEmpty() && !SpiritTorchBarrierTracker.hasBarriers(level)) return;
         long start = SaltEnclosure.key(mob.blockPosition().getX(), mob.blockPosition().getZ());
         Boolean enclosed = index.areas.get(start);
         if (enclosed == null) {
-            SaltEnclosure.Result result = SaltEnclosure.find(start, index.columns::containsKey,
+            SaltEnclosure.Result result = SaltEnclosure.find(start, cell -> index.columns.containsKey(cell)
+                            || SpiritTorchBarrierTracker.hasBarrierColumn(level,
+                                    SaltEnclosure.x(cell), SaltEnclosure.z(cell)),
                     cell -> index.chunks.containsKey(chunkKey(SaltEnclosure.x(cell), SaltEnclosure.z(cell))));
             // Bound memory for wandering mobs and large servers.
             if (index.areas.size() > 65536) index.areas.clear();

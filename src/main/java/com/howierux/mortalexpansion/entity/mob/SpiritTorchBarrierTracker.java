@@ -1,6 +1,7 @@
 package com.howierux.mortalexpansion.entity.mob;
 
 import com.howierux.mortalexpansion.block.SpiritSignals;
+import com.howierux.mortalexpansion.sanctification.SanctifiedAreaHandler;
 import net.minecraft.core.BlockPos;
 import net.minecraft.world.level.Level;
 import net.minecraft.world.level.chunk.LevelChunk;
@@ -30,9 +31,10 @@ public final class SpiritTorchBarrierTracker {
             Set<BlockPos> torches = chunks.remove(chunk);
             if (torches != null) torches.forEach(pos -> count(pos, -1));
         }
-        void rebuild() {
+        void rebuild(Level level) {
             walls = SpiritTorchLinks.build(columns.keySet(), column ->
                     chunks.containsKey(chunkKey(SpiritTorchLinks.x(column), SpiritTorchLinks.z(column))));
+            SanctifiedAreaHandler.invalidateAreas(level);
         }
     }
 
@@ -46,7 +48,7 @@ public final class SpiritTorchBarrierTracker {
                 chunkKey(pos.getX(), pos.getZ()), unused -> new HashSet<>());
         if (torches.add(pos.immutable())) {
             index.count(pos, 1);
-            index.rebuild();
+            index.rebuild(level);
         }
     }
 
@@ -56,8 +58,13 @@ public final class SpiritTorchBarrierTracker {
         Set<BlockPos> torches = index.chunks.get(chunkKey(pos.getX(), pos.getZ()));
         if (torches != null && torches.remove(pos)) {
             index.count(pos, -1);
-            index.rebuild();
+            index.rebuild(level);
         }
+    }
+
+    public static boolean hasBarriers(Level level) {
+        Index index = LEVELS.get(level);
+        return index != null && !index.walls.isEmpty();
     }
 
     public static boolean hasBarrierColumn(Level level, int x, int z) {
@@ -92,7 +99,7 @@ public final class SpiritTorchBarrierTracker {
                 }
             }
         }
-        index.rebuild();
+        index.rebuild(level);
     }
 
     @SubscribeEvent
@@ -102,6 +109,6 @@ public final class SpiritTorchBarrierTracker {
         if (index == null) return;
         var pos = event.getChunk().getPos();
         index.forget(SpiritTorchLinks.key(pos.x, pos.z));
-        index.rebuild();
+        index.rebuild(level);
     }
 }
