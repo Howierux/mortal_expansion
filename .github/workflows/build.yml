@@ -41,6 +41,11 @@ jobs:
           javac -d build/fraction-checks src/main/java/com/howierux/mortalexpansion/haunt/HauntTier.java src/main/java/com/howierux/mortalexpansion/haunt/FractionalHaunt.java tests/java/com/howierux/mortalexpansion/haunt/FractionalHauntTest.java
           java -ea -cp build/fraction-checks com.howierux.mortalexpansion.haunt.FractionalHauntTest
 
+      - name: Check Haunt furnace timing
+        run: |
+          javac -d build/furnace-checks src/main/java/com/howierux/mortalexpansion/haunt/HauntTier.java src/main/java/com/howierux/mortalexpansion/haunt/HauntFurnaceTiming.java tests/java/com/howierux/mortalexpansion/haunt/HauntFurnaceTimingTest.java
+          java -ea -cp build/furnace-checks com.howierux.mortalexpansion.haunt.HauntFurnaceTimingTest
+
       - name: Build with Gradle
         run: ./gradlew build
 

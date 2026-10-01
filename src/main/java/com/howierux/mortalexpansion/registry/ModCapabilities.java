@@ -12,6 +12,12 @@ public final class ModCapabilities {
     }
 
     private static void registerCapabilities(RegisterCapabilitiesEvent event) {
+        event.registerBlockEntity(Capabilities.ItemHandler.BLOCK,
+                ModBlockEntities.HAUNT_FURNACE.get(),
+                (furnace, side) -> side == null
+                        ? new net.neoforged.neoforge.items.wrapper.InvWrapper(furnace)
+                        : new net.neoforged.neoforge.items.wrapper.SidedInvWrapper(furnace, side));
+
         event.registerBlockEntity(
                 Capabilities.EnergyStorage.BLOCK,
                 ModBlockEntities.ECTCHANTMENT_MACHINE.get(),

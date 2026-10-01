@@ -357,6 +357,11 @@ public final class ModItems {
             new Item.Properties()
     );
 
+    public static final DeferredItem<BlockItem> HAUNT_FURNACE =
+            ITEMS.registerSimpleBlockItem(ModBlocks.HAUNT_FURNACE);
+    public static final DeferredItem<BlockItem> HAINT_FURNACE =
+            ITEMS.registerSimpleBlockItem(ModBlocks.HAINT_FURNACE);
+
     public static void register(IEventBus modBus) {
         ITEMS.register(modBus);
     }

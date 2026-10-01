@@ -5,6 +5,7 @@ import com.howierux.mortalexpansion.blockentity.EctchantmentMachineBlockEntity;
 import com.howierux.mortalexpansion.blockentity.EctoplasmicGeneratorBlockEntity;
 import com.howierux.mortalexpansion.blockentity.EnchantmentGeneratorBlockEntity;
 import com.howierux.mortalexpansion.blockentity.GraveBlockEntity;
+import com.howierux.mortalexpansion.blockentity.HauntFurnaceBlockEntity;
 import com.howierux.mortalexpansion.blockentity.PurificationWardBlockEntity;
 import com.howierux.mortalexpansion.blockentity.PurificationStationBlockEntity;
 import net.minecraft.core.registries.Registries;
@@ -73,6 +74,11 @@ public final class ModBlockEntities {
                             ModBlocks.GRAVE.get()
                     ).build(null)
             );
+
+    public static final Supplier<BlockEntityType<HauntFurnaceBlockEntity>> HAUNT_FURNACE =
+            BLOCK_ENTITY_TYPES.register("haunt_furnace",
+                    () -> BlockEntityType.Builder.of(HauntFurnaceBlockEntity::new,
+                            ModBlocks.HAUNT_FURNACE.get(), ModBlocks.HAINT_FURNACE.get()).build(null));
 
     public static void register(IEventBus modBus) {
         BLOCK_ENTITY_TYPES.register(modBus);

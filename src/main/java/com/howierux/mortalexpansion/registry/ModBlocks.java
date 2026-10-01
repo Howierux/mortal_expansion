@@ -2,6 +2,8 @@ package com.howierux.mortalexpansion.registry;
 
 import com.howierux.mortalexpansion.MortalExpansion;
 import com.howierux.mortalexpansion.block.EctchantmentMachineBlock;
+import com.howierux.mortalexpansion.block.HauntFurnaceBlock;
+import com.howierux.mortalexpansion.block.HaintFurnaceBlock;
 import com.howierux.mortalexpansion.block.EctoplasmicGeneratorBlock;
 import com.howierux.mortalexpansion.block.EnchantmentGeneratorBlock;
 import com.howierux.mortalexpansion.block.SpiritwoodSaplingBlock;
@@ -89,6 +91,16 @@ public final class ModBlocks {
     public static final DeferredBlock<Block> GRAVESTONE = BLOCKS.registerSimpleBlock(
             "gravestone",
             BlockBehaviour.Properties.ofFullCopy(Blocks.STONE)
+    );
+
+    public static final DeferredBlock<HauntFurnaceBlock> HAUNT_FURNACE = BLOCKS.registerBlock(
+            "haunt_furnace", HauntFurnaceBlock::new,
+            BlockBehaviour.Properties.ofFullCopy(Blocks.FURNACE)
+    );
+
+    public static final DeferredBlock<HaintFurnaceBlock> HAINT_FURNACE = BLOCKS.registerBlock(
+            "haint_furnace", HaintFurnaceBlock::new,
+            BlockBehaviour.Properties.ofFullCopy(Blocks.FURNACE)
     );
 
     public static final DeferredBlock<GlowLichenBlock> GRAVE_MOSS = BLOCKS.registerBlock(

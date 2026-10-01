@@ -33,6 +33,8 @@ public final class ModCreativeTabs {
                         output.accept(ModItems.GRAVE_MOSS.get());
                         output.accept(ModItems.PURIFIED_GRAVESTONE.get());
                         output.accept(ModItems.GRAVE.get());
+                        output.accept(ModItems.HAUNT_FURNACE.get());
+                        output.accept(ModItems.HAINT_FURNACE.get());
                         output.accept(ModItems.STONE_FENCE.get());
 
                         output.accept(ModItems.SPIRITWOOD_LOG.get());
