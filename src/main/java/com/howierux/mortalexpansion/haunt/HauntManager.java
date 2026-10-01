@@ -52,12 +52,16 @@ public final class HauntManager {
         int clamped = HauntTier.clampValue(value);
         HauntTier tier = HauntTier.fromValue(clamped);
         LevelChunk chunk = level.getChunk(pos.x, pos.z);
+        HauntTier previousTier = HauntTier.fromId(chunk.getData(ModAttachments.HAUNT_TIER));
 
         chunk.setData(ModAttachments.HAUNT_TIER, tier.id());
         chunk.setData(
                 ModAttachments.HAUNT_PROGRESS,
                 HauntTier.progressFromValue(clamped)
         );
+        if (previousTier != tier) {
+            com.howierux.mortalexpansion.blockentity.HauntFurnaceBlockEntity.onChunkTierChanged(chunk, tier);
+        }
         return clamped;
     }
 

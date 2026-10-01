@@ -48,5 +48,6 @@ public final class HauntGenerationHandler {
                 ModAttachments.HAUNT_PROGRESS,
                 HauntTier.progressFromValue(initialValue)
         );
+        com.howierux.mortalexpansion.blockentity.HauntFurnaceBlockEntity.onChunkTierChanged(chunk, initialTier);
     }
 }
