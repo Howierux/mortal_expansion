@@ -40,6 +40,7 @@ public final class MortalExpansion {
     public static final String MOD_ID = "mortal_expansion";
 
     public MortalExpansion(IEventBus modBus) {
+        com.howierux.mortalexpansion.registry.ModEffects.register(modBus);
         ModDataComponents.register(modBus);
         GraveNamePayloads.register(modBus);
         ModArmorMaterials.register(modBus);
@@ -57,6 +58,7 @@ public final class MortalExpansion {
 
         ModTerraBlender.registerRegions();
 
+        NeoForge.EVENT_BUS.register(com.howierux.mortalexpansion.sanctification.SanctifiedAreaHandler.class);
         NeoForge.EVENT_BUS.register(ModCommands.class);
         NeoForge.EVENT_BUS.register(HauntGenerationHandler.class);
         NeoForge.EVENT_BUS.register(HauntSimulationHandler.class);

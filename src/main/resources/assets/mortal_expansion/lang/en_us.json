@@ -115,5 +115,9 @@
   "gui.mortal_expansion.ectchantment_machine.status.output_ready": "Output ready",
   "gui.mortal_expansion.ectchantment_machine.ecto_charge": "Ectoplasmic Charge: %s / %s",
   "gui.mortal_expansion.ectchantment_machine.ecto_slot": "Ecto",
-  "gui.mortal_expansion.ectoplasmic_generator.ecto": "Ecto"
+  "gui.mortal_expansion.ectoplasmic_generator.ecto": "Ecto",
+  "block.mortal_expansion.spirit_torch": "Spirit Torch",
+  "effect.mortal_expansion.sanctified": "Sanctified",
+  "death.attack.sanctification": "%1$s was cleansed by sanctification",
+  "death.attack.sanctification.player": "%1$s was cleansed by sanctification while fighting %2$s"
 }

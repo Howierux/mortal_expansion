@@ -12,6 +12,8 @@ import com.howierux.mortalexpansion.block.HolyWaterLiquidBlock;
 import com.howierux.mortalexpansion.block.PurifiedEctoplasmLiquidBlock;
 import com.howierux.mortalexpansion.block.EctoCauldronBlock;
 import com.howierux.mortalexpansion.block.HolySaltWireBlock;
+import com.howierux.mortalexpansion.block.SpiritTorchBlock;
+import com.howierux.mortalexpansion.block.SpiritWallTorchBlock;
 import com.howierux.mortalexpansion.worldgen.ModTreeGrowers;
 import net.minecraft.util.valueproviders.UniformInt;
 import net.minecraft.world.level.block.*;
@@ -246,6 +248,14 @@ public final class ModBlocks {
             properties -> new EctoCauldronBlock(properties, false),
             BlockBehaviour.Properties.ofFullCopy(Blocks.CAULDRON)
     );
+
+    public static final DeferredBlock<SpiritTorchBlock> SPIRIT_TORCH = BLOCKS.registerBlock(
+            "spirit_torch", SpiritTorchBlock::new,
+            BlockBehaviour.Properties.ofFullCopy(Blocks.REDSTONE_TORCH));
+    public static final DeferredBlock<SpiritWallTorchBlock> SPIRIT_WALL_TORCH = BLOCKS.registerBlock(
+            "spirit_wall_torch", SpiritWallTorchBlock::new,
+            BlockBehaviour.Properties.ofFullCopy(Blocks.REDSTONE_WALL_TORCH)
+                    .dropsLike(SPIRIT_TORCH.get()));
 
     public static final DeferredBlock<HolySaltWireBlock> HOLY_SALT = BLOCKS.registerBlock(
             "holy_salt",

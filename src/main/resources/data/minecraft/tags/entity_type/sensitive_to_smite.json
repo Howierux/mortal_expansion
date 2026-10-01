@@ -1,0 +1,13 @@
+{
+  "replace": false,
+  "values": [
+    "mortal_expansion:ghost",
+    "mortal_expansion:phantom",
+    "mortal_expansion:spirit",
+    "mortal_expansion:elemental",
+    "mortal_expansion:haunt",
+    "mortal_expansion:haint",
+    "mortal_expansion:mummy",
+    "mortal_expansion:pharaohl"
+  ]
+}

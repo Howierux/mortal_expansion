@@ -26,6 +26,10 @@ public final class DemiTangibleDamage {
      * - attacks made with an item carrying the Demi-Tangible enchantment.
      */
     public static boolean canDamageIntangible(DamageSource source) {
+        if (source.is(com.howierux.mortalexpansion.effect.ModDamageTypes.SANCTIFICATION)) {
+            return true;
+        }
+
         if (source.is(DamageTypeTags.IS_EXPLOSION)) {
             return true;
         }

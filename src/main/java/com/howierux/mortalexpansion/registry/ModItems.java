@@ -115,6 +115,11 @@ public final class ModItems {
             new Item.Properties()
     );
 
+    public static final DeferredItem<StandingAndWallBlockItem> SPIRIT_TORCH = ITEMS.registerItem(
+            "spirit_torch", properties -> new StandingAndWallBlockItem(
+                    ModBlocks.SPIRIT_TORCH.get(), ModBlocks.SPIRIT_WALL_TORCH.get(),
+                    properties, net.minecraft.core.Direction.DOWN), new Item.Properties());
+
     public static final DeferredItem<BlockItem> HOLY_SALT =
             ITEMS.registerSimpleBlockItem(ModBlocks.HOLY_SALT);
 

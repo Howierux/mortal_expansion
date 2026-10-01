@@ -21,5 +21,10 @@ jobs:
       - name: Setup Gradle
         uses: gradle/actions/setup-gradle@v4
 
+      - name: Check salt enclosure rules
+        run: |
+          javac -d build/salt-checks src/main/java/com/howierux/mortalexpansion/sanctification/SaltEnclosure.java src/test/java/com/howierux/mortalexpansion/sanctification/SaltEnclosureTest.java
+          java -ea -cp build/salt-checks com.howierux.mortalexpansion.sanctification.SaltEnclosureTest
+
       - name: Build with Gradle
         run: ./gradlew build
