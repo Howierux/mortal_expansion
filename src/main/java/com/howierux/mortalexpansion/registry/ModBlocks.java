@@ -254,8 +254,7 @@ public final class ModBlocks {
             BlockBehaviour.Properties.ofFullCopy(Blocks.REDSTONE_TORCH));
     public static final DeferredBlock<SpiritWallTorchBlock> SPIRIT_WALL_TORCH = BLOCKS.registerBlock(
             "spirit_wall_torch", SpiritWallTorchBlock::new,
-            BlockBehaviour.Properties.ofFullCopy(Blocks.REDSTONE_WALL_TORCH)
-                    .dropsLike(SPIRIT_TORCH.get()));
+            BlockBehaviour.Properties.ofFullCopy(Blocks.REDSTONE_WALL_TORCH));
 
     public static final DeferredBlock<HolySaltWireBlock> HOLY_SALT = BLOCKS.registerBlock(
             "holy_salt",
