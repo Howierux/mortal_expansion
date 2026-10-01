@@ -31,10 +31,13 @@ public final class HauntGenerationHandler {
         }
 
         if (!event.isNewChunk()) {
-            // Preserve older tier-only data as well as points and Ward purification.
+            // A default Void attachment may have been read by a furnace before
+            // dimension Haunt existed. Treat that tier-only placeholder as uninitialized.
+            // Preserve explicit points, Ward purification and non-Void older tiers.
+            boolean savedTier = chunk.hasData(ModAttachments.HAUNT_TIER)
+                    && chunk.getData(ModAttachments.HAUNT_TIER) != HauntTier.VOID.id();
             if (level.dimension().equals(Level.OVERWORLD)
-                    || chunk.hasData(ModAttachments.HAUNT_TIER)
-                    || chunk.hasData(ModAttachments.HAUNT_PROGRESS)) return;
+                    || savedTier || chunk.hasData(ModAttachments.HAUNT_PROGRESS)) return;
         }
 
         HauntTier initialTier = NaturalHauntGenerator.determineInitialTier(level, chunk);
