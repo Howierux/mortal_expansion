@@ -44,7 +44,10 @@ public abstract class AbstractSpiritMob extends PathfinderMob
 
     @Override
     public void move(MoverType moverType, Vec3 movement) {
-        Vec3 safeMovement = avoidEnteringWater(movement);
+        Vec3 daylightMovement = moverType == MoverType.SELF
+                ? com.howierux.mortalexpansion.haunt.HauntDaylightRules.limitMovement(this, movement)
+                : movement;
+        Vec3 safeMovement = avoidEnteringWater(daylightMovement);
 
         // Spirits phase only horizontally. Normal vertical collision is retained
         // so they still stand on terrain instead of falling through the world.
