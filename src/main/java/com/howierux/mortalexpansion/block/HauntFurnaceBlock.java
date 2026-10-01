@@ -12,11 +12,11 @@ import net.minecraft.world.level.block.entity.*;
 import net.minecraft.world.level.block.state.BlockState;
 
 public class HauntFurnaceBlock extends FurnaceBlock {
-    public static final MapCodec<HauntFurnaceBlock> CODEC = simpleCodec(HauntFurnaceBlock::new);
+    public static final MapCodec<FurnaceBlock> CODEC = simpleCodec(HauntFurnaceBlock::new);
     public HauntFurnaceBlock(Properties properties) { super(properties); }
 
     @Override
-    public MapCodec<? extends FurnaceBlock> codec() { return CODEC; }
+    public MapCodec<FurnaceBlock> codec() { return CODEC; }
 
     @Override
     public BlockEntity newBlockEntity(BlockPos pos, BlockState state) {
