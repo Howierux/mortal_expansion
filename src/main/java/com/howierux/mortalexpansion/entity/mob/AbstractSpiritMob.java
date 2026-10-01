@@ -21,6 +21,7 @@ public abstract class AbstractSpiritMob extends PathfinderMob
         implements HorizontalPhasingMob {
     protected AbstractSpiritMob(EntityType<? extends PathfinderMob> type, Level level) {
         super(type, level);
+        moveControl = new SpectralMoveControl(this);
         setPathfindingMalus(PathType.WATER, -1.0F);
         setPathfindingMalus(PathType.WATER_BORDER, -1.0F);
     }

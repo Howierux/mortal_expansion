@@ -58,6 +58,11 @@ public final class SpectralMeleeAttackGoal extends Goal {
     }
 
     @Override
+    public boolean requiresUpdateEveryTick() {
+        return true;
+    }
+
+    @Override
     public void tick() {
         LivingEntity target = mob.getTarget();
         if (target == null) {

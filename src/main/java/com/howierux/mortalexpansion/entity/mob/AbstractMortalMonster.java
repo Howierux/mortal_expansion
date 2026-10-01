@@ -30,6 +30,7 @@ public abstract class AbstractMortalMonster extends Monster {
     private UUID alliedOwner;
     protected AbstractMortalMonster(EntityType<? extends Monster> type, Level level) {
         super(type, level);
+        moveControl = new SpectralMoveControl(this);
         setPathfindingMalus(PathType.WATER, -1.0F);
         setPathfindingMalus(PathType.WATER_BORDER, -1.0F);
     }
