@@ -1,6 +1,7 @@
 package com.howierux.mortalexpansion.blockentity;
 
 import com.howierux.mortalexpansion.haunt.PurificationWardTracker;
+import com.howierux.mortalexpansion.haunt.PurificationWardChunkLoader;
 import com.howierux.mortalexpansion.registry.ModBlockEntities;
 import net.minecraft.core.BlockPos;
 import net.minecraft.server.level.ServerLevel;
@@ -18,6 +19,7 @@ public final class PurificationWardBlockEntity extends BlockEntity {
 
         if (level instanceof ServerLevel serverLevel) {
             PurificationWardTracker.add(serverLevel, worldPosition);
+            PurificationWardChunkLoader.requestLoad(serverLevel, worldPosition);
         }
     }
 

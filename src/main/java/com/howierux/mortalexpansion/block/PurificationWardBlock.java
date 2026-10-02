@@ -4,6 +4,8 @@ import com.howierux.mortalexpansion.blockentity.PurificationWardBlockEntity;
 import com.howierux.mortalexpansion.registry.ModBlockEntities;
 import com.mojang.serialization.MapCodec;
 import net.minecraft.core.BlockPos;
+import net.minecraft.server.level.ServerLevel;
+import com.howierux.mortalexpansion.haunt.PurificationWardChunkLoader;
 import net.minecraft.world.level.Level;
 import net.minecraft.world.level.block.BaseEntityBlock;
 import net.minecraft.world.level.block.RenderShape;
@@ -34,6 +36,16 @@ public final class PurificationWardBlock extends BaseEntityBlock {
     @Override
     protected RenderShape getRenderShape(BlockState state) {
         return RenderShape.MODEL;
+    }
+
+    @Override
+    protected void onRemove(BlockState state, Level level, BlockPos pos,
+            BlockState newState, boolean moved) {
+        if (!state.is(newState.getBlock()) && level instanceof ServerLevel serverLevel) {
+            // Release on physical removal, never on chunk unload or server shutdown.
+            PurificationWardChunkLoader.release(serverLevel, pos);
+        }
+        super.onRemove(state, level, pos, newState, moved);
     }
 
     @Nullable

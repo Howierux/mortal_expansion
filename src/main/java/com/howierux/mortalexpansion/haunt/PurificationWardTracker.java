@@ -10,10 +10,10 @@ import java.util.Set;
 import java.util.WeakHashMap;
 
 /**
- * Tracks loaded Purification Wards without forcing chunks to load.
+ * Tracks the cleansing coverage of loaded Purification Wards.
  *
  * Each Ward protects and cleanses its own chunk plus the eight surrounding
- * chunks. Only currently loaded Ward block entities participate.
+ * chunks. PurificationWardChunkLoader keeps this coverage ticking.
  */
 public final class PurificationWardTracker {
     private PurificationWardTracker() {}

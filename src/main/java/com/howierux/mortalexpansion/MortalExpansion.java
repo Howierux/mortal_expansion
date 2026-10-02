@@ -51,6 +51,7 @@ public final class MortalExpansion {
         ModMenus.register(modBus);
         ModCapabilities.register(modBus);
         ModAttachments.register(modBus);
+        com.howierux.mortalexpansion.haunt.PurificationWardChunkLoader.register(modBus);
         ModEntities.register(modBus);
         ModFeatures.register(modBus);
         ModCreativeTabs.register(modBus);
