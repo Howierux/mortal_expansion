@@ -3,7 +3,7 @@
 **Repository:** https://github.com/Howierux/mortal_expansion  
 **Branches:** `main` (consolidated baseline), `dev` (active work)  
 **Docs:** [Overview](Overview.md), [Notes](Notes.md), [Roadmap](ROADMAP.md)  
-**Last Synced:** 2026-10-02 - Documentation release for `main` and `dev`; gameplay baseline remains `5de1c69`.  
+**Last Synced:** 2026-10-03 - Spirit Journey stage-one development on `dev`; `main` retains the documented Ward baseline.  
 **Current Phase:** Gameplay requirements and Haunt effect proposal accepted; implementation and gameplay validation remain pending.
 
 > **Checklist legend:** `[ ]` not started, `[x]` completed, `[~]` partially completed. Implementation status and gameplay verification are tracked separately. Discussion items are proposals, not approved implementation work.
@@ -11,6 +11,18 @@
 ## Selected gameplay requirements [Planned]
 
 The user selected these requirements on 2026-10-02. This records the intended work; the documentation update does not mark any gameplay change as implemented.
+
+### Spirit Journey [Staged work selected 2026-10-03]
+
+The user requested implementing this feature in smaller parts, starting with entry into an alternative game mode on death. This supersedes the earlier deferral.
+
+- [~] Stage 1: Offer Spirit Journey only to dead players with a valid selected self-named Grave; respawn at that Grave in vanilla Spectator mode. Retain ordinary Respawn and existing inventory-drop/Grave rules. Build validation is pending.
+- [ ] Stage 2: Add grayscale and dedicated journey movement/state/exit handling.
+- [ ] Stage 3: Enforce spirit-blocking mechanisms during the journey.
+- [ ] Stage 4: Persist a corpse and support inventory recovery by returning to it, including logout/restart and cross-dimension cases.
+- [ ] Visually validate the death-screen option and mode entry in a client session requested by the user.
+
+The stage order after the first part is a proposed work breakdown, not authorization to implement every stage in this update. Full corpse recovery is required before the first-stage mode becomes a complete survival recovery feature.
 
 ### Elemental ranged attacks
 
@@ -104,7 +116,7 @@ Implement each effect with the minimum tier and behavior below. Thresholds are m
 | [ ] | Haint encounter reward | Defeating the encounter Haint removes five Haunt points from its chunk and caps Haunt at the resulting value for ten minutes. Apply once per encounter, including its split into Haunts; define when the split encounter counts as defeated. |
 | [ ] | The End event | Rare Eldritch encounter with sky changes and the proposed Wither/terrain effects. After successful resolution, remove twenty points from affected chunks and cap each at its resulting value for twenty minutes. Define event footprint, trigger odds, resolution, and interaction with existing Haunt simulation in a separate event design. |
 
-- [ ] Validate tier thresholds, protection, cooldowns, multiplayer overlap, inventory conservation, recipe output/experience, safe movement, mob limits, and temporary cap expiry. Keep Spirit Journey deferred; these events do not depend on it.
+- [ ] Validate tier thresholds, protection, cooldowns, multiplayer overlap, inventory conservation, recipe output/experience, safe movement, mob limits, and temporary cap expiry. These events do not depend on Spirit Journey.
 
 ### Portal system
 
@@ -112,7 +124,7 @@ Implement each effect with the minimum tier and behavior below. Thresholds are m
 - [ ] Consider the original **Spirit Gates** concept as one design option, without assuming spirit-only travel, a full-armor requirement, or same-dimension travel is the final choice.
 - [ ] Specify safe arrival, blocked/missing destinations, portal removal, persistence, and multiplayer behavior before implementation.
 
-**Scope decisions:** Duplicator and Triplicator are long-term items below. Spirit Journey is temporarily excluded from the active roadmap and retained in [Notes](Notes.md) for possible future review. Tinkers' Construct compatibility is out of scope.
+**Scope decisions:** Duplicator and Triplicator are long-term items below. Spirit Journey has reopened as the staged work above; its broader historical references remain in [Notes](Notes.md). Tinkers' Construct compatibility is out of scope.
 
 ## Phase 1 - Existing gameplay foundation [Completed]
 
@@ -319,7 +331,7 @@ Bloodstone tools follow the selected Natural-Haunt Diamond baseline and higher-t
 
 **Already present:** Grave inscriptions and own-name respawn anchoring, including ordinary placed-Grave consumption and naturalized reuse.
 
-Spirit Journey, body recovery, and associated spirit-player/PvP mechanics are temporarily excluded. Their historical design is preserved in [Notes](Notes.md) for future review. Ordinary Grave respawn behavior remains a separate implemented system; the portal requirement above is independent of Spirit Journey.
+Spirit Journey mode entry is the selected first stage above; corpse recovery, grayscale, and barriers are later stages. Broader historical spirit-player/PvP mechanics remain unselected in [Notes](Notes.md). Ordinary Grave respawning remains available, and the portal requirement above is independent.
 
 - [ ] Preserve the proposed Grave display, `RIP` plus the entered inscription. Reconcile the original sign-like Grave and its rough crafting sketch with the current block/recipe.
 - [ ] **Consecrated Gravestone:** At Supernatural+, direct revival with keep-inventory-like benefits, a maintained ritual, a tentative four uses per consecration, and Haunt costs for both maintenance and revival.
@@ -338,7 +350,7 @@ Spirit Journey, body recovery, and associated spirit-player/PvP mechanics are te
 
 - [ ] **Spectral Shielding:** Pure ectoplasm plus RF sustain a field rejecting undead/spectral aggressors and turning undead away beyond its edge. Proposed activation kills undead already inside and absorbs spirits for temporary resource efficiency, while slowly raising local Haunt. Other non-spectral/non-undead mobs can enter. Preserve the base-defense and mob-farm intent.
 - [ ] **Mob spectralization:** Convert otherwise living mobs such as Spiders, Endermen, Cows, Witches, and Iron Golems into undead/spirit variants for farms and encounters.
-- [ ] **Doomsday Device:** Configurable nearby spectralization, described initially as killing nearby mobs. Players are excluded in one version; an alternative includes them and allows armor resistance. Eligibility, transformation versus killing, and radius need a decision. The historical Spirit Journey recovery alternative is deferred with that feature.
+- [ ] **Doomsday Device:** Configurable nearby spectralization, described initially as killing nearby mobs. Players are excluded in one version; an alternative includes them and allows armor resistance. Eligibility, transformation versus killing, and radius need a decision. The historical Spirit Journey interaction requires a separate design decision for this device.
 - [ ] **Ritualistic Purifier:** Gravestone/carpet offering table, Blood Blossom burning for fast resource-intensive cleansing, and a Bloodstone chalice with Holy Water for slow cleansing and manual refill. The source also proposes slow blood/pure-ecto output and distinguishes that output from Haunt-raising Liquefactor bucket production.
 - [ ] **Industrial Purifier:** More expensive, automated alternative with fluid input/output, Blood Blossom material input, fuel input, and one-quarter the ritual purifier's effectiveness. Keep it distinct from the current pure-ecto-producing Purification Station.
 

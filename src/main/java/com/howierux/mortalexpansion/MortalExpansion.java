@@ -43,6 +43,7 @@ public final class MortalExpansion {
         com.howierux.mortalexpansion.registry.ModEffects.register(modBus);
         ModDataComponents.register(modBus);
         GraveNamePayloads.register(modBus);
+        com.howierux.mortalexpansion.network.SpiritJourneyPayloads.register(modBus);
         ModArmorMaterials.register(modBus);
         ModFluids.register(modBus);
         ModBlocks.register(modBus);
@@ -72,5 +73,6 @@ public final class MortalExpansion {
         NeoForge.EVENT_BUS.register(PharaohlPyramidHandler.class);
         NeoForge.EVENT_BUS.register(MobDropHandler.class);
         NeoForge.EVENT_BUS.register(GraveRespawnHandler.class);
+        NeoForge.EVENT_BUS.register(com.howierux.mortalexpansion.respawn.SpiritJourneyHandler.class);
     }
 }

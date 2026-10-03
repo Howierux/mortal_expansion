@@ -69,9 +69,9 @@ public final class GraveRespawnHandler {
         }
     }
 
-    private record GraveTarget(ResourceKey<Level> dimension, BlockPos pos) {
+    public record GraveTarget(ResourceKey<Level> dimension, BlockPos pos) {
         @Nullable
-        static GraveTarget parse(String encoded) {
+        public static GraveTarget parse(String encoded) {
             if (encoded == null || encoded.isBlank()) {
                 return null;
             }

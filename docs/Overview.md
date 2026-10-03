@@ -2,7 +2,7 @@
 
 **Repository:** https://github.com/Howierux/mortal_expansion  
 **Branches:** `main` (consolidated baseline), `dev` (active development)  
-**Last Updated:** 2026-10-02
+**Last Updated:** 2026-10-03
 
 Mortal Expansion is a Minecraft mod built around Haunt, spectral creatures, graveyards, spirit defenses, and ectoplasm-powered machines. Haunt is both a danger and a resource: higher tiers sustain supernatural activity while improving generators and furnaces. Players can cleanse an area or deliberately work in a haunted location.
 
@@ -16,7 +16,7 @@ The design has two paths into the same systems. A primal path uses cauldrons, ho
 
 Haunt connects progression and consequences: stronger spirits appear as an area becomes more haunted, some equipment and machines benefit, and players gain reasons to deliberately raise or cleanse Haunt. The notebook proposes personal disturbances, spectral gear, and late-game events in addition to the simulation already implemented.
 
-The selected gameplay direction includes ranged Elemental attacks, intangible mobs able to attack tangible and intangible targets, a discoverable passive Spirit Villager with trading for key mod resources, a review of mob strengths and spawn conditions, and a portal system whose implementation still needs design. Duplicator and Triplicator are long-term features. Spirit Journey is temporarily excluded and preserved in Notes for future review; Tinkers' Construct compatibility is out of scope.
+The selected gameplay direction includes ranged Elemental attacks, intangible mobs able to attack tangible and intangible targets, a discoverable passive Spirit Villager with trading for key mod resources, a review of mob strengths and spawn conditions, and a portal system whose implementation still needs design. Duplicator and Triplicator are long-term features. Spirit Journey has reopened as staged work: stage one adds the self-Grave death choice and spectator-mode entry; corpse recovery, grayscale, and spirit barriers follow later. Tinkers' Construct compatibility remains out of scope.
 
 Other longer-term design concepts include Spiritwood trees that fight back, Blood Blooms, spiritual armor sets, soul-based upgrades, and consecrated Graves with maintained revival benefits. Ordinary named-Grave respawning is already implemented. The original spirit-only gates are one possible portal design, not a settled travel restriction.
 
@@ -27,7 +27,7 @@ The accepted Haunt effect roadmap adds occasional atmospheric, disruptive, and b
 | Design area | Current baseline | Remaining design scope |
 |---|---|---|
 | Chunk and player Haunt | Persistent values, named tiers, spread, purification, and tier-controlled spawning | Ambient haunt events, more ways to raise Haunt, and the special The End event |
-| Graves and death | Inscriptions, own-name anchor, placed-Grave consumption, and naturalized reuse | Consecration, maintained keep-inventory behavior, and click reselection; Spirit Journey/body recovery deferred to Notes |
+| Graves and death | Inscriptions, own-name anchor, placed-Grave consumption, and naturalized reuse | Consecration, maintained keep-inventory behavior, and click reselection; staged Spirit Journey corpse recovery |
 | Spiritwood and Graveyards | Forest biome, wood family, Graveyards, structures, and Graves | Hostile tree entities, ectoplasm-fed saplings, village association, and randomized inscriptions |
 | Creature progression | Spirit, Elemental, Ghost, Phantom, Haunt, Haint, Mummy, and Pharaohl classes; several proposed death transformations | Elemental ranged attacks, attacks across tangibility states, strength/spawn review, passive Spirit Villager trading, and other encounter ideas |
 | Ectchantments and generators | Ectchantment Machine, Demi-Tangible, ectoplasm generator, and enchantment extraction generator | Possessor and Ectocleanser variants, fluid/fuel power choices, and optional integrations |
@@ -80,6 +80,8 @@ World generation establishes natural baselines, including Supernatural in Spirit
 ### Graves and spectral combat
 
 Graves support inscriptions, player ownership, natural provenance, and naturalization. Engraving a placed Grave with the player's exact in-game name selects a respawn anchor. An ordinary placed anchor is consumed on respawn and adds one personal Haunt point; a naturalized anchor can remain reusable. Clicking an already engraved Grave does not currently reselect an anchor.
+
+Spirit Journey stage one adds an optional death-screen choice for a valid selected self-named Grave. Choosing it respawns at the Grave in vanilla Spectator mode. Ordinary Respawn remains available; items still follow ordinary death-drop rules. Grayscale, corpse recovery, and spirit barriers are later stages. Existing Grave consumption, Haunt cost, and naturalized reuse remain in effect.
 
 Intangible creatures use custom combat and movement rules. Demi-tangible equipment, spectral projectiles, and other supported damage sources can reach them. Holy Salt and linked Spirit Torches provide barriers; sanctification and Purification Wards provide cleansing mechanics.
 

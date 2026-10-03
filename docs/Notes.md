@@ -187,3 +187,12 @@ This concept has not been promoted to an accepted implementation specification. 
 The user requested committing and pushing the documentation to `dev` and `main`, then returning the local checkout to `dev`. This release contains the project overview, dated notes, original design references, selected gameplay requirements, accepted Haunt effect proposal, and tentative multiblock concept. The gameplay baseline remains `5de1c69`; this release changes documentation only.
 
 Use fast-forward updates for branch synchronization and verify both remote branch tips after publication. Keep the local checkout on `dev`. No client launch is needed for this documentation release.
+
+
+### 2026-10-03 - Spirit Journey stage one: death-screen alternative mode
+
+The user reopened Spirit Journey, then requested splitting it into smaller stages and implementing only entry into an alternative game mode on death first. This supersedes the earlier deferral for staged work. The broader proposal remains: optional self-Grave respawn, grayscale spectator-style movement, corpse inventory recovery, and spirit barriers.
+
+Stage one offers a Spirit Journey button only when a dead player has a valid selected self-named Grave. The server checks eligibility for display and again when the choice is accepted. The existing Grave respawn positions the replacement player; a one-shot copied attachment changes its mode to vanilla Spectator and is cleared immediately. Ordinary Respawn, death drops, placed-Grave consumption, one-point personal Haunt cost, and naturalized Grave reuse retain their existing behavior. Vanilla persists the resulting game mode normally; administrators can leave it with ordinary game-mode commands during this first stage.
+
+Corpse creation/recovery, grayscale, spirit barrier enforcement, and a dedicated journey exit are deliberately outside this implementation stage. The Book of Ectcetera documents this limit. The earlier larger implementation draft was not applied to `dev` or `main`. This stage is being build-checked on an isolated branch before updating `dev`; no Minecraft client has been launched.

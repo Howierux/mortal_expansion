@@ -104,4 +104,9 @@ public final class ModAttachments {
     public static void register(IEventBus modBus) {
         ATTACHMENTS.register(modBus);
     }
+
+    /** One-shot choice copied to the replacement player, then cleared after respawn. */
+    public static final Supplier<AttachmentType<Boolean>> SPIRIT_JOURNEY_RESPAWN = ATTACHMENTS.register(
+            "spirit_journey_respawn", () -> AttachmentType.builder(() -> false)
+                    .serialize(Codec.BOOL).copyOnDeath().build());
 }

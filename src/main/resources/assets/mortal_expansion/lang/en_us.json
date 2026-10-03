@@ -230,5 +230,8 @@
   "book.mortal_expansion.ectcetera.page.creatures.3": "At Supernatural or higher, Mortal Expansion mobs, Zombies and Skeletons resist sunlight burning.",
   "book.mortal_expansion.ectcetera.page.creatures.4": "During daylight they seek sustaining Haunt or shelter. Stronger spectral mobs may require higher tiers for their preferred refuge.",
   "book.mortal_expansion.ectcetera.page.scepter.1": "Pharaohl drops a scepter. Using it summons two allied Mummies near you.",
-  "book.mortal_expansion.ectcetera.page.scepter.2": "It has a 15-second cooldown. Prepare demi-tangible equipment before challenging Pharaohl's intangible form."
+  "book.mortal_expansion.ectcetera.page.scepter.2": "It has a 15-second cooldown. Prepare demi-tangible equipment before challenging Pharaohl's intangible form.",
+  "button.mortal_expansion.spirit_journey": "Spirit Journey",
+  "book.mortal_expansion.ectcetera.page.graves.7": "Spirit Journey is a death-screen choice if your selected self-named Grave is valid. It starts spectator flight at the Grave.",
+  "book.mortal_expansion.ectcetera.page.graves.8": "This first stage still uses ordinary death drops. Corpse recovery, grayscale, and spirit barriers are planned for later stages."
 }
