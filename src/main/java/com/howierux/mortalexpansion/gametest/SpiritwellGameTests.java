@@ -34,8 +34,12 @@ import java.util.List;
 public final class SpiritwellGameTests {
     private static final BlockPos WELL = new BlockPos(7, 4, 7);
     private static void floor(GameTestHelper helper) {
-        for (int x = 0; x < 15; x++) for (int z = 0; z < 15; z++)
+        // GameTest encloses its empty template above the test volume. Remove
+        // that fixture ceiling so heightmaps see exposed land rather than a roof.
+        for (int x = 0; x < 15; x++) for (int z = 0; z < 15; z++) {
             helper.setBlock(new BlockPos(x, 1, z), Blocks.STONE);
+            for (int y = 2; y <= 12; y++) helper.setBlock(new BlockPos(x, y, z), Blocks.AIR);
+        }
     }
     private static boolean generate(GameTestHelper helper) {
         var feature = helper.getLevel().registryAccess().registryOrThrow(Registries.CONFIGURED_FEATURE)
