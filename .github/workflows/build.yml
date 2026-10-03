@@ -60,3 +60,7 @@ jobs:
       - name: Verify mod loading with data generation
         timeout-minutes: 5
         run: ./gradlew runData
+
+      - name: Check deferred death items on a headless server
+        timeout-minutes: 5
+        run: ./gradlew runGameTestServer

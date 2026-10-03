@@ -3,7 +3,7 @@
 **Repository:** https://github.com/Howierux/mortal_expansion  
 **Branches:** `main` (consolidated baseline), `dev` (active work)  
 **Docs:** [Overview](Overview.md), [Notes](Notes.md), [Roadmap](ROADMAP.md)  
-**Last Synced:** 2026-10-03 - Spirit Journey stage-one development on `dev`; `main` retains the documented Ward baseline.  
+**Last Synced:** 2026-10-03 - Spirit Journey stage-two development on `dev`; `main` retains the documented Ward baseline.  
 **Current Phase:** Gameplay requirements and Haunt effect proposal accepted; implementation and gameplay validation remain pending.
 
 > **Checklist legend:** `[ ]` not started, `[x]` completed, `[~]` partially completed. Implementation status and gameplay verification are tracked separately. Discussion items are proposals, not approved implementation work.
@@ -19,12 +19,14 @@ The user requested implementing this feature in smaller parts, starting with ent
 - [x] Stage 1 implementation: Offer Spirit Journey only to dead players with a valid selected self-named Grave; respawn at that Grave in vanilla Spectator mode. Retain ordinary Respawn and existing inventory-drop/Grave rules.
 - [x] Automated rule/guide checks, Gradle build, and mod loading through data generation passed for the corrected stage-one code.
 - [ ] Client gameplay verification of mode entry.
-- [ ] Stage 2: Add grayscale and dedicated journey movement/state/exit handling.
-- [ ] Stage 3: Enforce spirit-blocking mechanisms during the journey.
-- [ ] Stage 4: Persist a corpse and support inventory recovery by returning to it, including logout/restart and cross-dimension cases.
+- [x] Stage 2 implementation: Defer eligible death items until the choice; Ordinary Respawn releases them at the death site, while Spirit Journey holds them in serialized player data. Keep Inventory and Vanishing retain vanilla behavior.
+- [ ] Stage 2 headless death/respawn, serialization, and vanilla-rule validation.
+- [ ] Later: Add grayscale and dedicated journey movement/state/exit handling.
+- [ ] Later: Enforce spirit-blocking mechanisms during the journey.
+- [ ] Later: Persist a corpse and support inventory recovery by returning to it, including logout/restart and cross-dimension cases.
 - [ ] Visually validate the death-screen option and mode entry in a client session requested by the user.
 
-The stage order after the first part is a proposed work breakdown, not authorization to implement every stage in this update. Full corpse recovery is required before the first-stage mode becomes a complete survival recovery feature.
+The stage order after the first part is a proposed work breakdown, not authorization to implement every stage in this update. Full corpse recovery is required before Spirit Journey becomes a complete survival recovery feature.
 
 ### Elemental ranged attacks
 
@@ -333,7 +335,7 @@ Bloodstone tools follow the selected Natural-Haunt Diamond baseline and higher-t
 
 **Already present:** Grave inscriptions and own-name respawn anchoring, including ordinary placed-Grave consumption and naturalized reuse.
 
-Spirit Journey mode entry is the selected first stage above; corpse recovery, grayscale, and barriers are later stages. Broader historical spirit-player/PvP mechanics remain unselected in [Notes](Notes.md). Ordinary Grave respawning remains available, and the portal requirement above is independent.
+Spirit Journey mode entry and deferred death items are the selected first two stages above; corpse recovery, grayscale, and barriers are later stages. Broader historical spirit-player/PvP mechanics remain unselected in [Notes](Notes.md). Ordinary Grave respawning remains available, and the portal requirement above is independent.
 
 - [ ] Preserve the proposed Grave display, `RIP` plus the entered inscription. Reconcile the original sign-like Grave and its rough crafting sketch with the current block/recipe.
 - [ ] **Consecrated Gravestone:** At Supernatural+, direct revival with keep-inventory-like benefits, a maintained ritual, a tentative four uses per consecration, and Haunt costs for both maintenance and revival.

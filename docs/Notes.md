@@ -202,3 +202,11 @@ The initial isolated stage-one commit compiled and passed the existing rule/guid
 
 
 **Final verification:** The corrected stage-one code at `42dad13` passed all existing rule checks, Book of Ectcetera validation (19 chapters, 89 pages), Gradle build, and mod loading through data generation: [GitHub Actions run](https://github.com/Howierux/mortal_expansion/actions/runs/37154102287). This verifies compilation/loading, not an in-world death-screen session. The passing code and this documentation are being fast-forwarded into `dev`; `main` remains unchanged. In this first stage, use `/gamemode survival` with command permission to leave spectator mode during testing. Corpse recovery, grayscale, and spirit barriers remain deferred.
+
+### 2026-10-03 - Spirit Journey stage two: defer death items until choice
+
+The user selected item handling as stage two: choosing Spirit Journey must not drop items, and dropping must wait for a selection. For a player eligible for Spirit Journey at death, the server saves the actual vanilla ItemEntity drops into a serialized, copy-on-death attachment before removing them from the world spawn collection. Pending items survive player save/load. Ordinary Respawn emits them at their original position and dimension; Spirit Journey moves them into held batches for later corpse recovery. Missing dimensions or failed emissions remain queued for a later respawn/login retry.
+
+Players without a valid self-named Grave use ordinary immediate drops. Keep Inventory and Curse of Vanishing are processed by vanilla before capture. Item counts, components, armor, offhand, and entity drop data are retained; XP handling is unchanged. Held journey batches do not auto-release on login or subsequent ordinary respawns. A still-dead reconnect preserves the pending choice.
+
+This stage does not create a corpse or expose recovery yet. Grayscale, dedicated spirit movement, barriers, and exit/recovery remain later work. The guide now explains the held inventory limit. Validation is being run on an isolated branch with real headless server death/respawn GameTests, including player serialization, both choices, no-Grave drops, Keep Inventory, and Vanishing; no Minecraft client has been launched.

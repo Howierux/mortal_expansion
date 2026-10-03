@@ -74,5 +74,6 @@ public final class MortalExpansion {
         NeoForge.EVENT_BUS.register(MobDropHandler.class);
         NeoForge.EVENT_BUS.register(GraveRespawnHandler.class);
         NeoForge.EVENT_BUS.register(com.howierux.mortalexpansion.respawn.SpiritJourneyHandler.class);
+        NeoForge.EVENT_BUS.register(com.howierux.mortalexpansion.respawn.DeferredDeathItems.class);
     }
 }

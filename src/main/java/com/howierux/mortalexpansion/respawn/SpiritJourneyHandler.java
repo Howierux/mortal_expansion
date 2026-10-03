@@ -11,7 +11,7 @@ import net.neoforged.bus.api.SubscribeEvent;
 import net.neoforged.neoforge.event.entity.player.PlayerEvent;
 import net.neoforged.neoforge.network.PacketDistributor;
 
-/** Stage one: an optional self-Grave respawn into vanilla spectator flight. */
+/** Optional self-Grave spectator respawn with deferred death-item selection. */
 public final class SpiritJourneyHandler {
     private SpiritJourneyHandler() {}
 
@@ -46,8 +46,10 @@ public final class SpiritJourneyHandler {
 
     @SubscribeEvent
     public static void onRespawn(PlayerEvent.PlayerRespawnEvent event) {
-        if (!(event.getEntity() instanceof ServerPlayer player) || event.isEndConquered()
-                || !player.getData(ModAttachments.SPIRIT_JOURNEY_RESPAWN)) return;
+        if (!(event.getEntity() instanceof ServerPlayer player) || event.isEndConquered()) return;
+        boolean journey = player.getData(ModAttachments.SPIRIT_JOURNEY_RESPAWN);
+        DeferredDeathItems.resolveChoice(player, journey);
+        if (!journey) return;
         player.setData(ModAttachments.SPIRIT_JOURNEY_RESPAWN, false);
         player.setGameMode(GameType.SPECTATOR);
         if (player.connection.hasChannel(SpiritJourneyPayloads.Eligibility.TYPE)) {
