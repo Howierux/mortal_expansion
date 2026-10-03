@@ -41,7 +41,7 @@ public final class SpiritJourneyHandler {
             return;
         }
         player.setData(ModAttachments.SPIRIT_JOURNEY_RESPAWN, true);
-        player.server.getPlayerList().respawn(player, false, Entity.RemovalReason.KILLED);
+        player.connection.player = player.server.getPlayerList().respawn(player, false, Entity.RemovalReason.KILLED);
     }
 
     @SubscribeEvent
