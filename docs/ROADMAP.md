@@ -20,7 +20,7 @@ The user requested implementing this feature in smaller parts, starting with ent
 - [x] Automated rule/guide checks, Gradle build, and mod loading through data generation passed for the corrected stage-one code.
 - [ ] Client gameplay verification of mode entry.
 - [x] Stage 2 implementation: Defer eligible death items until the choice; Ordinary Respawn releases them at the death site, while Spirit Journey holds them in serialized player data. Keep Inventory and Vanishing retain vanilla behavior.
-- [ ] Stage 2 headless death/respawn, serialization, and vanilla-rule validation.
+- [x] Stage 2 headless death/respawn, serialization, and vanilla-rule validation (four GameTests); build, guide, and data-generation checks passed. Full restart/reconnect and client gameplay remain untested.
 - [ ] Later: Add grayscale and dedicated journey movement/state/exit handling.
 - [ ] Later: Enforce spirit-blocking mechanisms during the journey.
 - [ ] Later: Persist a corpse and support inventory recovery by returning to it, including logout/restart and cross-dimension cases.
