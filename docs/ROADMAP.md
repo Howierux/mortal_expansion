@@ -16,7 +16,7 @@ The user selected these requirements on 2026-10-02. This records the intended wo
 
 - [x] Add rare intangible Overworld anchors, rendered as a faint Nether Star about two blocks above dry land.
 - [x] Persist anchors and prevent block placement in a two-block spherical radius.
-- [ ] Validate worldgen, placement rollback, multi-placement, piston movement, and persistence on a headless server.
+- [x] Validate worldgen, placement rollback, multi-placement, piston movement, and persistence on a headless server; all eight server tests, build, guide, and mod-loading checks passed.
 - [ ] Visually verify floating appearance in a user-requested client session.
 - [ ] Design/select additional Haunt effects and Spirit Journey interactions.
 
