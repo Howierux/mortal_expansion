@@ -36,6 +36,6 @@ public final class SpiritJourneyPayloads {
             if (payload.choose()) SpiritJourneyHandler.choose(player);
             else SpiritJourneyHandler.sendEligibility(player);
         });
-        registrar.playToClient(Eligibility.TYPE, Eligibility.STREAM_CODEC, SpiritJourneyClient::handleEligibility);
+        registrar.playToClient(Eligibility.TYPE, Eligibility.STREAM_CODEC, (payload, context) -> SpiritJourneyClient.handleEligibility(payload, context));
     }
 }

@@ -72,7 +72,7 @@ public final class GraveNamePayloads {
         registrar.playToClient(
                 OpenGraveName.TYPE,
                 OpenGraveName.STREAM_CODEC,
-                GraveNameClientPayloadHandler::handle
+                (payload, context) -> GraveNameClientPayloadHandler.handle(payload, context)
         );
 
         registrar.playToServer(

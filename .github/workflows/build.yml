@@ -63,4 +63,12 @@ jobs:
 
       - name: Check deferred death items on a headless server
         timeout-minutes: 5
-        run: ./gradlew runGameTestServer
+        run: |
+          set -o pipefail
+          ./gradlew runGameTestServer | tee build/deferred-items-gametest.log
+          python3 - <<'PY'
+          import re
+          from pathlib import Path
+          log = Path("build/deferred-items-gametest.log").read_text()
+          assert re.search(r"All 4 required tests passed", log), "Expected all four deferred-item GameTests to finish successfully"
+          PY
