@@ -47,6 +47,17 @@ public final class SpiritwellGameTests {
     @GameTest(template = "deferred_items_test")
     public static void worldgen_is_two_blocks_above_land_and_persists(GameTestHelper helper) {
         floor(helper);
+        BlockPos surface = helper.absolutePos(new BlockPos(7, 2, 7));
+        int height = helper.getLevel().getHeight(net.minecraft.world.level.levelgen.Heightmap.Types.MOTION_BLOCKING_NO_LEAVES,
+                surface.getX(), surface.getZ());
+        helper.assertTrue(height == surface.getY(), "Surface height expected " + surface.getY() + " but was " + height);
+        helper.assertTrue(helper.getLevel().getBlockState(surface.below()).isSolidRender(helper.getLevel(), surface.below()),
+                "Surface support is solid: " + helper.getLevel().getBlockState(surface.below()));
+        BlockPos expectedAnchor = surface.above(2);
+        for (BlockPos check : BlockPos.betweenClosed(expectedAnchor.offset(-2, -2, -2), expectedAnchor.offset(2, 2, 2))) {
+            if (check.distSqr(expectedAnchor) <= 4)
+                helper.assertTrue(helper.getLevel().isEmptyBlock(check), "Unexpected obstacle at " + check + ": " + helper.getLevel().getBlockState(check));
+        }
         helper.assertTrue(generate(helper), "Open dry surface generates a well");
         helper.assertBlockPresent(ModBlocks.SPIRITWELL.get(), WELL);
         BlockPos pos = helper.absolutePos(WELL);
