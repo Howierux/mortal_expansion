@@ -199,3 +199,6 @@ Corpse creation/recovery, grayscale, spirit barrier enforcement, and a dedicated
 
 
 The initial isolated stage-one commit compiled and passed the existing rule/guide checks. Review also corrected the custom respawn caller to replace the connection's player reference, matching vanilla respawn handling. Final build/mod-loading validation of that correction is pending; client gameplay remains untested.
+
+
+**Final verification:** The corrected stage-one code at `42dad13` passed all existing rule checks, Book of Ectcetera validation (19 chapters, 89 pages), Gradle build, and mod loading through data generation: [GitHub Actions run](https://github.com/Howierux/mortal_expansion/actions/runs/37154102287). This verifies compilation/loading, not an in-world death-screen session. The passing code and this documentation are being fast-forwarded into `dev`; `main` remains unchanged. In this first stage, use `/gamemode survival` with command permission to leave spectator mode during testing. Corpse recovery, grayscale, and spirit barriers remain deferred.

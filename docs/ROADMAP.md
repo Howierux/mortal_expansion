@@ -17,7 +17,8 @@ The user selected these requirements on 2026-10-02. This records the intended wo
 The user requested implementing this feature in smaller parts, starting with entry into an alternative game mode on death. This supersedes the earlier deferral.
 
 - [x] Stage 1 implementation: Offer Spirit Journey only to dead players with a valid selected self-named Grave; respawn at that Grave in vanilla Spectator mode. Retain ordinary Respawn and existing inventory-drop/Grave rules.
-- [ ] Complete final automated build/mod-loading validation and client gameplay verification of mode entry.
+- [x] Automated rule/guide checks, Gradle build, and mod loading through data generation passed for the corrected stage-one code.
+- [ ] Client gameplay verification of mode entry.
 - [ ] Stage 2: Add grayscale and dedicated journey movement/state/exit handling.
 - [ ] Stage 3: Enforce spirit-blocking mechanisms during the journey.
 - [ ] Stage 4: Persist a corpse and support inventory recovery by returning to it, including logout/restart and cross-dimension cases.
