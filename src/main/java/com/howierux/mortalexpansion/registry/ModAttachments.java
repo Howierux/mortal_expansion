@@ -113,6 +113,6 @@ public final class ModAttachments {
     /** Actual death item entities, retained across logout and player replacement. */
     public static final Supplier<AttachmentType<net.minecraft.nbt.CompoundTag>> DEFERRED_DEATH_ITEMS =
             ATTACHMENTS.register("deferred_death_items", () -> AttachmentType
-                    .builder(net.minecraft.nbt.CompoundTag::new)
+                    .builder(() -> new net.minecraft.nbt.CompoundTag())
                     .serialize(net.minecraft.nbt.CompoundTag.CODEC).copyOnDeath().build());
 }
