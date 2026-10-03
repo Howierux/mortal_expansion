@@ -80,6 +80,11 @@ public final class ModBlockEntities {
                     () -> BlockEntityType.Builder.of(HauntFurnaceBlockEntity::new,
                             ModBlocks.HAUNT_FURNACE.get(), ModBlocks.HAINT_FURNACE.get()).build(null));
 
+    public static final Supplier<BlockEntityType<com.howierux.mortalexpansion.blockentity.SpiritwellBlockEntity>> SPIRITWELL =
+            BLOCK_ENTITY_TYPES.register("spiritwell", () -> BlockEntityType.Builder.of(
+                    com.howierux.mortalexpansion.blockentity.SpiritwellBlockEntity::new,
+                    ModBlocks.SPIRITWELL.get()).build(null));
+
     public static void register(IEventBus modBus) {
         BLOCK_ENTITY_TYPES.register(modBus);
     }

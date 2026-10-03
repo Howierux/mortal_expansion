@@ -3,7 +3,7 @@
 **Repository:** https://github.com/Howierux/mortal_expansion  
 **Branches:** `main` (consolidated baseline), `dev` (active work)  
 **Docs:** [Overview](Overview.md), [Notes](Notes.md), [Roadmap](ROADMAP.md)  
-**Last Synced:** 2026-10-03 - Spirit Journey stage-two development on `dev`; `main` retains the documented Ward baseline.  
+**Last Synced:** 2026-10-03 - Spiritwells and Spirit Journey stage-two development on `dev`; `main` retains the documented Ward baseline.  
 **Current Phase:** Gameplay requirements and Haunt effect proposal accepted; implementation and gameplay validation remain pending.
 
 > **Checklist legend:** `[ ]` not started, `[x]` completed, `[~]` partially completed. Implementation status and gameplay verification are tracked separately. Discussion items are proposals, not approved implementation work.
@@ -11,6 +11,14 @@
 ## Selected gameplay requirements [Planned]
 
 The user selected these requirements on 2026-10-02. This records the intended work; the documentation update does not mark any gameplay change as implemented.
+
+### Spiritwells [Foundation selected 2026-10-03]
+
+- [x] Add rare intangible Overworld anchors, rendered as a faint Nether Star about two blocks above dry land.
+- [x] Persist anchors and prevent block placement in a two-block spherical radius.
+- [ ] Validate worldgen, placement rollback, multi-placement, piston movement, and persistence on a headless server.
+- [ ] Visually verify floating appearance in a user-requested client session.
+- [ ] Design/select additional Haunt effects and Spirit Journey interactions.
 
 ### Spirit Journey [Staged work selected 2026-10-03]
 
@@ -99,7 +107,7 @@ Implement each effect with the minimum tier and behavior below. Thresholds are m
 | [ ] | Inventory shuffling | Demonic | Swap two occupied main-inventory slots. Preserve hotbar, armor, offhand, and open containers; show brief spectral particles. |
 | [ ] | Random potion effect | Supernatural | Five seconds of one curated effect: Speed, Haste, Weakness, Slowness, or Mining Fatigue. Avoid lethal effects and preserve stronger existing effects. |
 | [ ] | Nearby Spirit | Natural | Spawn one passive Spirit within five blocks at a valid position. Prevent repeated appearances while an event-created Spirit remains nearby. |
-| [ ] | Spiritwell Ghost | Dead Rising | A nearby Spiritwell releases a real hostile Ghost with a sound/particle warning. Respect mob caps and valid unprotected spawn positions. Requires Spiritwell implementation first. |
+| [ ] | Spiritwell Ghost | Dead Rising | A nearby Spiritwell releases a real hostile Ghost with a sound/particle warning. Respect mob caps and valid unprotected spawn positions. Spiritwell anchors are implemented; the Ghost event remains planned. |
 
 #### Beneficial effects
 
@@ -248,7 +256,7 @@ The discussed 3x3 structure footprint is a tentative local influence area. The a
 The **The End event** is now part of the accepted Haunt effect proposal above: a rare Eldritch encounter, twenty-point cleansing on resolution, and a twenty-minute cap. Preserve the original End-like sky, possible surface Wither within 100 blocks, and End Stone patches as design references while finalizing the event scope. It remains separate from the existing End dimension; Eldritch stays the ordinary maximum tier.
 - [ ] Decide whether lowered Haunt should dissipate without activity as the notebook suggests, remain at the current natural-floor recovery behavior, or depend on the source of Haunt. Do not silently replace the present simulation.
 Ambient and beneficial haunting have moved into the **accepted Haunt effect proposal** above, with initial thresholds, durations, frequencies, and protection rules. Use those selected rules when they differ from the historical sketches.
-- [ ] Define Spiritwell world generation and event rules if the Ghost-spawn idea is selected; the notebook references Spiritwells without a complete specification.
+- [~] Spiritwell worldgen/protection foundation is implemented above. Define additional event rules if the Ghost-spawn idea is selected.
 - [ ] Evaluate rotten-flesh furnace processing to raise local Haunt, and a starter Gravestone recipe using rotten flesh or bone so progression need not begin in a haunted biome.
 
 The earlier Skeleton -> Zombie -> Ghost -> Spirit -> Haunt -> Haint strength sketch was explicitly reconsidered in the source. It is not a final progression order.

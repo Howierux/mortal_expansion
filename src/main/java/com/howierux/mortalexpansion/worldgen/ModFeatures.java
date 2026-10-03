@@ -22,6 +22,9 @@ public final class ModFeatures {
     public static final DeferredHolder<Feature<?>, GraveRowsFeature> GRAVE_ROWS =
             FEATURES.register("grave_rows", GraveRowsFeature::new);
 
+    public static final DeferredHolder<Feature<?>, SpiritwellFeature> SPIRITWELL =
+            FEATURES.register("spiritwell", SpiritwellFeature::new);
+
     public static void register(IEventBus modBus) {
         FEATURES.register(modBus);
     }

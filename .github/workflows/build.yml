@@ -61,7 +61,7 @@ jobs:
         timeout-minutes: 5
         run: ./gradlew runData
 
-      - name: Check deferred death items on a headless server
+      - name: Check death items and Spiritwells on a headless server
         timeout-minutes: 5
         run: |
           set -o pipefail
@@ -70,5 +70,6 @@ jobs:
           import re
           from pathlib import Path
           log = Path("build/deferred-items-gametest.log").read_text()
-          assert re.search(r"All 4 required tests passed", log), "Expected all four deferred-item GameTests to finish successfully"
+          match = re.search(r"All (\d+) required tests passed", log)
+          assert match and int(match.group(1)) >= 8, "Expected at least eight death-item and Spiritwell GameTests to finish successfully"
           PY

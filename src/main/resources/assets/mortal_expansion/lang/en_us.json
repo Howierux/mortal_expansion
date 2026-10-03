@@ -235,5 +235,10 @@
   "book.mortal_expansion.ectcetera.page.graves.7": "Spirit Journey is a death-screen choice if your selected self-named Grave is valid. It starts spectator flight at the Grave.",
   "book.mortal_expansion.ectcetera.page.graves.8": "With a valid self-Grave, death items wait for your choice. Ordinary Respawn drops them where you died.",
   "book.mortal_expansion.ectcetera.page.graves.9": "Spirit Journey holds those items safely across logout. Corpse recovery, grayscale, and spirit barriers are still planned.",
-  "book.mortal_expansion.ectcetera.page.graves.10": "Keep Inventory and Curse of Vanishing still apply. Without a valid self-Grave, death drops work normally."
+  "book.mortal_expansion.ectcetera.page.graves.10": "Keep Inventory and Curse of Vanishing still apply. Without a valid self-Grave, death drops work normally.",
+  "block.mortal_expansion.spiritwell": "Spiritwell",
+  "book.mortal_expansion.ectcetera.chapter.spiritwells": "Spiritwells",
+  "book.mortal_expansion.ectcetera.page.spiritwells.1": "Spiritwells rarely appear over open Overworld land. Look for a faint Nether Star floating two blocks above the surface.",
+  "book.mortal_expansion.ectcetera.page.spiritwells.2": "You can walk through a Spiritwell, but cannot place blocks within two blocks of it. Pistons cannot push blocks into that space.",
+  "book.mortal_expansion.ectcetera.page.spiritwells.3": "Spiritwells cannot be collected or mined. Future Haunt effects and Spirit Journey uses are planned; they have no such effects yet."
 }

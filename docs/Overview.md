@@ -124,3 +124,7 @@ Do new work on `dev`. Consolidate a reviewed state into `main` when requested. P
 Build and rule validation can run without opening the game. Launch Minecraft only when the user explicitly requests it. Routine repository updates do not need a save backup, per the user's preference.
 
 At the start of future work, read this file, the latest entry in [Notes](Notes.md), and the [Roadmap](ROADMAP.md). Append dated notes as decisions or changes land; update roadmap status with evidence. Update the overview when the architecture or project scope changes. These repository docs are the current documentation source; no external vault synchronization has been established for this project.
+
+### Spiritwells
+
+Rare worldgen-only Overworld anchors appear as a faint Nether Star floating about two blocks above dry land. The star has no collision, cannot be mined/collected, and prevents normal block placement within a two-block spherical radius, including multi-placement and piston movement into the area. The initial rate is one attempt per 256 newly generated chunks, with terrain and clearance checks reducing successful placements. Anchors persist with their chunks; there are no additional Haunt effects or Spirit Journey interactions yet.

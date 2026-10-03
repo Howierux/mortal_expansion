@@ -309,6 +309,13 @@ public final class ModBlocks {
             BlockBehaviour.Properties.ofFullCopy(Blocks.OAK_SAPLING)
     );
 
+    /** Worldgen-only intangible anchor; intentionally has no BlockItem. */
+    public static final DeferredBlock<com.howierux.mortalexpansion.block.SpiritwellBlock> SPIRITWELL =
+            BLOCKS.registerBlock("spiritwell", com.howierux.mortalexpansion.block.SpiritwellBlock::new,
+                    BlockBehaviour.Properties.of().noCollission().noOcclusion()
+                            .strength(-1.0F, 3600000.0F).noLootTable()
+                            .pushReaction(net.minecraft.world.level.material.PushReaction.BLOCK));
+
     public static void register(IEventBus modBus) {
         BLOCKS.register(modBus);
     }
