@@ -240,5 +240,12 @@
   "book.mortal_expansion.ectcetera.chapter.spiritwells": "Spiritwells",
   "book.mortal_expansion.ectcetera.page.spiritwells.1": "Spiritwells rarely appear over open Overworld land. Look for a faint Nether Star floating two blocks above the surface.",
   "book.mortal_expansion.ectcetera.page.spiritwells.2": "You can walk through a Spiritwell, but cannot place blocks within two blocks of it. Pistons cannot push blocks into that space.",
-  "book.mortal_expansion.ectcetera.page.spiritwells.3": "Spiritwells cannot be collected or mined. Future Haunt effects and Spirit Journey uses are planned; they have no such effects yet."
+  "book.mortal_expansion.ectcetera.page.spiritwells.3": "At Dead Rising, haunting can release a Ghost at a well. A missing well holds the event until a player is within 100 blocks of one.",
+  "message.mortal_expansion.holy_water_blessing": "Holy Water protects you from haunting for 60 seconds.",
+  "book.mortal_expansion.ectcetera.page.personal.5": "Ambient Haunt effects use your personal tier. Checks occur every 30 seconds; an event starts a 60-second cooldown.",
+  "book.mortal_expansion.ectcetera.page.personal.6": "Natural can bring quiet sounds or a passive Spirit. Supernatural adds fleeting shadows, brief slowing, and curated potion effects.",
+  "book.mortal_expansion.ectcetera.page.personal.7": "Demonic can safely shove you one block or swap two occupied main-inventory slots. Hotbar, armor, and offhand stay untouched.",
+  "book.mortal_expansion.ectcetera.page.personal.8": "At Supernatural, haunting may finish one nearby cooking recipe or convert one carried plank or cobblestone into its spectral form.",
+  "book.mortal_expansion.ectcetera.page.personal.9": "Holy Water grants 60 seconds of protection and removes one personal point per minute. Wards also suppress negative ambient effects.",
+  "book.mortal_expansion.ectcetera.page.personal.10": "Event chance per check:\nNatural: 2%\nSupernatural: 5%\nDead Rising: 8%\nDemonic: 12%\nAbominable: 16%\nEldritch: 20%"
 }

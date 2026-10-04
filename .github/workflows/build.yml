@@ -51,6 +51,11 @@ jobs:
           javac -d build/torch-enclosure-checks src/main/java/com/howierux/mortalexpansion/sanctification/SaltEnclosure.java src/main/java/com/howierux/mortalexpansion/entity/mob/SpiritTorchLinks.java tests/java/com/howierux/mortalexpansion/sanctification/SpiritTorchEnclosureTest.java
           java -ea -cp build/torch-enclosure-checks com.howierux.mortalexpansion.sanctification.SpiritTorchEnclosureTest
 
+      - name: Check Haunt effect policy
+        run: |
+          javac -d build/effect-checks src/main/java/com/howierux/mortalexpansion/haunt/effects/HauntEffectKind.java tests/java/com/howierux/mortalexpansion/haunt/HauntEffectPolicyTest.java
+          java -ea -cp build/effect-checks com.howierux.mortalexpansion.haunt.HauntEffectPolicyTest
+
       - name: Check Book of Ectcetera content
         run: python3 tools/check_ectcetera.py
 
@@ -71,5 +76,5 @@ jobs:
           from pathlib import Path
           log = Path("build/deferred-items-gametest.log").read_text()
           match = re.search(r"All (\d+) required tests passed", log)
-          assert match and int(match.group(1)) >= 8, "Expected at least eight death-item and Spiritwell GameTests to finish successfully"
+          assert match and int(match.group(1)) >= 17, "Expected at least seventeen death-item, Spiritwell, and Haunt-effect GameTests to finish successfully"
           PY

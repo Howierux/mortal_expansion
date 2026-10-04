@@ -3,8 +3,8 @@
 **Repository:** https://github.com/Howierux/mortal_expansion  
 **Branches:** `main` (consolidated baseline), `dev` (active work)  
 **Docs:** [Overview](Overview.md), [Notes](Notes.md), [Roadmap](ROADMAP.md)  
-**Last Synced:** 2026-10-04 - Spiritwell deferred-event requirement added on `dev`; `main` retains the documented Ward baseline.  
-**Current Phase:** Gameplay requirements and Haunt effect proposal accepted; implementation and gameplay validation remain pending.
+**Last Synced:** 2026-10-04 - Personal-Haunt ambient and beneficial effects implemented on `dev`; validation underway; `main` retains the documented Ward baseline.  
+**Current Phase:** Ambient/beneficial Haunt effects implemented; automated validation underway. Major encounters and Ghost’s Garb armor remain separate work.
 
 > **Checklist legend:** `[ ]` not started, `[x]` completed, `[~]` partially completed. Implementation status and gameplay verification are tracked separately. Discussion items are proposals, not approved implementation work.
 
@@ -20,7 +20,7 @@ The user selected these requirements on 2026-10-02. This records the intended wo
 - [ ] Visually verify floating appearance in a user-requested client session.
 - [ ] Design/select additional Haunt effects and Spirit Journey interactions.
 
-**Selected deferred-event rule (2026-10-04):** When the Spiritwell-spawn Haunt effect is selected and no loaded Spiritwell is within 100 blocks of the triggering player, retain that effect until a player comes within 100 blocks of a loaded Spiritwell. The later player need not be the original triggering player. Resolve proximity in the player's current dimension, and inspect loaded chunks only; this rule must not generate or force-load a Spiritwell. Retain the pending event across saves/restarts. The 100-block Spiritwell lookup does not expand the accepted sixteen-chunk footprint used to evaluate chunk Haunt. Delivery must still satisfy the effect's mob-cap, protection, and safe-spawn rules; keep it pending if delivery cannot succeed. Queue ownership, stacking, and release cadence will be finalized with the ambient-effect scheduler. This is a selected requirement, not implemented runtime behavior.
+**Selected deferred-event rule (2026-10-04):** When the Spiritwell-spawn Haunt effect is selected and no loaded Spiritwell is within 100 blocks of the triggering player, retain that effect until a player comes within 100 blocks of a loaded Spiritwell. The later player need not be the original triggering player. Resolve proximity in the player's current dimension, and inspect loaded chunks only; this rule must not generate or force-load a Spiritwell. Retain the pending event across saves/restarts. The 100-block lookup only finds an already loaded destination; personal Haunt alone controls new trigger eligibility. Delivery must still satisfy the effect's mob-cap, protection, and safe-spawn rules; keep it pending if delivery cannot succeed. The scheduler stores a per-dimension count of held selections, keeps every trigger, and delivers at most one per second while preserving player cooldowns and mob limits. Delivery does not reroll or require the later player to retain the original triggering tier.
 
 ### Spirit Journey [Staged work selected 2026-10-03]
 
@@ -75,15 +75,15 @@ The stage order after the first part is a proposed work breakdown, not authoriza
 
 ### Haunt effects [Accepted proposal]
 
-The user accepted the effect proposal on 2026-10-02, including the subsequent **4x4-chunk area around the player** constraint. The values below are starting balance targets; all implementation remains unchecked.
+The user accepted the effect proposal on 2026-10-02. On 2026-10-04, the user superseded the 4x4-chunk rule: **personal Haunt alone triggers and determines eligibility for every ambient and beneficial effect**. Chunk Haunt still drives the existing world simulation and normal mob-spawn rules.
 
 #### Event controller and local Haunt evaluation
 
-- [ ] Use one shared event controller for timing, eligibility, protection, and cooldowns. Keep inventory changes, spawning, and Haunt adjustments authoritative on the server; send sounds and visual effects to the affected players.
-- [ ] For personal effects, use the higher of personal Haunt and the evaluated local chunk Haunt. World changes and mob appearances use local chunk Haunt.
-- [ ] Limit chunk-based event checks to the **4x4 chunks around the player: sixteen chunks covering 64x64 blocks**. Chunks outside this footprint do not influence these effects. Personal Haunt stays separate. Define the exact alignment of the even-sized footprint and the method for evaluating its sixteen values before implementation; the accepted scope does not specify maximum versus average or another aggregation rule.
-- [ ] Check every **30 seconds**, allow one event at a time per player, and apply a **60-second player cooldown** after an event. Give harmless atmosphere higher selection weights than shoving, shuffling, or hostile appearances.
-- [ ] Start with the following total event chance per eligible check, then select one eligible effect by weight. Void has no ambient event roll. Cooldowns and eligibility affect actual event frequency.
+- [x] Use one shared event controller for timing, eligibility, protection, and cooldowns. Keep inventory changes, spawning, and Haunt adjustments authoritative on the server; send sounds and visual effects to the affected players.
+- [x] Use personal Haunt alone for trigger odds and minimum tiers, including world changes and event-created mobs. Do not evaluate surrounding chunks for these effects.
+- [x] Remove the sixteen-chunk footprint/aggregation requirement from the ambient controller, per the 2026-10-04 correction. Loaded-chunk lookups remain only for actual nearby targets and Spiritwells.
+- [x] Check every **30 seconds**, allow one event at a time per player, and apply a **60-second player cooldown** after an event. Give harmless atmosphere higher selection weights than shoving, shuffling, or hostile appearances.
+- [x] Start with the following total event chance per eligible check, then select one eligible effect by weight. Void has no ambient event roll. Cooldowns and eligibility affect actual event frequency.
 
 | Evaluated Haunt tier | Chance per 30-second check |
 |---|---:|
@@ -94,7 +94,7 @@ The user accepted the effect proposal on 2026-10-02, including the subsequent **
 | Abominable | 16% |
 | Eldritch | 20% |
 
-- [ ] Apply a shared chunk cooldown to beneficial world events so multiple players cannot multiply furnace completions or material conversions. Set its duration and exact selection weights during implementation.
+- [x] Apply a saved **60-second cooldown per affected chunk** for furnace completion and material conversion. Furnace cooldown follows the furnace’s chunk; conversions follow the player’s chunk. Weights: sounds 30, shadows 20, passive Spirit 8, Slowness 6, good/bad potion 5 each, furnace 4, shove/shuffle/plank/cobblestone 3 each, Spiritwell Ghost 2. Ineligible operations are skipped without consuming inventory.
 
 #### Ambient effects
 
@@ -102,31 +102,33 @@ Implement each effect with the minimum tier and behavior below. Thresholds are m
 
 | Status | Effect | Minimum tier | Accepted behavior |
 |---|---|---|---|
-| [ ] | Harmless hit sounds | Natural | Quiet impact or footstep behind the player, with no damage or combat reaction. |
-| [ ] | Shadows | Supernatural | Faint figure at the edge of vision for two seconds; disappears when approached or directly observed. |
-| [ ] | Slowness II | Supernatural | Three seconds with a cold breath sound. Skip while swimming, climbing, or under a stronger slowing effect. |
-| [ ] | One-block shove | Demonic | Short push opposite the player's facing direction. Check the destination and skip blocked spaces, falls, and lava hazards. |
-| [ ] | Inventory shuffling | Demonic | Swap two occupied main-inventory slots. Preserve hotbar, armor, offhand, and open containers; show brief spectral particles. |
-| [ ] | Random potion effect | Supernatural | Five seconds of one curated effect: Speed, Haste, Weakness, Slowness, or Mining Fatigue. Avoid lethal effects and preserve stronger existing effects. |
-| [ ] | Nearby Spirit | Natural | Spawn one passive Spirit within five blocks at a valid position. Prevent repeated appearances while an event-created Spirit remains nearby. |
-| [ ] | Spiritwell Ghost | Dead Rising | A loaded Spiritwell within 100 blocks releases a real hostile Ghost with a sound/particle warning. If this effect triggers without a loaded Spiritwell in range, hold the trigger until a player is within 100 blocks of a loaded Spiritwell; do not discard it or require a new random roll. Respect mob caps and valid unprotected spawn positions. Spiritwell anchors are implemented; the Ghost event and deferred-trigger handling remain planned. |
+| [x] | Harmless hit sounds | Natural | Quiet impact or footstep behind the player, with no damage or combat reaction. |
+| [x] | Shadows | Supernatural | Faint figure at the edge of vision for two seconds; disappears when approached or directly observed. |
+| [x] | Slowness II | Supernatural | Three seconds with a cold breath sound. Skip while swimming, climbing, or under a stronger slowing effect. |
+| [x] | One-block shove | Demonic | Short push opposite the player's facing direction. Check the destination and skip blocked spaces, falls, and lava hazards. |
+| [x] | Inventory shuffling | Demonic | Swap two occupied main-inventory slots. Preserve hotbar, armor, offhand, and open containers; show brief spectral particles. |
+| [x] | Random potion effect | Supernatural | Five seconds of one curated effect: Speed, Haste, Weakness, Slowness, or Mining Fatigue. Avoid lethal effects and preserve stronger existing effects. |
+| [x] | Nearby Spirit | Natural | Spawn one passive Spirit within five blocks at a valid position. Prevent repeated appearances while an event-created Spirit remains nearby. |
+| [x] | Spiritwell Ghost | Dead Rising | A loaded Spiritwell within 100 blocks releases a real hostile Ghost with a sound/particle warning. If this effect triggers without a loaded Spiritwell in range, hold the trigger until a player is within 100 blocks of a loaded Spiritwell; do not discard it or require a new random roll. Respect mob caps and valid unprotected spawn positions. The saved per-dimension queue delivers held selections to any eligible nearby player without rerolling or force-loading. |
 
 #### Beneficial effects
 
 | Status | Effect | Minimum tier | Accepted behavior |
 |---|---|---|---|
-| [ ] | Finish cooking | Supernatural | Complete one valid recipe in an active furnace within eight blocks. Consume input normally, preserve output and experience, require output space, and complete one operation rather than a whole stack. |
-| [ ] | Planks to Spiritwood | Supernatural | Convert one ordinary inventory plank into one Spiritwood plank. Show a green shimmer and require room for the result; leave placed buildings intact. |
-| [ ] | Cobblestone to Gravestone | Supernatural | Convert one inventory cobblestone into one Gravestone using the same single-item, output-space, and visual rules. |
-| [ ] | Ghost's Garb repair | Dead Rising | During a spectral visitation event, restore one durability to each equipped Ghost's Garb piece. Requires the garb to exist; unrelated equipment is unaffected. |
+| [x] | Finish cooking | Supernatural | Complete one valid recipe in an active furnace within eight blocks. Consume input normally, preserve output and experience, require output space, and complete one operation rather than a whole stack. |
+| [x] | Planks to Spiritwood | Supernatural | Convert one ordinary inventory plank into one Spiritwood plank. Show a green shimmer and require room for the result; leave placed buildings intact. |
+| [x] | Cobblestone to Gravestone | Supernatural | Convert one inventory cobblestone into one Gravestone using the same single-item, output-space, and visual rules. |
+| [~] | Ghost's Garb repair | Dead Rising | During a spectral visitation event, restore one durability to each equipped Ghost's Garb piece. Implemented via the `mortal_expansion:ghosts_garb` item tag; the empty default tag awaits armor content. Unrelated equipment is unaffected. |
 
 #### Protection and major encounters
 
+The user selected ambient/beneficial effects first and tag hooks for Ghost’s Garb. Major Haint/Eldritch encounters and the armor itself are deferred pending their separate design.
+
 | Status | Feature | Accepted behavior |
 |---|---|---|
-| [ ] | Ghost's Garb immunity | A full set blocks negative ambient effects while allowing beneficial events. Direct mob attacks follow the armor's separate combat rules. |
-| [ ] | Holy Water blessing | Contact grants 60 seconds of negative-ambient-effect protection and removes active effects applied by haunting. Lower personal Haunt by one point, with a cooldown on that reduction; define the cooldown duration and effect provenance handling. |
-| [ ] | Purification Ward protection | Suppress negative ambient events inside covered chunks while the existing cleansing continues separately. |
+| [~] | Ghost's Garb immunity | A full set blocks negative ambient effects while allowing beneficial events. Implemented as a full-four-piece tag hook; actual armor/recipe deferred by user choice. Direct mob attacks are unchanged. |
+| [x] | Holy Water blessing | Contact grants 60 seconds of negative-ambient-effect protection and removes active effects applied by haunting. Lower personal Haunt by one point at most once per 60 seconds; contact refreshes the blessing. Only unchanged haunting-owned negative potion effects are removed; external applications relinquish ownership. |
+| [x] | Purification Ward protection | Suppress negative ambient events inside covered chunks while the existing cleansing continues separately. |
 | [ ] | Haint encounter reward | Defeating the encounter Haint removes five Haunt points from its chunk and caps Haunt at the resulting value for ten minutes. Apply once per encounter, including its split into Haunts; define when the split encounter counts as defeated. |
 | [ ] | The End event | Rare Eldritch encounter with sky changes and the proposed Wither/terrain effects. After successful resolution, remove twenty points from affected chunks and cap each at its resulting value for twenty minutes. Define event footprint, trigger odds, resolution, and interaction with existing Haunt simulation in a separate event design. |
 
@@ -219,7 +221,7 @@ This is documented behavior, not a confirmed balance defect. Decide whether an i
 - Natural and player-built complete structures should use the same rules. Naturally generated ruined/incomplete examples could invite investigation and repair.
 - Consider passive operation for complete structures, with consumable offerings providing an optional temporary boost. Required fuel, offering recipes, boost strength, and costs remain undecided.
 
-The discussed 3x3 structure footprint is a tentative local influence area. The accepted **4x4-chunk limit for player-centered Haunt effect evaluation** remains a separate constraint; finalize how structural influence and player checks interact during design.
+The discussed 3x3 structure footprint is a tentative local influence area. The accepted **former 4x4-chunk limit for Haunt effect triggering** was superseded on 2026-10-04 by personal Haunt alone; finalize how structural influence and player checks interact during design.
 
 ### Tentative overlap and scheduling
 

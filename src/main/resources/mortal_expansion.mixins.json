@@ -5,9 +5,12 @@
   "compatibilityLevel": "JAVA_21",
   "mixins": [
     "HauntMobMixin",
-    "HauntMovementMixin"
+    "HauntMovementMixin",
+    "HauntFurnaceAccessor"
   ],
-  "client": ["SpiritJourneyDeathScreenMixin"],
+  "client": [
+    "SpiritJourneyDeathScreenMixin"
+  ],
   "injectors": {
     "defaultRequire": 1
   }

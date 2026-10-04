@@ -101,6 +101,12 @@ public final class ModAttachments {
                     .build()
     );
 
+    /** Personal ambient cooldown, blessing, and effect provenance survive death/logout. */
+    public static final Supplier<AttachmentType<net.minecraft.nbt.CompoundTag>> AMBIENT_HAUNT_STATE =
+            ATTACHMENTS.register("ambient_haunt_state", () -> AttachmentType
+                    .builder(() -> new net.minecraft.nbt.CompoundTag())
+                    .serialize(net.minecraft.nbt.CompoundTag.CODEC).copyOnDeath().build());
+
     public static void register(IEventBus modBus) {
         ATTACHMENTS.register(modBus);
     }

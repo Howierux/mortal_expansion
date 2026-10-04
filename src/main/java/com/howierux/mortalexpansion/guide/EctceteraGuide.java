@@ -9,7 +9,7 @@ public final class EctceteraGuide {
     public static final List<Chapter> CHAPTERS = List.of(
             new Chapter("first_steps", 4),
             new Chapter("haunt", 7),
-            new Chapter("personal", 4),
+            new Chapter("personal", 10),
             new Chapter("biomes", 4),
             new Chapter("spiritwells", 3),
             new Chapter("graves", 10),

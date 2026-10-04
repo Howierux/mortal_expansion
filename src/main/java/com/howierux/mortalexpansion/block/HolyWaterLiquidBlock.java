@@ -17,6 +17,13 @@ public final class HolyWaterLiquidBlock extends LiquidBlock {
     }
 
     @Override
+    protected void entityInside(BlockState state, Level level, BlockPos pos, net.minecraft.world.entity.Entity entity) {
+        super.entityInside(state, level, pos, entity);
+        if (entity instanceof net.minecraft.server.level.ServerPlayer player)
+            com.howierux.mortalexpansion.haunt.effects.HauntProtection.bless(player);
+    }
+
+    @Override
     public void animateTick(
             BlockState state,
             Level level,

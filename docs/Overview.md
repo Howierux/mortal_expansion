@@ -20,7 +20,7 @@ The selected gameplay direction includes ranged Elemental attacks, intangible mo
 
 Other longer-term design concepts include Spiritwood trees that fight back, Blood Blooms, spiritual armor sets, soul-based upgrades, and consecrated Graves with maintained revival benefits. Ordinary named-Grave respawning is already implemented. The original spirit-only gates are one possible portal design, not a settled travel restriction.
 
-The accepted Haunt effect roadmap adds occasional atmospheric, disruptive, and beneficial events with tier thresholds, cooldowns, and protection from garb, Holy Water, and Wards. Chunk-based evaluation is limited to the 4x4 chunks around the player; the exact footprint alignment and aggregation still need definition. Bloodstone tools use personal Haunt, with Diamond parity at Natural and initial +10% power/speed per higher tier. Burning Grave Moss is planned to remove one point per consumed item from the fire's chunk. These specifications await implementation and gameplay validation.
+The accepted Haunt effect roadmap adds occasional atmospheric, disruptive, and beneficial events with tier thresholds, cooldowns, and protection from garb, Holy Water, and Wards. The 2026-10-04 correction makes personal Haunt alone control ambient triggers and minimum tiers. Bloodstone tools use personal Haunt, with Diamond parity at Natural and initial +10% power/speed per higher tier. Burning Grave Moss is planned to remove one point per consumed item from the fire's chunk. Ambient/beneficial effects are now implemented; major encounters and actual Ghost’s Garb content remain separate design work.
 
 ### Design compared with the current baseline
 
@@ -127,6 +127,11 @@ At the start of future work, read this file, the latest entry in [Notes](Notes.m
 
 ### Spiritwells
 
-Rare worldgen-only Overworld anchors appear as a faint Nether Star floating about two blocks above dry land. The star has no collision, cannot be mined/collected, and prevents normal block placement within a two-block spherical radius, including multi-placement and piston movement into the area. The initial rate is one attempt per 256 newly generated chunks, with terrain and clearance checks reducing successful placements. Anchors persist with their chunks; there are no additional Haunt effects or Spirit Journey interactions yet.
+Rare worldgen-only Overworld anchors appear as a faint Nether Star floating about two blocks above dry land. The star has no collision, cannot be mined/collected, and prevents normal block placement within a two-block spherical radius, including multi-placement and piston movement into the area. The initial rate is one attempt per 256 newly generated chunks, with terrain and clearance checks reducing successful placements. Anchors persist with their chunks; the personal-Haunt controller now uses them for hostile Ghost appearances; Spirit Journey interactions remain future work.
 
-The planned Spiritwell-spawn Haunt effect retains its trigger if no loaded Spiritwell is within 100 blocks. It waits until a player enters that range of a loaded well, without another random roll or forced chunk loading. This deferred-event rule is documented for the future effect scheduler and is not active gameplay yet.
+The planned Spiritwell-spawn Haunt effect retains its trigger if no loaded Spiritwell is within 100 blocks. It waits until a player enters that range of a loaded well, without another random roll or forced chunk loading. The server now persists these held selections per dimension and delivers them to eligible nearby players without another tier check; player cooldowns, protection, and mob caps still apply.
+
+
+### Ambient effects
+
+Personal Haunt alone drives 30-second rolls and accepted tier probabilities; each selected event has a sixty-second player cooldown. Effects range from sounds and fleeting render-only shadows to brief potions, safe one-block shoves, main-inventory swaps, passive Spirits, and Spiritwell Ghosts. Beneficial effects finish one active cooking operation or convert one carried material, with a shared sixty-second chunk cooldown. Holy Water grants sixty seconds of negative-event protection, removes only unchanged haunting-owned negative potions, and cleanses one personal point per minute. Wards protect their covered chunks. Ghost’s Garb immunity/repair hooks exist through an empty item tag; the armor and major encounters are not yet added.
