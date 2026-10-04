@@ -40,8 +40,25 @@ public final class SpiritJourneyHandler {
             sendEligibility(player);
             return;
         }
+        var corpse = com.howierux.mortalexpansion.registry.ModEntities.PLAYER_CORPSE.get().create(player.serverLevel());
+        if (corpse == null) return;
+        corpse.initialize(player);
+        if (!player.serverLevel().addFreshEntity(corpse)) return;
+        player.setData(ModAttachments.SPIRIT_JOURNEY_CORPSE, corpse.getUUID().toString());
         player.setData(ModAttachments.SPIRIT_JOURNEY_RESPAWN, true);
         player.connection.player = player.server.getPlayerList().respawn(player, false, Entity.RemovalReason.KILLED);
+    }
+
+    @SubscribeEvent
+    public static void onLogin(PlayerEvent.PlayerLoggedInEvent event) {
+        if (event.getEntity() instanceof ServerPlayer player) syncState(player);
+    }
+
+    public static void syncState(ServerPlayer player) {
+        if (player.connection.hasChannel(SpiritJourneyPayloads.State.TYPE)) {
+            PacketDistributor.sendToPlayer(player, new SpiritJourneyPayloads.State(
+                    player.isSpectator() && !player.getData(ModAttachments.SPIRIT_JOURNEY_CORPSE).isEmpty()));
+        }
     }
 
     @SubscribeEvent
@@ -49,9 +66,10 @@ public final class SpiritJourneyHandler {
         if (!(event.getEntity() instanceof ServerPlayer player) || event.isEndConquered()) return;
         boolean journey = player.getData(ModAttachments.SPIRIT_JOURNEY_RESPAWN);
         DeferredDeathItems.resolveChoice(player, journey);
-        if (!journey) return;
+        if (!journey) { syncState(player); return; }
         player.setData(ModAttachments.SPIRIT_JOURNEY_RESPAWN, false);
         player.setGameMode(GameType.SPECTATOR);
+        syncState(player);
         if (player.connection.hasChannel(SpiritJourneyPayloads.Eligibility.TYPE)) {
             PacketDistributor.sendToPlayer(player, new SpiritJourneyPayloads.Eligibility(false, true));
         }

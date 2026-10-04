@@ -92,6 +92,7 @@ public final class ModClientEvents {
         event.registerBlockEntityRenderer(com.howierux.mortalexpansion.registry.ModBlockEntities.SPIRITWELL.get(),
                 SpiritwellRenderer::new);
         event.registerEntityRenderer(EntityType.GHAST, IntangibleGhastRenderer::new);
+        event.registerEntityRenderer(ModEntities.PLAYER_CORPSE.get(), PlayerCorpseRenderer::new);
 
         ResourceLocation zombie = ResourceLocation.withDefaultNamespace("textures/entity/zombie/zombie.png");
         ResourceLocation husk = ResourceLocation.withDefaultNamespace("textures/entity/zombie/husk.png");

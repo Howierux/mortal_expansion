@@ -29,6 +29,11 @@ public final class ModEntities {
     public static final DeferredRegister<EntityType<?>> ENTITY_TYPES =
             DeferredRegister.create(Registries.ENTITY_TYPE, MortalExpansion.MOD_ID);
 
+    public static final DeferredHolder<EntityType<?>, EntityType<com.howierux.mortalexpansion.entity.PlayerCorpseEntity>> PLAYER_CORPSE =
+            ENTITY_TYPES.register("player_corpse", () -> EntityType.Builder
+                    .of(com.howierux.mortalexpansion.entity.PlayerCorpseEntity::new, MobCategory.MISC)
+                    .sized(0.6F, 0.3F).clientTrackingRange(10).fireImmune().build("player_corpse"));
+
     public static final DeferredHolder<EntityType<?>, EntityType<GhostEntity>> GHOST =
             ENTITY_TYPES.register("ghost", () -> EntityType.Builder
                     .of(GhostEntity::new, MobCategory.MONSTER)
@@ -126,6 +131,7 @@ public final class ModEntities {
     }
 
     private static void registerAttributes(EntityAttributeCreationEvent event) {
+        event.put(PLAYER_CORPSE.get(), net.minecraft.world.entity.LivingEntity.createLivingAttributes().build());
         event.put(GHOST.get(), GhostEntity.createAttributes().build());
         event.put(PHANTOM.get(), EmpoweredPhantomEntity.createAttributes().build());
         event.put(SPIRIT.get(), SpiritEntity.createAttributes().build());

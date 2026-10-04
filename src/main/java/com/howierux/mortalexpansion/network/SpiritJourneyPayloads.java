@@ -29,6 +29,11 @@ public final class SpiritJourneyPayloads {
     }
 
     public static void register(IEventBus bus) { bus.addListener(SpiritJourneyPayloads::registerPayloads); }
+    public record State(boolean active) implements CustomPacketPayload {
+        public static final Type<State> TYPE = new Type<>(ResourceLocation.fromNamespaceAndPath(MortalExpansion.MOD_ID, "spirit_journey_state"));
+        public static final StreamCodec<ByteBuf, State> STREAM_CODEC = StreamCodec.composite(ByteBufCodecs.BOOL, State::active, State::new);
+        @Override public Type<? extends CustomPacketPayload> type() { return TYPE; }
+    }
     private static void registerPayloads(RegisterPayloadHandlersEvent event) {
         var registrar = event.registrar("1");
         registrar.playToServer(Request.TYPE, Request.STREAM_CODEC, (payload, context) -> {
@@ -37,5 +42,6 @@ public final class SpiritJourneyPayloads {
             else SpiritJourneyHandler.sendEligibility(player);
         });
         registrar.playToClient(Eligibility.TYPE, Eligibility.STREAM_CODEC, (payload, context) -> SpiritJourneyClient.handleEligibility(payload, context));
+        registrar.playToClient(State.TYPE, State.STREAM_CODEC, (payload, context) -> SpiritJourneyClient.handleState(payload, context));
     }
 }

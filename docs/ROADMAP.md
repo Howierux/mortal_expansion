@@ -34,7 +34,7 @@ The user requested implementing this feature in smaller parts, starting with ent
 - [x] Stage 2 headless death/respawn, serialization, and vanilla-rule validation (four GameTests); build, guide, and data-generation checks passed. Full restart/reconnect and client gameplay remain untested.
 - [ ] Later: Add grayscale and dedicated journey movement/state/exit handling.
 - [ ] Later: Enforce spirit-blocking mechanisms during the journey.
-- [ ] Later: Persist a corpse and support inventory recovery by returning to it, including logout/restart and cross-dimension cases.
+- [~] Owner-linked persistent corpse and return-within-two-blocks inventory recovery implemented; 19 server tests pass. Spiritwell beams are visible only during an active journey. Manual logout/restart, cross-dimension journeys, and client visuals remain to be verified.
 - [ ] Visually validate the death-screen option and mode entry in a client session requested by the user.
 
 The stage order after the first part is a proposed work breakdown, not authorization to implement every stage in this update. Full corpse recovery is required before Spirit Journey becomes a complete survival recovery feature.

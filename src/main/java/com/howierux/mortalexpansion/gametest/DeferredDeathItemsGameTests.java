@@ -115,6 +115,41 @@ public final class DeferredDeathItemsGameTests {
         });
     }
     @GameTest(template = "deferred_items_test", timeoutTicks = 100)
+    public static void journey_corpse_persists_and_recovers_once(GameTestHelper helper) {
+        withKeepInventory(helper, false, () -> {
+            ServerPlayer dead = player(helper, true);
+            Vec3 death = dead.position();
+            die(dead);
+            SpiritJourneyHandler.choose(dead);
+            ServerPlayer spirit = dead.connection.player;
+            var id = java.util.UUID.fromString(spirit.getData(ModAttachments.SPIRIT_JOURNEY_CORPSE));
+            var corpse = (com.howierux.mortalexpansion.entity.PlayerCorpseEntity) helper.getLevel().getEntity(id);
+            helper.assertTrue(corpse != null && corpse.position().distanceToSqr(death) < 0.01,
+                    "Journey leaves a body at the death site");
+            var saved = corpse.saveWithoutId(new CompoundTag());
+            corpse.load(saved);
+            helper.assertTrue(corpse.owner().orElseThrow().equals(spirit.getUUID()), "Corpse owner survives save/load");
+            spirit.moveTo(death.x, death.y, death.z, 0, 0);
+            spirit.setData(ModAttachments.SPIRIT_JOURNEY_CORPSE, "");
+            corpse.tick();
+            helper.assertTrue(spirit.isSpectator() && !corpse.isRemoved(), "Unlinked spectators cannot recover the body");
+            spirit.setData(ModAttachments.SPIRIT_JOURNEY_CORPSE, id.toString());
+            corpse.tick();
+            helper.assertTrue(!spirit.isSpectator() && corpse.isRemoved(), "Returning revives the owner and consumes the body");
+            helper.assertTrue(spirit.getData(ModAttachments.DEFERRED_DEATH_ITEMS).getList("Held", 10).isEmpty(),
+                    "Recovered escrow is cleared");
+            int count = 0;
+            for (ItemStack stack : spirit.getInventory().items) if (stack.is(Items.DIAMOND)) count += stack.getCount();
+            helper.assertTrue(count == 64, "Exactly one original stack restored");
+            com.howierux.mortalexpansion.respawn.DeferredDeathItems.recoverHeld(spirit);
+            int after = 0;
+            for (ItemStack stack : spirit.getInventory().items) if (stack.is(Items.DIAMOND)) after += stack.getCount();
+            helper.assertTrue(after == 64, "Repeated recovery cannot duplicate items");
+            spirit.discard();
+            helper.succeed();
+        });
+    }
+    @GameTest(template = "deferred_items_test", timeoutTicks = 100)
     public static void no_self_grave_uses_normal_death_drops(GameTestHelper helper) {
         withKeepInventory(helper, false, () -> {
             ServerPlayer dead = player(helper, false);

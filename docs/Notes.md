@@ -2,6 +2,16 @@
 
 ## Progress Log
 
+### 2026-10-04 - Playtest apparitions, corpse recovery, and journey beacons
+
+The shadow Haunt effect now renders a Steve-shaped Herobrine apparition with white eyes at 75% opacity, distinct from the 20% intangible mobs. It still disappears when looked at directly, approached, or after two seconds.
+
+Choosing Spirit Journey creates an invulnerable, persistent owner-linked corpse at the death site. Returning within two blocks in the active journey restores the previous non-spectator game mode and held death items, then consumes the corpse. Recovery checks terrain clearance and prevents repeated item recovery. Keep Inventory and Vanishing keep their existing handling. The body uses the owner's available skin; full equipment rendering is not implemented.
+
+Spiritwells emit pale cyan vanilla beacon beams only for the player's active Spirit Journey. Server state is sent on entry, login, and recovery; ordinary spectator mode does not reveal the beam. Rendering extends up 1024 blocks with horizontal visibility up to 256 blocks for loaded wells. Disconnect clears the client state.
+
+Validation: Gradle build and all 19 headless server GameTests passed, including corpse location, owner persistence, linked-only recovery, and no duplicate items. Client visuals and full manual restart/reconnect or cross-dimension journeys still need playtesting.
+
 ### 2026-10-02 - Repository setup, branch consolidation, and documentation
 
 **Current baseline:** `5de1c69` - Keep Purification Ward cleansing chunks ticking with persistent owned tickets. `main` and `dev` were pushed at this commit. The local checkout is on `dev`.

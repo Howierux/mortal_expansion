@@ -23,6 +23,12 @@ public final class SpiritwellRenderer implements BlockEntityRenderer<SpiritwellB
     public void render(SpiritwellBlockEntity well, float partialTick, PoseStack poses,
             MultiBufferSource buffers, int light, int overlay) {
         if (well.getLevel() == null) return;
+        if (SpiritJourneyClient.isActive()) {
+            net.minecraft.client.renderer.blockentity.BeaconRenderer.renderBeaconBeam(poses, buffers,
+                    net.minecraft.client.renderer.blockentity.BeaconRenderer.BEAM_LOCATION,
+                    partialTick, 1.0F, well.getLevel().getGameTime(), 0, 1024,
+                    0xFFB8FFFF, 0.2F, 0.25F);
+        }
         float time = (well.getLevel().getGameTime() % 24000) + partialTick;
         // Position is surface + 2. The visual floats around that precise height.
         float phase = (float) (well.getBlockPos().asLong() & 255);
@@ -43,5 +49,18 @@ public final class SpiritwellRenderer implements BlockEntityRenderer<SpiritwellB
         vertices.addVertex(pose, x, y, 0).setColor(255, 255, 255, 56)
                 .setUv(u, v).setOverlay(OverlayTexture.NO_OVERLAY)
                 .setLight(LightTexture.FULL_BRIGHT).setNormal(pose, 0, 0, 1);
+    }
+    @Override public boolean shouldRenderOffScreen(SpiritwellBlockEntity well) { return SpiritJourneyClient.isActive(); }
+    @Override public int getViewDistance() { return 256; }
+    @Override public boolean shouldRender(SpiritwellBlockEntity well, net.minecraft.world.phys.Vec3 camera) {
+        return net.minecraft.world.phys.Vec3.atCenterOf(well.getBlockPos()).multiply(1, 0, 1)
+                .closerThan(camera.multiply(1, 0, 1), getViewDistance());
+    }
+    @Override public net.minecraft.world.phys.AABB getRenderBoundingBox(SpiritwellBlockEntity well) {
+        var pos = well.getBlockPos();
+        return SpiritJourneyClient.isActive()
+                ? new net.minecraft.world.phys.AABB(pos.getX(), pos.getY(), pos.getZ(), pos.getX() + 1,
+                        pos.getY() + 1024, pos.getZ() + 1)
+                : new net.minecraft.world.phys.AABB(pos);
     }
 }

@@ -117,6 +117,10 @@ public final class ModAttachments {
                     .serialize(Codec.BOOL).copyOnDeath().build());
 
     /** Actual death item entities, retained across logout and player replacement. */
+    public static final Supplier<AttachmentType<String>> SPIRIT_JOURNEY_CORPSE = ATTACHMENTS.register(
+            "spirit_journey_corpse", () -> AttachmentType.builder(() -> "")
+                    .serialize(Codec.STRING).copyOnDeath().build());
+
     public static final Supplier<AttachmentType<net.minecraft.nbt.CompoundTag>> DEFERRED_DEATH_ITEMS =
             ATTACHMENTS.register("deferred_death_items", () -> AttachmentType
                     .builder(() -> new net.minecraft.nbt.CompoundTag())

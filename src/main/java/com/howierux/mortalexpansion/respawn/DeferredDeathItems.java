@@ -50,6 +50,21 @@ public final class DeferredDeathItems {
         releaseRequested(player);
     }
 
+    public static void recoverHeld(ServerPlayer player) {
+        CompoundTag storage = player.getData(ModAttachments.DEFERRED_DEATH_ITEMS).copy();
+        ListTag held = storage.getList("Held", Tag.TAG_COMPOUND);
+        storage.remove("Held");
+        player.setData(ModAttachments.DEFERRED_DEATH_ITEMS, storage);
+        for (int i = 0; i < held.size(); i++) {
+            ListTag drops = held.getCompound(i).getList("Drops", Tag.TAG_COMPOUND);
+            for (int j = 0; j < drops.size(); j++) {
+                ItemStack stack = ItemStack.parseOptional(player.registryAccess(), drops.getCompound(j).getCompound("Item"));
+                if (!stack.isEmpty() && !player.getInventory().add(stack)) player.drop(stack, false);
+            }
+        }
+        player.inventoryMenu.broadcastChanges();
+    }
+
     private static void movePending(ServerPlayer player, String destination) {
         CompoundTag storage = player.getData(ModAttachments.DEFERRED_DEATH_ITEMS).copy();
         ListTag pending = storage.getList("Pending", Tag.TAG_COMPOUND);
