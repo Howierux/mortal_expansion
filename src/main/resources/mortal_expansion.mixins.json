@@ -8,7 +8,8 @@
     "HauntMovementMixin",
     "HauntFurnaceAccessor",
     "GhostGarbCollisionMixin",
-    "GhostGarbServerMovementMixin"
+    "GhostGarbServerMovementMixin",
+    "FluidBucketSmeltingMixin"
   ],
   "client": [
     "SpiritJourneyDeathScreenMixin",

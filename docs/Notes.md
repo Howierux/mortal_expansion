@@ -326,3 +326,20 @@ surface (clearing the natural shimmer expansion). Corrected the text X scale
 for readable front-facing text, enabled normal depth testing, and capped text
 width at 0.88 blocks. The geometry regression checks all 12 face/depth combinations.
 Client visual confirmation remains pending after restart.
+
+### 2026-10-04 - Cauldron bucket prediction and smelting vessel returns
+
+Client playtesting found Holy Water placed above the cauldron immediately after
+bucket extraction. The interaction listener had skipped client-side consumption.
+Matching cauldron interactions now consume clicks on both sides, while only the
+server changes inventory/blocks; server cancellation uses CONSUME. Added matching
+Purified Ectoplasm refill handling. Regression tests check the three mod fluids,
+one filled bucket, empty cauldron, no fluid above it, and deliberate refill.
+
+Vanilla furnace cooking does not use crafting remainders. A scoped burn-path
+mixin returns one empty bucket in the vacated input slot only after successfully
+smelting Holy Water, Liquid Ectoplasm, or Purified Ectoplasm. The same path serves
+mod furnaces and instant Haunt cooking. Existing recipes and JSON remain unchanged.
+Tests check Holy Salt output, the returned bucket, no duplication on subsequent
+ticks, and blocked-output preservation. Build and all 26 required server tests
+passed. The original client interaction needs retesting after restart.

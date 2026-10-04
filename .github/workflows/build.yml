@@ -81,6 +81,6 @@ jobs:
           from pathlib import Path
           log = Path("build/deferred-items-gametest.log").read_text()
           match = re.search(r"All (\d+) required tests passed", log)
-          assert match and int(match.group(1)) >= 24, "Expected at least twenty-four death-item, corpse-recovery, Spiritwell, and Haunt-effect GameTests to finish successfully"
+          assert match and int(match.group(1)) >= 26, "Expected at least twenty-six death-item, corpse-recovery, Spiritwell, and Haunt-effect GameTests to finish successfully"
           PY
 

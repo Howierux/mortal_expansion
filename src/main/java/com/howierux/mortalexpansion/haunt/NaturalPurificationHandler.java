@@ -29,18 +29,22 @@ public final class NaturalPurificationHandler {
     @SubscribeEvent
     public static void onRightClickBlock(PlayerInteractEvent.RightClickBlock event) {
         Level level = event.getLevel();
-        if (level.isClientSide) {
-            return;
-        }
-
         Player player = event.getEntity();
         InteractionHand hand = event.getHand();
         ItemStack held = player.getItemInHand(hand);
         BlockPos pos = event.getPos();
         BlockState state = level.getBlockState(pos);
-
+        if (level.isClientSide) {
+            if (handlesCauldronInteraction(level, pos, state, held)) succeed(event);
+            return;
+        }
 
         if (state.is(Blocks.CAULDRON)) {
+            if (held.is(ModItems.PURIFIED_ECTOPLASM_BUCKET.get())) {
+                emptyFluidBucketIntoCauldron(player, hand, ModBlocks.PURIFIED_ECTOPLASM_CAULDRON.get().defaultBlockState(), level, pos);
+                succeed(event);
+                return;
+            }
             if (held.is(ModItems.LIQUID_ECTOPLASM_BUCKET.get())) {
                 emptyFluidBucketIntoCauldron(
                         player,
@@ -155,6 +159,19 @@ public final class NaturalPurificationHandler {
         }
     }
 
+
+    /** Client prediction must consume exactly the interactions handled by the server. */
+    public static boolean handlesCauldronInteraction(Level level, BlockPos pos, BlockState state, ItemStack held) {
+        if (state.is(Blocks.CAULDRON)) return held.is(ModItems.LIQUID_ECTOPLASM_BUCKET.get())
+                || held.is(ModItems.HOLY_WATER_BUCKET.get()) || held.is(ModItems.PURIFIED_ECTOPLASM_BUCKET.get());
+        if (held.is(Items.BUCKET)) return state.is(ModBlocks.LIQUID_ECTOPLASM_CAULDRON.get())
+                || state.is(ModBlocks.HOLY_WATER_CAULDRON.get()) || state.is(ModBlocks.PURIFIED_ECTOPLASM_CAULDRON.get());
+        if (!hasHeatSource(level, pos)) return false;
+        if (state.is(Blocks.WATER_CAULDRON) && state.getValue(LayeredCauldronBlock.LEVEL) == 3)
+            return held.is(ModItems.RAW_ECTOPLASM.get()) || held.is(ModItems.GRAVE_MOSS.get());
+        return (state.is(ModBlocks.LIQUID_ECTOPLASM_CAULDRON.get()) && held.is(ModItems.GRAVE_MOSS.get()))
+                || (state.is(ModBlocks.HOLY_WATER_CAULDRON.get()) && held.is(ModItems.RAW_ECTOPLASM.get()));
+    }
 
     @SubscribeEvent
     public static void onItemTick(EntityTickEvent.Post event) {
@@ -294,7 +311,7 @@ public final class NaturalPurificationHandler {
     }
 
     private static void succeed(PlayerInteractEvent.RightClickBlock event) {
-        event.setCancellationResult(InteractionResult.SUCCESS);
+        event.setCancellationResult(InteractionResult.sidedSuccess(event.getLevel().isClientSide));
         event.setCanceled(true);
     }
 }
