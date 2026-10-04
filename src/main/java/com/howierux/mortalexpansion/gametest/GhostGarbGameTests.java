@@ -32,6 +32,28 @@ public final class GhostGarbGameTests {
         return player;
     }
     @GameTest(template = "deferred_items_test")
+    public static void demi_tangible_weapon_damage_is_magic(GameTestHelper helper) {
+        var attacker = helper.makeMockServerPlayerInLevel();
+        var target = equipped(helper);
+        attacker.setItemSlot(EquipmentSlot.MAINHAND, new ItemStack(net.minecraft.world.item.Items.DIAMOND_SWORD));
+        helper.assertFalse(attacker.damageSources().playerAttack(attacker).is(net.neoforged.neoforge.common.Tags.DamageTypes.IS_MAGIC), "Ordinary weapon remains physical");
+        attacker.getMainHandItem().set(com.howierux.mortalexpansion.registry.ModDataComponents.DEMI_TANGIBLE.get(), true);
+        var source = attacker.damageSources().playerAttack(attacker);
+        helper.assertTrue(source.is(net.neoforged.neoforge.common.Tags.DamageTypes.IS_MAGIC)
+                && source.typeHolder().is(net.neoforged.neoforge.common.Tags.DamageTypes.IS_MAGIC), "Demi-tangible damage type carries standard magic tag");
+        helper.assertTrue(source.getEntity() == attacker && source.getDirectEntity() == attacker
+                && source.getWeaponItem() == attacker.getMainHandItem(), "Attacker and weapon attribution retained");
+        helper.assertFalse(source.is(net.minecraft.tags.DamageTypeTags.BYPASSES_ARMOR), "Weapon still respects armor");
+        helper.assertTrue(com.howierux.mortalexpansion.combat.DemiTangibleDamage.canDamageIntangible(source), "Magical player weapon bypasses intangibility");
+        var zombie = net.minecraft.world.entity.EntityType.ZOMBIE.create(helper.getLevel());
+        zombie.setItemSlot(EquipmentSlot.MAINHAND, attacker.getMainHandItem().copy());
+        helper.assertTrue(zombie.damageSources().mobAttack(zombie).is(net.neoforged.neoforge.common.Tags.DamageTypes.IS_MAGIC), "Mob weapon damage is magic too");
+        helper.assertTrue(target.hurt(zombie.damageSources().mobAttack(zombie), 4), "Magical mob weapon hurts intangible garb wearer");
+        attacker.setItemSlot(EquipmentSlot.MAINHAND, new ItemStack(ModItems.BLOODSTONE_SWORD.get()));
+        helper.assertTrue(attacker.damageSources().playerAttack(attacker).is(net.neoforged.neoforge.common.Tags.DamageTypes.IS_MAGIC), "Tagged Bloodstone weapon is magic");
+        attacker.discard(); target.discard(); helper.succeed();
+    }
+    @GameTest(template = "deferred_items_test")
     public static void garb_damage_and_set_rules(GameTestHelper helper) {
         var player = equipped(helper);
         helper.assertTrue(player.getArmorValue() == 7, "Full leather defense");

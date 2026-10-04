@@ -15,6 +15,7 @@ running generators during normal gameplay.
   policy. The Book's custom advancement remains authored separately.
 - `ModBlockLoot` and `ModLootTables`: validated loot builders serialized with
   Mojang's codec, retaining the existing named-random-sequence policy.
+- `DatapackBuiltinEntriesProvider`: demi-tangible melee damage types, serialized with Mojang registry codecs.
 - `ModTags`: block, item, entity, damage-type, and biome tags, including empty
   extension tags and additions to vanilla tags.
 

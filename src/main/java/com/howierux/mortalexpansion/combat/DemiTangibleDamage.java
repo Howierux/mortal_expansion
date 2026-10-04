@@ -14,6 +14,13 @@ import net.minecraft.world.item.ItemStack;
 public final class DemiTangibleDamage {
     private DemiTangibleDamage() {}
 
+    /** Exact tag names opt into magic behavior; avoid matching unrelated tags containing 'magic'. */
+    public static boolean isMagicTag(net.minecraft.resources.ResourceLocation id) {
+        String path = id.getPath();
+        String name = path.substring(path.lastIndexOf('/') + 1);
+        return name.equals("magic") || name.equals("magical") || name.equals("is_magic") || name.equals("is_magical");
+    }
+
     /**
      * Returns true when this damage source is allowed to affect an intangible
      * target.
@@ -27,13 +34,6 @@ public final class DemiTangibleDamage {
      * - attacks made with an item tagged mortal_expansion:demi_tangible;
      * - attacks made with an item carrying the Demi-Tangible enchantment.
      */
-    /** Exact tag names opt into magic behavior; avoid matching unrelated tags containing 'magic'. */
-    public static boolean isMagicTag(net.minecraft.resources.ResourceLocation id) {
-        String path = id.getPath();
-        String name = path.substring(path.lastIndexOf('/') + 1);
-        return name.equals("magic") || name.equals("magical") || name.equals("is_magic") || name.equals("is_magical");
-    }
-
     public static boolean canDamageIntangible(DamageSource source) {
         if (source.getEntity() != null && com.howierux.mortalexpansion.entity.IntangibleEntities.isIntangible(source.getEntity())) return true;
         if (source.is(DamageTypeTags.BYPASSES_INVULNERABILITY)) return true;
@@ -54,7 +54,10 @@ public final class DemiTangibleDamage {
             return true;
         }
 
-        ItemStack weapon = source.getWeaponItem();
+        return isDemiTangibleWeapon(source.getWeaponItem());
+    }
+
+    public static boolean isDemiTangibleWeapon(ItemStack weapon) {
         if (weapon == null || weapon.isEmpty()) {
             return false;
         }

@@ -370,3 +370,7 @@ rules remain applicable. NeoForge�s tag also categorizes vanilla poison, Withe
 Thorns, and dragon breath as magical. Build and all 28 required server tests
 passed, including actual magic hits on both target types, continued ordinary
 fire immunity, cross-namespace tag names, and a non-magical tag rejection.
+
+### 2026-10-04 - Demi-tangible weapon damage tagged as magic
+
+Player and mob melee hits with demi-tangible weapons now use dedicated generated damage types in neoforge:is_magic. Item tags, the Demi-Tangible component, and legacy enchanted items share one predicate. Ordinary weapons remain physical; armor mitigation, normal difficulty scaling, death messages, and attacker/weapon credit are preserved. A focused damage-source factory mixin is needed because incoming-damage events cannot replace their source. NeoForge registry data generation owns the damage type definitions and tags. Data checks pass for 370 resources; build and all 29 required server GameTests pass, including real mob weapon damage against Ghost Garb, item-tagged Bloodstone weapons, and source attribution.

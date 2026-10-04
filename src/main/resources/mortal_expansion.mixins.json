@@ -4,6 +4,7 @@
   "package": "com.howierux.mortalexpansion.mixin",
   "compatibilityLevel": "JAVA_21",
   "mixins": [
+    "DemiTangibleDamageSourcesMixin",
     "HauntMobMixin",
     "HauntMovementMixin",
     "HauntFurnaceAccessor",

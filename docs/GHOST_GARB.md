@@ -43,3 +43,11 @@ ejection, and body rendering require narrowly scoped mixins because this version
 has no supported event replacing those operations. GhostGarbPhasing contains the
 shared gameplay logic. No transient noPhysics/game-mode changes or new persisted
 player state are introduced; equipment determines the ability.
+
+Demi-tangible player and mob melee hits use generated damage types tagged
+`neoforge:is_magic`. This includes tagged weapons, the Demi-Tangible component,
+and legacy enchanted test items. Armor, difficulty scaling, death messages, and
+attacker/weapon credit retain normal melee behavior. `DemiTangibleDamageSourcesMixin`
+converts the two melee factories because NeoForge incoming-damage events cannot
+replace their damage source. During migration, verify those factory signatures
+and registry tag loading before enabling combat.

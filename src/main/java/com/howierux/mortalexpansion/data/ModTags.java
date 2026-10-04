@@ -97,6 +97,9 @@ public abstract class ModTags<T> extends TagsProvider<T> {
             super(output, Registries.DAMAGE_TYPE, lookup, helper);
         }
         @Override protected void addTags(HolderLookup.Provider lookup) {
+            tag(net.neoforged.neoforge.common.Tags.DamageTypes.IS_MAGIC)
+                    .add(com.howierux.mortalexpansion.effect.ModDamageTypes.DEMI_TANGIBLE_PLAYER)
+                    .add(com.howierux.mortalexpansion.effect.ModDamageTypes.DEMI_TANGIBLE_MOB);
             tag(TagKey.create(registryKey, ResourceLocation.parse("minecraft:bypasses_armor"))).add(ResourceKey.create(registryKey, ResourceLocation.parse("mortal_expansion:sanctification")));
         }
     }

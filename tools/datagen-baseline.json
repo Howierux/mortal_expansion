@@ -265,6 +265,8 @@
   "data/mortal_expansion/advancement/recipes/combat/ghost_garb_helmet.json": "846a52f38531059d787afccef0ca6e18f0e902743185d518f9489ca4d3e5ccd1",
   "data/mortal_expansion/advancement/recipes/combat/ghost_garb_leggings.json": "63c134c73b16332169d23759dc7935f7c6a038669c1fa6e5a7025da314a3594e",
   "data/mortal_expansion/advancement/recipes/misc/ectothread.json": "2a40031022d278972f4dedde3fdf25cafe85e59711a0c80254a4ee6dd59a47b2",
+  "data/mortal_expansion/damage_type/demi_tangible_mob.json": "0f74d24f7e92b68b24f88dc8b91d63b3bb5599334f67991024c172ea8e36d147",
+  "data/mortal_expansion/damage_type/demi_tangible_player.json": "c4eee50a385cd788da81049437e2743d147f3f73495688c13355c12693fabe7c",
   "data/mortal_expansion/loot_table/blocks/bloodstone_ore.json": "3e31281acfb247c07063d82e295ecc143ea625140447f7637a17405b6318bf95",
   "data/mortal_expansion/loot_table/blocks/bloodstone_ore_stone.json": "1555a2b96e80020758a50bc8728eecfd5b33a201c59143fcfed9d9946157e1c5",
   "data/mortal_expansion/loot_table/blocks/ectchantment_machine.json": "8202d49a1a92afa49c41e528591e22399a6ecbf5779c0fe9be9a3c32c9fddb33",
@@ -365,5 +367,6 @@
   "data/mortal_expansion/tags/worldgen/biome/dead_rising_haunt.json": "4b1f03d077c69adcf8835ea1820bf0b5cafe1518a98a3893b8343fc5cc7c03b6",
   "data/mortal_expansion/tags/worldgen/biome/has_structure/graveyard_cemetery.json": "4b1f03d077c69adcf8835ea1820bf0b5cafe1518a98a3893b8343fc5cc7c03b6",
   "data/mortal_expansion/tags/worldgen/biome/natural_haunt.json": "8138e5e9bb95f27b029fa5e119d99c2e9a6b7f44c8a07faada29f295b76297d3",
-  "data/mortal_expansion/tags/worldgen/biome/supernatural_haunt.json": "8b13a5116b47f8fa2fdff9b2ceea79f818c337fbe0dd6efef8b759dd6bf5a591"
+  "data/mortal_expansion/tags/worldgen/biome/supernatural_haunt.json": "8b13a5116b47f8fa2fdff9b2ceea79f818c337fbe0dd6efef8b759dd6bf5a591",
+  "data/neoforge/tags/damage_type/is_magic.json": "4f8a64b173298fe3bff1fea4c5055d62226116f060c58e3a5f63d24562b209e7"
 }
