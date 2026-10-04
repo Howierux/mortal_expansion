@@ -3,7 +3,7 @@
 **Repository:** https://github.com/Howierux/mortal_expansion  
 **Branches:** `main` (consolidated baseline), `dev` (active work)  
 **Docs:** [Overview](Overview.md), [Notes](Notes.md), [Roadmap](ROADMAP.md)  
-**Last Synced:** 2026-10-03 - Spiritwells and Spirit Journey stage-two development on `dev`; `main` retains the documented Ward baseline.  
+**Last Synced:** 2026-10-04 - Spiritwell deferred-event requirement added on `dev`; `main` retains the documented Ward baseline.  
 **Current Phase:** Gameplay requirements and Haunt effect proposal accepted; implementation and gameplay validation remain pending.
 
 > **Checklist legend:** `[ ]` not started, `[x]` completed, `[~]` partially completed. Implementation status and gameplay verification are tracked separately. Discussion items are proposals, not approved implementation work.
@@ -19,6 +19,8 @@ The user selected these requirements on 2026-10-02. This records the intended wo
 - [x] Validate worldgen, placement rollback, multi-placement, piston movement, and persistence on a headless server; all eight server tests, build, guide, and mod-loading checks passed.
 - [ ] Visually verify floating appearance in a user-requested client session.
 - [ ] Design/select additional Haunt effects and Spirit Journey interactions.
+
+**Selected deferred-event rule (2026-10-04):** When the Spiritwell-spawn Haunt effect is selected and no loaded Spiritwell is within 100 blocks of the triggering player, retain that effect until a player comes within 100 blocks of a loaded Spiritwell. The later player need not be the original triggering player. Resolve proximity in the player's current dimension, and inspect loaded chunks only; this rule must not generate or force-load a Spiritwell. Retain the pending event across saves/restarts. The 100-block Spiritwell lookup does not expand the accepted sixteen-chunk footprint used to evaluate chunk Haunt. Delivery must still satisfy the effect's mob-cap, protection, and safe-spawn rules; keep it pending if delivery cannot succeed. Queue ownership, stacking, and release cadence will be finalized with the ambient-effect scheduler. This is a selected requirement, not implemented runtime behavior.
 
 ### Spirit Journey [Staged work selected 2026-10-03]
 
@@ -107,7 +109,7 @@ Implement each effect with the minimum tier and behavior below. Thresholds are m
 | [ ] | Inventory shuffling | Demonic | Swap two occupied main-inventory slots. Preserve hotbar, armor, offhand, and open containers; show brief spectral particles. |
 | [ ] | Random potion effect | Supernatural | Five seconds of one curated effect: Speed, Haste, Weakness, Slowness, or Mining Fatigue. Avoid lethal effects and preserve stronger existing effects. |
 | [ ] | Nearby Spirit | Natural | Spawn one passive Spirit within five blocks at a valid position. Prevent repeated appearances while an event-created Spirit remains nearby. |
-| [ ] | Spiritwell Ghost | Dead Rising | A nearby Spiritwell releases a real hostile Ghost with a sound/particle warning. Respect mob caps and valid unprotected spawn positions. Spiritwell anchors are implemented; the Ghost event remains planned. |
+| [ ] | Spiritwell Ghost | Dead Rising | A loaded Spiritwell within 100 blocks releases a real hostile Ghost with a sound/particle warning. If this effect triggers without a loaded Spiritwell in range, hold the trigger until a player is within 100 blocks of a loaded Spiritwell; do not discard it or require a new random roll. Respect mob caps and valid unprotected spawn positions. Spiritwell anchors are implemented; the Ghost event and deferred-trigger handling remain planned. |
 
 #### Beneficial effects
 

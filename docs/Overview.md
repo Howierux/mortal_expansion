@@ -128,3 +128,5 @@ At the start of future work, read this file, the latest entry in [Notes](Notes.m
 ### Spiritwells
 
 Rare worldgen-only Overworld anchors appear as a faint Nether Star floating about two blocks above dry land. The star has no collision, cannot be mined/collected, and prevents normal block placement within a two-block spherical radius, including multi-placement and piston movement into the area. The initial rate is one attempt per 256 newly generated chunks, with terrain and clearance checks reducing successful placements. Anchors persist with their chunks; there are no additional Haunt effects or Spirit Journey interactions yet.
+
+The planned Spiritwell-spawn Haunt effect retains its trigger if no loaded Spiritwell is within 100 blocks. It waits until a player enters that range of a loaded well, without another random roll or forced chunk loading. This deferred-event rule is documented for the future effect scheduler and is not active gameplay yet.
