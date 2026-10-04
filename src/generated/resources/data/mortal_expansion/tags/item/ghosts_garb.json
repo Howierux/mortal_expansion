@@ -1,3 +1,8 @@
 {
-  "values": []
+  "values": [
+    "mortal_expansion:ghost_garb_helmet",
+    "mortal_expansion:ghost_garb_chestplate",
+    "mortal_expansion:ghost_garb_leggings",
+    "mortal_expansion:ghost_garb_boots"
+  ]
 }

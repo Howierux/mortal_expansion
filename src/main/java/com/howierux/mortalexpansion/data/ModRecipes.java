@@ -28,6 +28,16 @@ public final class ModRecipes extends RecipeProvider {
                 output.accept(id, recipe, null, conditions);
             }
         };
+        ShapedRecipeBuilder.shaped(RecipeCategory.MISC, ModItems.ECTOTHREAD.get()).pattern("SSS").pattern("SES").pattern("SSS")
+                .define('S', Items.STRING).define('E', ModItems.RAW_ECTOPLASM.get()).unlockedBy("has_ectoplasm", has(ModItems.RAW_ECTOPLASM.get())).save(output);
+        ShapedRecipeBuilder.shaped(RecipeCategory.COMBAT, ModItems.GHOST_GARB_HELMET.get()).pattern("EEE").pattern("E E")
+                .define('E', ModItems.ECTOTHREAD.get()).unlockedBy("has_ectothread", has(ModItems.ECTOTHREAD.get())).save(output);
+        ShapedRecipeBuilder.shaped(RecipeCategory.COMBAT, ModItems.GHOST_GARB_CHESTPLATE.get()).pattern("E E").pattern("EEE").pattern("EEE")
+                .define('E', ModItems.ECTOTHREAD.get()).unlockedBy("has_ectothread", has(ModItems.ECTOTHREAD.get())).save(output);
+        ShapedRecipeBuilder.shaped(RecipeCategory.COMBAT, ModItems.GHOST_GARB_LEGGINGS.get()).pattern("EEE").pattern("E E").pattern("E E")
+                .define('E', ModItems.ECTOTHREAD.get()).unlockedBy("has_ectothread", has(ModItems.ECTOTHREAD.get())).save(output);
+        ShapedRecipeBuilder.shaped(RecipeCategory.COMBAT, ModItems.GHOST_GARB_BOOTS.get()).pattern("E E").pattern("E E")
+                .define('E', ModItems.ECTOTHREAD.get()).unlockedBy("has_ectothread", has(ModItems.ECTOTHREAD.get())).save(output);
         ShapedRecipeBuilder.shaped(RecipeCategory.COMBAT, ModItems.BLOODSTONE_AXE.get(), 1).pattern("BB").pattern("BS").pattern(" S").define('B', ModItems.BLOODSTONE.get()).define('S', Items.STICK).unlockedBy("has_ingredient", has(ModItems.BLOODSTONE.get())).save(recipesOnly, ResourceLocation.fromNamespaceAndPath(MortalExpansion.MOD_ID, "bloodstone_axe"));
         ShapedRecipeBuilder.shaped(RecipeCategory.COMBAT, ModItems.BLOODSTONE_BOOTS.get(), 1).pattern("B B").pattern("B B").define('B', ModItems.BLOODSTONE.get()).unlockedBy("has_ingredient", has(ModItems.BLOODSTONE.get())).save(recipesOnly, ResourceLocation.fromNamespaceAndPath(MortalExpansion.MOD_ID, "bloodstone_boots"));
         ShapedRecipeBuilder.shaped(RecipeCategory.COMBAT, ModItems.BLOODSTONE_CHESTPLATE.get(), 1).pattern("B B").pattern("BBB").pattern("BBB").define('B', ModItems.BLOODSTONE.get()).unlockedBy("has_ingredient", has(ModItems.BLOODSTONE.get())).save(recipesOnly, ResourceLocation.fromNamespaceAndPath(MortalExpansion.MOD_ID, "bloodstone_chestplate"));

@@ -6,10 +6,14 @@
   "mixins": [
     "HauntMobMixin",
     "HauntMovementMixin",
-    "HauntFurnaceAccessor"
+    "HauntFurnaceAccessor",
+    "GhostGarbCollisionMixin",
+    "GhostGarbServerMovementMixin"
   ],
   "client": [
-    "SpiritJourneyDeathScreenMixin"
+    "SpiritJourneyDeathScreenMixin",
+    "GhostGarbLocalPlayerMixin",
+    "GhostGarbRenderMixin"
   ],
   "injectors": {
     "defaultRequire": 1

@@ -16,6 +16,17 @@ public final class ModItems {
     public static final DeferredRegister.Items ITEMS =
             DeferredRegister.createItems(MortalExpansion.MOD_ID);
 
+    public static final DeferredItem<Item> ECTOTHREAD = ITEMS.registerSimpleItem("ectothread");
+    public static final DeferredItem<ArmorItem> GHOST_GARB_HELMET = garb("ghost_garb_helmet", ArmorItem.Type.HELMET);
+    public static final DeferredItem<ArmorItem> GHOST_GARB_CHESTPLATE = garb("ghost_garb_chestplate", ArmorItem.Type.CHESTPLATE);
+    public static final DeferredItem<ArmorItem> GHOST_GARB_LEGGINGS = garb("ghost_garb_leggings", ArmorItem.Type.LEGGINGS);
+    public static final DeferredItem<ArmorItem> GHOST_GARB_BOOTS = garb("ghost_garb_boots", ArmorItem.Type.BOOTS);
+    private static DeferredItem<ArmorItem> garb(String id, ArmorItem.Type type) {
+        return ITEMS.registerItem(id, properties -> new ArmorItem(ModArmorMaterials.GHOST_GARB, type,
+                properties.durability(type.getDurability(15)).component(net.minecraft.core.component.DataComponents.DYED_COLOR,
+                        new net.minecraft.world.item.component.DyedItemColor(0x80C71F, false))));
+    }
+
     public static final DeferredItem<BlockItem> SPIRITWOOD_LOG =
             ITEMS.registerSimpleBlockItem(ModBlocks.SPIRITWOOD_LOG);
 

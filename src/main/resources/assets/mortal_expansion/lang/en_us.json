@@ -259,5 +259,10 @@
   "screen.mortal_expansion.journey.cost": "Cost: +%s personal haunt, +%s local haunt",
   "screen.mortal_expansion.journey.body": "Returning to your body remains free.",
   "message.mortal_expansion.spiritwell_blocked": "This spiritwell has no safe return space.",
-  "message.mortal_expansion.journey_menu": "Press %s to open Spirit Journey options."
+  "message.mortal_expansion.journey_menu": "Press %s to open Spirit Journey options.",
+  "item.mortal_expansion.ectothread": "Ectothread",
+  "item.mortal_expansion.ghost_garb_helmet": "Ghost's Garb Hood",
+  "item.mortal_expansion.ghost_garb_chestplate": "Ghost's Garb Robe",
+  "item.mortal_expansion.ghost_garb_leggings": "Ghost's Garb Leggings",
+  "item.mortal_expansion.ghost_garb_boots": "Ghost's Garb Boots"
 }

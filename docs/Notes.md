@@ -298,3 +298,20 @@ blit pass. Active server-synced journey state controls activation; recovery, los
 of spectator mode, and disconnect remove the owned effect. Resource reloads and
 camera changes reapply it. HUD/menu colors remain unchanged. Build/data-generation
 checks passed; visual confirmation is still required after restarting the client.
+
+### 2026-10-04 - Crafted Ghost�s Garb and Ectothread
+
+Implemented the user-selected full set with leather defense and iron durability.
+Ectothread uses eight String around Raw Ectoplasm, yielding one. Standard armor
+patterns consume Ectothread. Vanilla lime wool and default lime-dyed leather models
+serve as placeholders. Full-set abilities are derived from equipment: horizontal
+phasing with existing spectral barriers, intangible damage rules, and negative
+ambient haunt protection with owned-effect cleanup. Intangible attackers now
+qualify as spectral damage in the shared combat API. Admin/void bypass sources
+remain effective. Narrow mixins isolate collision, server wall validation, client
+wall ejection, and translucent player-body rendering; no game-mode/noPhysics
+state changes are needed. Vanilla floor collision remains intact. Models, recipes,
+advancements, and armor tags are generated. Build, client mod/mixin loading through
+data generation, 367-resource checks, guide checks, and all 23 headless server
+tests passed. Manual client visuals, movement prediction, and full combined
+Spirit Journey/garb playtesting remain pending.

@@ -27,6 +27,10 @@ import net.neoforged.neoforge.client.model.DynamicFluidContainerModel;
 @EventBusSubscriber(modid = MortalExpansion.MOD_ID, bus = EventBusSubscriber.Bus.MOD, value = Dist.CLIENT)
 public final class ModClientEvents {
     private ModClientEvents() {}
+    @SubscribeEvent public static void garbColors(RegisterColorHandlersEvent.Item event) {
+        event.register((stack, tint) -> tint == 0 ? net.minecraft.world.item.component.DyedItemColor.getOrDefault(stack, 0x80C71F) : -1,
+                ModItems.GHOST_GARB_HELMET.get(), ModItems.GHOST_GARB_CHESTPLATE.get(), ModItems.GHOST_GARB_LEGGINGS.get(), ModItems.GHOST_GARB_BOOTS.get());
+    }
     @SubscribeEvent public static void registerKeys(net.neoforged.neoforge.client.event.RegisterKeyMappingsEvent event) {
         event.register(SpiritJourneyClient.JOURNEY_MENU);
     }

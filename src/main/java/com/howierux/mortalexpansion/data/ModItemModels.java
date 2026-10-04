@@ -13,6 +13,12 @@ public final class ModItemModels extends ItemModelProvider {
         super(output, MortalExpansion.MOD_ID, helper);
     }
     @Override protected void registerModels() {
+        getBuilder("ectothread").parent(new ModelFile.UncheckedModelFile("minecraft:block/lime_wool"));
+        for (String piece : new String[]{"helmet", "chestplate", "leggings", "boots"}) {
+            getBuilder("ghost_garb_" + piece).parent(new ModelFile.UncheckedModelFile("minecraft:item/generated"))
+                    .texture("layer0", "minecraft:item/leather_" + piece)
+                    .texture("layer1", "minecraft:item/leather_" + piece + "_overlay");
+        }
         {
             var model = this.getBuilder("bloodstone").parent(new ModelFile.UncheckedModelFile("minecraft:item/generated"));
             model.texture("layer0", "mortal_expansion:item/bloodstone");

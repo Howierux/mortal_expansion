@@ -27,8 +27,8 @@ public final class HauntProtection {
     public static long now(ServerPlayer player) { return player.server.overworld().getGameTime(); }
     public static CompoundTag state(ServerPlayer player) { return player.getData(ModAttachments.AMBIENT_HAUNT_STATE).copy(); }
     public static void state(ServerPlayer player, CompoundTag state) { player.setData(ModAttachments.AMBIENT_HAUNT_STATE, state); }
-    public static boolean fullGarb(ServerPlayer player) {
-        for (ItemStack stack : player.getInventory().armor) if (stack.isEmpty() || !stack.is(GARB)) return false;
+    public static boolean fullGarb(net.minecraft.world.entity.LivingEntity player) {
+        for (ItemStack stack : player.getArmorSlots()) if (stack.isEmpty() || !stack.is(GARB)) return false;
         return true;
     }
     public static boolean protectedPlayer(ServerPlayer player) {
@@ -46,6 +46,16 @@ public final class HauntProtection {
             PlayerHauntManager.addPoints(player, -1);
             state.putLong("CleanseAfter", now + 1200);
         }
+        state(player, state);
+        clearNegative(player);
+        if (first) player.displayClientMessage(Component.translatable("message.mortal_expansion.holy_water_blessing"), true);
+    }
+    /** Equipment protection clears only haunting-owned effects, without granting a water blessing. */
+    @SubscribeEvent public static void equipmentChanged(net.neoforged.neoforge.event.entity.living.LivingEquipmentChangeEvent event) {
+        if (event.getEntity() instanceof ServerPlayer player && fullGarb(player)) clearNegative(player);
+    }
+    public static void clearNegative(ServerPlayer player) {
+        CompoundTag state = state(player);
         // Only remove unchanged effects owned by haunting. External applications
         // relinquish ownership, including hidden/merged potion effects.
         CompoundTag owned = state.getCompound("Owned");
@@ -60,7 +70,6 @@ public final class HauntProtection {
         state.remove("Owned");
         state(player, state);
         com.howierux.mortalexpansion.network.HauntEffectPayloads.clearShadow(player);
-        if (first) player.displayClientMessage(Component.translatable("message.mortal_expansion.holy_water_blessing"), true);
     }
     public static boolean apply(ServerPlayer player, Holder<MobEffect> effect, int duration, int amplifier, boolean negative) {
         if ((negative && protectedPlayer(player)) || player.hasEffect(effect)) return false;

@@ -9,6 +9,10 @@
     "mortal_expansion:spectralite_axe",
     "mortal_expansion:spectralite_pickaxe",
     "mortal_expansion:spectralite_shovel",
-    "mortal_expansion:spectralite_hoe"
+    "mortal_expansion:spectralite_hoe",
+    "mortal_expansion:ghost_garb_helmet",
+    "mortal_expansion:ghost_garb_chestplate",
+    "mortal_expansion:ghost_garb_leggings",
+    "mortal_expansion:ghost_garb_boots"
   ]
 }

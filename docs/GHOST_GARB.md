@@ -1,0 +1,39 @@
+# Ghost's Garb
+
+Ectothread is crafted from eight String around one Raw Ectoplasm, producing one
+Ectothread. It uses the vanilla lime wool model as a placeholder. Craft the four
+Ghost's Garb pieces with standard helmet, chestplate, leggings, and boots patterns
+using Ectothread. Default lime-dyed leather item/armor textures are placeholders.
+The items appear in the Mortal Expansion creative tab and support normal armor
+enchantments, dyeing, and repair with Ectothread.
+
+Protection is leather strength: hood 1, robe 3, leggings 2, boots 1 (7 total).
+Durability is iron strength: 165, 240, 225, and 195 respectively. There is no
+armor toughness or knockback resistance.
+
+A full four-piece set grants horizontal wall phasing and intangible combat rules.
+Floors and vertical collision remain solid; Spiritwood/other intangible-solid
+blocks, Holy Salt columns, and Spirit Torch barriers block phasing. Movement is
+checked along the swept path on client and server. There is no spectator mode,
+flight, or downward floor phasing. The body renders at 20% opacity; armor retains
+its visible lime leather placeholder appearance. Removing a piece immediately
+removes full-set abilities. Ordinary in-wall overlays are suppressed while phasing.
+
+Ordinary physical/environmental damage is blocked through the shared intangible
+damage handler. Intangible attackers, explosions, spectral arrows, Ghast fireballs,
+demi-tangible weapons/enchantments, and sanctification remain able to hurt the
+wearer. Administrative/void sources that bypass invulnerability remain effective.
+Intangible attackers now qualify in the shared damage API for other intangible
+targets as well. Applicable damage still applies normal armor and durability rules.
+
+The full set prevents negative ambient haunt events, keeps beneficial events, and
+clears only currently haunt-owned negative potion effects when equipped. External
+potion effects are preserved. Existing visitation repair at Dead Rising or above
+remains one durability per worn tagged piece.
+
+Version migration: registrations, models, recipes, and item tags are code-based;
+regenerate resources after changes. Collision, server wall validation, client wall
+ejection, and body rendering require narrowly scoped mixins because this version
+has no supported event replacing those operations. GhostGarbPhasing contains the
+shared gameplay logic. No transient noPhysics/game-mode changes or new persisted
+player state are introduced; equipment determines the ability.

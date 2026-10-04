@@ -120,7 +120,7 @@ Implement each effect with the minimum tier and behavior below. Thresholds are m
 | [x] | Finish cooking | Supernatural | Complete one valid recipe in an active furnace within eight blocks. Consume input normally, preserve output and experience, require output space, and complete one operation rather than a whole stack. |
 | [x] | Planks to Spiritwood | Supernatural | Convert one ordinary inventory plank into one Spiritwood plank. Show a green shimmer and require room for the result; leave placed buildings intact. |
 | [x] | Cobblestone to Gravestone | Supernatural | Convert one inventory cobblestone into one Gravestone using the same single-item, output-space, and visual rules. |
-| [~] | Ghost's Garb repair | Dead Rising | During a spectral visitation event, restore one durability to each equipped Ghost's Garb piece. Implemented via the `mortal_expansion:ghosts_garb` item tag; the empty default tag awaits armor content. Unrelated equipment is unaffected. |
+| [~] | Ghost's Garb repair | Dead Rising | During a spectral visitation event, restore one durability to each equipped Ghost's Garb piece. Implemented via the `mortal_expansion:ghosts_garb` item tag; the tag now includes crafted Ghost�s Garb; equipped pieces use the existing repair hook. Unrelated equipment is unaffected. |
 
 #### Protection and major encounters
 
@@ -128,7 +128,7 @@ The user selected ambient/beneficial effects first and tag hooks for Ghost’s G
 
 | Status | Feature | Accepted behavior |
 |---|---|---|
-| [~] | Ghost's Garb immunity | A full set blocks negative ambient effects while allowing beneficial events. Implemented as a full-four-piece tag hook; actual armor/recipe deferred by user choice. Direct mob attacks are unchanged. |
+| [~] | Ghost's Garb immunity | A full set blocks negative ambient effects while allowing beneficial events. Full-four-piece protection now uses crafted Ghost�s Garb, with leather defense, iron durability, and Ectothread recipes. Direct mob attacks are unchanged. |
 | [x] | Holy Water blessing | Contact grants 60 seconds of negative-ambient-effect protection and removes active effects applied by haunting. Lower personal Haunt by one point at most once per 60 seconds; contact refreshes the blessing. Only unchanged haunting-owned negative potion effects are removed; external applications relinquish ownership. |
 | [x] | Purification Ward protection | Suppress negative ambient events inside covered chunks while the existing cleansing continues separately. |
 | [ ] | Haint encounter reward | Defeating the encounter Haint removes five Haunt points from its chunk and caps Haunt at the resulting value for ten minutes. Apply once per encounter, including its split into Haunts; define when the split encounter counts as defeated. |
@@ -400,3 +400,11 @@ The duplication notes do not settle whether fluid, RF, and raw ectoplasm costs a
 ## Documentation upkeep
 
 Append dated entries to [Notes](Notes.md) when decisions or implementation changes land. Update checklists and verification limits here as evidence changes. Update [Overview](Overview.md) when architecture or scope changes, and update `Last Synced` after repository synchronization.
+
+### 2026-10-04 - Ghost�s Garb selected and implemented
+
+- [x] Ectothread: eight String around Raw Ectoplasm; lime wool placeholder.
+- [x] Four Ghost�s Garb pieces: standard armor crafting shapes, lime leather placeholders, leather defense, iron durability.
+- [x] Full-set horizontal phasing with existing spectral barriers and intangible damage immunity; intangible attackers still damage wearers.
+- [x] Full-set negative ambient haunt protection and haunting-owned effect cleanup; beneficial events remain enabled.
+- [ ] Client playtest: dyed placeholder appearance, phasing/prediction, barriers, and recovery combined with Spirit Journey grayscale.
