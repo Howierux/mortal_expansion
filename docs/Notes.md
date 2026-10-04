@@ -343,3 +343,17 @@ mod furnaces and instant Haunt cooking. Existing recipes and JSON remain unchang
 Tests check Holy Salt output, the returned bucket, no duplication on subsequent
 ticks, and blocked-output preservation. Build and all 26 required server tests
 passed. The original client interaction needs retesting after restart.
+
+### 2026-10-04 - Grave Moss on sapling-grown Spiritwood leaves
+
+Spiritwood saplings now decorate newly grown canopy leaves with Grave Moss after
+successful growth, including bone meal. Each exposed suitable face has a 25%
+placement chance, with at least one patch when a valid face exists. Decoration
+uses vanilla multiface attachment/survival and merges patches without replacing
+occupied blocks. Preexisting Spiritwood leaves are excluded, and stage changes
+or failed growth do not decorate neighboring trees. Natural worldgen definitions
+remain unchanged. The bounded scan is isolated in SpiritwoodSaplingMoss and covers
+the current 4-6-block trunk/radius-two foliage; adjust those bounds if the tree
+configuration grows. No new mixins, saved data, or resource schemas are required.
+Build and all 27 required server tests passed, including actual sapling growth
+and moss attachment checks. Already-grown trees are not retroactively decorated.

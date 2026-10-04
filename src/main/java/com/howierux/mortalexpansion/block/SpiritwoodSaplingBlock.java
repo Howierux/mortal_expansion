@@ -22,6 +22,26 @@ public class SpiritwoodSaplingBlock extends SaplingBlock {
     }
 
     @Override
+    public void advanceTree(net.minecraft.server.level.ServerLevel level, BlockPos pos, BlockState state, RandomSource random) {
+        if (state.getValue(STAGE) == 0) {
+            super.advanceTree(level, pos, state, random);
+            return;
+        }
+        var oldLeaves = new java.util.HashSet<BlockPos>();
+        int radius = com.howierux.mortalexpansion.worldgen.SpiritwoodSaplingMoss.RADIUS;
+        int height = com.howierux.mortalexpansion.worldgen.SpiritwoodSaplingMoss.HEIGHT;
+        for (var at : BlockPos.betweenClosed(pos.offset(-radius, 0, -radius), pos.offset(radius, height, radius)))
+            if (level.getBlockState(at).is(com.howierux.mortalexpansion.registry.ModBlocks.SPIRITWOOD_LEAVES.get())) oldLeaves.add(at.immutable());
+        super.advanceTree(level, pos, state, random);
+        // Failed growth or stage advancement must not decorate neighboring trees.
+        if (!level.getBlockState(pos).is(com.howierux.mortalexpansion.registry.ModBlocks.SPIRITWOOD_LOG.get())) return;
+        var newLeaves = new java.util.ArrayList<BlockPos>();
+        for (var at : BlockPos.betweenClosed(pos.offset(-radius, 0, -radius), pos.offset(radius, height, radius)))
+            if (!oldLeaves.contains(at) && level.getBlockState(at).is(com.howierux.mortalexpansion.registry.ModBlocks.SPIRITWOOD_LEAVES.get())) newLeaves.add(at.immutable());
+        com.howierux.mortalexpansion.worldgen.SpiritwoodSaplingMoss.decorate(level, newLeaves, random);
+    }
+
+    @Override
     public void animateTick(BlockState state, Level level, BlockPos pos, RandomSource random) {
         super.animateTick(state, level, pos, random);
 
