@@ -357,3 +357,16 @@ the current 4-6-block trunk/radius-two foliage; adjust those bounds if the tree
 configuration grows. No new mixins, saved data, or resource schemas are required.
 Build and all 27 required server tests passed, including actual sapling growth
 and moss attachment checks. Already-grown trees are not retroactively decorated.
+
+### 2026-10-04 - Cross-mod magical damage bypass
+
+The user selected magic/magical-tagged damage as an intangibility exception.
+DemiTangibleDamage now checks NeoForge�s standard is_magic damage-type tag and
+recognizes damage tags whose final path component is magic, magical, is_magic,
+or is_magical in any namespace. This uses registry tag membership rather than
+hardcoded mod damage IDs or broad substring matches. Shared behavior covers
+intangible mobs and Ghost�s Garb wearers. Ordinary armor and other damage/effect
+rules remain applicable. NeoForge�s tag also categorizes vanilla poison, Wither,
+Thorns, and dragon breath as magical. Build and all 28 required server tests
+passed, including actual magic hits on both target types, continued ordinary
+fire immunity, cross-namespace tag names, and a non-magical tag rejection.

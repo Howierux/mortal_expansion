@@ -81,6 +81,23 @@ public final class GhostGarbGameTests {
         helper.assertTrue(player.hasEffect(net.minecraft.world.effect.MobEffects.MOVEMENT_SPEED), "Beneficial effect preserved");
         player.discard(); helper.succeed();
     }
+    @GameTest(template = "deferred_items_test")
+    public static void tagged_magic_bypasses_intangibility(GameTestHelper helper) {
+        var player = equipped(helper);
+        helper.assertTrue(player.hurt(player.damageSources().magic(), 4), "Tagged magic damages Ghost's Garb wearer");
+        player.invulnerableTime = 0;
+        helper.assertFalse(player.hurt(player.damageSources().inFire(), 4), "Ordinary fire remains blocked");
+        var ghost = ModEntities.GHOST.get().create(helper.getLevel());
+        helper.assertTrue(ghost.hurt(player.damageSources().magic(), 4), "Same magic exception damages intangible mobs");
+        for (String name : new String[]{"magic", "magical", "is_magic", "is_magical", "damage/magical"}) {
+            helper.assertTrue(com.howierux.mortalexpansion.combat.DemiTangibleDamage.isMagicTag(
+                    net.minecraft.resources.ResourceLocation.fromNamespaceAndPath("example_mod", name)), "Cross-mod magic tag recognized: " + name);
+        }
+        helper.assertFalse(com.howierux.mortalexpansion.combat.DemiTangibleDamage.isMagicTag(
+                net.minecraft.resources.ResourceLocation.parse("example_mod:non_magical")), "Unrelated tag is not a bypass");
+        player.discard(); helper.succeed();
+    }
+
 }
 
 

@@ -22,7 +22,13 @@ removes full-set abilities. Ordinary in-wall overlays are suppressed while phasi
 Ordinary physical/environmental damage is blocked through the shared intangible
 damage handler. Intangible attackers, explosions, spectral arrows, Ghast fireballs,
 demi-tangible weapons/enchantments, and sanctification remain able to hurt the
-wearer. Administrative/void sources that bypass invulnerability remain effective.
+wearer. Magical damage also bypasses intangibility: NeoForge's `is_magic` tag
+and damage tags with the final path component `magic`, `magical`, `is_magic`, or
+`is_magical` in any namespace. This includes vanilla sources categorized by
+NeoForge as magic (such as poison, Wither damage, Thorns, and dragon breath).
+Matching tags permit damage through intangibility; ordinary armor, other damage
+immunities, and potion-effect susceptibility still follow their existing rules.
+Administrative/void sources that bypass invulnerability remain effective.
 Intangible attackers now qualify in the shared damage API for other intangible
 targets as well. Applicable damage still applies normal armor and durability rules.
 
