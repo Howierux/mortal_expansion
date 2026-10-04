@@ -36,6 +36,7 @@ public final class HauntEffectsGameTests {
         Vec3 at = Vec3.atBottomCenterOf(helper.absolutePos(new BlockPos(7, 2, 7)));
         player.moveTo(at.x, at.y, at.z, 0, 0);
         player.getInventory().clearContent();
+        player.getRandom().setSeed(42);
         return player;
     }
     private static void floor(GameTestHelper helper) {
@@ -180,7 +181,9 @@ public final class HauntEffectsGameTests {
         while (data.pendingGhosts() > 0) data.deliveredGhost();
         player.setPos(player.getX(), player.getY() + 200, player.getZ());
         helper.assertTrue(HauntEffects.nearestWell(player) == null, "No loaded well within 100 blocks");
-        helper.assertTrue(HauntEffects.perform(player, HauntEffectKind.GHOST), "Missing well holds trigger");
+        PlayerHauntManager.setTier(player, HauntTier.DEAD_RISING);
+        helper.assertTrue(HauntEventController.tryEffect(player, HauntEffectKind.GHOST), "Missing well holds trigger");
+        helper.assertTrue(HauntEventController.ready(player), "Held event does not spend its cooldown before delivery");
         helper.assertTrue(data.pendingGhosts() == 1, "Exactly one pending event");
         var reloaded = HauntEventData.load(data.save(new CompoundTag(), helper.getLevel().registryAccess()), helper.getLevel().registryAccess());
         helper.assertTrue(reloaded.pendingGhosts() == 1, "Deferred selection survives world save/load");
@@ -189,8 +192,9 @@ public final class HauntEffectsGameTests {
         helper.setBlock(new BlockPos(7, 4, 7), ModBlocks.SPIRITWELL.get());
         var well = HauntEffects.nearestWell(player);
         helper.assertTrue(well != null, "Loaded nearby well found without a new roll");
-        helper.assertTrue(HauntEffects.spawnGhost(player, well), "Held event has a safe delivery location");
-        data.deliveredGhost();
+        PlayerHauntManager.setTier(player, HauntTier.VOID);
+        helper.assertTrue(HauntEventController.deliverPendingTo(player), "Held event delivers without a new tier roll");
+        helper.assertFalse(HauntEventController.ready(player), "Actual delivery starts the cooldown");
         helper.assertTrue(data.pendingGhosts() == 0, "Delivery consumes only one held event");
         for (var ghost : helper.getLevel().getEntitiesOfClass(com.howierux.mortalexpansion.entity.mob.GhostEntity.class,
                 player.getBoundingBox().inflate(16), mob -> mob.getPersistentData().getBoolean(HauntEffects.EVENT_MOB))) ghost.discard();
@@ -206,6 +210,22 @@ public final class HauntEffectsGameTests {
         helper.assertTrue(spirits.size() == 1 && spirits.get(0).distanceTo(player) <= 5, "One passive Spirit within five blocks");
         helper.assertFalse(HauntEffects.spawnSpirit(player), "Nearby event-created Spirit prevents repeats");
         spirits.forEach(net.minecraft.world.entity.Entity::discard);
+        player.discard(); helper.succeed();
+    }
+    @GameTest(template = "deferred_items_test")
+    public static void well_lookup_includes_the_exact_100_block_boundary(GameTestHelper helper) {
+        var player = player(helper);
+        BlockPos relative = new BlockPos(7, 4, 7);
+        helper.setBlock(relative, ModBlocks.SPIRITWELL.get());
+        var well = (com.howierux.mortalexpansion.blockentity.SpiritwellBlockEntity) helper.getBlockEntity(relative);
+        Vec3 center = HauntEffects.wellPosition(well);
+        player.moveTo(center.x + 100, center.y, center.z, 0, 0);
+        helper.assertTrue(HauntEffects.wellsNear(player).contains(well), "Exactly 100 blocks qualifies");
+        player.moveTo(center.x + 100.01, center.y, center.z, 0, 0);
+        helper.assertFalse(HauntEffects.wellsNear(player).contains(well), "Outside 100 blocks does not qualify");
+        player.moveTo(center.x, center.y, center.z, 0, 0);
+        helper.setBlock(relative, Blocks.AIR);
+        helper.assertFalse(HauntEffects.wellsNear(player).contains(well), "Removed anchor cannot receive a pending event");
         player.discard(); helper.succeed();
     }
 }

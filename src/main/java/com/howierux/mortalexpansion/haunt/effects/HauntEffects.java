@@ -44,6 +44,19 @@ import java.util.List;
 /** Server-authoritative operations. False means ineligible/blocked, without consuming an event. */
 public final class HauntEffects {
     public static final String EVENT_MOB = "MortalExpansionAmbient";
+    private static final java.util.Map<ServerLevel, SpawnReservations> RESERVATIONS = new java.util.WeakHashMap<>();
+    private static final class SpawnReservations {
+        long tick;
+        final java.util.EnumMap<MobCategory, Integer> counts = new java.util.EnumMap<>(MobCategory.class);
+    }
+    private static SpawnReservations reservations(ServerLevel level) {
+        var current = RESERVATIONS.computeIfAbsent(level, unused -> new SpawnReservations());
+        if (current.tick != level.getGameTime()) {
+            current.tick = level.getGameTime();
+            current.counts.clear();
+        }
+        return current;
+    }
     private HauntEffects() {}
     public static boolean perform(ServerPlayer player, HauntEffectKind kind) {
         if (kind.negative && HauntProtection.protectedPlayer(player)) return false;
@@ -62,8 +75,7 @@ public final class HauntEffects {
             case BAD_POTION -> potion(player, true);
             case SPIRIT -> spawnSpirit(player);
             case GHOST -> {
-                var well = nearestWell(player);
-                if (well == null || !spawnGhost(player, well)) HauntEventData.get(player.serverLevel()).deferGhost();
+                if (!spawnGhostNear(player)) HauntEventData.get(player.serverLevel()).deferGhost();
                 yield true;
             }
             case FURNACE -> finishNearbyFurnace(player);
@@ -177,13 +189,21 @@ public final class HauntEffects {
         }
         return entries;
     }
-    public static SpiritwellBlockEntity nearestWell(ServerPlayer player) {
+    public static List<SpiritwellBlockEntity> wellsNear(ServerPlayer player) {
         return loadedAnchors(player.serverLevel(), player.position(), 100).stream()
                 .filter(be -> be instanceof SpiritwellBlockEntity && !be.isRemoved())
                 .map(be -> (SpiritwellBlockEntity) be)
                 .filter(well -> wellPosition(well).distanceToSqr(player.position()) <= 10000)
-                .min(Comparator.comparingDouble(well -> wellPosition(well).distanceToSqr(player.position())))
-                .orElse(null);
+                .sorted(Comparator.comparingDouble(well -> wellPosition(well).distanceToSqr(player.position())))
+                .toList();
+    }
+    public static SpiritwellBlockEntity nearestWell(ServerPlayer player) {
+        var wells = wellsNear(player);
+        return wells.isEmpty() ? null : wells.get(0);
+    }
+    public static boolean spawnGhostNear(ServerPlayer player) {
+        for (var well : wellsNear(player)) if (spawnGhost(player, well)) return true;
+        return false;
     }
     public static Vec3 wellPosition(SpiritwellBlockEntity well) {
         BlockPos pos = well.getBlockPos();
@@ -215,7 +235,10 @@ public final class HauntEffects {
         var state = level.getChunkSource().getLastSpawnState();
         if (state != null) {
             int limit = Math.max(1, category.getMaxInstancesPerChunk() * state.getSpawnableChunkCount() / 289);
-            if (state.getMobCategoryCounts().getInt(category) >= limit) return false;
+            // The vanilla snapshot predates event spawns. Reserve successes
+            // so several players cannot exceed its cap within the same tick.
+            if (state.getMobCategoryCounts().getInt(category)
+                    + reservations(level).counts.getOrDefault(category, 0) >= limit) return false;
         }
         return level.getEntitiesOfClass(Mob.class, new AABB(BlockPos.containing(center)).inflate(32),
                 mob -> mob.getType().getCategory() == category).size() < category.getMaxInstancesPerChunk();
@@ -239,7 +262,9 @@ public final class HauntEffects {
         EventHooks.finalizeMobSpawn(mob, level, level.getCurrentDifficultyAt(mob.blockPosition()), MobSpawnType.EVENT, null);
         if (mob.isSpawnCancelled()) return false;
         mob.getPersistentData().putBoolean(EVENT_MOB, true);
-        return level.addFreshEntity(mob);
+        boolean added = level.addFreshEntity(mob);
+        if (added) reservations(level).counts.merge(mob.getType().getCategory(), 1, Integer::sum);
+        return added;
     }
     public static boolean spawnSpirit(ServerPlayer player) {
         ServerLevel level = player.serverLevel();

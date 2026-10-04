@@ -18,7 +18,8 @@ The user selected these requirements on 2026-10-02. This records the intended wo
 - [x] Persist anchors and prevent block placement in a two-block spherical radius.
 - [x] Validate worldgen, placement rollback, multi-placement, piston movement, and persistence on a headless server; all eight server tests, build, guide, and mod-loading checks passed.
 - [ ] Visually verify floating appearance in a user-requested client session.
-- [ ] Design/select additional Haunt effects and Spirit Journey interactions.
+- [~] Personal-Haunt Ghost events and durable deferral are implemented; further Spirit Journey interactions remain planned.
+- [ ] Add Spiritwell worldgen to the Nether and End in a later update. Held triggers remain in their original dimension awaiting wells there.
 
 **Selected deferred-event rule (2026-10-04):** When the Spiritwell-spawn Haunt effect is selected and no loaded Spiritwell is within 100 blocks of the triggering player, retain that effect until a player comes within 100 blocks of a loaded Spiritwell. The later player need not be the original triggering player. Resolve proximity in the player's current dimension, and inspect loaded chunks only; this rule must not generate or force-load a Spiritwell. Retain the pending event across saves/restarts. The 100-block lookup only finds an already loaded destination; personal Haunt alone controls new trigger eligibility. Delivery must still satisfy the effect's mob-cap, protection, and safe-spawn rules; keep it pending if delivery cannot succeed. The scheduler stores a per-dimension count of held selections, keeps every trigger, and delivers at most one per second while preserving player cooldowns and mob limits. Delivery does not reroll or require the later player to retain the original triggering tier.
 

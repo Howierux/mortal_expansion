@@ -26,9 +26,22 @@ public final class HauntEventController {
     public static boolean tryEffect(ServerPlayer player, HauntEffectKind kind) {
         // Personal Haunt alone drives every event, including world effects.
         int tier = PlayerHauntManager.getTier(player).id();
-        if (!ready(player) || !kind.eligible(tier, HauntProtection.protectedPlayer(player))
-                || !HauntEffects.perform(player, kind)) return false;
-        completed(player, kind.activeTicks);
+        if (!ready(player) || !kind.eligible(tier, HauntProtection.protectedPlayer(player))) return false;
+        long pendingBefore = HauntEventData.get(player.serverLevel()).pendingGhosts();
+        if (!HauntEffects.perform(player, kind)) return false;
+        boolean held = kind == HauntEffectKind.GHOST
+                && HauntEventData.get(player.serverLevel()).pendingGhosts() > pendingBefore;
+        // A held selection is not an active/completed event. Start its cooldown
+        // on delivery, so entering range can release it immediately.
+        if (!held) completed(player, kind.activeTicks);
+        return true;
+    }
+    public static boolean deliverPendingTo(ServerPlayer player) {
+        HauntEventData data = HauntEventData.get(player.serverLevel());
+        if (data.pendingGhosts() == 0 || !ready(player) || HauntProtection.protectedPlayer(player)
+                || !HauntEffects.spawnGhostNear(player)) return false;
+        data.deliveredGhost();
+        completed(player, 0);
         return true;
     }
     private static boolean eligiblePlayer(ServerPlayer player) {
@@ -42,11 +55,8 @@ public final class HauntEventController {
         // in this dimension can receive it when a loaded well is within 100.
         if (data.pendingGhosts() > 0) {
             for (ServerPlayer player : level.players()) {
-                if (!eligiblePlayer(player) || !ready(player) || HauntProtection.protectedPlayer(player)) continue;
-                var well = HauntEffects.nearestWell(player);
-                if (well != null && HauntEffects.spawnGhost(player, well)) {
-                    data.deliveredGhost();
-                    completed(player, 0);
+                if (!eligiblePlayer(player)) continue;
+                if (deliverPendingTo(player)) {
                     break; // No backlog burst; at most one delivery per second/dimension.
                 }
             }
