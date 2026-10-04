@@ -408,3 +408,10 @@ Append dated entries to [Notes](Notes.md) when decisions or implementation chang
 - [x] Full-set horizontal phasing with existing spectral barriers and intangible damage immunity; intangible attackers still damage wearers.
 - [x] Full-set negative ambient haunt protection and haunting-owned effect cleanup; beneficial events remain enabled.
 - [ ] Client playtest: dyed placeholder appearance, phasing/prediction, barriers, and recovery combined with Spirit Journey grayscale.
+
+### Haint Garb / Spectralite combination follow-up
+
+Purified Ectothread (eight String around Pure Ectoplasm, output eight) and
+light blue leather Haint Garb are implemented. Planned: a way to combine Haint
+Garb with Spectralite equipment and retain the benefits of both. Final crafting
+method and combined stats remain to be decided.

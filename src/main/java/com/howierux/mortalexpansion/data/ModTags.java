@@ -72,15 +72,22 @@ public abstract class ModTags<T> extends TagsProvider<T> {
             tag(TagKey.create(registryKey, ResourceLocation.parse("mortal_expansion:ghosts_garb")))
                     .add(com.howierux.mortalexpansion.registry.ModItems.GHOST_GARB_HELMET.getKey(), com.howierux.mortalexpansion.registry.ModItems.GHOST_GARB_CHESTPLATE.getKey(),
                             com.howierux.mortalexpansion.registry.ModItems.GHOST_GARB_LEGGINGS.getKey(), com.howierux.mortalexpansion.registry.ModItems.GHOST_GARB_BOOTS.getKey());
+            tag(TagKey.create(registryKey, ResourceLocation.parse("mortal_expansion:haints_garb")))
+                    .add(com.howierux.mortalexpansion.registry.ModItems.HAINT_GARB_HELMET.getKey(), com.howierux.mortalexpansion.registry.ModItems.HAINT_GARB_CHESTPLATE.getKey(),
+                            com.howierux.mortalexpansion.registry.ModItems.HAINT_GARB_LEGGINGS.getKey(), com.howierux.mortalexpansion.registry.ModItems.HAINT_GARB_BOOTS.getKey());
+            tag(TagKey.create(registryKey, ResourceLocation.parse("mortal_expansion:spectral_garb")))
+                    .addTag(TagKey.create(registryKey, ResourceLocation.parse("mortal_expansion:ghosts_garb")))
+                    .addTag(TagKey.create(registryKey, ResourceLocation.parse("mortal_expansion:haints_garb")));
             for (String name : new String[]{"dyeable", "enchantable/armor", "enchantable/durability", "enchantable/vanishing", "enchantable/equippable"}) {
                 tag(TagKey.create(registryKey, ResourceLocation.withDefaultNamespace(name)))
                         .add(com.howierux.mortalexpansion.registry.ModItems.GHOST_GARB_HELMET.getKey(), com.howierux.mortalexpansion.registry.ModItems.GHOST_GARB_CHESTPLATE.getKey(),
-                                com.howierux.mortalexpansion.registry.ModItems.GHOST_GARB_LEGGINGS.getKey(), com.howierux.mortalexpansion.registry.ModItems.GHOST_GARB_BOOTS.getKey());
+                                com.howierux.mortalexpansion.registry.ModItems.GHOST_GARB_LEGGINGS.getKey(), com.howierux.mortalexpansion.registry.ModItems.GHOST_GARB_BOOTS.getKey(), com.howierux.mortalexpansion.registry.ModItems.HAINT_GARB_HELMET.getKey(), com.howierux.mortalexpansion.registry.ModItems.HAINT_GARB_CHESTPLATE.getKey(),
+                                com.howierux.mortalexpansion.registry.ModItems.HAINT_GARB_LEGGINGS.getKey(), com.howierux.mortalexpansion.registry.ModItems.HAINT_GARB_BOOTS.getKey());
             }
-            tag(TagKey.create(registryKey, ResourceLocation.withDefaultNamespace("enchantable/head_armor"))).add(com.howierux.mortalexpansion.registry.ModItems.GHOST_GARB_HELMET.getKey());
-            tag(TagKey.create(registryKey, ResourceLocation.withDefaultNamespace("enchantable/chest_armor"))).add(com.howierux.mortalexpansion.registry.ModItems.GHOST_GARB_CHESTPLATE.getKey());
-            tag(TagKey.create(registryKey, ResourceLocation.withDefaultNamespace("enchantable/leg_armor"))).add(com.howierux.mortalexpansion.registry.ModItems.GHOST_GARB_LEGGINGS.getKey());
-            tag(TagKey.create(registryKey, ResourceLocation.withDefaultNamespace("enchantable/foot_armor"))).add(com.howierux.mortalexpansion.registry.ModItems.GHOST_GARB_BOOTS.getKey());
+            tag(TagKey.create(registryKey, ResourceLocation.withDefaultNamespace("enchantable/head_armor"))).add(com.howierux.mortalexpansion.registry.ModItems.GHOST_GARB_HELMET.getKey(), com.howierux.mortalexpansion.registry.ModItems.HAINT_GARB_HELMET.getKey());
+            tag(TagKey.create(registryKey, ResourceLocation.withDefaultNamespace("enchantable/chest_armor"))).add(com.howierux.mortalexpansion.registry.ModItems.GHOST_GARB_CHESTPLATE.getKey(), com.howierux.mortalexpansion.registry.ModItems.HAINT_GARB_CHESTPLATE.getKey());
+            tag(TagKey.create(registryKey, ResourceLocation.withDefaultNamespace("enchantable/leg_armor"))).add(com.howierux.mortalexpansion.registry.ModItems.GHOST_GARB_LEGGINGS.getKey(), com.howierux.mortalexpansion.registry.ModItems.HAINT_GARB_LEGGINGS.getKey());
+            tag(TagKey.create(registryKey, ResourceLocation.withDefaultNamespace("enchantable/foot_armor"))).add(com.howierux.mortalexpansion.registry.ModItems.GHOST_GARB_BOOTS.getKey(), com.howierux.mortalexpansion.registry.ModItems.HAINT_GARB_BOOTS.getKey());
         }
     }
     public static final class EntityTypeTags extends ModTags<net.minecraft.world.entity.EntityType<?>> {

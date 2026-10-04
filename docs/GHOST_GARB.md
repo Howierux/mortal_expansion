@@ -1,6 +1,6 @@
 # Ghost's Garb
 
-Ectothread is crafted from eight String around one Raw Ectoplasm, producing one
+Ectothread is crafted from eight String around one Raw Ectoplasm, producing eight
 Ectothread. It uses the vanilla lime wool model as a placeholder. Craft the four
 Ghost's Garb pieces with standard helmet, chestplate, leggings, and boots patterns
 using Ectothread. Default lime-dyed leather item/armor textures are placeholders.
@@ -51,3 +51,17 @@ attacker/weapon credit retain normal melee behavior. `DemiTangibleDamageSourcesM
 converts the two melee factories because NeoForge incoming-damage events cannot
 replace their damage source. During migration, verify those factory signatures
 and registry tag loading before enabling combat.
+
+## Haint's Garb
+
+Eight String surrounding one Pure Ectoplasm produce eight Purified Ectothread.
+Purified Ectothread uses light blue wool as its placeholder. The four Haint's
+Garb pieces use standard armor crafting patterns with Purified Ectothread, and
+light blue dyed leather item and worn armor placeholders. Haint's Garb has the
+same defense, durability, enchantability, intangibility, and haunt protection
+as Ghost's Garb; repair uses Purified Ectothread. Both sets belong to the shared
+`mortal_expansion:spectral_garb` tag, allowing mixed Ghost/Haint pieces to retain
+full-set benefits. Separate `ghosts_garb` and `haints_garb` tags retain their identities.
+
+A later Spectralite combination will add both sets of benefits; no combination
+recipe or additional Spectralite attributes are included yet.

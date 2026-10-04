@@ -14,8 +14,9 @@ public final class ModItemModels extends ItemModelProvider {
     }
     @Override protected void registerModels() {
         getBuilder("ectothread").parent(new ModelFile.UncheckedModelFile("minecraft:block/lime_wool"));
-        for (String piece : new String[]{"helmet", "chestplate", "leggings", "boots"}) {
-            getBuilder("ghost_garb_" + piece).parent(new ModelFile.UncheckedModelFile("minecraft:item/generated"))
+        getBuilder("purified_ectothread").parent(new ModelFile.UncheckedModelFile("minecraft:block/light_blue_wool"));
+        for (String set : new String[]{"ghost_garb", "haint_garb"}) for (String piece : new String[]{"helmet", "chestplate", "leggings", "boots"}) {
+            getBuilder(set + "_" + piece).parent(new ModelFile.UncheckedModelFile("minecraft:item/generated"))
                     .texture("layer0", "minecraft:item/leather_" + piece)
                     .texture("layer1", "minecraft:item/leather_" + piece + "_overlay");
         }

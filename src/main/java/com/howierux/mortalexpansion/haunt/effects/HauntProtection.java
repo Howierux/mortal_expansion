@@ -21,7 +21,7 @@ import net.neoforged.neoforge.event.entity.living.MobEffectEvent;
 
 public final class HauntProtection {
     public static final TagKey<Item> GARB = TagKey.create(net.minecraft.core.registries.Registries.ITEM,
-            ResourceLocation.fromNamespaceAndPath(MortalExpansion.MOD_ID, "ghosts_garb"));
+            ResourceLocation.fromNamespaceAndPath(MortalExpansion.MOD_ID, "spectral_garb"));
     private static final ThreadLocal<Boolean> APPLYING = ThreadLocal.withInitial(() -> false);
     private HauntProtection() {}
     public static long now(ServerPlayer player) { return player.server.overworld().getGameTime(); }

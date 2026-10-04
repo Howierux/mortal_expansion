@@ -32,6 +32,48 @@ public final class GhostGarbGameTests {
         return player;
     }
     @GameTest(template = "deferred_items_test")
+    public static void ectothread_recipes_yield_eight(GameTestHelper helper) {
+        var cores = new net.minecraft.world.item.Item[]{ModItems.RAW_ECTOPLASM.get(), ModItems.PURE_ECTOPLASM.get()};
+        var results = new net.minecraft.world.item.Item[]{ModItems.ECTOTHREAD.get(), ModItems.PURIFIED_ECTOTHREAD.get()};
+        for (int n = 0; n < cores.length; n++) {
+            var ingredients = new java.util.ArrayList<ItemStack>();
+            for (int i = 0; i < 9; i++) ingredients.add(new ItemStack(i == 4 ? cores[n] : net.minecraft.world.item.Items.STRING));
+            var input = net.minecraft.world.item.crafting.CraftingInput.of(3, 3, ingredients);
+            var recipe = helper.getLevel().getRecipeManager().getRecipeFor(net.minecraft.world.item.crafting.RecipeType.CRAFTING, input, helper.getLevel()).orElseThrow();
+            var result = recipe.value().assemble(input, helper.getLevel().registryAccess());
+            helper.assertTrue(result.is(results[n]) && result.getCount() == 8, "Eight matching threads from string ring and ectoplasm");
+        }
+        helper.succeed();
+    }
+    @GameTest(template = "deferred_items_test")
+    public static void haint_garb_matches_stats_and_full_set_benefits(GameTestHelper helper) {
+        var player = equipped(helper);
+        var slots = new EquipmentSlot[]{EquipmentSlot.HEAD, EquipmentSlot.CHEST, EquipmentSlot.LEGS, EquipmentSlot.FEET};
+        var pieces = new net.minecraft.world.item.ArmorItem[]{ModItems.HAINT_GARB_HELMET.get(), ModItems.HAINT_GARB_CHESTPLATE.get(), ModItems.HAINT_GARB_LEGGINGS.get(), ModItems.HAINT_GARB_BOOTS.get()};
+        var patterns = new String[][]{{"EEE", "E E", "   "}, {"E E", "EEE", "EEE"}, {"EEE", "E E", "E E"}, {"E E", "E E", "   "}};
+        for (int i = 0; i < pieces.length; i++) {
+            var stack = new ItemStack(pieces[i]);
+            helper.assertTrue(stack.getMaxDamage() == player.getItemBySlot(slots[i]).getMaxDamage(), "Haint and Ghost durability match");
+            helper.assertTrue(stack.get(net.minecraft.core.component.DataComponents.DYED_COLOR).rgb() == 0x3AB3DA, "Light blue leather placeholder tint");
+            helper.assertTrue(pieces[i].getMaterial().value().repairIngredient().get().test(new ItemStack(ModItems.PURIFIED_ECTOTHREAD.get())), "Repairs with purified thread");
+            var ingredients = new java.util.ArrayList<ItemStack>();
+            for (String row : patterns[i]) for (char c : row.toCharArray()) ingredients.add(c == 'E' ? new ItemStack(ModItems.PURIFIED_ECTOTHREAD.get()) : ItemStack.EMPTY);
+            var input = net.minecraft.world.item.crafting.CraftingInput.of(3, 3, ingredients);
+            var recipe = helper.getLevel().getRecipeManager().getRecipeFor(net.minecraft.world.item.crafting.RecipeType.CRAFTING, input, helper.getLevel()).orElseThrow();
+            helper.assertTrue(recipe.value().assemble(input, helper.getLevel().registryAccess()).is(pieces[i]), "Standard armor pattern produces Haint piece");
+            player.setItemSlot(slots[i], stack);
+        }
+        player.doTick();
+        helper.assertTrue(player.getArmorValue() == 7 && GhostGarbPhasing.active(player), "Leather defense and full-set phasing");
+        helper.assertFalse(player.hurt(player.damageSources().inFire(), 4), "Normal damage immunity");
+        helper.assertFalse(HauntProtection.apply(player, net.minecraft.world.effect.MobEffects.MOVEMENT_SLOWDOWN, 60, 1, true), "Negative haunt immunity");
+        var ghost = ModEntities.GHOST.get().create(helper.getLevel());
+        helper.assertTrue(player.hurt(player.damageSources().mobAttack(ghost), 4), "Intangible attacker still hurts wearer");
+        player.setItemSlot(EquipmentSlot.HEAD, ItemStack.EMPTY);
+        helper.assertFalse(GhostGarbPhasing.active(player), "Partial Haint set loses benefits");
+        player.discard(); helper.succeed();
+    }
+    @GameTest(template = "deferred_items_test")
     public static void demi_tangible_weapon_damage_is_magic(GameTestHelper helper) {
         var attacker = helper.makeMockServerPlayerInLevel();
         var target = equipped(helper);

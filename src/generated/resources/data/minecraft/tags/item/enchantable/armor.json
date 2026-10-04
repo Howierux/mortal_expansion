@@ -3,6 +3,10 @@
     "mortal_expansion:ghost_garb_helmet",
     "mortal_expansion:ghost_garb_chestplate",
     "mortal_expansion:ghost_garb_leggings",
-    "mortal_expansion:ghost_garb_boots"
+    "mortal_expansion:ghost_garb_boots",
+    "mortal_expansion:haint_garb_helmet",
+    "mortal_expansion:haint_garb_chestplate",
+    "mortal_expansion:haint_garb_leggings",
+    "mortal_expansion:haint_garb_boots"
   ]
 }

@@ -1,0 +1,32 @@
+{
+  "parent": "minecraft:recipes/root",
+  "criteria": {
+    "has_purified_ectothread": {
+      "conditions": {
+        "items": [
+          {
+            "items": "mortal_expansion:purified_ectothread"
+          }
+        ]
+      },
+      "trigger": "minecraft:inventory_changed"
+    },
+    "has_the_recipe": {
+      "conditions": {
+        "recipe": "mortal_expansion:haint_garb_chestplate"
+      },
+      "trigger": "minecraft:recipe_unlocked"
+    }
+  },
+  "requirements": [
+    [
+      "has_the_recipe",
+      "has_purified_ectothread"
+    ]
+  ],
+  "rewards": {
+    "recipes": [
+      "mortal_expansion:haint_garb_chestplate"
+    ]
+  }
+}

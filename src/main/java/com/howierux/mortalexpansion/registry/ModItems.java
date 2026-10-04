@@ -21,10 +21,19 @@ public final class ModItems {
     public static final DeferredItem<ArmorItem> GHOST_GARB_CHESTPLATE = garb("ghost_garb_chestplate", ArmorItem.Type.CHESTPLATE);
     public static final DeferredItem<ArmorItem> GHOST_GARB_LEGGINGS = garb("ghost_garb_leggings", ArmorItem.Type.LEGGINGS);
     public static final DeferredItem<ArmorItem> GHOST_GARB_BOOTS = garb("ghost_garb_boots", ArmorItem.Type.BOOTS);
+    public static final DeferredItem<Item> PURIFIED_ECTOTHREAD = ITEMS.registerSimpleItem("purified_ectothread");
+    public static final DeferredItem<ArmorItem> HAINT_GARB_HELMET = garb("haint_garb_helmet", ArmorItem.Type.HELMET, ModArmorMaterials.HAINT_GARB, 0x3AB3DA);
+    public static final DeferredItem<ArmorItem> HAINT_GARB_CHESTPLATE = garb("haint_garb_chestplate", ArmorItem.Type.CHESTPLATE, ModArmorMaterials.HAINT_GARB, 0x3AB3DA);
+    public static final DeferredItem<ArmorItem> HAINT_GARB_LEGGINGS = garb("haint_garb_leggings", ArmorItem.Type.LEGGINGS, ModArmorMaterials.HAINT_GARB, 0x3AB3DA);
+    public static final DeferredItem<ArmorItem> HAINT_GARB_BOOTS = garb("haint_garb_boots", ArmorItem.Type.BOOTS, ModArmorMaterials.HAINT_GARB, 0x3AB3DA);
     private static DeferredItem<ArmorItem> garb(String id, ArmorItem.Type type) {
-        return ITEMS.registerItem(id, properties -> new ArmorItem(ModArmorMaterials.GHOST_GARB, type,
+        return garb(id, type, ModArmorMaterials.GHOST_GARB, 0x80C71F);
+    }
+    private static DeferredItem<ArmorItem> garb(String id, ArmorItem.Type type,
+            net.minecraft.core.Holder<ArmorMaterial> material, int color) {
+        return ITEMS.registerItem(id, properties -> new ArmorItem(material, type,
                 properties.durability(type.getDurability(15)).component(net.minecraft.core.component.DataComponents.DYED_COLOR,
-                        new net.minecraft.world.item.component.DyedItemColor(0x80C71F, false))));
+                        new net.minecraft.world.item.component.DyedItemColor(color, false))));
     }
 
     public static final DeferredItem<BlockItem> SPIRITWOOD_LOG =
