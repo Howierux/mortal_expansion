@@ -53,7 +53,7 @@ public final class HauntEffects {
             case SLOW -> {
                 boolean ok = !player.isInWater() && !player.onClimbable()
                         && HauntProtection.apply(player, MobEffects.MOVEMENT_SLOWDOWN, 60, 1, true);
-                if (ok) sound(player, SoundEvents.SOUL_ESCAPE, player.position(), 0.2F);
+                if (ok) sound(player, SoundEvents.SOUL_ESCAPE.value(), player.position(), 0.2F);
                 yield ok;
             }
             case SHOVE -> shove(player);
@@ -93,7 +93,7 @@ public final class HauntEffects {
         return HauntProtection.apply(player, choices.get(player.getRandom().nextInt(choices.size())), 100, 0, negative);
     }
     private static boolean shadow(ServerPlayer player) {
-        Vec3 side = horizontal(player).yRot(player.getRandom().nextBoolean() ? 1.25F : -1.25F);
+        Vec3 side = horizontal(player).yRot(player.getRandom().nextBoolean() ? 0.85F : -0.85F);
         Vec3 center = player.position().add(side.scale(6));
         for (int dy = -1; dy <= 1; dy++) {
             Vec3 at = new Vec3(center.x, Math.floor(player.getY()) + dy, center.z);
@@ -191,7 +191,9 @@ public final class HauntEffects {
     }
     public static boolean safeStanding(ServerLevel level, Vec3 at, double width, double height, boolean hostile) {
         AABB body = new AABB(at.x - width / 2, at.y, at.z - width / 2, at.x + width / 2, at.y + height, at.z + width / 2);
-        for (BlockPos pos : BlockPos.betweenClosed(body.deflate(0.0001))) {
+        AABB inside = body.deflate(0.0001);
+        for (BlockPos pos : BlockPos.betweenClosed(BlockPos.containing(inside.minX, inside.minY, inside.minZ),
+                BlockPos.containing(inside.maxX, inside.maxY, inside.maxZ))) {
             if (level.getChunkSource().getChunkNow(pos.getX() >> 4, pos.getZ() >> 4) == null
                     || !level.getFluidState(pos).isEmpty() || level.getBlockState(pos).is(net.minecraft.tags.BlockTags.FIRE)) return false;
         }
@@ -265,7 +267,7 @@ public final class HauntEffects {
         Vec3 at = findSpawn(player, ghost, center, 6, true);
         if (at == null) return false;
         // Warn before spawning the real hostile entity.
-        sound(player, SoundEvents.SOUL_ESCAPE, center, 0.7F);
+        sound(player, SoundEvents.SOUL_ESCAPE.value(), center, 0.7F);
         level.sendParticles(player, ParticleTypes.SOUL, true, center.x, center.y, center.z, 16, 0.7, 0.7, 0.7, 0.03);
         if (!spawn(player, ghost, at)) return false;
         ghost.setTarget(player);
