@@ -10,6 +10,7 @@ running generators during normal gameplay.
 - `ModBlockModels`: block geometry, textures, and block states, using framework
   shape helpers where they preserve the existing visuals.
 - `ModItemModels`: item models and typed fluid-container loaders.
+- `ModPostEffects`: Spirit Journey grayscale post-chain, using vanilla shader programs.
 - `ModRecipes`: crafting, cooking, and smithing recipes with the existing unlock
   policy. The Book's custom advancement remains authored separately.
 - `ModBlockLoot` and `ModLootTables`: validated loot builders serialized with

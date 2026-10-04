@@ -288,3 +288,13 @@ Validation is underway on an isolated branch: ten new real server regression tes
 **Final ambient-effect verification:** Code at `4a1a0a3` passed all standalone rule checks, the effect-tier/protection policy check, Book of Ectcetera validation (20 chapters, 100 pages), Gradle build, mod loading through data generation, and all eighteen real headless GameTests: [GitHub Actions run](https://github.com/Howierux/mortal_expansion/actions/runs/37212500685). Ten new effect regressions cover personal-only eligibility, player cooldown serialization, Holy Water provenance and cleansing cooldown, stronger external potions, Ward suppression with beneficial effects allowed, inventory stack/component conservation, output-room validation and persisted shared chunk cooldowns, one-recipe furnace completion with vanilla XP ledger, wall/lava/fall-safe displacement, saved deferred queues and delivery without a new tier roll, passive Spirit repeat prevention, and the exact 100-block/removed-anchor boundary. The existing eight death-item/Spiritwell regressions also pass.
 
 The empty default garb tag means actual armor behavior awaits its future content; the hook and Dead Rising repair guard are compiled. Shadows/sound presentation is compiled but not visually verified, and a full process restart/reconnect was not manually exercised. No client was launched. Passing code and final docs are being fast-forwarded to `dev`; `main` remains unchanged. Major Haint/End encounters and Nether/End Spiritwell generation remain deferred by the selected scope.
+
+### 2026-10-04 - Spirit Journey grayscale
+
+Playtesting confirmed that the deferred grayscale stage was absent. Added a client-only
+render-frame handler using GameRenderer post-processing APIs without a new mixin.
+The generated post-chain uses vanilla color_convolve with zero saturation and a
+blit pass. Active server-synced journey state controls activation; recovery, loss
+of spectator mode, and disconnect remove the owned effect. Resource reloads and
+camera changes reapply it. HUD/menu colors remain unchanged. Build/data-generation
+checks passed; visual confirmation is still required after restarting the client.

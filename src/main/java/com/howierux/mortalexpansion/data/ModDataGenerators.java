@@ -18,6 +18,7 @@ public final class ModDataGenerators {
         var helper = event.getExistingFileHelper();
         generator.addProvider(event.includeClient(), new ModBlockModels(output, helper));
         generator.addProvider(event.includeClient(), new ModItemModels(output, helper));
+        generator.addProvider(event.includeClient(), new ModPostEffects(output));
         generator.addProvider(event.includeServer(), new ModRecipes(output, lookup));
         generator.addProvider(event.includeServer(), new ModLootTables(output, lookup));
         generator.addProvider(event.includeServer(), new ModTags.BlockTags(output, lookup, helper));

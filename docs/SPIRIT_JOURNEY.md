@@ -27,3 +27,10 @@ owns wire codecs, and client key/menu registration stays client-only. The new
 return-mode attachment preserves the pre-death mode for remote recovery. Existing
 journeys without that attachment default to Survival. Existing escrow and corpse
 UUID save formats are retained.
+
+The world renders in grayscale during an active journey. The filter is client-only,
+uses the vanilla color-convolution program at zero saturation, and is generated
+by ModPostEffects. SpiritJourneyVisuals contains the renderer integration.
+Journey recovery/disconnection restores normal camera effects; resource reloads
+and spectator camera changes reapply grayscale while the journey remains active.
+HUD and menu rendering retain their normal colors.

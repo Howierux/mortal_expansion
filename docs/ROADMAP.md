@@ -32,7 +32,8 @@ The user requested implementing this feature in smaller parts, starting with ent
 - [ ] Client gameplay verification of mode entry.
 - [x] Stage 2 implementation: Defer eligible death items until the choice; Ordinary Respawn releases them at the death site, while Spirit Journey holds them in serialized player data. Keep Inventory and Vanishing retain vanilla behavior.
 - [x] Stage 2 headless death/respawn, serialization, and vanilla-rule validation (four GameTests); build, guide, and data-generation checks passed. Full restart/reconnect and client gameplay remain untested.
-- [ ] Later: Add grayscale and dedicated journey movement/state/exit handling.
+- [x] Grayscale post-processing implemented for active Spirit Journey; normal color returns on recovery or disconnect. Client visual verification remains pending.
+- [ ] Later: Add dedicated journey movement and remaining state/exit handling.
 - [ ] Later: Enforce spirit-blocking mechanisms during the journey.
 - [~] Owner-linked persistent corpse and return-within-two-blocks inventory recovery implemented; 19 server tests pass. Spiritwell beams are visible only during an active journey. Manual logout/restart, cross-dimension journeys, and client visuals remain to be verified.
 - [ ] Visually validate the death-screen option and mode entry in a client session requested by the user.
