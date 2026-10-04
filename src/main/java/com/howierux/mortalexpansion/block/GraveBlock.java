@@ -208,6 +208,16 @@ public final class GraveBlock extends BaseEntityBlock {
         // Graves are intentionally immune to explosion destruction.
     }
 
+    /** Front inscription plane; 0.002 clears the natural shimmer's 0.00125 expansion. */
+    public static net.minecraft.world.phys.Vec3 inscriptionAnchor(BlockState state) {
+        Direction facing = state.getValue(FACING);
+        double center = 0.25D + state.getValue(DEPTH) * 0.25D;
+        double x = facing.getAxis() == Direction.Axis.X ? center : 0.5D;
+        double z = facing.getAxis() == Direction.Axis.Z ? center : 0.5D;
+        return new net.minecraft.world.phys.Vec3(x + facing.getStepX() * 0.252D, 0.70D,
+                z + facing.getStepZ() * 0.252D);
+    }
+
     @Override
     protected VoxelShape getShape(
             BlockState state,

@@ -36,10 +36,11 @@ public final class GraveBlockEntityRenderer
         Direction facing = grave.getBlockState().getValue(GraveBlock.FACING);
 
         poseStack.pushPose();
-        poseStack.translate(0.5D, 0.70D, 0.5D);
+        var anchor = GraveBlock.inscriptionAnchor(grave.getBlockState());
+        poseStack.translate(anchor.x, anchor.y, anchor.z);
         poseStack.mulPose(Axis.YP.rotationDegrees(-facing.toYRot()));
-        poseStack.translate(0.0D, 0.0D, -0.257D);
-        poseStack.scale(-0.0105F, -0.0105F, 0.0105F);
+        float scale = Math.min(0.0105F, 0.88F / Math.max(1, font.width(text)));
+        poseStack.scale(scale, -scale, scale);
 
         float x = -font.width(text) / 2.0F;
         font.drawInBatch(
@@ -50,7 +51,7 @@ public final class GraveBlockEntityRenderer
                 false,
                 poseStack.last().pose(),
                 bufferSource,
-                Font.DisplayMode.POLYGON_OFFSET,
+                Font.DisplayMode.NORMAL,
                 0,
                 packedLight
         );
@@ -58,3 +59,4 @@ public final class GraveBlockEntityRenderer
         poseStack.popPose();
     }
 }
+

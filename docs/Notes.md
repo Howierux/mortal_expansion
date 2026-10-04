@@ -315,3 +315,14 @@ advancements, and armor tags are generated. Build, client mod/mixin loading thro
 data generation, 367-resource checks, guide checks, and all 23 headless server
 tests passed. Manual client visuals, movement prediction, and full combined
 Spirit Journey/garb playtesting remain pending.
+
+### 2026-10-04 - Grave inscription face/depth correction
+
+Client playtesting found floating or hidden inscriptions across grave rotations
+and placement thirds. The renderer used a fixed centered anchor, ignored DEPTH,
+and offset toward the opposite face. Added a state-derived front-plane anchor
+for all four facings and three depths, 0.002 blocks outside the actual front
+surface (clearing the natural shimmer expansion). Corrected the text X scale
+for readable front-facing text, enabled normal depth testing, and capped text
+width at 0.88 blocks. The geometry regression checks all 12 face/depth combinations.
+Client visual confirmation remains pending after restart.
