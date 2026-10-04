@@ -42,6 +42,15 @@ public final class SpiritTorchBarrierTracker {
         return SpiritTorchLinks.key(x >> 4, z >> 4);
     }
 
+    /** Applies the actual block transition, including client prediction and server corrections. */
+    public static void onBlockChanged(Level level, BlockPos pos,
+            net.minecraft.world.level.block.state.BlockState oldState,
+            net.minecraft.world.level.block.state.BlockState newState) {
+        boolean wasTorch = SpiritSignals.isTorch(oldState), isTorch = SpiritSignals.isTorch(newState);
+        if (wasTorch && !isTorch) removeTorch(level, pos);
+        else if (!wasTorch && isTorch) addTorch(level, pos);
+    }
+
     public static void addTorch(Level level, BlockPos pos) {
         Index index = LEVELS.computeIfAbsent(level, unused -> new Index());
         Set<BlockPos> torches = index.chunks.computeIfAbsent(

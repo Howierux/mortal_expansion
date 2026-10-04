@@ -65,3 +65,12 @@ full-set benefits. Separate `ghosts_garb` and `haints_garb` tags retain their id
 
 A later Spectralite combination will add both sets of benefits; no combination
 recipe or additional Spectralite attributes are included yet.
+
+Spirit Torch boundaries update on client block transitions as well as server
+placement/removal. Breaking either standing or wall torch endpoints releases
+the boundary immediately, and denied client predictions restore the barrier.
+`SpiritTorchClientUpdatesMixin` observes `Level.onBlockStateChange` because
+client chunk writes skip block lifecycle callbacks and NeoForge has no general
+client block-change event. Verify this hook and inherited ClientLevel behavior
+during version migration; keep updates tied to actual states rather than
+pre-break events or timed polling.

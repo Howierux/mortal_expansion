@@ -5,6 +5,7 @@ import com.howierux.mortalexpansion.registry.ModItems;
 import com.howierux.mortalexpansion.registry.ModEntities;
 import com.howierux.mortalexpansion.haunt.effects.HauntProtection;
 import com.howierux.mortalexpansion.combat.GhostGarbPhasing;
+import com.howierux.mortalexpansion.entity.mob.SpiritTorchBarrierTracker;
 import net.minecraft.gametest.framework.GameTest;
 import net.minecraft.gametest.framework.GameTestHelper;
 import net.minecraft.server.level.ServerPlayer;
@@ -30,6 +31,30 @@ public final class GhostGarbGameTests {
         for (int i = 0; i < 61; i++) player.tick();
         player.doTick();
         return player;
+    }
+    @GameTest(template = "deferred_items_test")
+    public static void torch_boundaries_follow_block_updates_immediately(GameTestHelper helper) {
+        var level = helper.getLevel();
+        var a = helper.absolutePos(new BlockPos(3, 3, 3));
+        var b = a.east(6);
+        var middle = a.east(3);
+        var torch = com.howierux.mortalexpansion.registry.ModBlocks.SPIRIT_TORCH.get().defaultBlockState();
+        var wallTorch = com.howierux.mortalexpansion.registry.ModBlocks.SPIRIT_WALL_TORCH.get().defaultBlockState();
+        var air = Blocks.AIR.defaultBlockState();
+        // Feed the same transitions as a client update; no server torch lifecycle callbacks are used.
+        SpiritTorchBarrierTracker.onBlockChanged(level, a, air, torch);
+        SpiritTorchBarrierTracker.onBlockChanged(level, b, air, wallTorch);
+        helper.assertTrue(SpiritTorchBarrierTracker.hasBarrierColumn(level, middle.getX(), middle.getZ()), "Placement creates boundary immediately");
+        SpiritTorchBarrierTracker.onBlockChanged(level, a, torch, air);
+        helper.assertFalse(SpiritTorchBarrierTracker.hasBarrierColumn(level, middle.getX(), middle.getZ()), "Breaking endpoint removes boundary without waiting or changing gear");
+        // A denied predicted break restores the endpoint, without double counting repeated updates.
+        SpiritTorchBarrierTracker.onBlockChanged(level, a, air, torch);
+        SpiritTorchBarrierTracker.onBlockChanged(level, a, air, torch);
+        helper.assertTrue(SpiritTorchBarrierTracker.hasBarrierColumn(level, middle.getX(), middle.getZ()), "Server correction restores boundary");
+        SpiritTorchBarrierTracker.onBlockChanged(level, b, wallTorch, air);
+        helper.assertFalse(SpiritTorchBarrierTracker.hasBarrierColumn(level, middle.getX(), middle.getZ()), "Wall torch removal also clears boundary");
+        SpiritTorchBarrierTracker.onBlockChanged(level, a, torch, air);
+        helper.succeed();
     }
     @GameTest(template = "deferred_items_test")
     public static void ectothread_recipes_yield_eight(GameTestHelper helper) {
