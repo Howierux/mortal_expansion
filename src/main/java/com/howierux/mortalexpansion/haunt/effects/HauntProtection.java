@@ -88,6 +88,8 @@ public final class HauntProtection {
         state(player, state);
     }
     public static void repairGarb(ServerPlayer player) {
+        if (PlayerHauntManager.getTier(player).id()
+                < com.howierux.mortalexpansion.haunt.HauntTier.DEAD_RISING.id()) return;
         boolean changed = false;
         for (ItemStack stack : player.getInventory().armor) {
             if (stack.is(GARB) && stack.isDamaged()) { stack.setDamageValue(stack.getDamageValue() - 1); changed = true; }
