@@ -3,8 +3,8 @@
 **Repository:** https://github.com/Howierux/mortal_expansion  
 **Branches:** `main` (consolidated baseline), `dev` (active work)  
 **Docs:** [Overview](Overview.md), [Notes](Notes.md), [Roadmap](ROADMAP.md)  
-**Last Synced:** 2026-10-04 - Personal-Haunt ambient and beneficial effects implemented on `dev`; validation underway; `main` retains the documented Ward baseline.  
-**Current Phase:** Ambient/beneficial Haunt effects implemented; automated validation underway. Major encounters and Ghost’s Garb armor remain separate work.
+**Last Synced:** 2026-10-04 - Personal-Haunt ambient and beneficial effects implemented on `dev`; automated validation passed; `main` retains the documented Ward baseline.  
+**Current Phase:** Ambient/beneficial Haunt effects implemented; automated validation passed. Major encounters and Ghost’s Garb armor remain separate work.
 
 > **Checklist legend:** `[ ]` not started, `[x]` completed, `[~]` partially completed. Implementation status and gameplay verification are tracked separately. Discussion items are proposals, not approved implementation work.
 
@@ -78,7 +78,7 @@ The stage order after the first part is a proposed work breakdown, not authoriza
 
 The user accepted the effect proposal on 2026-10-02. On 2026-10-04, the user superseded the 4x4-chunk rule: **personal Haunt alone triggers and determines eligibility for every ambient and beneficial effect**. Chunk Haunt still drives the existing world simulation and normal mob-spawn rules.
 
-#### Event controller and local Haunt evaluation
+#### Event controller and personal Haunt evaluation
 
 - [x] Use one shared event controller for timing, eligibility, protection, and cooldowns. Keep inventory changes, spawning, and Haunt adjustments authoritative on the server; send sounds and visual effects to the affected players.
 - [x] Use personal Haunt alone for trigger odds and minimum tiers, including world changes and event-created mobs. Do not evaluate surrounding chunks for these effects.
@@ -133,7 +133,7 @@ The user selected ambient/beneficial effects first and tag hooks for Ghost’s G
 | [ ] | Haint encounter reward | Defeating the encounter Haint removes five Haunt points from its chunk and caps Haunt at the resulting value for ten minutes. Apply once per encounter, including its split into Haunts; define when the split encounter counts as defeated. |
 | [ ] | The End event | Rare Eldritch encounter with sky changes and the proposed Wither/terrain effects. After successful resolution, remove twenty points from affected chunks and cap each at its resulting value for twenty minutes. Define event footprint, trigger odds, resolution, and interaction with existing Haunt simulation in a separate event design. |
 
-- [ ] Validate tier thresholds, protection, cooldowns, multiplayer overlap, inventory conservation, recipe output/experience, safe movement, mob limits, and temporary cap expiry. These events do not depend on Spirit Journey.
+- [~] Ambient validation passed: personal tier policy, cooldown/save-load, protection/provenance, inventory conservation, shared chunk cooldown, furnace output/XP, safe movement, passive repeat suppression, and deferred well boundaries/delivery. All eighteen server tests and build/loading/guide checks pass. Client visuals, manual restart/reconnect, full garb content, and major-encounter temporary caps remain unverified or deferred. These events do not depend on Spirit Journey.
 
 ### Portal system
 
@@ -222,7 +222,7 @@ This is documented behavior, not a confirmed balance defect. Decide whether an i
 - Natural and player-built complete structures should use the same rules. Naturally generated ruined/incomplete examples could invite investigation and repair.
 - Consider passive operation for complete structures, with consumable offerings providing an optional temporary boost. Required fuel, offering recipes, boost strength, and costs remain undecided.
 
-The discussed 3x3 structure footprint is a tentative local influence area. The accepted **former 4x4-chunk limit for Haunt effect triggering** was superseded on 2026-10-04 by personal Haunt alone; finalize how structural influence and player checks interact during design.
+The discussed 3x3 structure footprint is a tentative local influence area. The **former 4x4-chunk limit for Haunt effect triggering** was superseded on 2026-10-04 by personal Haunt alone; finalize how structural influence and player checks interact during design.
 
 ### Tentative overlap and scheduling
 
@@ -261,7 +261,7 @@ The discussed 3x3 structure footprint is a tentative local influence area. The a
 The **The End event** is now part of the accepted Haunt effect proposal above: a rare Eldritch encounter, twenty-point cleansing on resolution, and a twenty-minute cap. Preserve the original End-like sky, possible surface Wither within 100 blocks, and End Stone patches as design references while finalizing the event scope. It remains separate from the existing End dimension; Eldritch stays the ordinary maximum tier.
 - [ ] Decide whether lowered Haunt should dissipate without activity as the notebook suggests, remain at the current natural-floor recovery behavior, or depend on the source of Haunt. Do not silently replace the present simulation.
 Ambient and beneficial haunting have moved into the **accepted Haunt effect proposal** above, with initial thresholds, durations, frequencies, and protection rules. Use those selected rules when they differ from the historical sketches.
-- [~] Spiritwell worldgen/protection foundation is implemented above. Define additional event rules if the Ghost-spawn idea is selected.
+- [x] Spiritwell worldgen/protection and personal-Haunt Ghost appearances with durable deferral are implemented above. Further well interactions remain planned.
 - [ ] Evaluate rotten-flesh furnace processing to raise local Haunt, and a starter Gravestone recipe using rotten flesh or bone so progression need not begin in a haunted biome.
 
 The earlier Skeleton -> Zombie -> Ghost -> Spirit -> Haunt -> Haint strength sketch was explicitly reconsidered in the source. It is not a final progression order.
