@@ -1,7 +1,0 @@
-{
-  "parent": "minecraft:item/generated",
-  "textures": {
-    "layer0": "mortal_expansion:item/raw_ectoplasm",
-    "layer1": "mortal_expansion:item/raw_ectoplasm_shimmer"
-  }
-}

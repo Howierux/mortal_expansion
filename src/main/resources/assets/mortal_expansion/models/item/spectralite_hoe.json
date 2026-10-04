@@ -1,7 +1,0 @@
-{
-  "parent": "minecraft:item/handheld",
-  "textures": {
-    "layer0": "mortal_expansion:item/spectralite_hoe",
-    "layer1": "mortal_expansion:item/spectralite_hoe_shimmer"
-  }
-}

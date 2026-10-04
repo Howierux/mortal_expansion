@@ -1,0 +1,13 @@
+{
+  "type": "minecraft:smelting",
+  "category": "misc",
+  "cookingtime": 200,
+  "experience": 0.0,
+  "ingredient": {
+    "item": "mortal_expansion:purified_ectoplasm_bucket"
+  },
+  "result": {
+    "count": 1,
+    "id": "mortal_expansion:pure_ectoplasm"
+  }
+}

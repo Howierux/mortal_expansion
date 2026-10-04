@@ -2,6 +2,31 @@
 
 ## Progress Log
 
+### 2026-10-04 - Code-authored data generation
+
+Added independent NeoForge/Mojang providers for all 344 existing block states,
+block/item models, recipes, block loot tables, and tags across block, item,
+entity, damage-type, and biome registries. Runtime item/block registration stays
+in `ModItems` and `ModBlocks`; providers run only through `runData`.
+
+Moved verified output to `src/generated/resources` and removed its handwritten
+duplicates. The migration preserves prior content, including recipe counts and
+categories, unlock policy, empty extension tags, leaf/ore drops, named loot
+random sequences, and the mod's existing bottom-corner stair rotations.
+Standard NeoForge shape helpers replace exhaustive wood state tables where
+their output matches. The generated cache is ignored and excluded from the jar.
+
+`tools/check_datagen.py` checks a semantic snapshot of the original 344 resources,
+duplicate paths, and mod-owned model/texture references. CI regenerates and
+rejects stale output. See [Data generation](DATA_GENERATION.md) for authoring and
+version-migration instructions. Textures, translations, the custom Book unlock
+advancement, and worldgen definitions remain authored resources.
+
+Validation passed: full data generation, Gradle build, all 19 headless server
+GameTests, the 344-resource semantic/reference check, and the 20-chapter/100-page
+guide check. Regeneration wrote zero changed files. The built jar includes the
+generated recipes, states, and tags and excludes generator cache metadata.
+
 ### 2026-10-04 - Playtest apparitions, corpse recovery, and journey beacons
 
 The shadow Haunt effect now renders a Steve-shaped Herobrine apparition with white eyes at 75% opacity, distinct from the 20% intangible mobs. It still disappears when looked at directly, approached, or after two seconds.

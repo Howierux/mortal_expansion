@@ -1,6 +1,0 @@
-{
-  "parent": "minecraft:item/generated",
-  "textures": {
-    "layer0": "mortal_expansion:block/spirit_torch"
-  }
-}

@@ -16,6 +16,8 @@ out
 # gradle
 build
 .gradle
+src/generated/resources/.cache/
+__pycache__/
 
 # other
 eclipse

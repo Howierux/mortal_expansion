@@ -2,6 +2,9 @@
 Installation information
 =======
 
+Generated item/block resources and tags are authored in Java providers. See
+[Data generation](docs/DATA_GENERATION.md) for regeneration and validation commands.
+
 This template repository can be directly cloned to get you started with a new
 mod. Simply create a new repository cloned from this one, by following the
 instructions provided by [GitHub](https://docs.github.com/en/repositories/creating-and-managing-repositories/creating-a-repository-from-a-template).

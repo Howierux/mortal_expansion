@@ -1,6 +1,0 @@
-{
-  "parent": "minecraft:block/fence_post",
-  "textures": {
-    "texture": "mortal_expansion:block/purified_spiritwood_planks"
-  }
-}

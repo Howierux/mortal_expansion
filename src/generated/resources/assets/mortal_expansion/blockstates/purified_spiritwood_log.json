@@ -1,0 +1,16 @@
+{
+  "variants": {
+    "axis=x": {
+      "model": "mortal_expansion:block/purified_spiritwood_log",
+      "x": 90,
+      "y": 90
+    },
+    "axis=y": {
+      "model": "mortal_expansion:block/purified_spiritwood_log"
+    },
+    "axis=z": {
+      "model": "mortal_expansion:block/purified_spiritwood_log",
+      "x": 90
+    }
+  }
+}

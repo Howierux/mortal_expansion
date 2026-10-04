@@ -1,6 +1,0 @@
-{
-  "parent": "minecraft:block/button_pressed",
-  "textures": {
-    "texture": "mortal_expansion:block/spiritwood_planks"
-  }
-}

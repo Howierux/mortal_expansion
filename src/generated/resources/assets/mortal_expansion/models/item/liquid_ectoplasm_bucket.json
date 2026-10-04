@@ -1,0 +1,5 @@
+{
+  "parent": "neoforge:item/bucket",
+  "fluid": "mortal_expansion:liquid_ectoplasm",
+  "loader": "neoforge:fluid_container"
+}

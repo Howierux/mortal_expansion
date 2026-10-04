@@ -1,7 +1,0 @@
-{
-  "parent": "minecraft:block/redstone_dust_dot",
-  "textures": {
-    "particle": "minecraft:block/redstone_dust_dot",
-    "line": "minecraft:block/redstone_dust_dot"
-  }
-}

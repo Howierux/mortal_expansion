@@ -42,7 +42,7 @@ assert expected == {key for key in LANG if key.startswith(PREFIX)}, "Missing or 
 assert lines(LANG[PREFIX + "cover"] + "\n\nContents") <= 14
 total = 1 + (len(CHAPTERS) + 4) // 5 + sum(int(count) for _, count in CHAPTERS)
 assert total <= 100
-recipe = json.loads((ROOT / "src/main/resources/data/mortal_expansion/recipe/book_of_ectcetera.json").read_text())
+recipe = json.loads((ROOT / "src/generated/resources/data/mortal_expansion/recipe/book_of_ectcetera.json").read_text())
 assert recipe["result"]["id"] == "mortal_expansion:book_of_ectcetera"
 assert {ingredient["item"] for ingredient in recipe["ingredients"]} == {"minecraft:book", "minecraft:rotten_flesh"}
 print(f"Ectcetera guide checks passed: {len(CHAPTERS)} chapters, {total} pages")

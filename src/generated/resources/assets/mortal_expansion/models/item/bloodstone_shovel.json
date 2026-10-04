@@ -1,0 +1,7 @@
+{
+  "parent": "minecraft:item/handheld",
+  "textures": {
+    "layer0": "mortal_expansion:item/bloodstone_shovel",
+    "layer1": "mortal_expansion:item/bloodstone_shovel_shimmer"
+  }
+}

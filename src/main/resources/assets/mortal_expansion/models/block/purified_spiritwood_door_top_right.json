@@ -1,7 +1,0 @@
-{
-  "parent": "minecraft:block/door_top_right",
-  "textures": {
-    "bottom": "mortal_expansion:block/purified_spiritwood_door_bottom",
-    "top": "mortal_expansion:block/purified_spiritwood_door_top"
-  }
-}

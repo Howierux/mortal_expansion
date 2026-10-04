@@ -1,7 +1,0 @@
-{
-  "parent": "minecraft:block/wall_torch",
-  "render_type": "minecraft:cutout",
-  "textures": {
-    "torch": "mortal_expansion:block/spirit_torch_off"
-  }
-}

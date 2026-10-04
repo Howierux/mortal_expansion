@@ -1,0 +1,18 @@
+{
+  "type": "minecraft:crafting_shaped",
+  "category": "equipment",
+  "key": {
+    "B": {
+      "item": "mortal_expansion:bloodstone"
+    }
+  },
+  "pattern": [
+    "BBB",
+    "B B",
+    "B B"
+  ],
+  "result": {
+    "count": 1,
+    "id": "mortal_expansion:bloodstone_leggings"
+  }
+}

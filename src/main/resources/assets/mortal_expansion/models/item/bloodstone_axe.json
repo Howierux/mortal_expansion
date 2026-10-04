@@ -1,7 +1,0 @@
-{
-  "parent": "minecraft:item/handheld",
-  "textures": {
-    "layer0": "mortal_expansion:item/bloodstone_axe",
-    "layer1": "mortal_expansion:item/bloodstone_axe_shimmer"
-  }
-}

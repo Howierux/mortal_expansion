@@ -66,6 +66,11 @@ jobs:
         timeout-minutes: 5
         run: ./gradlew runData
 
+      - name: Verify generated resource content and freshness
+        run: |
+          python3 tools/check_datagen.py
+          git diff --exit-code -- src/generated/resources
+
       - name: Check death items and Spiritwells on a headless server
         timeout-minutes: 5
         run: |

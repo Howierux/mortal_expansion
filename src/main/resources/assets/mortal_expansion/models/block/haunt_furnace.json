@@ -1,8 +1,0 @@
-{
-  "parent": "minecraft:block/cube_orientable",
-  "textures": {
-    "side": "mortal_expansion:block/gravestone",
-    "top": "mortal_expansion:block/gravestone",
-    "front": "minecraft:block/furnace_front"
-  }
-}
