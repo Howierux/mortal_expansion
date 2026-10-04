@@ -121,6 +121,10 @@ public final class ModAttachments {
             "spirit_journey_corpse", () -> AttachmentType.builder(() -> "")
                     .serialize(Codec.STRING).copyOnDeath().build());
 
+    public static final Supplier<AttachmentType<Integer>> SPIRIT_JOURNEY_RETURN_MODE = ATTACHMENTS.register(
+            "spirit_journey_return_mode", () -> AttachmentType.builder(() -> 0)
+                    .serialize(Codec.INT).copyOnDeath().build());
+
     public static final Supplier<AttachmentType<net.minecraft.nbt.CompoundTag>> DEFERRED_DEATH_ITEMS =
             ATTACHMENTS.register("deferred_death_items", () -> AttachmentType
                     .builder(() -> new net.minecraft.nbt.CompoundTag())

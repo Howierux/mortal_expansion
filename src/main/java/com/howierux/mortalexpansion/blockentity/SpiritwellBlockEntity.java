@@ -7,6 +7,11 @@ import net.minecraft.world.level.block.state.BlockState;
 
 /** Dedicated anchor type for future Haunt effects and Spirit Journey interactions. */
 public final class SpiritwellBlockEntity extends BlockEntity {
+    @Override public void onLoad() {
+        super.onLoad();
+        if (level instanceof net.minecraft.server.level.ServerLevel server)
+            com.howierux.mortalexpansion.spiritwell.SpiritwellIndex.get(server).add(worldPosition);
+    }
     public SpiritwellBlockEntity(BlockPos pos, BlockState state) {
         super(ModBlockEntities.SPIRITWELL.get(), pos, state);
     }

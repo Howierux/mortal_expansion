@@ -27,6 +27,9 @@ import net.neoforged.neoforge.client.model.DynamicFluidContainerModel;
 @EventBusSubscriber(modid = MortalExpansion.MOD_ID, bus = EventBusSubscriber.Bus.MOD, value = Dist.CLIENT)
 public final class ModClientEvents {
     private ModClientEvents() {}
+    @SubscribeEvent public static void registerKeys(net.neoforged.neoforge.client.event.RegisterKeyMappingsEvent event) {
+        event.register(SpiritJourneyClient.JOURNEY_MENU);
+    }
 
     private static final ResourceLocation WATER_STILL =
             ResourceLocation.withDefaultNamespace("block/water_still");

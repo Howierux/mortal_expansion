@@ -43,10 +43,60 @@ public final class SpiritJourneyHandler {
         var corpse = com.howierux.mortalexpansion.registry.ModEntities.PLAYER_CORPSE.get().create(player.serverLevel());
         if (corpse == null) return;
         corpse.initialize(player);
+        player.setData(ModAttachments.SPIRIT_JOURNEY_RETURN_MODE, player.gameMode.getGameModeForPlayer().getId());
         if (!player.serverLevel().addFreshEntity(corpse)) return;
         player.setData(ModAttachments.SPIRIT_JOURNEY_CORPSE, corpse.getUUID().toString());
         player.setData(ModAttachments.SPIRIT_JOURNEY_RESPAWN, true);
         player.connection.player = player.server.getPlayerList().respawn(player, false, Entity.RemovalReason.KILLED);
+    }
+
+    public static boolean isActive(ServerPlayer player) {
+        return player.isSpectator() && !player.getData(ModAttachments.SPIRIT_JOURNEY_CORPSE).isEmpty();
+    }
+
+    public static final int WELL_HAUNT_COST = 10;
+
+    public static boolean recoverAtWell(ServerPlayer player) {
+        if (!isActive(player)) return false;
+        var well = com.howierux.mortalexpansion.spiritwell.SpiritwellIndex.get(player.serverLevel()).nearest(player.serverLevel(), player.position());
+        if (well == null) return false;
+        var level = player.serverLevel();
+        net.minecraft.world.phys.Vec3 destination = null;
+        for (int dy = 0; dy <= 3; dy++) {
+            var at = well.getCenter().add(0, dy, 0);
+            if (level.noCollision(player, player.getBoundingBox().move(at.subtract(player.position())))) {
+                destination = at;
+                break;
+            }
+        }
+        if (destination == null) {
+            player.displayClientMessage(net.minecraft.network.chat.Component.translatable("message.mortal_expansion.spiritwell_blocked"), false);
+            return false;
+        }
+        String corpseId = player.getData(ModAttachments.SPIRIT_JOURNEY_CORPSE);
+        var mode = GameType.byId(player.getData(ModAttachments.SPIRIT_JOURNEY_RETURN_MODE));
+        if (mode == GameType.SPECTATOR) mode = GameType.SURVIVAL;
+        player.teleportTo(level, destination.x, destination.y, destination.z, player.getYRot(), 0);
+        player.setData(ModAttachments.SPIRIT_JOURNEY_CORPSE, "");
+        player.setGameMode(mode);
+        player.setHealth(player.getMaxHealth());
+        player.clearFire();
+        player.fallDistance = 0;
+        player.setDeltaMovement(net.minecraft.world.phys.Vec3.ZERO);
+        com.howierux.mortalexpansion.haunt.PlayerHauntManager.addPoints(player, WELL_HAUNT_COST);
+        com.howierux.mortalexpansion.haunt.HauntManager.addPoints(level, well, WELL_HAUNT_COST);
+        DeferredDeathItems.recoverHeld(player);
+        syncState(player);
+        // Unloaded corpses remove themselves when next ticked, once the owner is available.
+        try {
+            var id = java.util.UUID.fromString(corpseId);
+            for (var world : player.server.getAllLevels()) {
+                var corpse = world.getEntity(id);
+                if (corpse instanceof com.howierux.mortalexpansion.entity.PlayerCorpseEntity body
+                        && body.owner().filter(player.getUUID()::equals).isPresent()) body.discard();
+            }
+        } catch (IllegalArgumentException ignored) { }
+        return true;
     }
 
     @SubscribeEvent

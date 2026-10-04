@@ -247,5 +247,17 @@
   "book.mortal_expansion.ectcetera.page.personal.7": "Demonic can safely shove you one block or swap two occupied main-inventory slots. Hotbar, armor, and offhand stay untouched.",
   "book.mortal_expansion.ectcetera.page.personal.8": "At Supernatural, haunting may finish one nearby cooking recipe or convert one carried plank or cobblestone into its spectral form.",
   "book.mortal_expansion.ectcetera.page.personal.9": "Holy Water grants 60 seconds of protection and removes one personal point per minute. Wards also suppress negative ambient effects.",
-  "book.mortal_expansion.ectcetera.page.personal.10": "Event chance per check:\nNatural: 2%\nSupernatural: 5%\nDead Rising: 8%\nDemonic: 12%\nAbominable: 16%\nEldritch: 20%"
+  "book.mortal_expansion.ectcetera.page.personal.10": "Event chance per check:\nNatural: 2%\nSupernatural: 5%\nDead Rising: 8%\nDemonic: 12%\nAbominable: 16%\nEldritch: 20%",
+  "key.mortal_expansion.journey_menu": "Open Spirit Journey menu",
+  "key.categories.mortal_expansion": "Mortal Expansion",
+  "screen.mortal_expansion.journey.title": "Spirit Journey",
+  "screen.mortal_expansion.journey.searching": "Finding nearest spiritwell...",
+  "screen.mortal_expansion.journey.recover": "Return at nearest spiritwell",
+  "screen.mortal_expansion.journey.continue": "Continue journey",
+  "screen.mortal_expansion.journey.destination": "Spiritwell at %s, %s, %s",
+  "screen.mortal_expansion.journey.none": "No known spiritwell in this dimension",
+  "screen.mortal_expansion.journey.cost": "Cost: +%s personal haunt, +%s local haunt",
+  "screen.mortal_expansion.journey.body": "Returning to your body remains free.",
+  "message.mortal_expansion.spiritwell_blocked": "This spiritwell has no safe return space.",
+  "message.mortal_expansion.journey_menu": "Press %s to open Spirit Journey options."
 }

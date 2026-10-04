@@ -150,6 +150,38 @@ public final class DeferredDeathItemsGameTests {
         });
     }
     @GameTest(template = "deferred_items_test", timeoutTicks = 100)
+    public static void journey_remote_well_recovers_once(GameTestHelper helper) {
+        withKeepInventory(helper, false, () -> {
+            ServerPlayer dead = player(helper, true);
+            die(dead);
+            SpiritJourneyHandler.choose(dead);
+            ServerPlayer spirit = dead.connection.player;
+            var id = java.util.UUID.fromString(spirit.getData(ModAttachments.SPIRIT_JOURNEY_CORPSE));
+            var body = helper.getLevel().getEntity(id);
+            var well = helper.absolutePos(new BlockPos(10, 3, 10));
+            helper.getLevel().setBlock(well, com.howierux.mortalexpansion.registry.ModBlocks.SPIRITWELL.get().defaultBlockState(), 3);
+            var index = com.howierux.mortalexpansion.spiritwell.SpiritwellIndex.get(helper.getLevel());
+            index.add(well);
+            var snapshot = index.save(new CompoundTag(), helper.getLevel().registryAccess());
+            helper.assertTrue(snapshot.getLongArray("Positions").length > 0, "Well index persists positions");
+            spirit.moveTo(helper.absoluteVec(new Vec3(2, 3, 2)));
+            int personal = com.howierux.mortalexpansion.haunt.PlayerHauntManager.getValue(spirit);
+            int local = com.howierux.mortalexpansion.haunt.HauntManager.getValue(helper.getLevel(), well);
+            helper.assertTrue(SpiritJourneyHandler.recoverAtWell(spirit), "Remote journey can return at nearest well");
+            helper.assertTrue(!spirit.isSpectator() && spirit.position().distanceToSqr(well.getCenter()) < 1,
+                    "Player revived at well");
+            helper.assertTrue(body.isRemoved(), "Old body consumed");
+            helper.assertTrue(com.howierux.mortalexpansion.haunt.PlayerHauntManager.getValue(spirit) == com.howierux.mortalexpansion.haunt.HauntTier.clampValue(personal + 10), "Personal haunt charged");
+            helper.assertTrue(com.howierux.mortalexpansion.haunt.HauntManager.getValue(helper.getLevel(), well) == com.howierux.mortalexpansion.haunt.HauntTier.clampValue(local + 10), "Destination haunt charged");
+            helper.assertFalse(SpiritJourneyHandler.recoverAtWell(spirit), "Repeated requests rejected");
+            int count = 0;
+            for (ItemStack stack : spirit.getInventory().items) if (stack.is(Items.DIAMOND)) count += stack.getCount();
+            helper.assertTrue(count == 64, "Items recovered exactly once");
+            spirit.discard();
+            helper.succeed();
+        });
+    }
+    @GameTest(template = "deferred_items_test", timeoutTicks = 100)
     public static void no_self_grave_uses_normal_death_drops(GameTestHelper helper) {
         withKeepInventory(helper, false, () -> {
             ServerPlayer dead = player(helper, false);

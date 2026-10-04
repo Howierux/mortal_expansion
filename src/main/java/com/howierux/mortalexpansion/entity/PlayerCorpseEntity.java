@@ -59,8 +59,12 @@ public final class PlayerCorpseEntity extends ArmorStand {
     @Override public void tick() {
         super.tick();
         if (!(level() instanceof ServerLevel level) || owner().isEmpty()) return;
-        var ownerPlayer = level.getPlayerByUUID(owner().get());
-        if (!(ownerPlayer instanceof ServerPlayer player) || !player.isSpectator()
+        var ownerPlayer = level.getServer().getPlayerList().getPlayer(owner().get());
+        if (ownerPlayer != null && !ownerPlayer.isSpectator() && !getUUID().toString().equals(ownerPlayer.getData(ModAttachments.SPIRIT_JOURNEY_CORPSE))) {
+            discard();
+            return;
+        }
+        if (!(ownerPlayer instanceof ServerPlayer player) || player.level() != level || !player.isSpectator()
                 || !getUUID().toString().equals(player.getData(ModAttachments.SPIRIT_JOURNEY_CORPSE))
                 || distanceToSqr(player) > 4) return;
         // Avoid reviving inside solid terrain; leave the body recoverable if obstructed.
