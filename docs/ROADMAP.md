@@ -474,3 +474,12 @@ abilities. Ghost Garb upgrades with one Pure Ectoplasm. Full Haint-family sets g
 a Jump Boost III-strength jump; all garb sets have benefit tooltips. Build and all
 42 required server GameTests pass; client jump/appearance playtesting remains.
 See [GHOST_GARB](GHOST_GARB.md) for recipes, attributes and migration checks.
+
+### 2026-10-05 - EMF Reader implemented
+
+- [x] Iron, Holy Salt and redstone crafting recipe; six colored tier bulbs and exact labeled reading.
+- [x] Chunk reading in either hand; held Use points inward and reads personal Haunt.
+- [x] Generated recipe/models, server-authoritative transient readings, guide chapter and server regression tests.
+- [ ] In-game visual playtest of HUD and inward pose in both hands.
+
+See [EMF Reader](EMF_READER.md) for crafting, behavior and migration details.

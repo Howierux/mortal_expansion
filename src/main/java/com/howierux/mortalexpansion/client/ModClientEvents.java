@@ -27,6 +27,16 @@ import net.neoforged.neoforge.client.model.DynamicFluidContainerModel;
 @EventBusSubscriber(modid = MortalExpansion.MOD_ID, bus = EventBusSubscriber.Bus.MOD, value = Dist.CLIENT)
 public final class ModClientEvents {
     private ModClientEvents() {}
+    @SubscribeEvent public static void emfLayers(net.neoforged.neoforge.client.event.RegisterGuiLayersEvent event) {
+        event.registerAbove(net.neoforged.neoforge.client.gui.VanillaGuiLayers.HOTBAR,
+                ResourceLocation.fromNamespaceAndPath(MortalExpansion.MOD_ID, "emf_reader"), EmfReaderClient::render);
+    }
+    @SubscribeEvent public static void emfProperties(net.neoforged.fml.event.lifecycle.FMLClientSetupEvent event) {
+        event.enqueueWork(() -> net.minecraft.client.renderer.item.ItemProperties.register(ModItems.EMF_READER.get(),
+                ResourceLocation.fromNamespaceAndPath(MortalExpansion.MOD_ID, "emf_level"),
+                (stack, level, holder, seed) -> EmfReaderClient.modelLevel(stack, holder)));
+    }
+
     @SubscribeEvent public static void garbColors(RegisterColorHandlersEvent.Item event) {
         event.register((stack, tint) -> tint == 0 ? net.minecraft.world.item.component.DyedItemColor.getOrDefault(stack, 0x80C71F) : -1,
                 ModItems.GHOST_GARB_HELMET.get(), ModItems.GHOST_GARB_CHESTPLATE.get(), ModItems.GHOST_GARB_LEGGINGS.get(), ModItems.GHOST_GARB_BOOTS.get(),
@@ -69,6 +79,24 @@ public final class ModClientEvents {
 
     @SubscribeEvent
     public static void registerFluidVisuals(RegisterClientExtensionsEvent event) {
+        event.registerItem(new net.neoforged.neoforge.client.extensions.common.IClientItemExtensions() {
+            @Override public net.minecraft.client.model.HumanoidModel.ArmPose getArmPose(
+                    net.minecraft.world.entity.LivingEntity entity, net.minecraft.world.InteractionHand hand,
+                    net.minecraft.world.item.ItemStack stack) {
+                return com.howierux.mortalexpansion.item.EmfReaderItem.personal(stack, entity)
+                        ? net.minecraft.client.model.HumanoidModel.ArmPose.BLOCK : null;
+            }
+            @Override public boolean applyForgeHandTransform(com.mojang.blaze3d.vertex.PoseStack pose,
+                    net.minecraft.client.player.LocalPlayer player, net.minecraft.world.entity.HumanoidArm arm,
+                    net.minecraft.world.item.ItemStack stack, float partialTick, float equip, float swing) {
+                if (!com.howierux.mortalexpansion.item.EmfReaderItem.personal(stack, player)) return false;
+                int side = arm == net.minecraft.world.entity.HumanoidArm.RIGHT ? 1 : -1;
+                pose.translate(side * 0.42F, -0.35F - equip * 0.6F, -0.55F);
+                pose.mulPose(com.mojang.math.Axis.YP.rotationDegrees(side * 150.0F));
+                pose.mulPose(com.mojang.math.Axis.XP.rotationDegrees(-20.0F));
+                return true;
+            }
+        }, ModItems.EMF_READER.get());
         event.registerFluidType(
                 fluidVisuals(0xFF42A83B),
                 ModFluids.LIQUID_ECTOPLASM_TYPE.get()

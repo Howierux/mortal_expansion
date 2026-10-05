@@ -28,6 +28,10 @@ public final class ModRecipes extends RecipeProvider {
                 output.accept(id, recipe, null, conditions);
             }
         };
+        ShapedRecipeBuilder.shaped(RecipeCategory.TOOLS, ModItems.EMF_READER.get())
+                .pattern("III").pattern("RSR").pattern("III")
+                .define('I', Items.IRON_INGOT).define('S', ModItems.HOLY_SALT.get()).define('R', Items.REDSTONE)
+                .unlockedBy("has_holy_salt", has(ModItems.HOLY_SALT.get())).save(output);
         ShapedRecipeBuilder.shaped(RecipeCategory.MISC, ModItems.ECTOTHREAD.get(), 8).pattern("SSS").pattern("SES").pattern("SSS")
                 .define('S', Items.STRING).define('E', ModItems.RAW_ECTOPLASM.get()).unlockedBy("has_ectoplasm", has(ModItems.RAW_ECTOPLASM.get())).save(output);
         ShapedRecipeBuilder.shaped(RecipeCategory.MISC, ModItems.PURIFIED_ECTOTHREAD.get(), 8).pattern("SSS").pattern("SES").pattern("SSS")

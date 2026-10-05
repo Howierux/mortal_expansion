@@ -3,6 +3,7 @@ package com.howierux.mortalexpansion.data;
 import com.howierux.mortalexpansion.MortalExpansion;
 import com.howierux.mortalexpansion.registry.ModFluids;
 import net.minecraft.core.Direction;
+import net.minecraft.resources.ResourceLocation;
 import net.minecraft.data.PackOutput;
 import net.neoforged.neoforge.client.model.generators.ItemModelProvider;
 import net.neoforged.neoforge.client.model.generators.ModelFile;
@@ -12,7 +13,31 @@ public final class ModItemModels extends ItemModelProvider {
     public ModItemModels(PackOutput output, ExistingFileHelper helper) {
         super(output, MortalExpansion.MOD_ID, helper);
     }
+    private void emfModels() {
+        String[] colors = {"lime_concrete", "yellow_concrete", "yellow_concrete", "orange_concrete", "red_concrete", "purple_concrete"};
+        var base = getBuilder("emf_reader").parent(new ModelFile.UncheckedModelFile("mortal_expansion:item/emf_reader_0"));
+        for (int lit = 0; lit <= 6; lit++) {
+            var model = getBuilder("emf_reader_" + lit).parent(new ModelFile.UncheckedModelFile("minecraft:block/block"))
+                    .texture("particle", "minecraft:block/iron_block").texture("case", "minecraft:block/iron_block")
+                    .texture("panel", "minecraft:block/black_concrete");
+            model.element().from(3, 4, 6).to(13, 14, 9).allFaces((dir, face) -> face.texture("#case")).end();
+            model.element().from(6, 0, 6.5F).to(10, 5, 8.5F).allFaces((dir, face) -> face.texture("#panel")).end();
+            model.element().from(3.5F, 8, 9).to(12.5F, 13.5F, 9.2F).allFaces((dir, face) -> face.texture("#panel")).end();
+            for (int bulb = 0; bulb < 6; bulb++) {
+                String texture = "bulb" + bulb;
+                model.texture(texture, "minecraft:block/" + (bulb < lit ? colors[bulb] : "gray_concrete"));
+                final String reference = "#" + texture;
+                float x = 4 + bulb * 1.35F;
+                model.element().from(x, 10, 9.2F).to(x + 1.05F, 12, 9.4F)
+                        .emissivity(bulb < lit ? 15 : 0, bulb < lit ? 15 : 0)
+                        .allFaces((dir, face) -> face.texture(reference)).end();
+            }
+            if (lit > 0) base.override().predicate(ResourceLocation.fromNamespaceAndPath(MortalExpansion.MOD_ID, "emf_level"), lit)
+                    .model(new ModelFile.UncheckedModelFile("mortal_expansion:item/emf_reader_" + lit)).end();
+        }
+    }
     @Override protected void registerModels() {
+        emfModels();
         getBuilder("ectothread").parent(new ModelFile.UncheckedModelFile("minecraft:block/lime_wool"));
         getBuilder("purified_ectothread").parent(new ModelFile.UncheckedModelFile("minecraft:block/light_blue_wool"));
         for (String set : new String[]{"ghost_garb", "haint_garb"}) for (String piece : new String[]{"helmet", "chestplate", "leggings", "boots"}) {
