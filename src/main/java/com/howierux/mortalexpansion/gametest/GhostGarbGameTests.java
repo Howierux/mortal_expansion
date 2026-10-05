@@ -33,6 +33,58 @@ public final class GhostGarbGameTests {
         return player;
     }
     @GameTest(template = "deferred_items_test")
+    public static void garb_wall_breathing_depletes_and_refills_native_air(GameTestHelper helper) {
+        var player = equipped(helper);
+        var pos = helper.absolutePos(new BlockPos(5, 2, 5));
+        player.moveTo(pos.getX() + 0.5, pos.getY(), pos.getZ() + 0.5, 0, 0);
+        player.setAirSupply(100);
+        // Standing on a floor or merely having feet in a block does not immerse the head.
+        helper.getLevel().setBlock(pos, Blocks.STONE.defaultBlockState(), 3);
+        player.baseTick();
+        helper.assertTrue(player.getAirSupply() == 104, "Feet-only overlap still breathes");
+        helper.getLevel().setBlock(pos.above(), Blocks.STONE.defaultBlockState(), 3);
+        player.baseTick();
+        helper.assertTrue(player.getAirSupply() == 103, "Head immersed in wall consumes native air");
+        helper.getLevel().setBlock(pos.above(), Blocks.GLASS.defaultBlockState(), 3);
+        player.baseTick();
+        helper.assertTrue(player.getAirSupply() == 102, "Glass collision also requires holding breath");
+        player.setAirSupply(-19); player.invulnerableTime = 0;
+        float health = player.getHealth(); player.baseTick();
+        helper.assertTrue(player.getAirSupply() == 0 && player.getHealth() == health - 2, "Empty wall air causes one heart of vanilla drowning damage");
+        helper.getLevel().setBlock(pos.above(), Blocks.AIR.defaultBlockState(), 3);
+        player.baseTick(); helper.assertTrue(player.getAirSupply() == 4, "Emerging refills four air per tick");
+        helper.assertFalse(player.hurt(player.damageSources().drown(), 2), "Ordinary drowning immunity outside walls is unchanged");
+        player.setItemSlot(EquipmentSlot.HEAD, ItemStack.EMPTY);
+        helper.getLevel().setBlock(pos.above(), Blocks.STONE.defaultBlockState(), 3);
+        helper.assertFalse(com.howierux.mortalexpansion.combat.GhostGarbBreathing.headInsideWall(player), "Partial set does not use wall air mechanic");
+        player.discard(); helper.succeed();
+    }
+    @GameTest(template = "deferred_items_test")
+    public static void haint_wall_breathing_honors_respiration_and_water_breathing(GameTestHelper helper) {
+        var player = equipped(helper);
+        player.setItemSlot(EquipmentSlot.HEAD, new ItemStack(ModItems.HAINT_GARB_HELMET.get()));
+        player.setItemSlot(EquipmentSlot.CHEST, new ItemStack(ModItems.HAINT_GARB_CHESTPLATE.get()));
+        player.setItemSlot(EquipmentSlot.LEGS, new ItemStack(ModItems.HAINT_GARB_LEGGINGS.get()));
+        player.setItemSlot(EquipmentSlot.FEET, new ItemStack(ModItems.HAINT_GARB_BOOTS.get()));
+        var respiration = helper.getLevel().registryAccess().lookupOrThrow(net.minecraft.core.registries.Registries.ENCHANTMENT)
+                .getOrThrow(net.minecraft.world.item.enchantment.Enchantments.RESPIRATION);
+        player.getItemBySlot(EquipmentSlot.HEAD).enchant(respiration, 3); player.doTick();
+        var pos = helper.absolutePos(new BlockPos(5, 2, 5));
+        player.moveTo(pos.getX() + 0.5, pos.getY(), pos.getZ() + 0.5, 0, 0);
+        helper.getLevel().setBlock(pos.above(), Blocks.STONE.defaultBlockState(), 3);
+        helper.assertTrue(player.getAttributeValue(net.minecraft.world.entity.ai.attributes.Attributes.OXYGEN_BONUS) >= 3, "Respiration installs native oxygen bonus");
+        player.setAirSupply(300); player.getRandom().setSeed(12345);
+        for (int i = 0; i < 200; i++) player.baseTick();
+        helper.assertTrue(player.getAirSupply() >= 200 && player.getAirSupply() < 300, "Respiration III substantially slows real air depletion");
+        player.addEffect(new net.minecraft.world.effect.MobEffectInstance(net.minecraft.world.effect.MobEffects.WATER_BREATHING, 100));
+        int air = player.getAirSupply(); player.baseTick();
+        helper.assertTrue(player.getAirSupply() == air, "Water Breathing holds air without refilling inside wall");
+        player.removeEffect(net.minecraft.world.effect.MobEffects.WATER_BREATHING);
+        player.setGameMode(GameType.CREATIVE); player.baseTick();
+        helper.assertTrue(player.getAirSupply() == air, "Creative players do not lose wall air");
+        player.discard(); helper.succeed();
+    }
+    @GameTest(template = "deferred_items_test")
     public static void torch_boundaries_follow_block_updates_immediately(GameTestHelper helper) {
         var level = helper.getLevel();
         var a = helper.absolutePos(new BlockPos(3, 3, 3));

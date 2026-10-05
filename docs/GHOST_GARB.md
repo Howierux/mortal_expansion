@@ -74,3 +74,28 @@ client chunk writes skip block lifecycle callbacks and NeoForge has no general
 client block-change event. Verify this hook and inherited ClientLevel behavior
 during version migration; keep updates tied to actual states rather than
 pre-break events or timed polling.
+
+## Holding breath inside walls
+
+With a full Ghost/Haint (or mixed) set, the normal air meter drains whenever
+the player's head intersects a block collision shape. Feet-only overlap and
+standing on floors do not consume air; transparent solid walls such as glass
+also count. The existing underwater HUD shows the depleted air meter.
+
+NeoForge's `LivingBreatheEvent` retains Minecraft's native consumption amount,
+including the `OXYGEN_BONUS` attribute supplied by Respiration. Normal capacity
+is 300 ticks (15 seconds) with one air consumed each tick; Respiration slows
+consumption with the same chance as underwater. Air refills four per tick after
+the head emerges. Water Breathing/Conduit Power and creative invulnerability
+prevent depletion without refilling air while inside walls. Spectators and
+partial garb sets do not use this rule.
+
+After air reaches -20, the native drowning tick resets it to zero and inflicts
+two damage (one heart), repeating on the standard cadence. Only drowning hits
+while actively phasing with the head inside a wall bypass garb intangibility.
+Ordinary drowning immunity outside walls and other intangible damage rules
+remain intact. No new damage IDs, saved fields, custom HUD, or mixins are needed.
+During migration, verify the breathing event's consumption/refill contract and
+the native Respiration oxygen attribute. Server tests cover real base ticks,
+head/feet/glass geometry, depletion/damage/refill, Haint Respiration III, potion
+and creative exemptions. Manual HUD and client movement still need playtesting.

@@ -74,6 +74,7 @@ public final class MortalExpansion {
         NeoForge.EVENT_BUS.register(HaintWitchHutSpawnHandler.class);
         NeoForge.EVENT_BUS.register(NaturalPurificationHandler.class);
         NeoForge.EVENT_BUS.register(IntangibleCombatHandler.class);
+        NeoForge.EVENT_BUS.register(com.howierux.mortalexpansion.combat.GhostGarbBreathing.class);
         NeoForge.EVENT_BUS.register(PharaohlPyramidHandler.class);
         NeoForge.EVENT_BUS.register(MobDropHandler.class);
         NeoForge.EVENT_BUS.register(GraveRespawnHandler.class);
