@@ -19,26 +19,27 @@ public final class EctceteraBookScreen {
                         new ClickEvent(ClickEvent.Action.CHANGE_PAGE, Integer.toString(page + 1))));
     }
 
-    public static void open() {
+    public static void open(int tier) {
+        var chapters = EctceteraGuide.chapters(tier);
         List<Component> pages = new ArrayList<>();
         pages.add(Component.translatable(PREFIX + "cover").append("\n\n")
                 .append(link(Component.translatable(PREFIX + "contents"), 1)));
-        for (int contents = 0; contents < EctceteraGuide.contentsPages(); contents++) {
+        for (int contents = 0; contents < EctceteraGuide.contentsPages(chapters); contents++) {
             MutableComponent page = Component.empty()
                     .append(Component.translatable(PREFIX + "contents").withStyle(ChatFormatting.BOLD))
                     .append("\n\n");
             int begin = contents * EctceteraGuide.CHAPTERS_PER_CONTENTS_PAGE;
-            int end = Math.min(EctceteraGuide.CHAPTERS.size(),
+            int end = Math.min(chapters.size(),
                     begin + EctceteraGuide.CHAPTERS_PER_CONTENTS_PAGE);
             for (int chapter = begin; chapter < end; chapter++) {
-                var entry = EctceteraGuide.CHAPTERS.get(chapter);
+                var entry = chapters.get(chapter);
                 page.append(link(Component.translatable(PREFIX + "chapter." + entry.key()),
-                        EctceteraGuide.firstPage(chapter))).append("\n");
+                        EctceteraGuide.firstPage(chapters, chapter))).append("\n");
             }
             pages.add(page);
         }
-        for (int chapter = 0; chapter < EctceteraGuide.CHAPTERS.size(); chapter++) {
-            var entry = EctceteraGuide.CHAPTERS.get(chapter);
+        for (int chapter = 0; chapter < chapters.size(); chapter++) {
+            var entry = chapters.get(chapter);
             for (int part = 1; part <= entry.pages(); part++) {
                 MutableComponent page = Component.empty()
                         .append(Component.translatable(PREFIX + "chapter." + entry.key())

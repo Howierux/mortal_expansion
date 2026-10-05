@@ -3,7 +3,7 @@
 **Repository:** https://github.com/Howierux/mortal_expansion  
 **Branches:** `main` (consolidated baseline), `dev` (active work)  
 **Docs:** [Overview](Overview.md), [Notes](Notes.md), [Roadmap](ROADMAP.md)  
-**Last Synced:** 2026-10-05 - Added 22 researched magic and magitech proposals to planning on `dev`; prior Haint/Spectralite Haint build and 42 required server GameTests passed.  
+**Last Synced:** 2026-10-05 - Four-tier Book of Ectcetera progression synchronized to `dev`; build, 46 required server GameTests, guide checks, and 403-resource data-generation checks passed.
 **Current Phase:** Ambient/beneficial Haunt effects implemented; automated validation passed. Major encounters and Ghost’s Garb armor remain separate work.
 
 > **Checklist legend:** `[ ]` not started, `[x]` completed, `[~]` partially completed. Implementation status and gameplay verification are tracked separately. Discussion items are proposals, not approved implementation work.
@@ -39,6 +39,17 @@ The user requested implementing this feature in smaller parts, starting with ent
 - [ ] Visually validate the death-screen option and mode entry in a client session requested by the user.
 
 The stage order after the first part is a proposed work breakdown, not authorization to implement every stage in this update. Full corpse recovery is required before Spirit Journey becomes a complete survival recovery feature.
+
+### Book of Ectcetera upgrades [Selected 2026-10-05]
+
+- [x] Starting shapeless recipe: Book + Rotten Flesh, with survival/Haunt/biome chapters.
+- [x] Sequential shapeless upgrades with Bone, Raw Ectoplasm, then solid Pure Ectoplasm; each consumes one material and retains the book's custom components.
+- [x] Cumulative element-related chapters and a final entry at each tier explaining how to obtain the next ingredient; final tier marks completion.
+- [x] Tier-aware contents navigation, tooltip guidance, persistent/synced per-book knowledge, and full-content compatibility for existing unmarked books.
+- [x] Build and all 46 required server GameTests pass, including actual inventory-grid consumption, sequential/rejected recipes, stack/recipe roundtrips and navigation. Guide/data checks pass.
+- [ ] Manual client page rendering and contents-link playtest when requested.
+
+See [Book progression](BOOK_OF_ECTCETERA.md) for chapter groups, compatibility and migration checks. These ingredient upgrades are implemented; the separate research proposal for discovery-based case files remains discussion work.
 
 ### Elemental ranged attacks
 

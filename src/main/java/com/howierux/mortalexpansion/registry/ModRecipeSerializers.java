@@ -13,5 +13,7 @@ public final class ModRecipeSerializers {
     private static final DeferredRegister<RecipeSerializer<?>> SERIALIZERS = DeferredRegister.create(Registries.RECIPE_SERIALIZER, MortalExpansion.MOD_ID);
     public static final DeferredHolder<RecipeSerializer<?>, TemplateFreeSmithingRecipe.Serializer> TEMPLATE_FREE_SMITHING =
             SERIALIZERS.register("template_free_smithing", TemplateFreeSmithingRecipe.Serializer::new);
+    public static final DeferredHolder<RecipeSerializer<?>, com.howierux.mortalexpansion.recipe.EctceteraUpgradeRecipe.Serializer> ECTCETERA_UPGRADE =
+            SERIALIZERS.register("ectcetera_upgrade", com.howierux.mortalexpansion.recipe.EctceteraUpgradeRecipe.Serializer::new);
     public static void register(IEventBus bus) { SERIALIZERS.register(bus); }
 }

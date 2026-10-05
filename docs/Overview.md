@@ -97,7 +97,7 @@ Intangible creatures use custom combat and movement rules. Demi-tangible equipme
 
 Purification Wards keep their 3x3 chunk cleansing area loaded and ticking through persistent, per-ward tickets. Breaking a Ward releases its tickets; overlapping Wards retain their own tickets.
 
-The Book of Ectcetera provides an indexed in-game guide covering Haunt, graves, combat, materials, machines, and defenses. Chapter metadata is shared with a resource validation tool.
+The Book of Ectcetera is an indexed, four-tier in-game guide. Craft a Book with Rotten Flesh, then upgrade the same book with a Bone, Raw Ectoplasm, and solid Pure Ectoplasm to unlock related chapters cumulatively. Each tier ends with guidance for the next ingredient. Existing unmarked books retain all chapters. Chapter metadata is shared with navigation and resource validation. See [Book progression](BOOK_OF_ECTCETERA.md).
 
 ## Source map
 

@@ -33,6 +33,11 @@ public final class ModDataComponents {
                     builder -> builder.persistent(CompoundTag.CODEC)
             );
 
+    /** Missing component identifies pre-progression books, which retain all chapters. */
+    public static final DeferredHolder<DataComponentType<?>, DataComponentType<Integer>> ECTCETERA_TIER =
+            DATA_COMPONENTS.registerComponentType("ectcetera_tier",
+                    builder -> builder.persistent(Codec.intRange(0, 3)).networkSynchronized(ByteBufCodecs.VAR_INT));
+
     public static void register(IEventBus modBus) {
         DATA_COMPONENTS.register(modBus);
     }
