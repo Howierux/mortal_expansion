@@ -3,7 +3,7 @@
 **Repository:** https://github.com/Howierux/mortal_expansion  
 **Branches:** `main` (consolidated baseline), `dev` (active work)  
 **Docs:** [Overview](Overview.md), [Notes](Notes.md), [Roadmap](ROADMAP.md)  
-**Last Synced:** 2026-10-04 - Haint jump, template-free garb upgrades, Spectralite Haint armor and benefit tooltips synchronized to `dev`; build and all 42 required server GameTests passed.  
+**Last Synced:** 2026-10-05 - Added 22 researched magic and magitech proposals to planning on `dev`; prior Haint/Spectralite Haint build and 42 required server GameTests passed.  
 **Current Phase:** Ambient/beneficial Haunt effects implemented; automated validation passed. Major encounters and Ghost’s Garb armor remain separate work.
 
 > **Checklist legend:** `[ ]` not started, `[x]` completed, `[~]` partially completed. Implementation status and gameplay verification are tracked separately. Discussion items are proposals, not approved implementation work.
@@ -238,6 +238,50 @@ The discussed 3x3 structure footprint is a tentative local influence area. The *
 - [ ] Decide pulse strength, footprint, cadence, allowed Haunt limits, and passive versus resource-fed operation.
 - [ ] Decide overlap rules, sleep/time-jump behavior, chunk loading, and interactions with existing Haunt systems.
 - [ ] Once the design is selected, specify discovery/activation feedback and verification for construction, damage, polarity changes, overlap, persistence, and natural/player-built equivalence.
+
+## Magic and magitech feature planning [Discuss]
+
+Added to planning at the user's request on 2026-10-05. These 22 candidates are recorded for review; adding them to this section does not authorize gameplay implementation. Scope and priority are the research report's recommendations, not a selected work order.
+
+See [Feature Ideas Research](FEATURE_IDEAS_RESEARCH.md) for the reference-mod comparisons, detailed mechanics, suggested progression, source links, and decisions needed before implementation. Existing-backlog expansions refine the concepts below rather than creating separate duplicate features.
+
+**Recommended first design batch:** Spectral Analogue (1), grave offerings (5), Spirit Villager commissions (6), haunted-processing containment (14), and spirit caretaker (11).
+
+### Investigation and discovery
+
+- [ ] **1. Spectral Analogue and field readings** — Show personal and local Haunt separately, with trends and optional redstone alarms. *High priority; small to medium scope; existing backlog expansion.*
+- [ ] **2. Case files in the Book of Ectcetera** — Record discoveries and useful experiments in the Book of Ectcetera; retain access to essential recovery instructions. *High priority; medium scope; new proposal.*
+- [ ] **3. Haunted-site investigations** — Explore graveyard, workshop, and mausoleum mysteries that can be settled peacefully or exploited. *Medium priority; medium scope; new proposal.*
+- [ ] **4. Spirit-visible secrets** — Reveal hidden inscriptions and clues through Spirit Journey or a living-player spectral lens. *Medium priority; medium scope; new proposal.*
+
+### Rituals, graves, and spirit relationships
+
+- [ ] **5. Grave offerings and consecration** — Use offerings, candles, and Graves for cleansing, blessings, spirit calling, and maintained consecration. *High priority; medium scope; existing backlog expansion.*
+- [ ] **6. Spirit Villager commissions** — Offer investigations, identification, and ritual services alongside recipe-balanced merchant trades. *High priority; medium scope; new proposal.*
+- [ ] **7. Spirit bargains** — Exchange explicit, temporary obligations for benefits; provide visible costs, expiry, and cancellation. *Medium priority; medium scope; new proposal.*
+- [ ] **8. Graveyard harmony and unrest** — Reward maintained graveyards with limited local benefits while distinguishing site order from Haunt intensity. *Medium priority; medium to large scope; new proposal.*
+- [ ] **9. Protective effigies** — Craft owner-bound effigies with visible charges and narrowly defined spectral protections. *Medium priority; small to medium scope; new proposal.*
+- [ ] **10. Blood Blooms and ritual gardens** — Cultivate plants in different Haunt conditions for offerings, incense, purification, and equipment. *Medium priority; medium scope; existing backlog expansion.*
+
+### Spirit labor and haunted industry
+
+- [ ] **11. Spirit caretaker** — Bind a willing, offering-maintained spirit to one limited task within a marked area. *High priority; medium scope; new proposal.*
+- [ ] **12. Spiritwood constructs** — Build modular Spiritwood workers for hauling, harvesting, or guarding after the simpler caretaker is established. *Later priority; large scope; new proposal.*
+- [ ] **13. Ectoplasm infrastructure** — Develop Ecto Pipes, Ectanks, and the Liquefactor with readable flow, storage, and shutdown controls. *High priority; medium scope; existing backlog expansion.*
+- [ ] **14. Containment and recoverable processing failures** — Make high-Haunt processing more productive but subject to visible warnings and manageable containment failures. *High priority; medium scope; new proposal.*
+- [ ] **15. The Possessor as a spirit-infused machine** — Develop controlled spectral item infusion, starting with the existing Demi-Tangible machine concept. *Medium priority; medium scope; existing backlog expansion.*
+- [ ] **16. Paired ritual and industrial purification** — Offer hands-on ritual and automated industrial area cleansing, distinct from material purification. *High priority; medium scope; existing backlog expansion.*
+- [ ] **17. Redstone spectral controls** — Expose Haunt thresholds, containment, ward charge, fluid levels, and worker activity through redstone. *Medium priority; small to medium scope; new proposal.*
+
+### Equipment, encounters, and travel
+
+- [ ] **18. A focused spectral skill set** — Provide a small selection of customizable spectral abilities instead of beginning with a full spell engine. *Medium priority; medium to large scope; new proposal.*
+- [ ] **19. Boss soul imprints** — Earn limited equipment sidegrades from identity-linked boss imprints with slots, conditions, and tradeoffs. *Medium priority; large scope; existing backlog expansion.*
+- [ ] **20. Cleansing and binding encounters** — Resolve a major haunting through combat, binding preparation, or negotiation with clear spectral counterplay. *Medium priority; large scope; new proposal.*
+- [ ] **21. Linked grave or Spiritwell travel** — Link discovered Graves or Spiritwells for explicit-cost travel independently of existing death-item recovery. *Later priority; large scope; existing portal backlog expansion.*
+- [ ] **22. Spirit-side expeditions** — Consider ritual-accessed spirit expeditions after prototyping spirit-visible secrets in existing terrain. *Long-term priority; very large scope; new proposal.*
+
+**Planning constraints:** Keep personal and local Haunt effects explicit; preserve corpse/Spiritwell recovery and current garb protections; favor readable, reversible costs. Use generated recipes/tags and supported framework APIs, with clear owner, dimension, unload, restart, and cancellation rules for new persistent systems. Integrations with reference mods require a separate current-version/API decision.
 
 ## Original design backlog [Discuss]
 
