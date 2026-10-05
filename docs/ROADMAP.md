@@ -63,6 +63,7 @@ See [Book progression](BOOK_OF_ECTCETERA.md) for chapter groups, compatibility a
 
 ### Spirit Villager trading
 
+- [ ] **Additional trades as Spirits level up [Requested 2026-10-05]:** Expand the available trade options at successive villager expertise levels (Novice through Master). Unlock additional choices as the Spirit gains trading XP, retaining previously unlocked trades. Define the new offerings and balance them against crafting recipes in a future update.
 - [~] Passive **Spirit Villagers** now have the standard trading interface, initial resource trades, and a Villager-engraved Grave workstation. One nearby adult jobless villager converts per grave; breaking its grave reverts only grave-created workers. See [Spirit Villagers](SPIRIT_VILLAGERS.md). Broader natural discovery remains pending.
 - [~] Villager-engraved graves provide manual discovery/conversion. Recipe-balanced Novice-to-Master trades, vanilla XP thresholds, limited stock, and daily workstation-aware restocking are implemented. Broader natural spawn/discovery and continued balance tuning remain.
 - [~] Server tests verify actual trade payment/output, stock persistence, passive behavior, workstation ownership, and save/load reversion. Client visuals and manual playtesting remain pending. Earlier village-graveyard and Creeper-deterrence ideas remain optional.
