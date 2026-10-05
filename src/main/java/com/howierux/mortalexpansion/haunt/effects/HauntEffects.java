@@ -59,7 +59,7 @@ public final class HauntEffects {
     }
     private HauntEffects() {}
     public static boolean perform(ServerPlayer player, HauntEffectKind kind) {
-        if (kind.negative && HauntProtection.protectedPlayer(player)) return false;
+        if (!kind.implemented() || (kind.negative && HauntProtection.protectedPlayer(player))) return false;
         return switch (kind) {
             case HIT -> { sound(player, SoundEvents.STONE_STEP, player.position().subtract(horizontal(player).scale(2)), 0.15F); yield true; }
             case SHADOW -> shadow(player);
@@ -81,6 +81,12 @@ public final class HauntEffects {
             case FURNACE -> finishNearbyFurnace(player);
             case PLANKS -> convert(player, true);
             case COBBLE -> convert(player, false);
+            case HELPFUL_WHISPERS, EMPOWERMENT, UNWANTED_COMPANY, FALSE_TRACES,
+                    RESTLESS_VISITATION, INTERFERENCE, MARKED_PRESENCE, PURSUER, VEIL_BREACH
+                    -> AdditionalHauntEffects.perform(player, kind);
+            // missing function: dependency-gated benefits are listed in HauntEffectKind.implemented().
+            case SECOND_SIGHT, SPECTRAL_INSIGHT, SPIRIT_COMMISSION, HELPFUL_VISITATION,
+                    SPIRIT_RECOGNITION, VEIL_REVELATION -> false;
         };
     }
     private static Vec3 horizontal(ServerPlayer player) {
@@ -88,7 +94,7 @@ public final class HauntEffects {
         Vec3 v = new Vec3(look.x, 0, look.z);
         return v.lengthSqr() < 0.001 ? new Vec3(0, 0, 1) : v.normalize();
     }
-    private static void sound(ServerPlayer player, SoundEvent sound, Vec3 pos, float volume) {
+    public static void sound(ServerPlayer player, SoundEvent sound, Vec3 pos, float volume) {
         player.connection.send(new ClientboundSoundPacket(Holder.direct(sound), SoundSource.AMBIENT,
                 pos.x, pos.y, pos.z, volume, 0.9F, player.getRandom().nextLong()));
     }
@@ -104,7 +110,7 @@ public final class HauntEffects {
         if (choices.isEmpty()) return false;
         return HauntProtection.apply(player, choices.get(player.getRandom().nextInt(choices.size())), 100, 0, negative);
     }
-    private static boolean shadow(ServerPlayer player) {
+    public static boolean shadow(ServerPlayer player) {
         Vec3 side = horizontal(player).yRot(player.getRandom().nextBoolean() ? 0.85F : -0.85F);
         Vec3 center = player.position().add(side.scale(6));
         for (int dy = -1; dy <= 1; dy++) {
@@ -231,7 +237,7 @@ public final class HauntEffects {
         return !hostile || (!PurificationWardTracker.isChunkProtected(level, new ChunkPos(feet))
                 && !SpiritwellProtection.isProtected(level, feet));
     }
-    private static boolean capAllows(ServerLevel level, MobCategory category, Vec3 center) {
+    public static boolean capAllows(ServerLevel level, MobCategory category, Vec3 center) {
         var state = level.getChunkSource().getLastSpawnState();
         if (state != null) {
             int limit = Math.max(1, category.getMaxInstancesPerChunk() * state.getSpawnableChunkCount() / 289);
@@ -243,7 +249,7 @@ public final class HauntEffects {
         return level.getEntitiesOfClass(Mob.class, new AABB(BlockPos.containing(center)).inflate(32),
                 mob -> mob.getType().getCategory() == category).size() < category.getMaxInstancesPerChunk();
     }
-    private static Vec3 findSpawn(ServerPlayer player, Mob mob, Vec3 center, int radius, boolean hostile) {
+    public static Vec3 findSpawn(ServerPlayer player, Mob mob, Vec3 center, int radius, boolean hostile) {
         for (int attempt = 0; attempt < 32; attempt++) {
             int dx = player.getRandom().nextInt(radius * 2 + 1) - radius;
             int dz = player.getRandom().nextInt(radius * 2 + 1) - radius;
@@ -256,7 +262,7 @@ public final class HauntEffects {
         }
         return null;
     }
-    private static boolean spawn(ServerPlayer player, Mob mob, Vec3 at) {
+    public static boolean spawn(ServerPlayer player, Mob mob, Vec3 at) {
         ServerLevel level = player.serverLevel();
         mob.moveTo(at.x, at.y, at.z, player.getRandom().nextFloat() * 360, 0);
         EventHooks.finalizeMobSpawn(mob, level, level.getCurrentDifficultyAt(mob.blockPosition()), MobSpawnType.EVENT, null);
@@ -313,6 +319,7 @@ public final class HauntEffects {
     }
     @SuppressWarnings({"unchecked", "rawtypes"})
     public static boolean finishFurnace(ServerLevel level, AbstractFurnaceBlockEntity furnace) {
+        if (furnace.getPersistentData().getLong("MortalExpansionInterferenceUntil") > level.getServer().overworld().getGameTime()) return false;
         HauntFurnaceAccessor access = (HauntFurnaceAccessor) furnace;
         if (access.mortalExpansion$litTime() <= 1 || furnace.getItem(0).isEmpty()) return false;
         SingleRecipeInput input = new SingleRecipeInput(furnace.getItem(0));

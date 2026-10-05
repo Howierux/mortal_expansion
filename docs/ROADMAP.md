@@ -96,10 +96,10 @@ The user accepted the effect proposal on 2026-10-02. On 2026-10-04, the user sup
 - [x] Use one shared event controller for timing, eligibility, protection, and cooldowns. Keep inventory changes, spawning, and Haunt adjustments authoritative on the server; send sounds and visual effects to the affected players.
 - [x] Use personal Haunt alone for trigger odds and minimum tiers, including world changes and event-created mobs. Do not evaluate surrounding chunks for these effects.
 - [x] Remove the sixteen-chunk footprint/aggregation requirement from the ambient controller, per the 2026-10-04 correction. Loaded-chunk lookups remain only for actual nearby targets and Spiritwells.
-- [x] Check every **30 seconds**, allow one event at a time per player, and apply a **60-second player cooldown** after an event. Give harmless atmosphere higher selection weights than shoving, shuffling, or hostile appearances.
+- [x] Check every **30 seconds**, allow one event per independent benefit/risk pool, and apply a **60-second cooldown per pool** after an event. Give harmless atmosphere higher selection weights than shoving, shuffling, or hostile appearances.
 - [x] Start with the following total event chance per eligible check, then select one eligible effect by weight. Void has no ambient event roll. Cooldowns and eligibility affect actual event frequency.
 
-| Evaluated Haunt tier | Chance per 30-second check |
+| Evaluated Haunt tier | Chance per pool per 30-second check |
 |---|---:|
 | Natural | 2% |
 | Supernatural | 5% |
@@ -488,3 +488,13 @@ See [EMF Reader](EMF_READER.md) for crafting, behavior and migration details.
 ### 2026-10-05 - Precise EMF Reader
 
 Implemented a shapeless EMF Reader + Raw Ectoplasm upgrade. Live digits on the held device and HUD show actual personal hundredths and whole-point chunk values with two decimal places. Existing hands, inward use pose, bulbs, and read-only behavior are retained. Recipes/models are generated; transient sample networking preserves hundredths without saved-world changes. Client visual playtesting remains. See [EMF Reader](EMF_READER.md).
+
+### 2026-10-05 - Independent personal Haunt effects
+
+- [x] Separate benefit/risk rolls and cooldowns, cumulative tier eligibility, localized chat hints on successful effects.
+- [x] Whispers, spectral empowerment, following footsteps, false apparitions, restless visits, furnace interference, marked presence, pursuers and warned breaches.
+- [ ] Second sight, discovery entries, commissions, spirit workers, recognition services and veil revelations: explicit `missing function` comments; excluded until supporting systems exist.
+- [ ] Visible harmless follower and further machine interference integrations.
+- [ ] Client effects/hints and extended live-world encounter playtest.
+
+See [Personal Haunt effects](PERSONAL_HAUNT_EFFECTS.md) for exact behavior and missing dependencies.

@@ -11,6 +11,7 @@ public final class EctceteraGuide {
             new Chapter("haunt", 7, 0),
             new Chapter("personal", 10, 0),
             new Chapter("biomes", 4, 0),
+            new Chapter("haunt_events", 4, 0),
             new Chapter("unlock_bone", 1, 0),
             new Chapter("graves", 10, 1),
             new Chapter("intangibles", 4, 1),

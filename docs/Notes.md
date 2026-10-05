@@ -415,3 +415,7 @@ Added a craftable six-bulb reader for chunk and personal Haunt, with an exact la
 ### 2026-10-05 - Precise EMF Reader
 
 Implemented a shapeless EMF Reader + Raw Ectoplasm upgrade. Live digits on the held device and HUD show actual personal hundredths and whole-point chunk values with two decimal places. Existing hands, inward use pose, bulbs, and read-only behavior are retained. Recipes/models are generated; transient sample networking preserves hundredths without saved-world changes. Client visual playtesting remains. See [EMF Reader](EMF_READER.md).
+
+### 2026-10-05 - Separate Haunt benefit and risk pools
+
+Benefits and risks now roll independently with separate cooldowns; neither causes the other. Added nine available effects plus honest localized chat hints for all successful ambient events. Six proposed benefits depend on missing systems and are explicitly marked `missing function` and excluded. Encounter placement/caps/protection and saved-state migration are documented in [Personal Haunt effects](PERSONAL_HAUNT_EFFECTS.md). New furnace interference pauses without consuming materials or fuel. Manual visual and extended live AI testing remain.

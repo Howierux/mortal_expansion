@@ -68,6 +68,7 @@ public final class HauntProtection {
                     && current.getDuration() <= record.getInt("Duration")) player.removeEffect(holder.get());
         }
         state.remove("Owned");
+        state.remove("CompanyUntil"); state.remove("MarkedUntil"); state.remove("BreachAt");
         state(player, state);
         com.howierux.mortalexpansion.network.HauntEffectPayloads.clearShadow(player);
     }

@@ -57,6 +57,8 @@ public final class HauntFurnaceBlockEntity extends AbstractFurnaceBlockEntity {
     public static void serverTick(Level level, BlockPos pos, BlockState state,
             HauntFurnaceBlockEntity furnace) {
         if (!(level instanceof ServerLevel serverLevel)) return;
+        if (furnace.getPersistentData().getLong("MortalExpansionInterferenceUntil")
+                > serverLevel.getServer().overworld().getGameTime()) return;
         // Initialize once after placement/load. Later changes are pushed by HauntManager.
         if (furnace.cachedTier == null) {
             var chunk = serverLevel.getChunkSource().getChunkNow(pos.getX() >> 4, pos.getZ() >> 4);

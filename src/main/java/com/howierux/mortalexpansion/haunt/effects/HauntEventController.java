@@ -11,29 +11,35 @@ import java.util.Arrays;
 
 public final class HauntEventController {
     private HauntEventController() {}
-    public static boolean ready(ServerPlayer player) {
+    public static boolean ready(ServerPlayer player) { return ready(player, true); }
+    public static boolean ready(ServerPlayer player, boolean negative) {
         var state = HauntProtection.state(player);
         long now = HauntProtection.now(player);
-        return state.getLong("CooldownUntil") <= now && state.getLong("ActiveUntil") <= now;
+        return state.getLong(negative ? "CooldownUntil" : "BenefitCooldownUntil") <= now
+                && state.getLong(negative ? "ActiveUntil" : "BenefitActiveUntil") <= now;
     }
-    public static void completed(ServerPlayer player, int activeTicks) {
+    public static void completed(ServerPlayer player, int activeTicks) { completed(player, activeTicks, true); }
+    private static void completed(ServerPlayer player, int activeTicks, boolean negative) {
         var state = HauntProtection.state(player);
         long now = HauntProtection.now(player);
-        state.putLong("CooldownUntil", now + 1200);
-        state.putLong("ActiveUntil", now + activeTicks);
+        state.putLong(negative ? "CooldownUntil" : "BenefitCooldownUntil", now + 1200);
+        state.putLong(negative ? "ActiveUntil" : "BenefitActiveUntil", now + activeTicks);
         HauntProtection.state(player, state);
     }
     public static boolean tryEffect(ServerPlayer player, HauntEffectKind kind) {
         // Personal Haunt alone drives every event, including world effects.
         int tier = PlayerHauntManager.getTier(player).id();
-        if (!ready(player) || !kind.eligible(tier, HauntProtection.protectedPlayer(player))) return false;
+        if (!ready(player, kind.negative) || !kind.eligible(tier, HauntProtection.protectedPlayer(player))) return false;
         long pendingBefore = HauntEventData.get(player.serverLevel()).pendingGhosts();
         if (!HauntEffects.perform(player, kind)) return false;
         boolean held = kind == HauntEffectKind.GHOST
                 && HauntEventData.get(player.serverLevel()).pendingGhosts() > pendingBefore;
         // A held selection is not an active/completed event. Start its cooldown
         // on delivery, so entering range can release it immediately.
-        if (!held) completed(player, kind.activeTicks);
+        if (!held) {
+            completed(player, kind.activeTicks, kind.negative);
+            hint(player, kind);
+        }
         return true;
     }
     public static boolean deliverPendingTo(ServerPlayer player) {
@@ -42,6 +48,7 @@ public final class HauntEventController {
                 || !HauntEffects.spawnGhostNear(player)) return false;
         data.deliveredGhost();
         completed(player, 0);
+        hint(player, HauntEffectKind.GHOST);
         return true;
     }
     private static boolean eligiblePlayer(ServerPlayer player) {
@@ -64,23 +71,35 @@ public final class HauntEventController {
         if (level.getGameTime() % 600 != 0) return;
         data.prune(level.getServer().overworld().getGameTime());
         for (ServerPlayer player : level.players()) {
-            if (!eligiblePlayer(player) || !ready(player)) continue;
-            int tier = PlayerHauntManager.getTier(player).id();
-            if (player.getRandom().nextDouble() >= HauntEffectKind.chance(tier)) continue;
-            boolean protectedPlayer = HauntProtection.protectedPlayer(player);
-            var choices = new ArrayList<>(Arrays.stream(HauntEffectKind.values())
-                    .filter(kind -> kind.eligible(tier, protectedPlayer)).toList());
-            while (!choices.isEmpty()) {
-                int total = choices.stream().mapToInt(kind -> kind.weight).sum();
-                int roll = player.getRandom().nextInt(total);
-                HauntEffectKind chosen = choices.get(0);
-                for (HauntEffectKind kind : choices) {
-                    roll -= kind.weight;
-                    if (roll < 0) { chosen = kind; break; }
-                }
-                choices.remove(chosen);
-                if (tryEffect(player, chosen)) break;
-            }
+            if (!eligiblePlayer(player)) continue;
+            rollPool(player, false);
+            rollPool(player, true);
         }
     }
+    public static java.util.List<HauntEffectKind> choices(int tier, boolean protectedPlayer, boolean negative) {
+        return Arrays.stream(HauntEffectKind.values())
+                .filter(kind -> kind.negative == negative && kind.eligible(tier, protectedPlayer)).toList();
+    }
+    private static void rollPool(ServerPlayer player, boolean negative) {
+        if (!ready(player, negative)) return;
+        int tier = PlayerHauntManager.getTier(player).id();
+        if (negative && HauntProtection.protectedPlayer(player)) return;
+        if (player.getRandom().nextDouble() >= HauntEffectKind.chance(tier)) return;
+        var choices = new ArrayList<>(choices(tier, HauntProtection.protectedPlayer(player), negative));
+        while (!choices.isEmpty()) {
+            int roll = player.getRandom().nextInt(choices.stream().mapToInt(kind -> kind.weight).sum());
+            HauntEffectKind chosen = choices.getFirst();
+            for (var kind : choices) {
+                roll -= kind.weight;
+                if (roll < 0) { chosen = kind; break; }
+            }
+            choices.remove(chosen);
+            if (tryEffect(player, chosen)) return;
+        }
+    }
+    public static void hint(ServerPlayer player, HauntEffectKind kind) {
+        player.displayClientMessage(net.minecraft.network.chat.Component.translatable(
+                "message.mortal_expansion.haunt." + kind.name().toLowerCase(java.util.Locale.ROOT)), false);
+    }
 }
+
