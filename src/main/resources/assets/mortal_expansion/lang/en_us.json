@@ -353,5 +353,11 @@
   "book.mortal_expansion.ectcetera.page.haunt_events.1": "Benefits and risks roll separately every 30 seconds. Each pool has a 60-second cooldown. Personal Haunt sets eligibility; higher tiers retain earlier effects.",
   "book.mortal_expansion.ectcetera.page.haunt_events.2": "Helpful whispers point toward nearby moss or graves. At Demonic Haunt, spectral melee weapons may gain 25% damage for 20 seconds. Chat hints announce successful effects.",
   "book.mortal_expansion.ectcetera.page.haunt_events.3": "Risks include footsteps, false figures and hostile visitors. At higher Haunt, spirits may notice you farther away or pursue you. Haunted furnaces may pause briefly.",
-  "book.mortal_expansion.ectcetera.page.haunt_events.4": "Veil breaches warn five seconds before spirits cross. Full garb, Holy Water blessings and wards block risks. Quests and advanced services await future updates."
+  "book.mortal_expansion.ectcetera.page.haunt_events.4": "Veil breaches warn five seconds before spirits cross. Full garb, Holy Water blessings and wards block risks. Quests and advanced services await future updates.",
+  "message.mortal_expansion.site.discovered": "Discovered: %s",
+  "message.mortal_expansion.haunt.second_sight": "Spectral footprints lead toward an undiscovered resting place.",
+  "message.mortal_expansion.site.none": "No Spiritwells or Cemeteries discovered yet.",
+  "message.mortal_expansion.site.entry": "%s [%s] at %s, %s, %s",
+  "book.mortal_expansion.ectcetera.page.spiritwells.4": "Pass within 20 blocks of a Spiritwell or Cemetery to discover it. Each site has a stable name. Discoveries survive death and logout. Use /spectralsites to list them.",
+  "book.mortal_expansion.ectcetera.page.spiritwells.5": "At Supernatural Haunt or higher, Second Sight may show spectral footprints for 30 seconds. They point to the nearest recorded undiscovered site in this dimension."
 }

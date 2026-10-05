@@ -419,3 +419,12 @@ Implemented a shapeless EMF Reader + Raw Ectoplasm upgrade. Live digits on the h
 ### 2026-10-05 - Separate Haunt benefit and risk pools
 
 Benefits and risks now roll independently with separate cooldowns; neither causes the other. Added nine available effects plus honest localized chat hints for all successful ambient events. Six proposed benefits depend on missing systems and are explicitly marked `missing function` and excluded. Encounter placement/caps/protection and saved-state migration are documented in [Personal Haunt effects](PERSONAL_HAUNT_EFFECTS.md). New furnace interference pauses without consuming materials or fuel. Manual visual and extended live AI testing remain.
+
+### 2026-10-05 - Named discoveries and spectral footprints
+
+- [x] Per-player Spiritwell/Cemetery discovery within 20 blocks, stable generated names, saved records retained on death, and `/spectralsites` listing.
+- [x] Second Sight now draws spectral footprints toward the nearest recorded undiscovered site in the player's dimension. Names and coordinates provide a future TP hook.
+- [ ] Teleport costs/permissions/safe landing, hidden inscription revealing and never-generated-site locating remain missing functions.
+- [ ] Manual footprint, Cemetery elevation and restart/death playtesting.
+
+See [Spectral discovery](SPECTRAL_DISCOVERY.md).

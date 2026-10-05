@@ -9,6 +9,7 @@ A successful effect sends a localized, atmospheric chat hint. No hint or cooldow
 | Effect | Minimum personal tier | Behavior |
 | --- | --- | --- |
 | Helpful whispers | Natural | Directional sound and particles at the closest loaded Grave Moss or Gravestone within a bounded 12-block horizontal/4-block vertical search. No trace means no trigger. |
+| Second Sight | Supernatural | Thirty-second footprint guidance toward the nearest recorded undiscovered Spiritwell or Cemetery; see [Spectral discovery](SPECTRAL_DISCOVERY.md). |
 | Spectral empowerment | Demonic | Holding a demi-tangible weapon grants 25% additional direct spectral melee damage for 20 seconds. Switching to an ordinary weapon does not retain the bonus. Supports the existing tag/component/enchantment permission helper. |
 
 Existing beneficial potions, Spirit visits, furnace completion and material conversions remain in the benefit pool.
@@ -31,9 +32,9 @@ Full Ghost/Haint-family garb, Holy Water blessings and Purification Wards suppre
 
 ## Missing functions: reserved, excluded from selection
 
-The following enum entries retain their intended minimum tiers but return false from `implemented()` and cannot spend a roll, cooldown, or send a fake success hint. Each dependency is marked with a literal `missing function` source comment:
+The five remaining inactive enum entries retain their intended minimum tiers but return false from `implemented()` and cannot spend a roll, cooldown, or send a fake success hint. Each dependency is marked with a literal `missing function` source comment:
 
-- Second sight (Supernatural): hidden inscription/track definitions and reveal rendering.
+- Hidden inscription revealing remains a missing function; Second Sight footprint guidance is now active.
 - Spectral insight (Supernatural): optional discovery records and dynamic Book entries.
 - Spirit commissions (Dead Rising): quest acceptance, objectives, completion and rewards.
 - Helpful visitation (Dead Rising): spirit worker jobs, ownership and inventory permissions.

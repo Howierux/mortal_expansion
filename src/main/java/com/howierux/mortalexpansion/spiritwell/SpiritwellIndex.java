@@ -24,6 +24,8 @@ public final class SpiritwellIndex extends SavedData {
         tag.putLongArray("Positions", positions.stream().mapToLong(BlockPos::asLong).toArray());
         return tag;
     }
+    public java.util.Set<BlockPos> knownPositions() { return java.util.Set.copyOf(positions); }
+    public void remove(BlockPos pos) { if (positions.remove(pos)) setDirty(); }
     public void add(BlockPos pos) { if (positions.add(pos.immutable())) setDirty(); }
     public BlockPos nearest(ServerLevel level, net.minecraft.world.phys.Vec3 from) {
         var ordered = positions.stream().sorted(Comparator.comparingDouble(pos -> pos.getCenter().distanceToSqr(from))).toList();

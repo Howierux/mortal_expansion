@@ -3,7 +3,7 @@
 **Repository:** https://github.com/Howierux/mortal_expansion  
 **Branches:** `main` (consolidated baseline), `dev` (active work)  
 **Docs:** [Overview](Overview.md), [Notes](Notes.md), [Roadmap](ROADMAP.md)  
-**Last Synced:** 2026-10-05 - Four-tier Book of Ectcetera progression synchronized to `dev`; build, 46 required server GameTests, guide checks, and 403-resource data-generation checks passed.
+**Last Synced:** 2026-10-05 - Named Spiritwell/Cemetery discoveries and spectral footprints synchronized to `dev`; build, 60 required server GameTests, 124-page guide and 423-resource checks passed. Client visuals remain pending.
 **Current Phase:** Ambient/beneficial Haunt effects implemented; automated validation passed. Major encounters and Ghost’s Garb armor remain separate work.
 
 > **Checklist legend:** `[ ]` not started, `[x]` completed, `[~]` partially completed. Implementation status and gameplay verification are tracked separately. Discussion items are proposals, not approved implementation work.
@@ -493,8 +493,17 @@ Implemented a shapeless EMF Reader + Raw Ectoplasm upgrade. Live digits on the h
 
 - [x] Separate benefit/risk rolls and cooldowns, cumulative tier eligibility, localized chat hints on successful effects.
 - [x] Whispers, spectral empowerment, following footsteps, false apparitions, restless visits, furnace interference, marked presence, pursuers and warned breaches.
-- [ ] Second sight, discovery entries, commissions, spirit workers, recognition services and veil revelations: explicit `missing function` comments; excluded until supporting systems exist.
+- [ ] Hidden inscription revealing, discovery entries, commissions, spirit workers, recognition services and veil revelations: explicit `missing function` comments; excluded until supporting systems exist.
 - [ ] Visible harmless follower and further machine interference integrations.
 - [ ] Client effects/hints and extended live-world encounter playtest.
 
 See [Personal Haunt effects](PERSONAL_HAUNT_EFFECTS.md) for exact behavior and missing dependencies.
+
+### 2026-10-05 - Named discoveries and spectral footprints
+
+- [x] Per-player Spiritwell/Cemetery discovery within 20 blocks, stable generated names, saved records retained on death, and `/spectralsites` listing.
+- [x] Second Sight now draws spectral footprints toward the nearest recorded undiscovered site in the player's dimension. Names and coordinates provide a future TP hook.
+- [ ] Teleport costs/permissions/safe landing, hidden inscription revealing and never-generated-site locating remain missing functions.
+- [ ] Manual footprint, Cemetery elevation and restart/death playtesting.
+
+See [Spectral discovery](SPECTRAL_DISCOVERY.md).

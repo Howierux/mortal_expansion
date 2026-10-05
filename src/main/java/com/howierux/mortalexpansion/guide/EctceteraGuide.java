@@ -16,7 +16,7 @@ public final class EctceteraGuide {
             new Chapter("graves", 10, 1),
             new Chapter("intangibles", 4, 1),
             new Chapter("creatures", 4, 1),
-            new Chapter("spiritwells", 3, 1),
+            new Chapter("spiritwells", 5, 1),
             new Chapter("unlock_raw", 2, 1),
             new Chapter("ectoplasm", 4, 2),
             new Chapter("cauldrons", 6, 2),

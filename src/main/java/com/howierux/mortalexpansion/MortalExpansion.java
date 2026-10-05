@@ -44,6 +44,7 @@ public final class MortalExpansion {
         ModDataComponents.register(modBus);
         GraveNamePayloads.register(modBus);
         com.howierux.mortalexpansion.network.HauntEffectPayloads.register(modBus);
+        com.howierux.mortalexpansion.network.SpectralTracksPayload.register(modBus);
         com.howierux.mortalexpansion.network.SpiritJourneyPayloads.register(modBus);
         ModArmorMaterials.register(modBus);
         ModFluids.register(modBus);
@@ -67,6 +68,7 @@ public final class MortalExpansion {
         NeoForge.EVENT_BUS.register(com.howierux.mortalexpansion.spiritwell.SpiritwellProtection.class);
         NeoForge.EVENT_BUS.register(com.howierux.mortalexpansion.haunt.effects.HauntEventController.class);
         NeoForge.EVENT_BUS.register(com.howierux.mortalexpansion.haunt.effects.AdditionalHauntEffects.class);
+        NeoForge.EVENT_BUS.register(com.howierux.mortalexpansion.discovery.SpectralDiscovery.class);
         NeoForge.EVENT_BUS.register(com.howierux.mortalexpansion.haunt.effects.HauntProtection.class);
         NeoForge.EVENT_BUS.register(ModCommands.class);
         NeoForge.EVENT_BUS.register(HauntGenerationHandler.class);

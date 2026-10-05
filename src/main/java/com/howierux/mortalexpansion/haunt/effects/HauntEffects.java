@@ -85,7 +85,8 @@ public final class HauntEffects {
                     RESTLESS_VISITATION, INTERFERENCE, MARKED_PRESENCE, PURSUER, VEIL_BREACH
                     -> AdditionalHauntEffects.perform(player, kind);
             // missing function: dependency-gated benefits are listed in HauntEffectKind.implemented().
-            case SECOND_SIGHT, SPECTRAL_INSIGHT, SPIRIT_COMMISSION, HELPFUL_VISITATION,
+            case SECOND_SIGHT -> com.howierux.mortalexpansion.discovery.SpectralDiscovery.startTracks(player);
+            case SPECTRAL_INSIGHT, SPIRIT_COMMISSION, HELPFUL_VISITATION,
                     SPIRIT_RECOGNITION, VEIL_REVELATION -> false;
         };
     }

@@ -107,6 +107,10 @@ public final class ModAttachments {
                     .builder(() -> new net.minecraft.nbt.CompoundTag())
                     .serialize(net.minecraft.nbt.CompoundTag.CODEC).copyOnDeath().build());
 
+    public static final Supplier<AttachmentType<java.util.List<com.howierux.mortalexpansion.discovery.SpectralSite>>> DISCOVERED_SITES =
+            ATTACHMENTS.register("discovered_sites", () -> AttachmentType.<java.util.List<com.howierux.mortalexpansion.discovery.SpectralSite>>builder(() -> java.util.List.of())
+                    .serialize(com.howierux.mortalexpansion.discovery.SpectralSite.CODEC.listOf()).copyOnDeath().build());
+
     public static void register(IEventBus modBus) {
         ATTACHMENTS.register(modBus);
     }

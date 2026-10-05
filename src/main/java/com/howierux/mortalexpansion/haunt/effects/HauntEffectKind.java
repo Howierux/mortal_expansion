@@ -25,8 +25,7 @@ public enum HauntEffectKind {
     }
     public boolean implemented() {
         return switch (this) {
-            // missing function: hidden inscription/track definitions and reveal rendering.
-            case SECOND_SIGHT -> false;
+            // Spectral footprints now guide players; hidden inscription revealing remains a missing function.
             // missing function: optional per-player discoveries and dynamic Book entries.
             case SPECTRAL_INSIGHT -> false;
             // missing function: Spirit quest acceptance, objectives, completion and rewards.
