@@ -38,6 +38,59 @@ public final class SpiritVillagerGameTests {
         helper.getLevel().addFreshEntity(villager); return villager;
     }
     @GameTest(template = "deferred_items_test")
+    public static void expertise_unlocks_tiers_and_survives_reload(GameTestHelper helper) {
+        var spirit = ModEntities.SPIRIT.get().create(helper.getLevel());
+        helper.assertTrue(spirit.getOffers().size() == 2 && spirit.getExpertise() == 1 && spirit.showProgressBar(), "Novice only has starter trades and expertise bar");
+        int[] trades = {5, 12, 8, 4, 3};
+        int[] offerIndices = {0, 2, 4, 6, 7};
+        for (int stage = 0; stage < trades.length; stage++) {
+            var offer = spirit.getOffers().get(offerIndices[stage]);
+            for (int n = 0; n < trades[stage]; n++) {
+                helper.assertFalse(offer.isOutOfStock(), "Progression uses available stock");
+                var a = offer.getCostA().copy(); var b = offer.getCostB().copy();
+                helper.assertTrue(offer.take(a, b) && a.isEmpty() && b.isEmpty(), "Full payment consumed before XP is awarded");
+                spirit.notifyTrade(offer);
+            }
+            int expected = new int[]{2, 3, 4, 4, 5}[stage];
+            helper.assertTrue(spirit.getExpertise() == expected && spirit.getOffers().size() == expected * 2, "Only earned tiers unlock; previous offers are not duplicated");
+        }
+        helper.assertTrue(spirit.getVillagerXp() == 255 && spirit.getExpertise() == 5, "Vanilla Master XP threshold");
+        var saved = spirit.saveWithoutId(new CompoundTag());
+        var loaded = ModEntities.SPIRIT.get().create(helper.getLevel()); loaded.load(saved);
+        helper.assertTrue(loaded.getExpertise() == 5 && loaded.getVillagerXp() == 255 && loaded.getOffers().size() == 10
+                && loaded.getOffers().get(6).isOutOfStock(), "Tier, XP, unlocks, and limited stock persist");
+        var legacy = saved.copy(); legacy.remove("SpiritTradeCatalog"); legacy.remove("SpiritExpertise"); legacy.remove("SpiritTradeXp");
+        loaded.load(legacy);
+        helper.assertTrue(loaded.getExpertise() == 1 && loaded.getVillagerXp() == 0 && loaded.getOffers().size() == 2,
+                "Legacy flat catalog becomes balanced novice trades");
+        helper.succeed();
+    }
+    @GameTest(template = "deferred_items_test")
+    public static void assembly_trades_retain_recipe_material_costs(GameTestHelper helper) {
+        var offers = new net.minecraft.world.item.trading.MerchantOffers(); SpiritTrades.populate(offers, 5);
+        for (var offer : offers) {
+            var result = offer.getResult();
+            if (result.getItem() instanceof net.minecraft.world.item.ArmorItem) {
+                var id = net.minecraft.core.registries.BuiltInRegistries.ITEM.getKey(result.getItem());
+                var recipe = helper.getLevel().getRecipeManager().byKey(id).orElseThrow().value();
+                long materialCost = recipe.getIngredients().stream().filter(ingredient -> !ingredient.isEmpty()).count();
+                helper.assertTrue(offer.getCostB().getCount() >= materialCost && offer.getCostA().is(Items.EMERALD),
+                        "Armor trade consumes at least the real crafting ingredient count plus assembly fee");
+                helper.assertTrue(recipe.getIngredients().stream().filter(ingredient -> !ingredient.isEmpty())
+                        .allMatch(ingredient -> ingredient.test(offer.getCostB())), "Trade material matches recipe thread");
+            }
+            if (result.is(ModItems.ECTOTHREAD.get()) || result.is(ModItems.PURIFIED_ECTOTHREAD.get())) {
+                var id = net.minecraft.core.registries.BuiltInRegistries.ITEM.getKey(result.getItem());
+                var recipe = helper.getLevel().getRecipeManager().byKey(id).orElseThrow().value();
+                helper.assertTrue(result.getCount() == recipe.getResultItem(helper.getLevel().registryAccess()).getCount()
+                        && offer.getCostB().getCount() == 1 && recipe.getIngredients().stream().anyMatch(ingredient -> ingredient.test(offer.getCostB())),
+                        "Thread trade retains recipe output and matching ectoplasm core");
+                helper.assertTrue(offer.getCostA().is(Items.EMERALD) && offer.getCostA().getCount() >= 2, "Fee replaces the eight string input");
+            }
+        }
+        helper.succeed();
+    }
+    @GameTest(template = "deferred_items_test")
     public static void engraved_grave_claims_one_eligible_villager(GameTestHelper helper) {
         var grave = grave(helper, "Villager");
         var first = villager(helper, grave.getBlockPos());
@@ -66,17 +119,20 @@ public final class SpiritVillagerGameTests {
         helper.assertTrue(spirit.mobInteract(player, InteractionHand.MAIN_HAND).consumesAction(), "Trading interaction accepted");
         helper.assertTrue(player.containerMenu instanceof MerchantMenu, "Vanilla trading screen opens");
         var menu = (MerchantMenu)player.containerMenu;
-        menu.setSelectionHint(1);
+        for (int i = 0; i < 5; i++) spirit.notifyTrade(spirit.getOffers().getFirst());
+        helper.assertTrue(spirit.getExpertise() == 2 && spirit.getVillagerXp() == 10, "Trades unlock Apprentice expertise");
+        menu.setSelectionHint(2);
         menu.getSlot(0).set(new ItemStack(Items.EMERALD, 2));
+        menu.getSlot(1).set(new ItemStack(ModItems.RAW_ECTOPLASM.get()));
         helper.assertTrue(menu.getSlot(2).getItem().is(ModItems.ECTOTHREAD.get()) && menu.getSlot(2).getItem().getCount() == 8, "Trade preview matches price and output");
         menu.quickMoveStack(player, 2);
-        helper.assertTrue(menu.getSlot(0).getItem().isEmpty() && spirit.getOffers().get(1).getUses() == 1, "Trade consumes emeralds and uses stock exactly once");
+        helper.assertTrue(menu.getSlot(0).getItem().isEmpty() && menu.getSlot(1).getItem().isEmpty() && spirit.getOffers().get(2).getUses() == 1, "Trade consumes emeralds and uses stock exactly once");
         int threads = 0;
         for (var stack : player.getInventory().items) if (stack.is(ModItems.ECTOTHREAD.get())) threads += stack.getCount();
         helper.assertTrue(threads == 8 && spirit.getTarget() == null, "Player receives output and merchant stays passive");
         var saved = spirit.saveWithoutId(new CompoundTag());
         var restored = ModEntities.SPIRIT.get().create(helper.getLevel()); restored.load(saved);
-        helper.assertTrue(restored.getOffers().get(1).getUses() == 1 && !restored.graveCreated(), "Natural Spirit trade stock survives load without becoming grave-created");
+        helper.assertTrue(restored.getOffers().get(2).getUses() == 1 && restored.getExpertise() == 2 && restored.getVillagerXp() == 15 && !restored.graveCreated(), "Natural Spirit trade stock survives load without becoming grave-created");
         helper.assertTrue(SpiritWorkstations.revert(helper.getLevel(), restored) == null, "Natural Spirits cannot become regular villagers");
         player.closeContainer(); player.discard(); spirit.discard(); helper.succeed();
     }

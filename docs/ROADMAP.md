@@ -53,7 +53,7 @@ The stage order after the first part is a proposed work breakdown, not authoriza
 ### Spirit Villager trading
 
 - [~] Passive **Spirit Villagers** now have the standard trading interface, initial resource trades, and a Villager-engraved Grave workstation. One nearby adult jobless villager converts per grave; breaking its grave reverts only grave-created workers. See [Spirit Villagers](SPIRIT_VILLAGERS.md). Broader natural discovery remains pending.
-- [ ] Decide where it can be found, its spawn conditions, trade inventory, prices, progression gates, stock limits, and restocking behavior.
+- [~] Villager-engraved graves provide manual discovery/conversion. Recipe-balanced Novice-to-Master trades, vanilla XP thresholds, limited stock, and daily workstation-aware restocking are implemented. Broader natural spawn/discovery and continued balance tuning remain.
 - [~] Server tests verify actual trade payment/output, stock persistence, passive behavior, workstation ownership, and save/load reversion. Client visuals and manual playtesting remain pending. Earlier village-graveyard and Creeper-deterrence ideas remain optional.
 
 ### Mob strength and spawn review
