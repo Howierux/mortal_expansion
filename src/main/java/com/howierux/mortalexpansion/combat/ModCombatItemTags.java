@@ -12,6 +12,9 @@ import net.minecraft.world.item.Item;
 public final class ModCombatItemTags {
     private ModCombatItemTags() {}
 
+    public static final TagKey<Item> SPECTRAL_PROTECTIVE_ARMOR = TagKey.create(Registries.ITEM,
+            ResourceLocation.fromNamespaceAndPath(MortalExpansion.MOD_ID, "spectral_protective_armor"));
+
     /**
      * Items capable of physically striking intangible entities.
      *

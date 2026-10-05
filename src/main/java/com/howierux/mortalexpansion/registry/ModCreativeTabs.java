@@ -88,6 +88,11 @@ public final class ModCreativeTabs {
                         output.accept(ModItems.HAINT_GARB_CHESTPLATE.get());
                         output.accept(ModItems.HAINT_GARB_LEGGINGS.get());
                         output.accept(ModItems.HAINT_GARB_BOOTS.get());
+                        output.accept(ModItems.SPECTRALITE_HAINT_HELMET.get());
+                        output.accept(ModItems.SPECTRALITE_HAINT_CHESTPLATE.get());
+                        output.accept(ModItems.SPECTRALITE_HAINT_LEGGINGS.get());
+                        output.accept(ModItems.SPECTRALITE_HAINT_BOOTS.get());
+
 
                         output.accept(ModItems.BLOODSTONE_HELMET.get());
                         output.accept(ModItems.BLOODSTONE_CHESTPLATE.get());

@@ -20,6 +20,9 @@ public final class ModItemModels extends ItemModelProvider {
                     .texture("layer0", "minecraft:item/leather_" + piece)
                     .texture("layer1", "minecraft:item/leather_" + piece + "_overlay");
         }
+        for (String piece : new String[]{"helmet", "chestplate", "leggings", "boots"}) {
+            getBuilder("spectralite_haint_" + piece).parent(new ModelFile.UncheckedModelFile("mortal_expansion:item/spectralite_" + piece));
+        }
         {
             var model = this.getBuilder("bloodstone").parent(new ModelFile.UncheckedModelFile("minecraft:item/generated"));
             model.texture("layer0", "mortal_expansion:item/bloodstone");

@@ -72,13 +72,6 @@ public final class IntangibleCombatHandler {
     }
 
     private static boolean isSpectralArmor(ItemStack stack) {
-        return stack.is(ModItems.BLOODSTONE_HELMET.get())
-                || stack.is(ModItems.BLOODSTONE_CHESTPLATE.get())
-                || stack.is(ModItems.BLOODSTONE_LEGGINGS.get())
-                || stack.is(ModItems.BLOODSTONE_BOOTS.get())
-                || stack.is(ModItems.SPECTRALITE_HELMET.get())
-                || stack.is(ModItems.SPECTRALITE_CHESTPLATE.get())
-                || stack.is(ModItems.SPECTRALITE_LEGGINGS.get())
-                || stack.is(ModItems.SPECTRALITE_BOOTS.get());
+        return stack.is(ModCombatItemTags.SPECTRAL_PROTECTIVE_ARMOR);
     }
 }

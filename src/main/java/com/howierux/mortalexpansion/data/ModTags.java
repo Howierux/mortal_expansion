@@ -75,6 +75,19 @@ public abstract class ModTags<T> extends TagsProvider<T> {
             tag(TagKey.create(registryKey, ResourceLocation.parse("mortal_expansion:haints_garb")))
                     .add(com.howierux.mortalexpansion.registry.ModItems.HAINT_GARB_HELMET.getKey(), com.howierux.mortalexpansion.registry.ModItems.HAINT_GARB_CHESTPLATE.getKey(),
                             com.howierux.mortalexpansion.registry.ModItems.HAINT_GARB_LEGGINGS.getKey(), com.howierux.mortalexpansion.registry.ModItems.HAINT_GARB_BOOTS.getKey());
+            for (String piece : new String[]{"helmet", "chestplate", "leggings", "boots"}) {
+                var combined = ResourceKey.create(registryKey, ResourceLocation.parse("mortal_expansion:spectralite_haint_" + piece));
+                tag(TagKey.create(registryKey, ResourceLocation.parse("mortal_expansion:haints_garb"))).add(combined);
+                for (String name : new String[]{"armor", "durability", "vanishing", "equippable"}) {
+                    tag(TagKey.create(registryKey, ResourceLocation.withDefaultNamespace("enchantable/" + name))).add(combined);
+                }
+                String slot = switch (piece) { case "helmet" -> "head"; case "chestplate" -> "chest"; case "leggings" -> "leg"; default -> "foot"; };
+                tag(TagKey.create(registryKey, ResourceLocation.withDefaultNamespace("enchantable/" + slot + "_armor"))).add(combined);
+                for (String family : new String[]{"bloodstone", "spectralite", "spectralite_haint"}) {
+                    tag(com.howierux.mortalexpansion.combat.ModCombatItemTags.SPECTRAL_PROTECTIVE_ARMOR)
+                            .add(ResourceKey.create(registryKey, ResourceLocation.parse("mortal_expansion:" + family + "_" + piece)));
+                }
+            }
             tag(TagKey.create(registryKey, ResourceLocation.parse("mortal_expansion:spectral_garb")))
                     .addTag(TagKey.create(registryKey, ResourceLocation.parse("mortal_expansion:ghosts_garb")))
                     .addTag(TagKey.create(registryKey, ResourceLocation.parse("mortal_expansion:haints_garb")));

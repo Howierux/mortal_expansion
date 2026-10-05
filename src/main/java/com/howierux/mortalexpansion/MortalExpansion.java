@@ -49,6 +49,7 @@ public final class MortalExpansion {
         ModFluids.register(modBus);
         ModBlocks.register(modBus);
         ModItems.register(modBus);
+        com.howierux.mortalexpansion.registry.ModRecipeSerializers.register(modBus);
         ModBlockEntities.register(modBus);
         ModMenus.register(modBus);
         ModCapabilities.register(modBus);
@@ -74,6 +75,7 @@ public final class MortalExpansion {
         NeoForge.EVENT_BUS.register(HaintWitchHutSpawnHandler.class);
         NeoForge.EVENT_BUS.register(NaturalPurificationHandler.class);
         NeoForge.EVENT_BUS.register(IntangibleCombatHandler.class);
+        NeoForge.EVENT_BUS.register(com.howierux.mortalexpansion.combat.HaintGarbJump.class);
         NeoForge.EVENT_BUS.register(com.howierux.mortalexpansion.combat.GhostGarbBreathing.class);
         NeoForge.EVENT_BUS.register(PharaohlPyramidHandler.class);
         NeoForge.EVENT_BUS.register(MobDropHandler.class);

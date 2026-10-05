@@ -48,6 +48,30 @@ public final class ModRecipes extends RecipeProvider {
                 .define('E', ModItems.PURIFIED_ECTOTHREAD.get()).unlockedBy("has_purified_ectothread", has(ModItems.PURIFIED_ECTOTHREAD.get())).save(output);
         ShapedRecipeBuilder.shaped(RecipeCategory.COMBAT, ModItems.HAINT_GARB_BOOTS.get()).pattern("E E").pattern("E E")
                 .define('E', ModItems.PURIFIED_ECTOTHREAD.get()).unlockedBy("has_purified_ectothread", has(ModItems.PURIFIED_ECTOTHREAD.get())).save(output);
+        recipesOnly.accept(ResourceLocation.fromNamespaceAndPath(MortalExpansion.MOD_ID, "haint_garb_helmet_smithing"),
+                new com.howierux.mortalexpansion.recipe.TemplateFreeSmithingRecipe(Ingredient.of(ModItems.GHOST_GARB_HELMET.get()),
+                        Ingredient.of(ModItems.PURE_ECTOPLASM.get()), new net.minecraft.world.item.ItemStack(ModItems.HAINT_GARB_HELMET.get())), null);
+        recipesOnly.accept(ResourceLocation.fromNamespaceAndPath(MortalExpansion.MOD_ID, "spectralite_haint_helmet_smithing"),
+                new com.howierux.mortalexpansion.recipe.TemplateFreeSmithingRecipe(Ingredient.of(ModItems.HAINT_GARB_HELMET.get()),
+                        Ingredient.of(ModItems.SPECTRALITE_HELMET.get()), new net.minecraft.world.item.ItemStack(ModItems.SPECTRALITE_HAINT_HELMET.get())), null);
+        recipesOnly.accept(ResourceLocation.fromNamespaceAndPath(MortalExpansion.MOD_ID, "haint_garb_chestplate_smithing"),
+                new com.howierux.mortalexpansion.recipe.TemplateFreeSmithingRecipe(Ingredient.of(ModItems.GHOST_GARB_CHESTPLATE.get()),
+                        Ingredient.of(ModItems.PURE_ECTOPLASM.get()), new net.minecraft.world.item.ItemStack(ModItems.HAINT_GARB_CHESTPLATE.get())), null);
+        recipesOnly.accept(ResourceLocation.fromNamespaceAndPath(MortalExpansion.MOD_ID, "spectralite_haint_chestplate_smithing"),
+                new com.howierux.mortalexpansion.recipe.TemplateFreeSmithingRecipe(Ingredient.of(ModItems.HAINT_GARB_CHESTPLATE.get()),
+                        Ingredient.of(ModItems.SPECTRALITE_CHESTPLATE.get()), new net.minecraft.world.item.ItemStack(ModItems.SPECTRALITE_HAINT_CHESTPLATE.get())), null);
+        recipesOnly.accept(ResourceLocation.fromNamespaceAndPath(MortalExpansion.MOD_ID, "haint_garb_leggings_smithing"),
+                new com.howierux.mortalexpansion.recipe.TemplateFreeSmithingRecipe(Ingredient.of(ModItems.GHOST_GARB_LEGGINGS.get()),
+                        Ingredient.of(ModItems.PURE_ECTOPLASM.get()), new net.minecraft.world.item.ItemStack(ModItems.HAINT_GARB_LEGGINGS.get())), null);
+        recipesOnly.accept(ResourceLocation.fromNamespaceAndPath(MortalExpansion.MOD_ID, "spectralite_haint_leggings_smithing"),
+                new com.howierux.mortalexpansion.recipe.TemplateFreeSmithingRecipe(Ingredient.of(ModItems.HAINT_GARB_LEGGINGS.get()),
+                        Ingredient.of(ModItems.SPECTRALITE_LEGGINGS.get()), new net.minecraft.world.item.ItemStack(ModItems.SPECTRALITE_HAINT_LEGGINGS.get())), null);
+        recipesOnly.accept(ResourceLocation.fromNamespaceAndPath(MortalExpansion.MOD_ID, "haint_garb_boots_smithing"),
+                new com.howierux.mortalexpansion.recipe.TemplateFreeSmithingRecipe(Ingredient.of(ModItems.GHOST_GARB_BOOTS.get()),
+                        Ingredient.of(ModItems.PURE_ECTOPLASM.get()), new net.minecraft.world.item.ItemStack(ModItems.HAINT_GARB_BOOTS.get())), null);
+        recipesOnly.accept(ResourceLocation.fromNamespaceAndPath(MortalExpansion.MOD_ID, "spectralite_haint_boots_smithing"),
+                new com.howierux.mortalexpansion.recipe.TemplateFreeSmithingRecipe(Ingredient.of(ModItems.HAINT_GARB_BOOTS.get()),
+                        Ingredient.of(ModItems.SPECTRALITE_BOOTS.get()), new net.minecraft.world.item.ItemStack(ModItems.SPECTRALITE_HAINT_BOOTS.get())), null);
         ShapedRecipeBuilder.shaped(RecipeCategory.COMBAT, ModItems.BLOODSTONE_AXE.get(), 1).pattern("BB").pattern("BS").pattern(" S").define('B', ModItems.BLOODSTONE.get()).define('S', Items.STICK).unlockedBy("has_ingredient", has(ModItems.BLOODSTONE.get())).save(recipesOnly, ResourceLocation.fromNamespaceAndPath(MortalExpansion.MOD_ID, "bloodstone_axe"));
         ShapedRecipeBuilder.shaped(RecipeCategory.COMBAT, ModItems.BLOODSTONE_BOOTS.get(), 1).pattern("B B").pattern("B B").define('B', ModItems.BLOODSTONE.get()).unlockedBy("has_ingredient", has(ModItems.BLOODSTONE.get())).save(recipesOnly, ResourceLocation.fromNamespaceAndPath(MortalExpansion.MOD_ID, "bloodstone_boots"));
         ShapedRecipeBuilder.shaped(RecipeCategory.COMBAT, ModItems.BLOODSTONE_CHESTPLATE.get(), 1).pattern("B B").pattern("BBB").pattern("BBB").define('B', ModItems.BLOODSTONE.get()).unlockedBy("has_ingredient", has(ModItems.BLOODSTONE.get())).save(recipesOnly, ResourceLocation.fromNamespaceAndPath(MortalExpansion.MOD_ID, "bloodstone_chestplate"));

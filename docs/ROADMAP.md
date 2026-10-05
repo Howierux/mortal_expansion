@@ -3,7 +3,7 @@
 **Repository:** https://github.com/Howierux/mortal_expansion  
 **Branches:** `main` (consolidated baseline), `dev` (active work)  
 **Docs:** [Overview](Overview.md), [Notes](Notes.md), [Roadmap](ROADMAP.md)  
-**Last Synced:** 2026-10-04 - Personal-Haunt ambient and beneficial effects implemented on `dev`; automated validation passed; `main` retains the documented Ward baseline.  
+**Last Synced:** 2026-10-04 - Haint jump, template-free garb upgrades, Spectralite Haint armor and benefit tooltips synchronized to `dev`; build and all 42 required server GameTests passed.  
 **Current Phase:** Ambient/beneficial Haunt effects implemented; automated validation passed. Major encounters and Ghost’s Garb armor remain separate work.
 
 > **Checklist legend:** `[ ]` not started, `[x]` completed, `[~]` partially completed. Implementation status and gameplay verification are tracked separately. Discussion items are proposals, not approved implementation work.
@@ -412,6 +412,10 @@ Append dated entries to [Notes](Notes.md) when decisions or implementation chang
 ### Haint Garb / Spectralite combination follow-up
 
 Purified Ectothread (eight String around Pure Ectoplasm, output eight) and
-light blue leather Haint Garb are implemented. Planned: a way to combine Haint
-Garb with Spectralite equipment and retain the benefits of both. Final crafting
-method and combined stats remain to be decided.
+light blue leather Haint Garb are implemented. Completed 2026-10-04: template-free
+smithing combines a Haint part with the matching Spectralite part into Spectralite
+Haint armor, retaining Spectralite stats and spectral damage reduction plus garb
+abilities. Ghost Garb upgrades with one Pure Ectoplasm. Full Haint-family sets gain
+a Jump Boost III-strength jump; all garb sets have benefit tooltips. Build and all
+42 required server GameTests pass; client jump/appearance playtesting remains.
+See [GHOST_GARB](GHOST_GARB.md) for recipes, attributes and migration checks.

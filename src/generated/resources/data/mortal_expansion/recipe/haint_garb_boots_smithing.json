@@ -1,0 +1,13 @@
+{
+  "type": "mortal_expansion:template_free_smithing",
+  "addition": {
+    "item": "mortal_expansion:pure_ectoplasm"
+  },
+  "base": {
+    "item": "mortal_expansion:ghost_garb_boots"
+  },
+  "result": {
+    "count": 1,
+    "id": "mortal_expansion:haint_garb_boots"
+  }
+}

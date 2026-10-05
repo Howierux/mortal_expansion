@@ -3,6 +3,10 @@
     "mortal_expansion:haint_garb_helmet",
     "mortal_expansion:haint_garb_chestplate",
     "mortal_expansion:haint_garb_leggings",
-    "mortal_expansion:haint_garb_boots"
+    "mortal_expansion:haint_garb_boots",
+    "mortal_expansion:spectralite_haint_helmet",
+    "mortal_expansion:spectralite_haint_chestplate",
+    "mortal_expansion:spectralite_haint_leggings",
+    "mortal_expansion:spectralite_haint_boots"
   ]
 }

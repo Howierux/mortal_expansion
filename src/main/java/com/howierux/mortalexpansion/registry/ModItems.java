@@ -5,6 +5,7 @@ import com.howierux.mortalexpansion.item.SpiritwoodSaplingItem;
 import com.howierux.mortalexpansion.item.BookOfEctceteraItem;
 import com.howierux.mortalexpansion.item.PharaohlScepterItem;
 import com.howierux.mortalexpansion.item.SpectralArmorItem;
+import com.howierux.mortalexpansion.item.GarbArmorItem;
 import net.minecraft.world.item.*;
 import net.neoforged.bus.api.IEventBus;
 import net.neoforged.neoforge.registries.DeferredItem;
@@ -26,12 +27,20 @@ public final class ModItems {
     public static final DeferredItem<ArmorItem> HAINT_GARB_CHESTPLATE = garb("haint_garb_chestplate", ArmorItem.Type.CHESTPLATE, ModArmorMaterials.HAINT_GARB, 0x3AB3DA);
     public static final DeferredItem<ArmorItem> HAINT_GARB_LEGGINGS = garb("haint_garb_leggings", ArmorItem.Type.LEGGINGS, ModArmorMaterials.HAINT_GARB, 0x3AB3DA);
     public static final DeferredItem<ArmorItem> HAINT_GARB_BOOTS = garb("haint_garb_boots", ArmorItem.Type.BOOTS, ModArmorMaterials.HAINT_GARB, 0x3AB3DA);
+    public static final DeferredItem<ArmorItem> SPECTRALITE_HAINT_HELMET = spectralHaint("spectralite_haint_helmet", ArmorItem.Type.HELMET);
+    public static final DeferredItem<ArmorItem> SPECTRALITE_HAINT_CHESTPLATE = spectralHaint("spectralite_haint_chestplate", ArmorItem.Type.CHESTPLATE);
+    public static final DeferredItem<ArmorItem> SPECTRALITE_HAINT_LEGGINGS = spectralHaint("spectralite_haint_leggings", ArmorItem.Type.LEGGINGS);
+    public static final DeferredItem<ArmorItem> SPECTRALITE_HAINT_BOOTS = spectralHaint("spectralite_haint_boots", ArmorItem.Type.BOOTS);
+    private static DeferredItem<ArmorItem> spectralHaint(String id, ArmorItem.Type type) {
+        return ITEMS.registerItem(id, properties -> new GarbArmorItem(ModArmorMaterials.SPECTRALITE, type,
+                properties.fireResistant().durability(type.getDurability(65))));
+    }
     private static DeferredItem<ArmorItem> garb(String id, ArmorItem.Type type) {
         return garb(id, type, ModArmorMaterials.GHOST_GARB, 0x80C71F);
     }
     private static DeferredItem<ArmorItem> garb(String id, ArmorItem.Type type,
             net.minecraft.core.Holder<ArmorMaterial> material, int color) {
-        return ITEMS.registerItem(id, properties -> new ArmorItem(material, type,
+        return ITEMS.registerItem(id, properties -> new GarbArmorItem(material, type,
                 properties.durability(type.getDurability(15)).component(net.minecraft.core.component.DataComponents.DYED_COLOR,
                         new net.minecraft.world.item.component.DyedItemColor(color, false))));
     }

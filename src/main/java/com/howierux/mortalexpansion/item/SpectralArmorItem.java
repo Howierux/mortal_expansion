@@ -12,7 +12,7 @@ import net.minecraft.world.item.TooltipFlag;
 
 import java.util.List;
 
-public final class SpectralArmorItem extends ArmorItem {
+public class SpectralArmorItem extends ArmorItem {
     private final boolean fireProofItem;
 
     public SpectralArmorItem(Holder<ArmorMaterial> material, Type type, Properties properties) {

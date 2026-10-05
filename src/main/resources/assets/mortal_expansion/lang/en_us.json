@@ -269,5 +269,16 @@
   "item.mortal_expansion.haint_garb_helmet": "Haint's Garb Hood",
   "item.mortal_expansion.haint_garb_chestplate": "Haint's Garb Robe",
   "item.mortal_expansion.haint_garb_leggings": "Haint's Garb Leggings",
-  "item.mortal_expansion.haint_garb_boots": "Haint's Garb Boots"
+  "item.mortal_expansion.haint_garb_boots": "Haint's Garb Boots",
+  "item.mortal_expansion.spectralite_haint_helmet": "Spectralite Haint Helmet",
+  "item.mortal_expansion.spectralite_haint_chestplate": "Spectralite Haint Chestplate",
+  "item.mortal_expansion.spectralite_haint_leggings": "Spectralite Haint Leggings",
+  "item.mortal_expansion.spectralite_haint_boots": "Spectralite Haint Boots",
+  "tooltip.mortal_expansion.garb.stats": "Leather protection; iron durability",
+  "tooltip.mortal_expansion.garb.spectralite": "Spectralite protection, toughness, and durability",
+  "tooltip.mortal_expansion.garb.intangible": "Full garb set: intangible; phase through walls; normal damage immunity",
+  "tooltip.mortal_expansion.garb.haunt": "Full garb set: blocks negative haunt effects",
+  "tooltip.mortal_expansion.garb.breathing": "Inside walls: hold your breath (Respiration helps)",
+  "tooltip.mortal_expansion.garb.vulnerable": "Intangible attackers, magic, and demi-tangible attacks can still hurt you",
+  "tooltip.mortal_expansion.garb.jump": "Full Haint set: powerful jump boost (Jump Boost III strength)"
 }
