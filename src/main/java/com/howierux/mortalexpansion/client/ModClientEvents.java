@@ -27,6 +27,10 @@ import net.neoforged.neoforge.client.model.DynamicFluidContainerModel;
 @EventBusSubscriber(modid = MortalExpansion.MOD_ID, bus = EventBusSubscriber.Bus.MOD, value = Dist.CLIENT)
 public final class ModClientEvents {
     private ModClientEvents() {}
+    @SubscribeEvent public static void emfModels(net.neoforged.neoforge.client.event.ModelEvent.RegisterAdditional event) {
+        for (int lit = 0; lit <= 6; lit++) event.register(net.minecraft.client.resources.model.ModelResourceLocation.standalone(
+                ResourceLocation.fromNamespaceAndPath(MortalExpansion.MOD_ID, "item/precise_emf_reader_" + lit)));
+    }
     @SubscribeEvent public static void emfLayers(net.neoforged.neoforge.client.event.RegisterGuiLayersEvent event) {
         event.registerAbove(net.neoforged.neoforge.client.gui.VanillaGuiLayers.HOTBAR,
                 ResourceLocation.fromNamespaceAndPath(MortalExpansion.MOD_ID, "emf_reader"), EmfReaderClient::render);
@@ -80,6 +84,11 @@ public final class ModClientEvents {
     @SubscribeEvent
     public static void registerFluidVisuals(RegisterClientExtensionsEvent event) {
         event.registerItem(new net.neoforged.neoforge.client.extensions.common.IClientItemExtensions() {
+            private PreciseEmfRenderer preciseRenderer;
+            @Override public net.minecraft.client.renderer.BlockEntityWithoutLevelRenderer getCustomRenderer() {
+                if (preciseRenderer == null) preciseRenderer = new PreciseEmfRenderer();
+                return preciseRenderer;
+            }
             @Override public net.minecraft.client.model.HumanoidModel.ArmPose getArmPose(
                     net.minecraft.world.entity.LivingEntity entity, net.minecraft.world.InteractionHand hand,
                     net.minecraft.world.item.ItemStack stack) {
@@ -96,7 +105,7 @@ public final class ModClientEvents {
                 pose.mulPose(com.mojang.math.Axis.XP.rotationDegrees(-20.0F));
                 return true;
             }
-        }, ModItems.EMF_READER.get());
+        }, ModItems.EMF_READER.get(), ModItems.PRECISE_EMF_READER.get());
         event.registerFluidType(
                 fluidVisuals(0xFF42A83B),
                 ModFluids.LIQUID_ECTOPLASM_TYPE.get()

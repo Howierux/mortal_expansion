@@ -48,8 +48,10 @@ The build and all 46 required server GameTests pass, including actual inventory
 crafting with consumed inputs, three sequential upgrades, component preservation,
 skip/repeat/extra-input rejection, legacy behavior, saved-item and network recipe
 roundtrips, cumulative chapters and navigation offsets. Resource checks cover
-27 chapters and 117 pages in the complete book, per-tier endings, translation/page
+27 chapters and 118 pages in the complete book, per-tier endings, translation/page
 budgets, the starter component and three generated upgrade recipes. Data generation
 checks pass for 403 resources. Manual client page appearance remains for playtest.
 
 The Raw Ectoplasm tier now includes the EMF Reader recipe, controls and bulb scale.
+
+The EMF chapter also covers upgrading with Raw Ectoplasm for decimal readings.

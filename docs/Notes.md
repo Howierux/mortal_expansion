@@ -411,3 +411,7 @@ Book plus Rotten Flesh now crafts the starter guide. Shapeless Bone, Raw Ectopla
 ### 2026-10-05 - Portable EMF reader
 
 Added a craftable six-bulb reader for chunk and personal Haunt, with an exact labeled HUD. Either hand reads the chunk; held Use turns inward for personal readings. Network-only samples are scoped to owner, dimension and chunk and never persist in saved items. Java data generation supplies recipe/models. No shield protection is granted by its pose. Added three gameplay tests and an Ectcetera chapter. Client visual playtesting remains.
+
+### 2026-10-05 - Precise EMF Reader
+
+Implemented a shapeless EMF Reader + Raw Ectoplasm upgrade. Live digits on the held device and HUD show actual personal hundredths and whole-point chunk values with two decimal places. Existing hands, inward use pose, bulbs, and read-only behavior are retained. Recipes/models are generated; transient sample networking preserves hundredths without saved-world changes. Client visual playtesting remains. See [EMF Reader](EMF_READER.md).

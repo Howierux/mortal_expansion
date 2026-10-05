@@ -483,3 +483,7 @@ See [GHOST_GARB](GHOST_GARB.md) for recipes, attributes and migration checks.
 - [ ] In-game visual playtest of HUD and inward pose in both hands.
 
 See [EMF Reader](EMF_READER.md) for crafting, behavior and migration details.
+
+### 2026-10-05 - Precise EMF Reader
+
+Implemented a shapeless EMF Reader + Raw Ectoplasm upgrade. Live digits on the held device and HUD show actual personal hundredths and whole-point chunk values with two decimal places. Existing hands, inward use pose, bulbs, and read-only behavior are retained. Recipes/models are generated; transient sample networking preserves hundredths without saved-world changes. Client visual playtesting remains. See [EMF Reader](EMF_READER.md).

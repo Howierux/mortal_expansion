@@ -27,7 +27,7 @@ public final class EmfReaderItem extends Item {
         // A player's current chunk is already loaded; never scan adjacent or unloaded chunks.
         if (!player.serverLevel().hasChunk(pos.x, pos.z)) return;
         var sample = new EmfReading(player.level().dimension().location(), pos.x, pos.z, player.getUUID(),
-                HauntManager.getValue(player.serverLevel(), pos), PlayerHauntManager.getValue(player));
+                HauntManager.getValue(player.serverLevel(), pos), PlayerHauntManager.getHundredths(player));
         if (!sample.equals(stack.get(ModDataComponents.EMF_READING.get()))) stack.set(ModDataComponents.EMF_READING.get(), sample);
     }
     public static EmfReading reading(ItemStack stack, Player player) {
@@ -41,6 +41,11 @@ public final class EmfReaderItem extends Item {
         var sample = reading(stack, player);
         if (sample == null) return -1;
         return personal(stack, player) ? sample.personalHaunt() : sample.chunkHaunt();
+    }
+    public static int hundredths(ItemStack stack, Player player) {
+        var sample = reading(stack, player);
+        return sample == null ? -1 : personal(stack, player) ? sample.personalHundredths()
+                : sample.chunkHaunt() * FractionalHaunt.UNITS_PER_POINT;
     }
     @Override public InteractionResultHolder<ItemStack> use(Level level, Player player, InteractionHand hand) {
         var stack = player.getItemInHand(hand);
@@ -57,6 +62,8 @@ public final class EmfReaderItem extends Item {
     @Override public void appendHoverText(ItemStack stack, TooltipContext context, List<Component> tooltip, TooltipFlag flag) {
         tooltip.add(Component.translatable("tooltip.mortal_expansion.emf_reader.chunk").withStyle(ChatFormatting.GRAY));
         tooltip.add(Component.translatable("tooltip.mortal_expansion.emf_reader.personal").withStyle(ChatFormatting.AQUA));
+        if (stack.is(com.howierux.mortalexpansion.registry.ModItems.PRECISE_EMF_READER.get()))
+            tooltip.add(Component.translatable("tooltip.mortal_expansion.emf_reader.precise").withStyle(ChatFormatting.GREEN));
         tooltip.add(Component.translatable("tooltip.mortal_expansion.emf_reader.scale").withStyle(ChatFormatting.GRAY));
     }
 }

@@ -322,5 +322,8 @@
   "book.mortal_expansion.ectcetera.chapter.emf_reader": "EMF Reader",
   "book.mortal_expansion.ectcetera.page.emf_reader.1": "Craft an EMF Reader with six Iron Ingots, two Redstone, and one Holy Salt. Top and bottom rows: Iron. Middle row: Redstone, Holy Salt, Redstone.",
   "book.mortal_expansion.ectcetera.page.emf_reader.2": "Hold in either hand to read chunk Haunt. Hold Use to point inward and read personal Haunt. Release to read the chunk again. Scanning costs nothing.",
-  "book.mortal_expansion.ectcetera.page.emf_reader.3": "Bulbs by tier: Void 0; Natural 1; Supernatural 2; Dead Rising 3; Demonic 4; Abominable 5; Eldritch 6. Colors rise from green to purple. The HUD shows the exact Haunt value."
+  "book.mortal_expansion.ectcetera.page.emf_reader.3": "Bulbs by tier: Void 0; Natural 1; Supernatural 2; Dead Rising 3; Demonic 4; Abominable 5; Eldritch 6. Colors rise from green to purple. The HUD shows the exact Haunt value.",
+  "item.mortal_expansion.precise_emf_reader": "Precise EMF Reader",
+  "book.mortal_expansion.ectcetera.page.emf_reader.4": "Craft a reader with one Raw Ectoplasm to make a Precise EMF Reader. Digits show hundredths. Hold Use for personal Haunt. Chunk values end in .00.",
+  "tooltip.mortal_expansion.emf_reader.precise": "On-device numeric display: precision to 0.01 Haunt"
 }

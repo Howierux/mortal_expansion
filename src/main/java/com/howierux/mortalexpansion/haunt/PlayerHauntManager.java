@@ -55,7 +55,7 @@ public final class PlayerHauntManager {
         return (double)getHundredths(player) / FractionalHaunt.UNITS_PER_POINT;
     }
 
-    private static int getHundredths(Player player) {
+    public static int getHundredths(Player player) {
         return getValue(player) * FractionalHaunt.UNITS_PER_POINT
                 + player.getData(ModAttachments.PLAYER_HAUNT_FRACTION);
     }

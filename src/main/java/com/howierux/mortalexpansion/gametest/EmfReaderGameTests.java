@@ -21,8 +21,9 @@ public final class EmfReaderGameTests {
         var level = helper.getLevel();
         HauntManager.setValue(level, player.blockPosition(), 37);
         PlayerHauntManager.setValue(player, 52);
+        for (var item : new Item[]{ModItems.EMF_READER.get(), ModItems.PRECISE_EMF_READER.get()})
         for (var hand : InteractionHand.values()) {
-            var stack = new ItemStack(ModItems.EMF_READER.get());
+            var stack = new ItemStack(item);
             player.setItemInHand(hand, stack);
             stack.getItem().inventoryTick(stack, level, player, 0, hand == InteractionHand.MAIN_HAND);
             helper.assertTrue(EmfReaderItem.value(stack, player) == 37, "Either held hand samples chunk Haunt");
@@ -71,5 +72,37 @@ public final class EmfReaderGameTests {
         var restored = ItemStack.CODEC.parse(ops, ItemStack.CODEC.encodeStart(ops, stack).getOrThrow()).getOrThrow();
         helper.assertTrue(!restored.has(ModDataComponents.EMF_READING.get()), "Live samples do not persist in saved items");
         player.discard(); helper.succeed();
+    }
+    @GameTest(template = "deferred_items_test")
+    public static void upgrade_consumes_materials_and_synchronizes_exact_hundredths(GameTestHelper helper) {
+        var player = helper.makeMockServerPlayerInLevel();
+        player.setPos(helper.absolutePos(net.minecraft.core.BlockPos.ZERO).getCenter());
+        var menu = player.inventoryMenu;
+        menu.getSlot(1).set(new ItemStack(ModItems.EMF_READER.get()));
+        menu.getSlot(4).set(new ItemStack(ModItems.RAW_ECTOPLASM.get(), 2));
+        menu.slotsChanged(menu.getSlot(1).container);
+        var upgraded = menu.getSlot(0).remove(1); menu.getSlot(0).onTake(player, upgraded);
+        helper.assertTrue(upgraded.is(ModItems.PRECISE_EMF_READER.get()) && upgraded.getCount() == 1,
+                "Reader plus raw ectoplasm crafts one precise reader in an arbitrary arrangement");
+        helper.assertTrue(menu.getSlot(1).getItem().isEmpty() && menu.getSlot(4).getItem().getCount() == 1,
+                "Consumes one reader and exactly one ectoplasm");
+        HauntManager.setValue(helper.getLevel(), player.blockPosition(), 37);
+        PlayerHauntManager.setValue(player, 24); PlayerHauntManager.addHundredths(player, 37);
+        player.setItemInHand(InteractionHand.OFF_HAND, upgraded);
+        EmfReaderItem.sample(upgraded, player);
+        helper.assertTrue(EmfScale.decimal(EmfReaderItem.hundredths(upgraded, player)).equals("37.00"), "Chunk has real whole-point precision");
+        upgraded.getItem().use(helper.getLevel(), player, InteractionHand.OFF_HAND);
+        helper.assertTrue(EmfScale.decimal(EmfReaderItem.hundredths(upgraded, player)).equals("24.37"), "Personal fractional state displayed without rounding to whole points");
+        PlayerHauntManager.addHundredths(player, 1); EmfReaderItem.sample(upgraded, player);
+        helper.assertTrue(EmfReaderItem.hundredths(upgraded, player) == 2438, "Changes smaller than one point update the live sample");
+        var buffer = new net.minecraft.network.RegistryFriendlyByteBuf(io.netty.buffer.Unpooled.buffer(), helper.getLevel().registryAccess());
+        try {
+            ItemStack.STREAM_CODEC.encode(buffer, upgraded);
+            var decoded = ItemStack.STREAM_CODEC.decode(buffer);
+            helper.assertTrue(EmfReaderItem.reading(decoded, player).personalHundredths() == 2438, "Network codec preserves hundredths");
+        } finally { buffer.release(); }
+        helper.assertTrue(EmfScale.decimal(1).equals("0.01") && EmfScale.decimal(6900).equals("69.00")
+                && EmfScale.decimal(-1).equals("--.--"), "Decimal formatting preserves zero padding, cap and missing samples");
+        player.stopUsingItem(); player.discard(); helper.succeed();
     }
 }

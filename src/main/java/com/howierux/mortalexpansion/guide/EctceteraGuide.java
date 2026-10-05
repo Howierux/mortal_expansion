@@ -20,7 +20,7 @@ public final class EctceteraGuide {
             new Chapter("ectoplasm", 4, 2),
             new Chapter("cauldrons", 6, 2),
             new Chapter("salt", 2, 2),
-            new Chapter("emf_reader", 3, 2),
+            new Chapter("emf_reader", 4, 2),
             new Chapter("torches", 2, 2),
             new Chapter("equipment", 6, 2),
             new Chapter("ghost_garb", 3, 2),

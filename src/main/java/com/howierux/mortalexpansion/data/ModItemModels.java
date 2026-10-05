@@ -38,6 +38,26 @@ public final class ModItemModels extends ItemModelProvider {
     }
     @Override protected void registerModels() {
         emfModels();
+        var precise = getBuilder("precise_emf_reader").parent(new ModelFile.UncheckedModelFile("minecraft:builtin/entity"))
+                .texture("particle", "minecraft:block/iron_block");
+        for (var context : new net.minecraft.world.item.ItemDisplayContext[]{
+                net.minecraft.world.item.ItemDisplayContext.FIRST_PERSON_RIGHT_HAND,
+                net.minecraft.world.item.ItemDisplayContext.FIRST_PERSON_LEFT_HAND}) {
+            precise.transforms().transform(context).rotation(0, 0, 0).translation(0, 0, 0).scale(0.65F).end();
+        }
+        precise.transforms().transform(net.minecraft.world.item.ItemDisplayContext.GUI)
+                .rotation(0, 0, 0).scale(0.9F).end();
+        precise.transforms().transform(net.minecraft.world.item.ItemDisplayContext.GROUND)
+                .translation(0, 3, 0).scale(0.5F).end();
+        for (var context : new net.minecraft.world.item.ItemDisplayContext[]{
+                net.minecraft.world.item.ItemDisplayContext.THIRD_PERSON_RIGHT_HAND,
+                net.minecraft.world.item.ItemDisplayContext.THIRD_PERSON_LEFT_HAND}) {
+            precise.transforms().transform(context).rotation(0, 0, 0).translation(0, 1, 0).scale(0.55F).end();
+        }
+        for (int lit = 0; lit <= 6; lit++) {
+            // Ordinary baked body avoids recursive custom rendering; registered as additional client models.
+            getBuilder("precise_emf_reader_" + lit).parent(new ModelFile.UncheckedModelFile("mortal_expansion:item/emf_reader_" + lit));
+        }
         getBuilder("ectothread").parent(new ModelFile.UncheckedModelFile("minecraft:block/lime_wool"));
         getBuilder("purified_ectothread").parent(new ModelFile.UncheckedModelFile("minecraft:block/light_blue_wool"));
         for (String set : new String[]{"ghost_garb", "haint_garb"}) for (String piece : new String[]{"helmet", "chestplate", "leggings", "boots"}) {

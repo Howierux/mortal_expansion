@@ -28,6 +28,9 @@ public final class ModRecipes extends RecipeProvider {
                 output.accept(id, recipe, null, conditions);
             }
         };
+        ShapelessRecipeBuilder.shapeless(RecipeCategory.TOOLS, ModItems.PRECISE_EMF_READER.get())
+                .requires(ModItems.EMF_READER.get()).requires(ModItems.RAW_ECTOPLASM.get())
+                .unlockedBy("has_emf_reader", has(ModItems.EMF_READER.get())).save(output);
         ShapedRecipeBuilder.shaped(RecipeCategory.TOOLS, ModItems.EMF_READER.get())
                 .pattern("III").pattern("RSR").pattern("III")
                 .define('I', Items.IRON_INGOT).define('S', ModItems.HOLY_SALT.get()).define('R', Items.REDSTONE)

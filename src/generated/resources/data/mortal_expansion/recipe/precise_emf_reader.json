@@ -1,0 +1,16 @@
+{
+  "type": "minecraft:crafting_shapeless",
+  "category": "equipment",
+  "ingredients": [
+    {
+      "item": "mortal_expansion:emf_reader"
+    },
+    {
+      "item": "mortal_expansion:raw_ectoplasm"
+    }
+  ],
+  "result": {
+    "count": 1,
+    "id": "mortal_expansion:precise_emf_reader"
+  }
+}

@@ -73,6 +73,7 @@ public final class ModCreativeTabs {
                         output.accept(ModItems.PURIFIED_ECTOPLASM_BUCKET.get());
                         output.accept(ModItems.HOLY_SALT.get());
                         output.accept(ModItems.EMF_READER.get());
+                output.accept(ModItems.PRECISE_EMF_READER.get());
                         output.accept(ModItems.SPIRIT_TORCH.get());
 
                         output.accept(ModItems.GRAVESTONE_SWORD.get());

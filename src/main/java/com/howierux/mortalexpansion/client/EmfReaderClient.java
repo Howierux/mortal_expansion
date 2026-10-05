@@ -22,9 +22,9 @@ public final class EmfReaderClient {
         var mc = Minecraft.getInstance(); var player = mc.player;
         if (player == null || mc.options.hideGui || player.isSpectator()) return;
         ItemStack stack;
-        if (player.isUsingItem() && player.getUseItem().is(ModItems.EMF_READER.get())) stack = player.getUseItem();
-        else if (player.getMainHandItem().is(ModItems.EMF_READER.get())) stack = player.getMainHandItem();
-        else if (player.getOffhandItem().is(ModItems.EMF_READER.get())) stack = player.getOffhandItem();
+        if (player.isUsingItem() && player.getUseItem().getItem() instanceof EmfReaderItem) stack = player.getUseItem();
+        else if (player.getMainHandItem().getItem() instanceof EmfReaderItem) stack = player.getMainHandItem();
+        else if (player.getOffhandItem().getItem() instanceof EmfReaderItem) stack = player.getOffhandItem();
         else return;
         boolean personal = EmfReaderItem.personal(stack, player);
         int value = EmfReaderItem.value(stack, player), lit = value < 0 ? 0 : EmfScale.litBulbs(value);
@@ -37,7 +37,8 @@ public final class EmfReaderClient {
             graphics.fill(bx + 1, y + 13, bx + 10, y + 22, bulb < lit ? EmfScale.bulbColor(bulb) : 0xFF444444);
         }
         Component label = value < 0 ? Component.translatable("hud.mortal_expansion.emf.waiting")
-                : Component.translatable("hud.mortal_expansion.emf.reading", value,
+                : Component.translatable("hud.mortal_expansion.emf.reading", stack.is(ModItems.PRECISE_EMF_READER.get())
+                        ? com.howierux.mortalexpansion.haunt.EmfScale.decimal(EmfReaderItem.hundredths(stack, player)) : value,
                         Component.translatable("haunt.mortal_expansion.tier." + HauntTier.fromValue(value).id()));
         graphics.drawString(mc.font, label, x, y + 26, lit == 0 ? 0xFFBBBBBB : EmfScale.bulbColor(lit - 1));
     }
