@@ -44,51 +44,9 @@ public abstract class AbstractSpiritMob extends PathfinderMob
 
     @Override
     public void move(MoverType moverType, Vec3 movement) {
-        Vec3 daylightMovement = moverType == MoverType.SELF
-                ? com.howierux.mortalexpansion.haunt.HauntDaylightRules.limitMovement(this, movement)
-                : movement;
-        Vec3 safeMovement = avoidEnteringWater(daylightMovement);
-
-        // Spirits phase only horizontally. Normal vertical collision is retained
-        // so they still stand on terrain instead of falling through the world.
-        super.move(moverType, new Vec3(0.0D, safeMovement.y, 0.0D));
-
-        if (safeMovement.x != 0.0D || safeMovement.z != 0.0D) {
-            AABB destination = getBoundingBox().move(
-                    safeMovement.x,
-                    0.0D,
-                    safeMovement.z
-            );
-
-            if (SpectralPhasingRules.canEnterHorizontally(this, destination)) {
-                setPos(
-                        getX() + safeMovement.x,
-                        getY(),
-                        getZ() + safeMovement.z
-                );
-            }
-        }
-    }
-
-    private Vec3 avoidEnteringWater(Vec3 movement) {
-        if (movement.lengthSqr() == 0.0D || isTouchingWater(getBoundingBox())) {
-            return movement;
-        }
-
-        AABB destination = getBoundingBox()
-                .move(movement.x, movement.y, movement.z)
-                .expandTowards(0.0D, -0.15D, 0.0D);
-
-        if (!isTouchingWater(destination)) {
-            return movement;
-        }
-
-        return new Vec3(0.0D, Math.max(0.0D, movement.y), 0.0D);
-    }
-
-    private boolean isTouchingWater(AABB box) {
-        return BlockPos.betweenClosedStream(box.deflate(1.0E-4D))
-                .anyMatch(pos -> level().getFluidState(pos).is(FluidTags.WATER));
+        Vec3 safeMovement = SpiritMovement.prepare(this, moverType, movement);
+        super.move(moverType, new Vec3(0, safeMovement.y, 0));
+        SpiritMovement.horizontal(this, safeMovement);
     }
 
     @Override

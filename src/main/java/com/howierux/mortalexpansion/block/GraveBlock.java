@@ -198,6 +198,15 @@ public final class GraveBlock extends BaseEntityBlock {
     }
 
     @Override
+    protected void onRemove(BlockState state, Level level, BlockPos pos, BlockState newState, boolean moved) {
+        if (!state.is(newState.getBlock()) && level instanceof ServerLevel server
+                && level.getBlockEntity(pos) instanceof GraveBlockEntity grave) {
+            com.howierux.mortalexpansion.entity.mob.SpiritWorkstations.removed(server, grave);
+        }
+        super.onRemove(state, level, pos, newState, moved);
+    }
+
+    @Override
     protected void onExplosionHit(
             BlockState state,
             Level level,

@@ -52,9 +52,9 @@ The stage order after the first part is a proposed work breakdown, not authoriza
 
 ### Spirit Villager trading
 
-- [ ] Add a discoverable, passive **Spirit Villager** with a familiar villager trading interface for Mortal Expansion's key items and resources.
+- [~] Passive **Spirit Villagers** now have the standard trading interface, initial resource trades, and a Villager-engraved Grave workstation. One nearby adult jobless villager converts per grave; breaking its grave reverts only grave-created workers. See [Spirit Villagers](SPIRIT_VILLAGERS.md). Broader natural discovery remains pending.
 - [ ] Decide where it can be found, its spawn conditions, trade inventory, prices, progression gates, stock limits, and restocking behavior.
-- [ ] Verify that trading works and that passive behavior remains intact. Earlier village-graveyard, haunted-material exchange, and Creeper-deterrence ideas are optional details rather than required final behavior.
+- [~] Server tests verify actual trade payment/output, stock persistence, passive behavior, workstation ownership, and save/load reversion. Client visuals and manual playtesting remain pending. Earlier village-graveyard and Creeper-deterrence ideas remain optional.
 
 ### Mob strength and spawn review
 

@@ -31,6 +31,9 @@ public final class GraveBlockEntity extends BlockEntity {
 
     private boolean naturallyGenerated;
     private String inscription = "";
+    private java.util.UUID spiritWorker;
+    public java.util.UUID getSpiritWorker() { return spiritWorker; }
+    public void setSpiritWorker(java.util.UUID worker) { spiritWorker = worker; setChanged(); }
     @javax.annotation.Nullable
     private java.util.UUID namingOwner;
     @javax.annotation.Nullable
@@ -167,6 +170,7 @@ public final class GraveBlockEntity extends BlockEntity {
             return;
         }
 
+        if (serverLevel.getGameTime() % 20 == 0) com.howierux.mortalexpansion.entity.mob.SpiritWorkstations.tick(serverLevel, grave);
         // Repair visual state from older saves only after the chunk is fully
         // loaded and ticking, never from onLoad/world generation.
         if (state.hasProperty(GraveBlock.NATURAL)
@@ -244,6 +248,7 @@ public final class GraveBlockEntity extends BlockEntity {
         super.loadAdditional(tag, registries);
         naturallyGenerated = tag.getBoolean(NATURALLY_GENERATED_TAG);
         inscription = tag.getString(INSCRIPTION_TAG);
+        spiritWorker = tag.hasUUID("SpiritWorker") ? tag.getUUID("SpiritWorker") : null;
         namingOwner = tag.hasUUID(NAMING_OWNER_TAG)
                 ? tag.getUUID(NAMING_OWNER_TAG)
                 : null;
@@ -256,6 +261,7 @@ public final class GraveBlockEntity extends BlockEntity {
     protected void saveAdditional(CompoundTag tag, HolderLookup.Provider registries) {
         super.saveAdditional(tag, registries);
         tag.putBoolean(NATURALLY_GENERATED_TAG, naturallyGenerated);
+        if (spiritWorker != null) tag.putUUID("SpiritWorker", spiritWorker);
 
         if (!inscription.isBlank()) {
             tag.putString(INSCRIPTION_TAG, inscription);

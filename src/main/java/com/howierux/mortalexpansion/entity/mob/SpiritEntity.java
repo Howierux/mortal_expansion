@@ -1,15 +1,114 @@
 package com.howierux.mortalexpansion.entity.mob;
 
-import net.minecraft.world.entity.EntityType;
-import net.minecraft.world.entity.ai.attributes.AttributeSupplier;
+import com.howierux.mortalexpansion.registry.ModItems;
+import net.minecraft.core.BlockPos;
+import net.minecraft.nbt.CompoundTag;
+import net.minecraft.server.level.ServerLevel;
+import net.minecraft.world.InteractionHand;
+import net.minecraft.world.InteractionResult;
+import net.minecraft.world.entity.*;
+import net.minecraft.world.entity.ai.attributes.*;
+import net.minecraft.world.entity.ai.goal.*;
+import net.minecraft.world.entity.npc.AbstractVillager;
+import net.minecraft.world.entity.player.Player;
+import net.minecraft.world.item.*;
+import net.minecraft.world.item.trading.*;
 import net.minecraft.world.level.Level;
+import net.minecraft.world.level.pathfinder.PathType;
+import net.minecraft.world.phys.Vec3;
 
-public final class SpiritEntity extends AbstractSpiritMob {
+/** A passive spirit merchant using vanilla merchant inventory, offers, and menu persistence. */
+public final class SpiritEntity extends AbstractVillager implements HorizontalPhasingMob {
+    private BlockPos workstation;
+    private net.minecraft.resources.ResourceKey<Level> workstationDimension;
+    private CompoundTag originalVillager;
+    private long lastRestockDay = Long.MIN_VALUE;
+
     public SpiritEntity(EntityType<? extends SpiritEntity> type, Level level) {
         super(type, level);
+        moveControl = new SpectralMoveControl(this);
+        setPathfindingMalus(PathType.WATER, -1);
+        setPathfindingMalus(PathType.WATER_BORDER, -1);
     }
-
     public static AttributeSupplier.Builder createAttributes() {
-        return baseAttributes(18.0D, 0.24D);
+        return AbstractVillager.createMobAttributes().add(Attributes.MAX_HEALTH, 18)
+                .add(Attributes.MOVEMENT_SPEED, 0.24).add(Attributes.FOLLOW_RANGE, 24);
+    }
+    public void bindGrave(BlockPos pos, CompoundTag villager) {
+        workstation = pos.immutable(); workstationDimension = level().dimension();
+        originalVillager = villager.copy(); setPersistenceRequired();
+    }
+    public BlockPos workstation() { return workstation; }
+    public ServerLevel workstationLevel(ServerLevel current) {
+        return current.getServer().getLevel(workstationDimension == null ? current.dimension() : workstationDimension);
+    }
+    public CompoundTag originalVillager() { return originalVillager == null ? null : originalVillager.copy(); }
+    public boolean graveCreated() { return workstation != null && originalVillager != null; }
+
+    @Override protected void registerGoals() {
+        goalSelector.addGoal(0, new FloatGoal(this));
+        goalSelector.addGoal(1, new TradeWithPlayerGoal(this));
+        goalSelector.addGoal(1, new LookAtTradingPlayerGoal(this));
+        goalSelector.addGoal(3, new WaterAvoidingRandomStrollGoal(this, 0.9));
+        goalSelector.addGoal(4, new LookAtPlayerGoal(this, Player.class, 8));
+        goalSelector.addGoal(5, new RandomLookAroundGoal(this));
+    }
+    @Override public void move(MoverType type, Vec3 motion) {
+        Vec3 safe = SpiritMovement.prepare(this, type, motion);
+        super.move(type, new Vec3(0, safe.y, 0));
+        SpiritMovement.horizontal(this, safe);
+    }
+    @Override public boolean isInWall() { return false; }
+    @Override public boolean hasLineOfSight(Entity entity) {
+        return entity instanceof Player ? SpectralPhasingRules.canTrackThroughBlocks(this, entity) : super.hasLineOfSight(entity);
+    }
+    @Override public InteractionResult mobInteract(Player player, InteractionHand hand) {
+        if (!isAlive() || isBaby() || isTrading() || player.isSecondaryUseActive()) return super.mobInteract(player, hand);
+        if (!level().isClientSide && !getOffers().isEmpty()) {
+            setTradingPlayer(player);
+            openTradingScreen(player, getDisplayName(), 1);
+        }
+        return InteractionResult.sidedSuccess(level().isClientSide);
+    }
+    @Override protected void updateTrades() { SpiritTrades.populate(getOffers()); }
+    @Override protected void rewardTradeXp(MerchantOffer offer) {
+        if (offer.shouldRewardExp()) level().addFreshEntity(new ExperienceOrb(level(), getX(), getY() + 0.5, getZ(), 3));
+    }
+    @Override public boolean showProgressBar() { return false; }
+    @Override public boolean canRestock() { return true; }
+    @Override public AgeableMob getBreedOffspring(ServerLevel level, AgeableMob other) { return null; }
+    @Override public void tick() {
+        super.tick();
+        if (level() instanceof ServerLevel server) {
+            if (graveCreated() && !SpiritWorkstations.validate(server, this)) return;
+            long day = server.getDayTime() / 24000;
+            if (lastRestockDay == Long.MIN_VALUE) lastRestockDay = day;
+            else if (day > lastRestockDay && !isTrading()) {
+                if (!graveCreated() || workstationLevel(server) == server && server.hasChunkAt(workstation) && blockPosition().distSqr(workstation) <= 64) {
+                    getOffers().forEach(MerchantOffer::resetUses); lastRestockDay = day;
+                }
+            }
+        }
+    }
+    @Override public void addAdditionalSaveData(CompoundTag tag) {
+        super.addAdditionalSaveData(tag);
+        tag.putLong("SpiritRestockDay", lastRestockDay);
+        if (graveCreated()) {
+            tag.putLong("SpiritWorkstation", workstation.asLong());
+            tag.putString("SpiritWorkstationDimension", workstationDimension.location().toString());
+            tag.put("OriginalVillager", originalVillager.copy());
+        }
+    }
+    @Override public void readAdditionalSaveData(CompoundTag tag) {
+        super.readAdditionalSaveData(tag);
+        lastRestockDay = tag.contains("SpiritRestockDay") ? tag.getLong("SpiritRestockDay") : Long.MIN_VALUE;
+        workstation = tag.contains("SpiritWorkstation") ? BlockPos.of(tag.getLong("SpiritWorkstation")) : null;
+        var dimension = net.minecraft.resources.ResourceLocation.tryParse(tag.getString("SpiritWorkstationDimension"));
+        workstationDimension = dimension == null ? level().dimension() : net.minecraft.resources.ResourceKey.create(
+                net.minecraft.core.registries.Registries.DIMENSION, dimension);
+        originalVillager = tag.contains("OriginalVillager") ? tag.getCompound("OriginalVillager").copy() : null;
+    }
+    @Override public void die(net.minecraft.world.damagesource.DamageSource source) {
+        SpiritWorkstations.release(this); super.die(source);
     }
 }
