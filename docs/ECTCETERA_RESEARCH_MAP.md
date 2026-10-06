@@ -1,6 +1,6 @@
 # Book of Ectcetera research-map interface
 
-The book now uses a Thaumonomicon-inspired research-browser format with original spectral colors and native Minecraft item icons. There are four category tabs: Foundations, Spirits, Ectoplasm and Purification. Each contains connected chapter nodes arranged on a draggable, zoomable map. The entry viewer uses a parchment-colored panel with Previous, Next and Research Map buttons instead of the old flat contents pages.
+The book now uses a Thaumonomicon-inspired research-browser format with original spectral colors and native Minecraft item icons. There are four material category tabs: Foundations, Spirits, Ectoplasm and Purification. From book tier 2 onward, a fifth Secrets of the Dead tab contains the Insight introduction and all four individually gated secrets. Each contains connected chapter nodes arranged on a draggable, zoomable map. The entry viewer uses a parchment-colored panel with Previous, Next and Research Map buttons instead of the old flat contents pages.
 
 ## Controls
 
@@ -15,7 +15,7 @@ Unlocked nodes use a pale green border. Locked nodes show the required book ingr
 
 ## Existing progression remains authoritative
 
-Book + Rotten Flesh starts the book. Bone, Raw Ectoplasm and Purified Ectoplasm upgrade it in order. Existing ingredient handoff chapters remain as map nodes. Ectothread, Ghost Garb and Haint Garb still unlock gradually through the same Spectral Insight events and personal Haunt thresholds. The existing raw-book Haint secret exception remains: a revealed Haint chapter can be read in the Purification tab before the final book upgrade. Spectralite Haint guidance within that chapter stays locked until its separate secret is known.
+Book + Rotten Flesh starts the book. Bone, Raw Ectoplasm and Purified Ectoplasm upgrade it in order. Existing ingredient handoff chapters remain as map nodes. Ectothread, Ghost Garb and Haint Garb still unlock gradually through the same Spectral Insight events and personal Haunt thresholds. The existing raw-book Haint secret exception remains: a revealed Haint chapter can be read in the Secrets of the Dead tab before the final book upgrade. Spectralite Haint guidance within that chapter stays locked until its separate secret is known.
 
 The map checks `EctceteraGuide.chapters(tier,secrets)` for every entry. Clicking nodes never writes knowledge, upgrades the book or grants recipes. The viewer reads the same per-stack tier/secret components and dynamic book guidance as before, refreshes while the book is held, and closes when that hand no longer holds it. The server recipe locks, item/attachment codecs, upgrading recipes, networking and saved-world data are unchanged.
 
@@ -28,3 +28,5 @@ Build and all 124 existing server tests pass, including book upgrade validation,
 Format reference: the original Thaumcraft author's release notes describe the category-based research browser: https://www.curseforge.com/minecraft/mc-mods/thaumcraft/files/2264542 .
 
 Render-order correction: Minecraft Screen.render invokes renderBackground before its widgets. The atlas renders background blur first and draws only the registered renderables at the end, avoiding a second blur over its own map or text. Preserve this ordering during migrations.
+
+Secret organization: Ectothread, Ghost Garb, purified weaving/Haint Garb and Spectralite Haint are dedicated secret entries. The separate Spectralite Haint presentation reuses the original third Haint page, leaving the stored 30-chapter/128-page text catalog unchanged. Book upgrades reveal the section and its introduction only, not the individual secrets. Existing inherited/shared book knowledge remains respected.

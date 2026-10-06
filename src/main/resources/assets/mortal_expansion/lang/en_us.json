@@ -1,4 +1,5 @@
 {
+  "gui.mortal_expansion.ectcetera.category.4": "Secrets of the Dead",
   "gui.mortal_expansion.ectcetera.category.0": "Foundations",
   "gui.mortal_expansion.ectcetera.category.1": "Spirits",
   "gui.mortal_expansion.ectcetera.category.2": "Ectoplasm",
@@ -420,7 +421,7 @@
   "insight.mortal_expansion.spectralite_haint.guidance": "Upgrade me with Pure Ectoplasm. At Abominable personal Haunt, I may reveal how Haint Garb joins Spectralite.",
   "insight.mortal_expansion.complete.guidance": "All weaving secrets are known. Seek undiscovered Spiritwells and Cemeteries. Balance your Haunt and protect your travels.",
   "insight.mortal_expansion.spectralite_haint.locked": "A stronger armor secret remains hidden. Upgrade me with Pure Ectoplasm and carry me at Abominable personal Haunt.",
-  "book.mortal_expansion.ectcetera.chapter.insight": "The Book Awakens",
+  "book.mortal_expansion.ectcetera.chapter.insight": "Secrets of the Dead",
   "book.mortal_expansion.ectcetera.page.insight.1": "Ectoplasm gives me awareness. Carry me as your personal Haunt grows. Insights reveal secrets one at a time; recipes stay locked until learned.",
   "book.mortal_expansion.ectcetera.page.insight.2": "I will recommend your next step as I remember new secrets. Knowledge survives death. A learned book can teach another player.",
   "book.mortal_expansion.ectcetera.chapter.ectothread": "Secret: Ectothread",

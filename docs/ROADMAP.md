@@ -3,7 +3,7 @@
 **Repository:** https://github.com/Howierux/mortal_expansion  
 **Branches:** `main` (consolidated baseline), `dev` (active work)  
 **Docs:** [Overview](Overview.md), [Notes](Notes.md), [Roadmap](ROADMAP.md)  
-**Last Synced:** 2026-10-06 - Book UI blur correction synchronized to `dev`; build passes. Existing 124-test gameplay baseline remains unchanged; client visual confirmation pending.
+**Last Synced:** 2026-10-06 - Secrets of the Dead organization synchronized to `dev`; build and guide checks pass. Existing Insight mechanics remain unchanged; client layout confirmation pending.
 **Current Phase:** Ambient/beneficial Haunt effects implemented; automated validation passed. Major encounters and Ghost’s Garb armor remain separate work.
 
 > **Checklist legend:** `[ ]` not started, `[x]` completed, `[~]` partially completed. Implementation status and gameplay verification are tracked separately. Discussion items are proposals, not approved implementation work.
@@ -607,3 +607,7 @@ The Book of Ectcetera now has four category tabs, a draggable/zoomable connected
 ### 2026-10-06 - Book UI blur correction
 
 The book was drawing its atlas/entry panel before calling Screen.render, whose background pass blurred the already drawn book. Background blur now runs once before custom UI; the final pass renders only registered widgets. Both map and reading panels remain crisp. Build passes; client confirmation remains a playtest check. No gameplay, progression or resource changes, and no new tests were added for this render-order fix.
+
+### 2026-10-06 - Secrets of the Dead book section
+
+Added a dedicated Secrets of the Dead research tab/chapter from the Raw Ectoplasm book stage onward. Insight guidance, Ectothread, Ghost Garb, purified weaving/Haint Garb and Spectralite Haint entries are grouped there, rather than scattered across material tabs. Spectralite Haint now has a separate presentation node using the existing Haint page text; the Haint entry displays only its first two pages. Each secret keeps its own Insight bit and existing personal/book-tier gates. Unrevealed entries hide their titles and text. No recipes, saved data or unlock events changed. Build and existing server/guide checks pass; client tab/layout confirmation remains pending.

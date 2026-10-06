@@ -11,10 +11,15 @@ public final class EctceteraResearchMap {
         Map.entry("wards","sanctified"),Map.entry("ectchantment","sanctified"),Map.entry("generators","ectchantment"),Map.entry("station","ectchantment"),Map.entry("scepter","station"),Map.entry("mastery","wards"));
     private EctceteraResearchMap(){}
     public static List<Node> nodes(int category){
-        var chapters=EctceteraGuide.CHAPTERS.stream().filter(ch->ch.tier()==category).toList();var nodes=new ArrayList<Node>();
-        for(int i=0;i<chapters.size();i++)nodes.add(new Node(chapters.get(i),LINKS.getOrDefault(chapters.get(i).key(),""),45+(i%3)*125,40+(i/3)*90));
+        var chapters=EctceteraGuide.CHAPTERS.stream().filter(ch->category==4
+            ? ch.key().equals("insight") || secret(ch.key())!=0
+            : ch.tier()==category && !ch.key().equals("insight") && secret(ch.key())==0)
+            .map(ch->ch.key().equals("haint_garb")?new EctceteraGuide.Chapter(ch.key(),2,ch.tier()):ch).toList();
+        if(category==4){var grouped=new ArrayList<>(chapters);grouped.add(new EctceteraGuide.Chapter("spectralite_haint",1,3));chapters=List.copyOf(grouped);}
+        var nodes=new ArrayList<Node>();
+        for(int i=0;i<chapters.size();i++)nodes.add(new Node(chapters.get(i),chapters.get(i).key().equals("haint_garb")?"ghost_garb":chapters.get(i).key().equals("spectralite_haint")?"haint_garb":LINKS.getOrDefault(chapters.get(i).key(),""),45+(i%3)*125,40+(i/3)*90));
         return List.copyOf(nodes);
     }
-    public static boolean unlocked(String key,int tier,int secrets){return EctceteraGuide.chapters(Math.clamp(tier,0,3),secrets).stream().anyMatch(ch->ch.key().equals(key));}
-    public static int secret(String key){return switch(key){case "ectothread"->1;case "ghost_garb"->2;case "haint_garb"->4;default->0;};}
+    public static boolean unlocked(String key,int tier,int secrets){if(key.equals("spectralite_haint"))return tier>=3 && (secrets&8)!=0;return EctceteraGuide.chapters(Math.clamp(tier,0,3),secrets).stream().anyMatch(ch->ch.key().equals(key));}
+    public static int secret(String key){return switch(key){case "ectothread"->1;case "ghost_garb"->2;case "haint_garb"->4;case "spectralite_haint"->8;default->0;};}
 }
