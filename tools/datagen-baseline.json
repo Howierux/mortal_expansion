@@ -241,6 +241,7 @@
   "assets/mortal_expansion/models/item/spiritwood_trapdoor.json": "4af57057f356a9ed93ec9dcfc1921ff7be32557825da656ed6fc187f63911270",
   "assets/mortal_expansion/models/item/stone_fence.json": "2c9045b0836100573cad7a19aa6668db02db553c17f603ef9e19945208c05eed",
   "assets/mortal_expansion/shaders/post/spirit_journey.json": "4796da36bbb262e53f48baf5a2e75f0cdbce9e172b0f1796ed6e186518d00943",
+  "assets/mortal_expansion/sounds.json": "9548d247d26cfee4f76096bd0a4374ea7cdd3150b3047756cf8078db7cb9f524",
   "data/minecraft/tags/block/fences.json": "f75c2c98d19da4a515f306730b547776f5963a8c040c465d13d33490aca2b8f9",
   "data/minecraft/tags/block/leaves.json": "c8a876436ec116ba27fbcfed11fa52a3b58d65736f166d192f0abe5ccfd199ad",
   "data/minecraft/tags/block/logs.json": "35e2a623866106b6dbb066240a1bd5fca15debd0b0423ae177daf016122a66a9",

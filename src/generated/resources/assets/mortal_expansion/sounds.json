@@ -1,0 +1,8 @@
+{
+  "haunt_tapping": {
+    "sounds": [
+      "mortal_expansion:haunt/rap_tap_tap"
+    ],
+    "subtitle": "subtitle.mortal_expansion.haunt_tapping"
+  }
+}

@@ -61,7 +61,7 @@ public final class HauntEffects {
     public static boolean perform(ServerPlayer player, HauntEffectKind kind) {
         if (!kind.implemented() || (kind.negative && HauntProtection.protectedPlayer(player))) return false;
         return switch (kind) {
-            case HIT -> { sound(player, SoundEvents.STONE_STEP, player.position().subtract(horizontal(player).scale(2)), 0.15F); yield true; }
+            case HIT -> { sound(player, com.howierux.mortalexpansion.registry.ModSounds.HAUNT_TAPPING.get(), player.position().subtract(horizontal(player).scale(2)), 0.8F, 1.0F); yield true; }
             case SHADOW -> shadow(player);
             case SLOW -> {
                 boolean ok = !player.isInWater() && !player.onClimbable()
@@ -98,8 +98,11 @@ public final class HauntEffects {
         return v.lengthSqr() < 0.001 ? new Vec3(0, 0, 1) : v.normalize();
     }
     public static void sound(ServerPlayer player, SoundEvent sound, Vec3 pos, float volume) {
+        sound(player,sound,pos,volume,0.9F);
+    }
+    public static void sound(ServerPlayer player, SoundEvent sound, Vec3 pos, float volume,float pitch) {
         player.connection.send(new ClientboundSoundPacket(Holder.direct(sound), SoundSource.AMBIENT,
-                pos.x, pos.y, pos.z, volume, 0.9F, player.getRandom().nextLong()));
+                pos.x, pos.y, pos.z, volume, pitch, player.getRandom().nextLong()));
     }
     public static void particles(ServerPlayer player) {
         player.serverLevel().sendParticles(player, ParticleTypes.HAPPY_VILLAGER, false,

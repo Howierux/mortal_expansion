@@ -3,7 +3,7 @@
 **Repository:** https://github.com/Howierux/mortal_expansion  
 **Branches:** `main` (consolidated baseline), `dev` (active work)  
 **Docs:** [Overview](Overview.md), [Notes](Notes.md), [Roadmap](ROADMAP.md)  
-**Last Synced:** 2026-10-06 - Machine recipes synchronized to `dev`; data generation, build, guide and 427-resource checks pass. Existing gameplay-test baseline remains 124.
+**Last Synced:** 2026-10-06 - Tapping audio synchronized to `dev`; build, 124 server tests and guide/428-resource checks pass. Client audio playtest remains pending.
 **Current Phase:** Ambient/beneficial Haunt effects implemented; automated validation passed. Major encounters and Ghost’s Garb armor remain separate work.
 
 > **Checklist legend:** `[ ]` not started, `[x]` completed, `[~]` partially completed. Implementation status and gameplay verification are tracked separately. Discussion items are proposals, not approved implementation work.
@@ -595,3 +595,7 @@ Completed raw ectoplasm burns add 1 chunk Haunt; purified burns add 3. Emission 
 ### 2026-10-06 - Machine crafting recipes
 
 Added generated crafting recipes for the Enchantment Generator (Grindstone, Redstone, Haunt Furnace and 6 Iron), Ectoplasmic Generator (Raw Ectoplasm, Haunt Furnace and 7 Gold), and Ectchantment Machine (Enchanting Table, Purified Ectoplasm and 7 Purified Gravestone). Each yields one machine and has a recipe-book unlock advancement. Data generation, build and guide/resource validation pass; the existing 124 gameplay tests are unchanged. See [Machine recipes](MACHINE_RECIPES.md).
+
+### 2026-10-06 - User-supplied tapping audio
+
+The tapping HIT Haunt effect plays the supplied Warframe Rell "Rap tap tap" recording. Converted to positional mono Ogg Vorbis; generated sound definition, stable registry key, original pitch and subtitle added. Playback remains private to the affected player with existing protection/cooldown behavior. Third-party source attribution is recorded. Build, data generation, 428-resource/guide checks and all 124 existing server tests pass. Client audibility/volume remains a playtest check. See [Tapping audio](TAPPING_AUDIO.md).
