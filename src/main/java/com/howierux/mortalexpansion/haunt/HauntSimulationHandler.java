@@ -281,7 +281,7 @@ public final class HauntSimulationHandler {
             int result = entry.getValue();
 
             if (result != original && chunksByPos.containsKey(entry.getKey())) {
-                HauntManager.setValue(level, new ChunkPos(entry.getKey()), result);
+                HauntManager.addPoints(level, new ChunkPos(entry.getKey()), result - original);
             }
         }
     }

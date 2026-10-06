@@ -1,6 +1,6 @@
 package com.howierux.mortalexpansion.haunt;
 
-/** Personal Haunt in exact hundredths, using the existing 0-69 point cap. */
+/** Haunt in exact hundredths, using the existing 0-69 point cap. */
 public final class FractionalHaunt {
     public static final int UNITS_PER_POINT = 100;
     public static final int MOB_KILL_INCREASE = 1;

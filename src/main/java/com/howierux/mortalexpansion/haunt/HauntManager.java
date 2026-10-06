@@ -49,6 +49,10 @@ public final class HauntManager {
     }
 
     public static int setValue(ServerLevel level, ChunkPos pos, int value) {
+        level.getChunk(pos.x,pos.z).setData(ModAttachments.HAUNT_FRACTION,0);
+        return storeWholeValue(level,pos,value);
+    }
+    private static int storeWholeValue(ServerLevel level,ChunkPos pos,int value) {
         int clamped = HauntTier.clampValue(value);
         HauntTier tier = HauntTier.fromValue(clamped);
         LevelChunk chunk = level.getChunk(pos.x, pos.z);
@@ -70,7 +74,21 @@ public final class HauntManager {
     }
 
     public static int addPoints(ServerLevel level, ChunkPos pos, int amount) {
-        return setValue(level, pos, getValue(level, pos) + amount);
+        addHundredths(level,pos,(long)amount*FractionalHaunt.UNITS_PER_POINT);
+        return getValue(level,pos);
+    }
+
+    public static int getHundredths(ServerLevel level,BlockPos pos){return getHundredths(level,new ChunkPos(pos));}
+    public static int getHundredths(ServerLevel level,ChunkPos pos){
+        int units=getValue(level,pos)*FractionalHaunt.UNITS_PER_POINT+level.getChunk(pos.x,pos.z).getData(ModAttachments.HAUNT_FRACTION);
+        return FractionalHaunt.add(units,0);
+    }
+    public static double getPreciseValue(ServerLevel level,BlockPos pos){return getHundredths(level,pos)/(double)FractionalHaunt.UNITS_PER_POINT;}
+    public static void addHundredths(ServerLevel level,BlockPos pos,long amount){addHundredths(level,new ChunkPos(pos),amount);}
+    public static void addHundredths(ServerLevel level,ChunkPos pos,long amount){
+        int result=FractionalHaunt.add(getHundredths(level,pos),amount);
+        storeWholeValue(level,pos,result/FractionalHaunt.UNITS_PER_POINT);
+        level.getChunk(pos.x,pos.z).setData(ModAttachments.HAUNT_FRACTION,result%FractionalHaunt.UNITS_PER_POINT);
     }
 
     /** Whole-tier adjustment retained for systems that truly mean a full tier. */

@@ -223,7 +223,7 @@ public final class ModItems {
 
     public static final DeferredItem<PickaxeItem> BLOODSTONE_PICKAXE = ITEMS.registerItem(
             "bloodstone_pickaxe",
-            properties -> new PickaxeItem(
+            properties -> new com.howierux.mortalexpansion.item.HauntedPickaxeItem(
                     ModTiers.BLOODSTONE,
                     properties.attributes(PickaxeItem.createAttributes(ModTiers.BLOODSTONE, 3.5F, -2.8F))
             ),
@@ -348,7 +348,7 @@ public final class ModItems {
 
     public static final DeferredItem<PickaxeItem> SPECTRALITE_PICKAXE = ITEMS.registerItem(
             "spectralite_pickaxe",
-            properties -> new PickaxeItem(
+            properties -> new com.howierux.mortalexpansion.item.HauntedPickaxeItem(
                     ModTiers.SPECTRALITE,
                     properties.fireResistant().attributes(PickaxeItem.createAttributes(ModTiers.SPECTRALITE, 4.75F, -2.8F))
             ),

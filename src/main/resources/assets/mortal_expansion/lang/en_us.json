@@ -178,8 +178,8 @@
   "book.mortal_expansion.ectcetera.page.intangibles.2": "Use a demi-tangible weapon, spectral arrows or explosions. Ghast fireballs also hurt intangible targets.",
   "book.mortal_expansion.ectcetera.page.intangibles.3": "Intangible mobs pass upward through ordinary blocks. Spectral ground mobs also pass walls. Tracking allows four occupied block cells.",
   "book.mortal_expansion.ectcetera.page.intangibles.4": "Floors stop downward motion. Holy Salt, linked Spirit Torches and spectral-solid materials block upward phasing and tracking.",
-  "book.mortal_expansion.ectcetera.page.equipment.1": "Bloodstone and Spectralite weapons and tools can hit intangibles. Gravestone Swords are an earlier option.",
-  "book.mortal_expansion.ectcetera.page.equipment.2": "Purified Gravestone Swords do 1.5 times the damage of a regular Gravestone Sword against intangible foes.",
+  "book.mortal_expansion.ectcetera.page.equipment.1": "Bloodstone and Spectralite pickaxes mine faster as they wear, up to 2x. They repair using 0.01 chunk Haunt per durability point. Void prevents repairs.",
+  "book.mortal_expansion.ectcetera.page.equipment.2": "Gravestone swords are early demi-tangible weapons. Purified swords do 1.5 times the damage against intangible foes.",
   "book.mortal_expansion.ectcetera.page.equipment.3": "Each Bloodstone or Spectralite armor piece reduces damage from intangible attackers by 5%. Mixed sets stack to 20%.",
   "book.mortal_expansion.ectcetera.page.equipment.4": "Spectralite drops resist fire and lava. Bloodstone and Spectralite shovels cut a vertical 3x3 wall. Sneak to mine one block.",
   "book.mortal_expansion.ectcetera.page.equipment.5": "Craft Bloodstone gear with normal tool and armor shapes. Hold Spectralite shovel Use for two seconds; release to dig up to 64 connected shovelable blocks.",
@@ -324,7 +324,7 @@
   "book.mortal_expansion.ectcetera.page.emf_reader.2": "Hold in either hand to read chunk Haunt. Hold Use to point inward and read personal Haunt. Release to read the chunk again. Scanning costs nothing.",
   "book.mortal_expansion.ectcetera.page.emf_reader.3": "Bulbs by tier: Void 0; Natural 1; Supernatural 2; Dead Rising 3; Demonic 4; Abominable 5; Eldritch 6. The basic reader shows bulbs on its face without a HUD.",
   "item.mortal_expansion.precise_emf_reader": "Precise EMF Reader",
-  "book.mortal_expansion.ectcetera.page.emf_reader.4": "Craft a reader with one Raw Ectoplasm to make a Precise EMF Reader. Digits show hundredths. Hold Use for personal Haunt. Chunk values end in .00.",
+  "book.mortal_expansion.ectcetera.page.emf_reader.4": "Craft a reader with one Raw Ectoplasm to make a Precise EMF Reader. Digits show hundredths of chunk or personal Haunt. Hold Use for personal readings.",
   "tooltip.mortal_expansion.emf_reader.precise": "On-device numeric display: precision to 0.01 Haunt",
   "message.mortal_expansion.haunt.hit": "Something taps just behind you.",
   "message.mortal_expansion.haunt.shadow": "A figure slips out of sight.",
@@ -383,9 +383,11 @@
   "book.mortal_expansion.ectcetera.page.ectothread.1": "Place eight String around one Raw Ectoplasm to weave eight Ectothread. Ghost Garb is another secret, revealed at Dead Rising personal Haunt.",
   "block.mortal_expansion.haunted_farmland": "Haunted Farmland",
   "book.mortal_expansion.ectcetera.page.equipment.7": "Spectralite hoes grow crops on right-click, costing one chunk Haunt per bonemeal pulse. Both spectral hoes make reactive farmland; Dead Rising keeps it moist.",
-  "message.mortal_expansion.crop_haunt_empty": "The chunk has no Haunt left to nourish this crop.",
+  "message.mortal_expansion.crop_haunt_empty": "The chunk has too little Haunt to nourish this crop.",
   "tooltip.mortal_expansion.spectralite_hoe.growth": "Right-click crops: grow using %s chunk Haunt per bonemeal pulse",
   "message.mortal_expansion.shovel_charged": "Shovel charged. Release toward shovelable blocks.",
   "tooltip.mortal_expansion.shovel.area": "Mine a vertical 3x3 face; sneak for one block",
-  "tooltip.mortal_expansion.shovel.charge": "Hold Use %s seconds; release to dig up to %s connected blocks"
+  "tooltip.mortal_expansion.shovel.charge": "Hold Use %s seconds; release to dig up to %s connected blocks",
+  "tooltip.mortal_expansion.pickaxe.wear": "Wear mining speed: %sx (up to 2x)",
+  "tooltip.mortal_expansion.pickaxe.repair": "Repairs draw %s chunk Haunt; faster at higher tiers, disabled at Void"
 }

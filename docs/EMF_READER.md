@@ -30,10 +30,12 @@ Client rendering uses supported item properties, client item extensions and GUI 
 
 ## Precise EMF Reader upgrade
 
-Combine one EMF Reader with one Raw Ectoplasm in any arrangement, including the inventory crafting grid. Both are consumed into one Precise EMF Reader. The upgrade retains chunk/personal controls and six tier bulbs and adds a live decimal number on both faces of the in-hand reader. The HUD also shows the decimal value. Personal readings expose actual hundredths (for example 24.37); chunk state currently stores whole points and therefore displays values such as 37.00. It does not invent fractional chunk state.
+Combine one EMF Reader with one Raw Ectoplasm in any arrangement, including the inventory crafting grid. Both are consumed into one Precise EMF Reader. The upgrade retains chunk/personal controls and six tier bulbs and adds a live decimal number on both faces of the in-hand reader. The HUD also shows the decimal value. Personal readings expose actual hundredths (for example 24.37); chunk state now also stores hundredths and displays its actual fractional value, including small pickaxe repair costs.
 
 A supported client item renderer combines registered baked bulb models with font rendering, avoiding a mixin or hundreds of pre-generated digit models. Renderer model coordinates and first/third-person transforms need manual visual playtesting. Unknown or out-of-scope samples display --.--.
 
 The existing network-only sample now transmits personal hundredths as an integer, retaining the existing whole-point accessor for basic-reader behavior. Server and clients must run the same build; no persistent item or world format changes. Integer arithmetic and explicit formatting avoid floating-point drift or locale-dependent decimal punctuation.
 
 2026-10-05 playtest correction: basic reader first-person model and hand poses now face the camera in both modes; the basic HUD is removed. Verify the revised appearance in-game.
+
+Chunk hundredths were added for [pickaxe repair](HAUNT_PICKAXES.md). Whole/tier readings remain compatible with existing rules; the Precise reader exposes the new fractions.

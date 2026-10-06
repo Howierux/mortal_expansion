@@ -65,3 +65,5 @@ Spiritwell guidance now describes named discovery and spectral footprint trails.
 Raw Ectoplasm books now gradually learn Ectothread, Ghost Garb and Haint Garb through beneficial Insight events, rather than showing their recipes immediately. Pure-upgraded books can learn the combined Spectralite Haint secret. Chapters and recommendations follow remembered knowledge; known book secrets can be shared. See [Spectral Insight](SPECTRAL_INSIGHT.md) for thresholds, actual crafting gates and compatibility.
 
 Equipment guidance includes Haunt-reactive soil made by Bloodstone and Spectralite hoes.
+
+Equipment guidance includes wear-based pickaxe speed and fractional chunk-Haunt repair costs.

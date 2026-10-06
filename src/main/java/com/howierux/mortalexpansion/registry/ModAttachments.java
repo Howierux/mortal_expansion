@@ -114,6 +114,10 @@ public final class ModAttachments {
     public static final Supplier<AttachmentType<Integer>> ECTCETERA_KNOWLEDGE = ATTACHMENTS.register("ectcetera_knowledge",
             () -> AttachmentType.builder(() -> 0).serialize(Codec.intRange(0,15)).copyOnDeath().build());
 
+    /** Exact hundredths retained beside existing chunk tier/progress fields; old chunks default to zero. */
+    public static final Supplier<AttachmentType<Integer>> HAUNT_FRACTION = ATTACHMENTS.register("haunt_fraction",
+            () -> AttachmentType.builder(() -> 0).serialize(Codec.intRange(0,99)).build());
+
     public static void register(IEventBus modBus) {
         ATTACHMENTS.register(modBus);
     }

@@ -27,7 +27,7 @@ public final class EmfReaderItem extends Item {
         // A player's current chunk is already loaded; never scan adjacent or unloaded chunks.
         if (!player.serverLevel().hasChunk(pos.x, pos.z)) return;
         var sample = new EmfReading(player.level().dimension().location(), pos.x, pos.z, player.getUUID(),
-                HauntManager.getValue(player.serverLevel(), pos), PlayerHauntManager.getHundredths(player));
+                HauntManager.getHundredths(player.serverLevel(), pos), PlayerHauntManager.getHundredths(player));
         if (!sample.equals(stack.get(ModDataComponents.EMF_READING.get()))) stack.set(ModDataComponents.EMF_READING.get(), sample);
     }
     public static EmfReading reading(ItemStack stack, Player player) {
@@ -45,7 +45,7 @@ public final class EmfReaderItem extends Item {
     public static int hundredths(ItemStack stack, Player player) {
         var sample = reading(stack, player);
         return sample == null ? -1 : personal(stack, player) ? sample.personalHundredths()
-                : sample.chunkHaunt() * FractionalHaunt.UNITS_PER_POINT;
+                : sample.chunkHundredths();
     }
     @Override public InteractionResultHolder<ItemStack> use(Level level, Player player, InteractionHand hand) {
         var stack = player.getItemInHand(hand);

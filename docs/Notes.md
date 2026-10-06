@@ -462,3 +462,7 @@ Right-click crops with the Spectralite Hoe to apply repeated bonemeal toward mat
 ### 2026-10-05 - Area shovels
 
 Bloodstone/Spectralite shovels mine a centred vertical 3x3x1 face; sneaking preserves single-block digging and normal paths. A main-hand Spectralite shovel charges for two seconds and releases up to 64 face-connected shovel-mineable blocks. Native drops, enchantments, durability and protections are preserved. Build and 88 server tests pass; client aiming/feedback playtesting remains. See [Area shovels](AREA_SHOVELS.md).
+
+### 2026-10-05 - Worn pickaxe speed and Haunt repair
+
+Bloodstone/Spectralite pickaxes approach 2x mining speed as they wear and repair one durability point at tier-dependent intervals (Natural 60s to Eldritch 2s). Repair costs 0.01 current-chunk Haunt and is disabled at Void. Chunk hundredths preserve the tiny cost; the Precise EMF reader now shows them. Build and 94 server tests pass. See [Haunt pickaxes](HAUNT_PICKAXES.md); client/balance playtesting remains.
