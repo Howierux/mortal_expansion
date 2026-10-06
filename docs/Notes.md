@@ -450,3 +450,7 @@ Intangible mobs now rise through ordinary blocks while floors still block descen
 ### 2026-10-05 - Garb drowning correction
 
 Ghost, Haint and Spectralite Haint wearers take normal drowning damage underwater as well as from wall-air exhaustion. Vanilla air/Respiration rules and other intangible defenses remain unchanged. Build and 72 required server tests pass.
+
+### 2026-10-05 - Haunt-reactive farmland
+
+Bloodstone/Spectralite tilling creates special farmland with tier-dependent bonemeal pulses based on chunk Haunt. Dead Rising and higher maintain full moisture. Ordinary farming survival, tool wear and dirt drops remain; losing farmland clears its bonus. Build and 77 server tests pass. See [Haunted farmland](HAUNTED_FARMLAND.md). Visual/balance playtesting remains.

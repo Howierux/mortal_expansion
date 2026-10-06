@@ -17,6 +17,11 @@ public final class ModBlockModels extends BlockStateProvider {
         super(output, MortalExpansion.MOD_ID, helper);
     }
     @Override protected void registerStatesAndModels() {
+        var dry=models().getBuilder("haunted_farmland").parent(new ModelFile.UncheckedModelFile("minecraft:block/farmland"));
+        var wet=models().getBuilder("haunted_farmland_moist").parent(new ModelFile.UncheckedModelFile("minecraft:block/farmland_moist"));
+        getVariantBuilder(com.howierux.mortalexpansion.registry.ModBlocks.HAUNTED_FARMLAND.get()).forAllStates(state ->
+                net.neoforged.neoforge.client.model.generators.ConfiguredModel.builder().modelFile(
+                        state.getValue(net.minecraft.world.level.block.FarmBlock.MOISTURE)==7?wet:dry).build());
         blockModels();
         blockStates();
     }

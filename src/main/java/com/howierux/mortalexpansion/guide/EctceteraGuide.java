@@ -25,7 +25,7 @@ public final class EctceteraGuide {
             new Chapter("torches", 2, 2),
             new Chapter("insight", 2, 2),
             new Chapter("ectothread", 1, 2),
-            new Chapter("equipment", 6, 2),
+            new Chapter("equipment", 7, 2),
             new Chapter("ghost_garb", 3, 2),
             new Chapter("furnaces", 5, 2),
             new Chapter("unlock_pure", 2, 2),

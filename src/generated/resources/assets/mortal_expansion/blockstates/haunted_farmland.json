@@ -1,0 +1,28 @@
+{
+  "variants": {
+    "moisture=0": {
+      "model": "mortal_expansion:block/haunted_farmland"
+    },
+    "moisture=1": {
+      "model": "mortal_expansion:block/haunted_farmland"
+    },
+    "moisture=2": {
+      "model": "mortal_expansion:block/haunted_farmland"
+    },
+    "moisture=3": {
+      "model": "mortal_expansion:block/haunted_farmland"
+    },
+    "moisture=4": {
+      "model": "mortal_expansion:block/haunted_farmland"
+    },
+    "moisture=5": {
+      "model": "mortal_expansion:block/haunted_farmland"
+    },
+    "moisture=6": {
+      "model": "mortal_expansion:block/haunted_farmland"
+    },
+    "moisture=7": {
+      "model": "mortal_expansion:block/haunted_farmland_moist"
+    }
+  }
+}

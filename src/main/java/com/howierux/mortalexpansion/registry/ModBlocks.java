@@ -32,6 +32,9 @@ public final class ModBlocks {
     public static final DeferredRegister.Blocks BLOCKS =
             DeferredRegister.createBlocks(MortalExpansion.MOD_ID);
 
+    public static final DeferredBlock<com.howierux.mortalexpansion.block.HauntedFarmlandBlock> HAUNTED_FARMLAND = BLOCKS.registerBlock(
+            "haunted_farmland",com.howierux.mortalexpansion.block.HauntedFarmlandBlock::new,BlockBehaviour.Properties.ofFullCopy(Blocks.FARMLAND));
+
     public static final DeferredBlock<RotatedPillarBlock> SPIRITWOOD_LOG = BLOCKS.registerBlock(
             "spiritwood_log", RotatedPillarBlock::new,
             BlockBehaviour.Properties.ofFullCopy(Blocks.OAK_LOG)

@@ -23,6 +23,7 @@ public abstract class ModTags<T> extends TagsProvider<T> {
             super(output, Registries.BLOCK, lookup, helper);
         }
         @Override protected void addTags(HolderLookup.Provider lookup) {
+            tag(TagKey.create(registryKey,ResourceLocation.parse("minecraft:mineable/shovel"))).add(ResourceKey.create(registryKey,ResourceLocation.parse("mortal_expansion:haunted_farmland")));
             tag(TagKey.create(registryKey, ResourceLocation.parse("minecraft:fences"))).add(ResourceKey.create(registryKey, ResourceLocation.parse("mortal_expansion:spiritwood_fence"))).add(ResourceKey.create(registryKey, ResourceLocation.parse("mortal_expansion:purified_spiritwood_fence")));
             tag(TagKey.create(registryKey, ResourceLocation.parse("minecraft:leaves"))).add(ResourceKey.create(registryKey, ResourceLocation.parse("mortal_expansion:spiritwood_leaves")));
             tag(TagKey.create(registryKey, ResourceLocation.parse("minecraft:logs"))).add(ResourceKey.create(registryKey, ResourceLocation.parse("mortal_expansion:spiritwood_log"))).add(ResourceKey.create(registryKey, ResourceLocation.parse("mortal_expansion:purified_spiritwood_log")));

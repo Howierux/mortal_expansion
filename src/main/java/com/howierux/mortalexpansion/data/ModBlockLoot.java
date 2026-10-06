@@ -23,6 +23,7 @@ import net.minecraft.core.registries.Registries;
 public final class ModBlockLoot extends BlockLootSubProvider {
     public ModBlockLoot(HolderLookup.Provider lookup) { super(Set.of(), FeatureFlags.REGISTRY.allFlags(), lookup); }
     @Override protected void generate() {
+        dropOther(ModBlocks.HAUNTED_FARMLAND.get(),net.minecraft.world.item.Items.DIRT);
         // Preserve current drops, including one-item slab drops. Balance changes are separate.
         add(ModBlocks.BLOODSTONE_ORE.get(), createOreDrop(ModBlocks.BLOODSTONE_ORE.get(), ModItems.BLOODSTONE.get()));
         add(ModBlocks.BLOODSTONE_ORE_STONE.get(), createOreDrop(ModBlocks.BLOODSTONE_ORE_STONE.get(), ModItems.BLOODSTONE.get()));
@@ -71,7 +72,7 @@ public final class ModBlockLoot extends BlockLootSubProvider {
     @Override protected Iterable<Block> getKnownBlocks() {
         // Only blocks with existing drop definitions: fluids, the well, and currently
         // non-dropping blocks must not acquire new loot as part of a schema migration.
-        return List.of(
+        return List.of(ModBlocks.HAUNTED_FARMLAND.get(),
                 ModBlocks.BLOODSTONE_ORE.get(),
                 ModBlocks.BLOODSTONE_ORE_STONE.get(),
                 ModBlocks.ECTCHANTMENT_MACHINE.get(),

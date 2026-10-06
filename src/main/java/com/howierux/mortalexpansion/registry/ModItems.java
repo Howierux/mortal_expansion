@@ -250,7 +250,7 @@ public final class ModItems {
 
     public static final DeferredItem<HoeItem> BLOODSTONE_HOE = ITEMS.registerItem(
             "bloodstone_hoe",
-            properties -> new HoeItem(
+            properties -> new com.howierux.mortalexpansion.item.HauntedHoeItem(
                     ModTiers.BLOODSTONE,
                     properties.attributes(HoeItem.createAttributes(ModTiers.BLOODSTONE, -2.5F, 0.0F))
             ),
@@ -375,7 +375,7 @@ public final class ModItems {
 
     public static final DeferredItem<HoeItem> SPECTRALITE_HOE = ITEMS.registerItem(
             "spectralite_hoe",
-            properties -> new HoeItem(
+            properties -> new com.howierux.mortalexpansion.item.HauntedHoeItem(
                     ModTiers.SPECTRALITE,
                     properties.fireResistant().attributes(HoeItem.createAttributes(ModTiers.SPECTRALITE, -3.05F, 0.0F))
             ),

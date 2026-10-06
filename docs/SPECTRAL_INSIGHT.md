@@ -15,7 +15,7 @@ Secrets are learned in that order. Earlier families remain known after upgrading
 
 ## Book behavior
 
-The book's tooltip shows awareness and remembered secret count. Its contents hide Ectothread/Ghost/Haint recipe chapters until the book knows them. The new awakening chapter recommends a next step according to current knowledge. An open guide refreshes from synchronized item components when a revelation arrives. Existing upgrade instructions remain at the end of each tier; full contents stay within 127 pages.
+The book's tooltip shows awareness and remembered secret count. Its contents hide Ectothread/Ghost/Haint recipe chapters until the book knows them. The new awakening chapter recommends a next step according to current knowledge. An open guide refreshes from synchronized item components when a revelation arrives. Existing upgrade instructions remain at the end of each tier; full contents stay within 128 pages.
 
 A learned book can teach another player while carried or read. An aware replacement book remembers knowledge its owner has already learned. Storing the book in a chest prevents new personal revelations; stored books do not independently gain secrets.
 
