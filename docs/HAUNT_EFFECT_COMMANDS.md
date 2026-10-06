@@ -16,3 +16,5 @@ A specific effect bypasses minimum tier and automatic cooldown for development t
 Successful events show their normal player hint and an operator confirmation. Unknown, unimplemented or blocked effects report failure. Ghost commands require an immediately usable spawn location instead of putting a ghost into the dimension-wide deferred queue for a different player.
 
 No persistent data or network changes. This uses Brigadier/vanilla entity arguments and the existing server effect operations. Validation covers native command parsing, single-target resolution, permission checks, explicit tier/cooldown bypass, unchanged Haunt/cooldown, random eligibility, missing functions and spectator rejection. Manual feedback and effect-specific world scenarios remain playtest checks.
+
+`spirit_commission` now creates an optional unfinished-business kill quest offer. Accept it from chat; completion pays without returning to an NPC. The target must have no active/unexpired quest and the offer cooldown must be ready.

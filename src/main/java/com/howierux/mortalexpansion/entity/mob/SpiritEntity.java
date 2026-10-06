@@ -73,7 +73,14 @@ public final class SpiritEntity extends AbstractVillager implements HorizontalPh
         return entity instanceof Player ? SpectralPhasingRules.canTrackThroughBlocks(this, entity) : super.hasLineOfSight(entity);
     }
     @Override public InteractionResult mobInteract(Player player, InteractionHand hand) {
-        if (!isAlive() || isBaby() || isTrading() || player.isSecondaryUseActive()) return super.mobInteract(player, hand);
+        if (!isAlive() || isBaby() || isTrading()) return super.mobInteract(player, hand);
+        if(player.isSecondaryUseActive()){
+            if(player instanceof net.minecraft.server.level.ServerPlayer server){
+                if(!com.howierux.mortalexpansion.quest.SpiritQuests.offer(server,getDisplayName().getString()))
+                    com.howierux.mortalexpansion.quest.SpiritQuests.status(server);
+            }
+            return InteractionResult.sidedSuccess(level().isClientSide);
+        }
         if (!level().isClientSide && !getOffers().isEmpty()) {
             setTradingPlayer(player);
             openTradingScreen(player, getDisplayName(), getExpertise());

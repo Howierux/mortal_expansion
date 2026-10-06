@@ -3,7 +3,7 @@
 **Repository:** https://github.com/Howierux/mortal_expansion  
 **Branches:** `main` (consolidated baseline), `dev` (active work)  
 **Docs:** [Overview](Overview.md), [Notes](Notes.md), [Roadmap](ROADMAP.md)  
-**Last Synced:** 2026-10-06 - 15-attempt sapling growth limit synchronized to `dev`; build, 110 required server tests, 128-page guide and 418-resource checks passed. Client movement remains pending.
+**Last Synced:** 2026-10-06 - Spirit mini-quests synchronized to `dev`; build, 115 required server tests and guide/resource checks passed. Client/respawn/balance playtesting remains pending.
 **Current Phase:** Ambient/beneficial Haunt effects implemented; automated validation passed. Major encounters and Ghost’s Garb armor remain separate work.
 
 > **Checklist legend:** `[ ]` not started, `[x]` completed, `[~]` partially completed. Implementation status and gameplay verification are tracked separately. Discussion items are proposals, not approved implementation work.
@@ -269,7 +269,7 @@ See [Feature Ideas Research](FEATURE_IDEAS_RESEARCH.md) for the reference-mod co
 ### Rituals, graves, and spirit relationships
 
 - [ ] **5. Grave offerings and consecration** — Use offerings, candles, and Graves for cleansing, blessings, spirit calling, and maintained consecration. *High priority; medium scope; existing backlog expansion.*
-- [ ] **6. Spirit Villager commissions** — Offer investigations, identification, and ritual services alongside recipe-balanced merchant trades. *High priority; medium scope; new proposal.*
+- [~] **6. Spirit Villager commissions** — Offer investigations, identification, and ritual services alongside recipe-balanced merchant trades. *High priority; medium scope; new proposal.*
 - [ ] **7. Spirit bargains** — Exchange explicit, temporary obligations for benefits; provide visible costs, expiry, and cancellation. *Medium priority; medium scope; new proposal.*
 - [ ] **8. Graveyard harmony and unrest** — Reward maintained graveyards with limited local benefits while distinguishing site order from Haunt intensity. *Medium priority; medium to large scope; new proposal.*
 - [ ] **9. Protective effigies** — Craft owner-bound effigies with visible charges and narrowly defined spectral protections. *Medium priority; small to medium scope; new proposal.*
@@ -493,7 +493,7 @@ Implemented a shapeless EMF Reader + Raw Ectoplasm upgrade. Live digits on the h
 
 - [x] Separate benefit/risk rolls and cooldowns, cumulative tier eligibility, localized chat hints on successful effects.
 - [x] Whispers, spectral empowerment, following footsteps, false apparitions, restless visits, furnace interference, marked presence, pursuers and warned breaches.
-- [ ] Hidden inscription revealing, commissions, spirit workers, recognition services and veil revelations: explicit `missing function` comments; excluded until supporting systems exist.
+- [ ] Hidden inscription revealing, spirit workers, recognition services and veil revelations: explicit `missing function` comments; excluded until supporting systems exist.
 - [ ] Visible harmless follower and further machine interference integrations.
 - [ ] Client effects/hints and extended live-world encounter playtest.
 
@@ -575,3 +575,7 @@ Full Ghost, Haint and Spectralite Haint wearers can move upward through ordinary
 Spectralite axe sapling growth stops after 15 total native bonemeal attempts per click if the tree has not grown. The initial accepted attempt is included in that total and the single 0.10 chunk Haunt payment remains unchanged. The blocked-growth test asserts exactly 15 attempts.
 
 Validation: build and all 110 required server tests passed, including successful Oak/Spiritwood growth and the exact 15-attempt blocked-growth limit.
+
+### 2026-10-06 - Spirit unfinished-business mini-quests
+
+Spirits offer optional mob-slaying tasks via sneak-right-click and clickable chat acceptance. Target selection favors hostile types 75%; three generated difficulty tags control mob pools, kill quotas and tiered emerald/ectoplasm/XP rewards. Progress persists without the giver, and final credited kills pay immediately with inventory-overflow drops. The previously missing Spirit Commission Haunt benefit now offers the same quest directly without a permanent NPC. Build and 115 server tests pass; guide/resource checks pass. Client/respawn/balance playtesting remains. See [Spirit quests](SPIRIT_QUESTS.md).

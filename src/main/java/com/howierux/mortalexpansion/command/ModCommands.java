@@ -31,6 +31,7 @@ public final class ModCommands {
     }
 
     public static void register(CommandDispatcher<CommandSourceStack> dispatcher) {
+        com.howierux.mortalexpansion.quest.SpiritQuestCommands.register(dispatcher);
         dispatcher.register(
                 Commands.literal("mortalexpansion")
                         .requires(source -> source.hasPermission(2))

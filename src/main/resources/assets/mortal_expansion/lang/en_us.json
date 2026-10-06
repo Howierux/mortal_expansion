@@ -1,4 +1,13 @@
 {
+  "message.mortal_expansion.quest.offer": "%s has unfinished business: slay %s %s. Difficulty: %s. Reward: %s.",
+  "message.mortal_expansion.quest.accepted": "Unfinished business accepted: slay %s %s. Your reward will find you.",
+  "message.mortal_expansion.quest.progress": "Unfinished business: %s \u2014 %s/%s",
+  "message.mortal_expansion.quest.complete": "%s finds peace. Reward delivered: %s.",
+  "message.mortal_expansion.quest.none": "No active Spirit quest. Sneak-right-click a Spirit to seek unfinished business.",
+  "message.mortal_expansion.quest.updated": "Spirit quest updated.",
+  "message.mortal_expansion.quest.unavailable": "That quest offer is unavailable, expired, or no longer current.",
+  "message.mortal_expansion.haunt.spirit_commission": "A restless spirit entrusts its unfinished business to you.",
+
   "message.mortal_expansion.haunt.garb_prevented": "Your spectral garb prevented a haunting.",
   "block.mortal_expansion.spiritwood_log": "Spiritwood Log",
   "block.mortal_expansion.spiritwood_leaves": "Spiritwood Leaves",

@@ -496,3 +496,7 @@ Full Ghost, Haint and Spectralite Haint wearers can move upward through ordinary
 Spectralite axe sapling growth stops after 15 total native bonemeal attempts per click if the tree has not grown. The initial accepted attempt is included in that total and the single 0.10 chunk Haunt payment remains unchanged. The blocked-growth test asserts exactly 15 attempts.
 
 Validation: build and all 110 required server tests passed, including successful Oak/Spiritwood growth and the exact 15-attempt blocked-growth limit.
+
+### 2026-10-06 - Spirit unfinished-business mini-quests
+
+Spirits offer optional mob-slaying tasks via sneak-right-click and clickable chat acceptance. Target selection favors hostile types 75%; three generated difficulty tags control mob pools, kill quotas and tiered emerald/ectoplasm/XP rewards. Progress persists without the giver, and final credited kills pay immediately with inventory-overflow drops. The previously missing Spirit Commission Haunt benefit now offers the same quest directly without a permanent NPC. Build and 115 server tests pass; guide/resource checks pass. Client/respawn/balance playtesting remains. See [Spirit quests](SPIRIT_QUESTS.md).

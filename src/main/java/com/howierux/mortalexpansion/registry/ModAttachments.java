@@ -118,6 +118,10 @@ public final class ModAttachments {
     public static final Supplier<AttachmentType<Integer>> HAUNT_FRACTION = ATTACHMENTS.register("haunt_fraction",
             () -> AttachmentType.builder(() -> 0).serialize(Codec.intRange(0,99)).build());
 
+    public static final Supplier<AttachmentType<com.howierux.mortalexpansion.quest.SpiritQuestState>> SPIRIT_QUESTS =
+            ATTACHMENTS.register("spirit_quests", () -> AttachmentType.builder(() -> com.howierux.mortalexpansion.quest.SpiritQuestState.EMPTY)
+                    .serialize(com.howierux.mortalexpansion.quest.SpiritQuestState.CODEC).copyOnDeath().build());
+
     public static void register(IEventBus modBus) {
         ATTACHMENTS.register(modBus);
     }

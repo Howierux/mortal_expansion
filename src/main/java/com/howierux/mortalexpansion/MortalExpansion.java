@@ -74,6 +74,7 @@ public final class MortalExpansion {
         NeoForge.EVENT_BUS.register(com.howierux.mortalexpansion.item.TreeAxeFelling.class);
         NeoForge.EVENT_BUS.register(com.howierux.mortalexpansion.haunt.effects.HauntProtection.class);
         NeoForge.EVENT_BUS.register(ModCommands.class);
+        NeoForge.EVENT_BUS.register(com.howierux.mortalexpansion.quest.SpiritQuests.class);
         NeoForge.EVENT_BUS.register(HauntGenerationHandler.class);
         NeoForge.EVENT_BUS.register(HauntSimulationHandler.class);
         NeoForge.EVENT_BUS.register(com.howierux.mortalexpansion.haunt.PlayerHauntKillHandler.class);
