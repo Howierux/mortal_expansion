@@ -446,3 +446,7 @@ Corrected the basic reader face orientation for both hands and personal scanning
 ### 2026-10-05 - Upward intangible mob movement
 
 Intangible mobs now rise through ordinary blocks while floors still block descent. Spectral materials, Holy Salt and Spirit Torch barriers remain effective across swept upward movement. Spectral pursuit steers toward higher targets; tangible phases and player garb movement are unchanged. See [Upward phasing](UPWARD_PHASING.md). Build and 71 server tests pass; live movement playtesting remains.
+
+### 2026-10-05 - Garb drowning correction
+
+Ghost, Haint and Spectralite Haint wearers take normal drowning damage underwater as well as from wall-air exhaustion. Vanilla air/Respiration rules and other intangible defenses remain unchanged. Build and 72 required server tests pass.

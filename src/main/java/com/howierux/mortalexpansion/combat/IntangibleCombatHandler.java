@@ -41,7 +41,7 @@ public final class IntangibleCombatHandler {
             return;
         }
 
-        if (GhostGarbBreathing.wallDrowning(event.getEntity(), event.getSource())) return;
+        if (GhostGarbBreathing.garbDrowning(event.getEntity(), event.getSource())) return;
         if (!DemiTangibleDamage.canDamageIntangible(event.getSource())) {
             event.setCanceled(true);
             return;

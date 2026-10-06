@@ -53,7 +53,8 @@ public final class GhostGarbGameTests {
         helper.assertTrue(player.getAirSupply() == 0 && player.getHealth() == health - 2, "Empty wall air causes one heart of vanilla drowning damage");
         helper.getLevel().setBlock(pos.above(), Blocks.AIR.defaultBlockState(), 3);
         player.baseTick(); helper.assertTrue(player.getAirSupply() == 4, "Emerging refills four air per tick");
-        helper.assertFalse(player.hurt(player.damageSources().drown(), 2), "Ordinary drowning immunity outside walls is unchanged");
+        player.invulnerableTime = 0;
+        helper.assertTrue(player.hurt(player.damageSources().drown(), 2), "Ordinary drowning also bypasses garb intangibility outside walls");
         player.setItemSlot(EquipmentSlot.HEAD, ItemStack.EMPTY);
         helper.getLevel().setBlock(pos.above(), Blocks.STONE.defaultBlockState(), 3);
         helper.assertFalse(com.howierux.mortalexpansion.combat.GhostGarbBreathing.headInsideWall(player), "Partial set does not use wall air mechanic");
@@ -239,6 +240,30 @@ public final class GhostGarbGameTests {
         player.discard(); helper.succeed();
     }
 
+    @GameTest(template = "deferred_items_test")
+    public static void all_garb_families_take_native_underwater_drowning_damage(GameTestHelper helper) {
+        net.minecraft.world.item.Item[][] sets={
+            {ModItems.GHOST_GARB_HELMET.get(),ModItems.GHOST_GARB_CHESTPLATE.get(),ModItems.GHOST_GARB_LEGGINGS.get(),ModItems.GHOST_GARB_BOOTS.get()},
+            {ModItems.HAINT_GARB_HELMET.get(),ModItems.HAINT_GARB_CHESTPLATE.get(),ModItems.HAINT_GARB_LEGGINGS.get(),ModItems.HAINT_GARB_BOOTS.get()},
+            {ModItems.SPECTRALITE_HAINT_HELMET.get(),ModItems.SPECTRALITE_HAINT_CHESTPLATE.get(),ModItems.SPECTRALITE_HAINT_LEGGINGS.get(),ModItems.SPECTRALITE_HAINT_BOOTS.get()}};
+        var slots=new EquipmentSlot[]{EquipmentSlot.HEAD,EquipmentSlot.CHEST,EquipmentSlot.LEGS,EquipmentSlot.FEET};
+        for(var set:sets){
+            var player=helper.makeMockServerPlayerInLevel();player.setGameMode(GameType.SURVIVAL);
+            for(int i=0;i<4;i++)player.setItemSlot(slots[i],new ItemStack(set[i]));
+            for(int i=0;i<61;i++)player.tick();player.doTick();
+            var pos=helper.absolutePos(new BlockPos(5,2,5));
+            helper.getLevel().setBlock(pos,Blocks.WATER.defaultBlockState(),3);
+            helper.getLevel().setBlock(pos.above(),Blocks.WATER.defaultBlockState(),3);
+            player.setPos(pos.getX()+0.5,pos.getY(),pos.getZ()+0.5);player.baseTick();
+            helper.assertTrue(player.isEyeInFluid(net.minecraft.tags.FluidTags.WATER),"Test player is genuinely submerged");
+            player.setAirSupply(-19);player.invulnerableTime=0;float health=player.getHealth();player.baseTick();
+            helper.assertTrue(player.getAirSupply()==0 && player.getHealth()==health-2,"Every full garb family takes normal one-heart drowning damage");
+            player.invulnerableTime=0;
+            helper.assertFalse(player.hurt(player.damageSources().generic(),2),"Ordinary damage immunity remains intact");
+            player.discard();
+        }
+        helper.succeed();
+    }
 }
 
 

@@ -32,7 +32,8 @@ public final class GhostGarbBreathing {
         event.setCanBreathe(player.getAbilities().invulnerable || MobEffectUtil.hasWaterBreathing(player));
         event.setRefillAirAmount(0);
     }
-    public static boolean wallDrowning(LivingEntity target, DamageSource source) {
-        return source.is(DamageTypes.DROWN) && headInsideWall(target);
+    public static boolean garbDrowning(LivingEntity target, DamageSource source) {
+        // Both ordinary underwater drowning and wall-air exhaustion retain vanilla damage.
+        return source.is(DamageTypes.DROWN) && GhostGarbPhasing.active(target);
     }
 }

@@ -133,11 +133,13 @@ prevent depletion without refilling air while inside walls. Spectators and
 partial garb sets do not use this rule.
 
 After air reaches -20, the native drowning tick resets it to zero and inflicts
-two damage (one heart), repeating on the standard cadence. Only drowning hits
-while actively phasing with the head inside a wall bypass garb intangibility.
-Ordinary drowning immunity outside walls and other intangible damage rules
-remain intact. No new damage IDs, saved fields, custom HUD, or mixins are needed.
+two damage (one heart), repeating on the standard cadence. Drowning bypasses
+player garb intangibility both underwater and inside walls, including full Ghost,
+Haint and Spectralite Haint sets. Respiration, Water Breathing and other vanilla
+air rules still apply; other intangible damage rules remain unchanged.
 During migration, verify the breathing event's consumption/refill contract and
 the native Respiration oxygen attribute. Server tests cover real base ticks,
 head/feet/glass geometry, depletion/damage/refill, Haint Respiration III, potion
 and creative exemptions. Manual HUD and client movement still need playtesting.
+
+2026-10-05: corrected normal underwater drowning immunity. Build and all 72 required server tests pass, including actual native submerged air exhaustion for all three garb families.

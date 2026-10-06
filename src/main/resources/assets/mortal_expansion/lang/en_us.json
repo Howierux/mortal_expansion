@@ -292,7 +292,7 @@
   "book.mortal_expansion.ectcetera.chapter.ghost_garb": "Ghost Garb",
   "book.mortal_expansion.ectcetera.page.ghost_garb.1": "Use Ectothread in normal armor patterns to craft Ghost Garb. Its recipe is learned through a Spectral Insight, not by merely holding the material.",
   "book.mortal_expansion.ectcetera.page.ghost_garb.2": "A full garb set lets you pass through walls and blocks negative haunt effects. Ghost Garb has leather defense and iron durability.",
-  "book.mortal_expansion.ectcetera.page.ghost_garb.3": "Hold your breath while inside walls; Respiration helps. Magic, explosions and spectral attacks can still hurt you.",
+  "book.mortal_expansion.ectcetera.page.ghost_garb.3": "Inside walls, your air drains as underwater. Respiration slows the drain. Ghost and Haint garb do not prevent drowning damage, either in water or inside walls.",
   "book.mortal_expansion.ectcetera.chapter.haint_garb": "Purified Garb",
   "book.mortal_expansion.ectcetera.page.haint_garb.1": "Eight String around Pure Ectoplasm make eight Purified Ectothread. Craft Haint Garb with normal armor patterns.",
   "book.mortal_expansion.ectcetera.page.haint_garb.2": "In smithing, add Pure Ectoplasm to a Ghost Garb part to upgrade it. Leave the template slot empty. Full Haint sets gain a powerful jump boost.",
