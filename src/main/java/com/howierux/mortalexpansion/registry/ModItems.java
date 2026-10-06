@@ -241,7 +241,7 @@ public final class ModItems {
 
     public static final DeferredItem<ShovelItem> BLOODSTONE_SHOVEL = ITEMS.registerItem(
             "bloodstone_shovel",
-            properties -> new ShovelItem(
+            properties -> new com.howierux.mortalexpansion.item.AreaShovelItem(
                     ModTiers.BLOODSTONE,
                     properties.attributes(ShovelItem.createAttributes(ModTiers.BLOODSTONE, 4.25F, -3.0F))
             ),
@@ -366,7 +366,7 @@ public final class ModItems {
 
     public static final DeferredItem<ShovelItem> SPECTRALITE_SHOVEL = ITEMS.registerItem(
             "spectralite_shovel",
-            properties -> new ShovelItem(
+            properties -> new com.howierux.mortalexpansion.item.AreaShovelItem(
                     ModTiers.SPECTRALITE,
                     properties.fireResistant().attributes(ShovelItem.createAttributes(ModTiers.SPECTRALITE, 5.725F, -3.0F))
             ),

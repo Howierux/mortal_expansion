@@ -181,8 +181,8 @@
   "book.mortal_expansion.ectcetera.page.equipment.1": "Bloodstone and Spectralite weapons and tools can hit intangibles. Gravestone Swords are an earlier option.",
   "book.mortal_expansion.ectcetera.page.equipment.2": "Purified Gravestone Swords do 1.5 times the damage of a regular Gravestone Sword against intangible foes.",
   "book.mortal_expansion.ectcetera.page.equipment.3": "Each Bloodstone or Spectralite armor piece reduces damage from intangible attackers by 5%. Mixed sets stack to 20%.",
-  "book.mortal_expansion.ectcetera.page.equipment.4": "Dropped Spectralite equipment resists fire and lava.",
-  "book.mortal_expansion.ectcetera.page.equipment.5": "Craft Bloodstone gear with the usual tool and armor shapes.",
+  "book.mortal_expansion.ectcetera.page.equipment.4": "Spectralite drops resist fire and lava. Bloodstone and Spectralite shovels cut a vertical 3x3 wall. Sneak to mine one block.",
+  "book.mortal_expansion.ectcetera.page.equipment.5": "Craft Bloodstone gear with normal tool and armor shapes. Hold Spectralite shovel Use for two seconds; release to dig up to 64 connected shovelable blocks.",
   "book.mortal_expansion.ectcetera.page.equipment.6": "At a smithing table, combine Bloodstone gear, a Netherite Upgrade template and a Netherite ingot to make matching Spectralite gear.",
   "book.mortal_expansion.ectcetera.page.ectoplasm.1": "Ectoplasm drops from Ghasts, Ghosts, Spirits, Elementals, Haunts and Haints.",
   "book.mortal_expansion.ectcetera.page.ectoplasm.2": "Pure Ectoplasm is stronger machine fuel and a purification ingredient. Make it with a heated cauldron or Purification Station.",
@@ -384,5 +384,8 @@
   "block.mortal_expansion.haunted_farmland": "Haunted Farmland",
   "book.mortal_expansion.ectcetera.page.equipment.7": "Spectralite hoes grow crops on right-click, costing one chunk Haunt per bonemeal pulse. Both spectral hoes make reactive farmland; Dead Rising keeps it moist.",
   "message.mortal_expansion.crop_haunt_empty": "The chunk has no Haunt left to nourish this crop.",
-  "tooltip.mortal_expansion.spectralite_hoe.growth": "Right-click crops: grow using %s chunk Haunt per bonemeal pulse"
+  "tooltip.mortal_expansion.spectralite_hoe.growth": "Right-click crops: grow using %s chunk Haunt per bonemeal pulse",
+  "message.mortal_expansion.shovel_charged": "Shovel charged. Release toward shovelable blocks.",
+  "tooltip.mortal_expansion.shovel.area": "Mine a vertical 3x3 face; sneak for one block",
+  "tooltip.mortal_expansion.shovel.charge": "Hold Use %s seconds; release to dig up to %s connected blocks"
 }

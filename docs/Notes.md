@@ -458,3 +458,7 @@ Bloodstone/Spectralite tilling creates special farmland with tier-dependent bone
 ### 2026-10-05 - Active Spectralite Hoe growth
 
 Right-click crops with the Spectralite Hoe to apply repeated bonemeal toward maturity, at one target-chunk Haunt point per accepted pulse. Empty chunks stop further growth; mature/unsupported targets and event vetoes cost nothing. Bloodstone and normal tilling behavior remain unchanged. Build and 82 required server tests pass. See [Spectralite Hoe growth](SPECTRALITE_HOE_GROWTH.md).
+
+### 2026-10-05 - Area shovels
+
+Bloodstone/Spectralite shovels mine a centred vertical 3x3x1 face; sneaking preserves single-block digging and normal paths. A main-hand Spectralite shovel charges for two seconds and releases up to 64 face-connected shovel-mineable blocks. Native drops, enchantments, durability and protections are preserved. Build and 88 server tests pass; client aiming/feedback playtesting remains. See [Area shovels](AREA_SHOVELS.md).
