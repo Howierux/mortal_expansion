@@ -392,6 +392,7 @@
   "tooltip.mortal_expansion.pickaxe.wear": "Wear mining speed: %sx (up to 2x)",
   "tooltip.mortal_expansion.pickaxe.repair": "Repairs draw %s chunk Haunt; faster at higher tiers, disabled at Void",
   "tooltip.mortal_expansion.axe.tree": "Fells connected tree logs; sneak to cut one log",
-  "tooltip.mortal_expansion.axe.grow": "Right-click saplings: bonemeal for %s chunk Haunt",
+  "tooltip.mortal_expansion.axe.grow": "Right-click saplings: grow a tree for %s chunk Haunt once",
+  "message.mortal_expansion.sapling_growth_blocked": "The sapling cannot finish growing. Check its space and growing conditions.",
   "message.mortal_expansion.sapling_haunt_low": "The chunk has too little Haunt to nourish this sapling."
 }

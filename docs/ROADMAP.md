@@ -3,7 +3,7 @@
 **Repository:** https://github.com/Howierux/mortal_expansion  
 **Branches:** `main` (consolidated baseline), `dev` (active work)  
 **Docs:** [Overview](Overview.md), [Notes](Notes.md), [Roadmap](ROADMAP.md)  
-**Last Synced:** 2026-10-06 - Shovel face targeting synchronized to `dev`; build, 107 required server tests, 128-page guide and 418-resource checks passed. Client aiming remains pending.
+**Last Synced:** 2026-10-06 - Single-click sapling growth synchronized to `dev`; build, 108 required server tests, 128-page guide and 418-resource checks passed. Client feedback remains pending.
 **Current Phase:** Ambient/beneficial Haunt effects implemented; automated validation passed. Major encounters and Ghost’s Garb armor remain separate work.
 
 > **Checklist legend:** `[ ]` not started, `[x]` completed, `[~]` partially completed. Implementation status and gameplay verification are tracked separately. Discussion items are proposals, not approved implementation work.
@@ -559,3 +559,9 @@ Validation: build and all 105 required server tests passed, including all three 
 ### 2026-10-06 - Shovel face targeting
 
 The normal Bloodstone/Spectralite shovel area follows the targeted block face, independently of player facing: side faces give vertical planes, top/bottom faces give horizontal planes. Mining-start face is retained through STOP and cleared on ABORT; a matching native ray hit supports server-driven breaks. Unknown faces do not trigger an area. The charged connected dig and ordinary harvest/protection semantics remain. Build and 107 server tests pass, including all six faces with both shovels, changed aim during mining and aborted targeting. Guide/resource checks pass; client aiming remains a playtest check. See [Area shovels](AREA_SHOVELS.md).
+
+### 2026-10-06 - Single-click Spectralite sapling growth
+
+One Spectralite axe right-click repeats native bonemeal until the sapling grows, charging 0.10 target-chunk Haunt once after the first accepted pulse. Free retries keep normal grower hooks, stages and tree selection. Growth stops on a veto, unsupported target or 64-attempt safety limit; a remaining sapling gets a space/conditions hint. Initial rejection spends nothing, while an accepted blocked attempt pays the single starting cost. No saved-state changes. See [Tree axes](TREE_AXES.md).
+
+Validation: build and all 108 server tests pass, including stage-zero Oak/Spiritwood growth in one click, one-payment retries under blocked growth, insufficient funds and initial bonemeal cancellation. Guide/resource checks pass; client feedback and growth balance remain playtest checks.

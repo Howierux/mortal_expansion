@@ -68,14 +68,14 @@ public final class TreeAxeGameTests {
     public static void spectralite_sapling_use_pays_fractional_chunk_cost_and_keeps_personal_haunt(GameTestHelper h){
         var pos=h.absolutePos(new BlockPos(6,2,6));planting(h,pos,Blocks.OAK_SAPLING);var p=player(h,ModItems.SPECTRALITE_AXE.get(),pos);HauntManager.setValue(h.getLevel(),pos,20);PlayerHauntManager.setValue(p,33);
         h.getLevel().getRandom().setSeed(12345);use(h,p,pos);
-        h.assertTrue(h.getLevel().getBlockState(pos).getValue(SaplingBlock.STAGE)==1,"Native bonemeal advances the sapling");
+        h.assertTrue(h.getLevel().getBlockState(pos).is(net.minecraft.tags.BlockTags.LOGS),"A single click grows the stage-zero sapling into a tree");
         h.assertTrue(HauntManager.getHundredths(h.getLevel(),pos)==1990 && PlayerHauntManager.getValue(p)==33 && p.getMainHandItem().getDamageValue()==0,"Growth costs only 0.10 target-chunk Haunt");p.discard();h.succeed();
     }
     @GameTest(template="deferred_items_test")
     public static void native_growth_creates_vanilla_and_spiritwood_trees(GameTestHelper h){
         var pos=h.absolutePos(new BlockPos(6,2,6));var p=player(h,ModItems.SPECTRALITE_AXE.get(),pos);
         for(var sapling:new net.minecraft.world.level.block.Block[]{Blocks.OAK_SAPLING,ModBlocks.SPIRITWOOD_SAPLING.get()}){
-            planting(h,pos,sapling);h.getLevel().setBlock(pos,sapling.defaultBlockState().setValue(SaplingBlock.STAGE,1),3);HauntManager.setValue(h.getLevel(),pos,20);
+            planting(h,pos,sapling);HauntManager.setValue(h.getLevel(),pos,20);
             h.getLevel().getRandom().setSeed(12345);use(h,p,pos);
             h.assertTrue(h.getLevel().getBlockState(pos).is(net.minecraft.tags.BlockTags.LOGS),"Native vanilla and Spiritwood tree grower behavior is retained");
             h.assertTrue(HauntManager.getHundredths(h.getLevel(),pos)==1990,"Successful tree growth still uses one application cost");
@@ -90,5 +90,18 @@ public final class TreeAxeGameTests {
         java.util.function.Consumer<net.neoforged.neoforge.event.entity.player.BonemealEvent> cancel=e->{if(e.getPlayer()==p && e.getPos().equals(pos))e.setCanceled(true);};net.neoforged.neoforge.common.NeoForge.EVENT_BUS.addListener(cancel);
         try{use(h,p,pos);h.assertTrue(HauntManager.getHundredths(h.getLevel(),pos)==2000 && h.getLevel().getBlockState(pos).getValue(SaplingBlock.STAGE)==0,"Native bonemeal veto preserves funds and sapling");}
         finally{net.neoforged.neoforge.common.NeoForge.EVENT_BUS.unregister(cancel);p.discard();}h.succeed();
+    }
+
+    @GameTest(template="deferred_items_test")
+    public static void obstructed_tree_stops_after_bounded_pulses_and_pays_only_once(GameTestHelper h){
+        var pos=h.absolutePos(new BlockPos(6,2,6));planting(h,pos,Blocks.OAK_SAPLING);
+        for(var at:BlockPos.betweenClosed(pos.offset(-4,1,-4),pos.offset(4,12,4)))h.getLevel().setBlock(at,Blocks.STONE.defaultBlockState(),3);
+        var p=player(h,ModItems.SPECTRALITE_AXE.get(),pos);HauntManager.setValue(h.getLevel(),pos,0);HauntManager.addHundredths(h.getLevel(),pos,10);
+        int[] pulses={0};java.util.function.Consumer<net.neoforged.neoforge.event.entity.player.BonemealEvent> count=e->{if(e.getPlayer()==p && e.getPos().equals(pos))pulses[0]++;};
+        net.neoforged.neoforge.common.NeoForge.EVENT_BUS.addListener(count);
+        try{use(h,p,pos);
+            h.assertTrue(pulses[0]==com.howierux.mortalexpansion.item.SpectralSaplingGrowth.MAX_PULSES,"A blocked tree cannot loop indefinitely");
+            h.assertTrue(h.getLevel().getBlockState(pos).is(Blocks.OAK_SAPLING) && HauntManager.getHundredths(h.getLevel(),pos)==0,"All retry pulses share one starting cost even with exactly 0.10 Haunt");
+        }finally{net.neoforged.neoforge.common.NeoForge.EVENT_BUS.unregister(count);p.discard();}h.succeed();
     }
 }
