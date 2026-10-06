@@ -470,3 +470,9 @@ Bloodstone/Spectralite pickaxes approach 2x mining speed as they wear and repair
 ### 2026-10-06 - Tree axes and targeted Haunt testing
 
 Bloodstone/Spectralite axes fell connected tree logs with normal harvesting and durability; sneak for one log. Leaves decay normally. Spectralite sapling bonemeal costs 0.10 target-chunk Haunt. Operators can trigger specific or random events with `/mortalexpansion haunt effect <player> <effect|random>`, retaining underlying protections and effect requirements. See [Tree axes](TREE_AXES.md) and [Haunt commands](HAUNT_EFFECT_COMMANDS.md). Build and all 103 required server tests pass; guide validation passes with 30 chapters and 128 pages. Client and balance playtesting remain.
+
+### 2026-10-06 - Prevented haunting feedback
+
+Full Ghost, Haint and Spectralite Haint sets now retain the normal personal-tier negative event chance and weighted selection. A successful roll shows the action-bar message "Your spectral garb prevented a haunting." and starts the existing 60-second risk cooldown without executing the effect, assigning an active negative duration or queuing a ghost. Benefits remain independent. Failed rolls, Void and cooldown suppression produce no prevention message. Blessings/wards without garb keep their existing suppression behavior. No saved-data or networking changes.
+
+Validation: build and all 105 required server tests passed, including all three spectral sets, successful/failed rolls, Void, risk cooldown and independent benefits. Guide and generated-resource checks pass; action-bar visuals remain a client playtest check.

@@ -80,12 +80,13 @@ public final class HauntEventController {
         return Arrays.stream(HauntEffectKind.values())
                 .filter(kind -> kind.negative == negative && kind.eligible(tier, protectedPlayer)).toList();
     }
-    private static void rollPool(ServerPlayer player, boolean negative) {
+    public static void rollPool(ServerPlayer player, boolean negative) {
         if (!ready(player, negative)) return;
         int tier = PlayerHauntManager.getTier(player).id();
-        if (negative && HauntProtection.protectedPlayer(player)) return;
+        boolean garb = negative && HauntProtection.fullGarb(player);
+        if (negative && HauntProtection.protectedPlayer(player) && !garb) return;
         if (player.getRandom().nextDouble() >= HauntEffectKind.chance(tier)) return;
-        var choices = new ArrayList<>(choices(tier, HauntProtection.protectedPlayer(player), negative));
+        var choices = new ArrayList<>(choices(tier, !garb && HauntProtection.protectedPlayer(player), negative));
         while (!choices.isEmpty()) {
             int roll = player.getRandom().nextInt(choices.stream().mapToInt(kind -> kind.weight).sum());
             HauntEffectKind chosen = choices.getFirst();
@@ -94,6 +95,14 @@ public final class HauntEventController {
                 if (roll < 0) { chosen = kind; break; }
             }
             choices.remove(chosen);
+            if (garb) {
+                // Roll and select normally, but never execute a prevented risk or defer a ghost.
+                // Use the existing risk cooldown so feedback does not spam or delay benefits.
+                completed(player, 0, true);
+                player.displayClientMessage(net.minecraft.network.chat.Component.translatable(
+                    "message.mortal_expansion.haunt.garb_prevented"), true);
+                return;
+            }
             if (tryEffect(player, chosen)) return;
         }
     }
