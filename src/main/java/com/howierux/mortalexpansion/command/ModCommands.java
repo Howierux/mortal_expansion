@@ -30,11 +30,12 @@ public final class ModCommands {
         register(event.getDispatcher());
     }
 
-    private static void register(CommandDispatcher<CommandSourceStack> dispatcher) {
+    public static void register(CommandDispatcher<CommandSourceStack> dispatcher) {
         dispatcher.register(
                 Commands.literal("mortalexpansion")
                         .requires(source -> source.hasPermission(2))
                         .then(Commands.literal("haunt")
+                                .then(HauntEffectCommands.branch())
                                 .then(Commands.literal("get")
                                         .executes(ModCommands::getHaunt))
                                 .then(Commands.literal("natural")

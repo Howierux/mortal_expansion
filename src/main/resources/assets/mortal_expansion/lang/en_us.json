@@ -389,5 +389,8 @@
   "tooltip.mortal_expansion.shovel.area": "Mine a vertical 3x3 face; sneak for one block",
   "tooltip.mortal_expansion.shovel.charge": "Hold Use %s seconds; release to dig up to %s connected blocks",
   "tooltip.mortal_expansion.pickaxe.wear": "Wear mining speed: %sx (up to 2x)",
-  "tooltip.mortal_expansion.pickaxe.repair": "Repairs draw %s chunk Haunt; faster at higher tiers, disabled at Void"
+  "tooltip.mortal_expansion.pickaxe.repair": "Repairs draw %s chunk Haunt; faster at higher tiers, disabled at Void",
+  "tooltip.mortal_expansion.axe.tree": "Fells connected tree logs; sneak to cut one log",
+  "tooltip.mortal_expansion.axe.grow": "Right-click saplings: bonemeal for %s chunk Haunt",
+  "message.mortal_expansion.sapling_haunt_low": "The chunk has too little Haunt to nourish this sapling."
 }

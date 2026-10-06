@@ -71,6 +71,7 @@ public final class MortalExpansion {
         NeoForge.EVENT_BUS.register(com.howierux.mortalexpansion.discovery.SpectralDiscovery.class);
         NeoForge.EVENT_BUS.register(com.howierux.mortalexpansion.guide.SpectralInsight.class);
         NeoForge.EVENT_BUS.register(com.howierux.mortalexpansion.item.AreaShovelMining.class);
+        NeoForge.EVENT_BUS.register(com.howierux.mortalexpansion.item.TreeAxeFelling.class);
         NeoForge.EVENT_BUS.register(com.howierux.mortalexpansion.haunt.effects.HauntProtection.class);
         NeoForge.EVENT_BUS.register(ModCommands.class);
         NeoForge.EVENT_BUS.register(HauntGenerationHandler.class);

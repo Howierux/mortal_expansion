@@ -232,7 +232,7 @@ public final class ModItems {
 
     public static final DeferredItem<AxeItem> BLOODSTONE_AXE = ITEMS.registerItem(
             "bloodstone_axe",
-            properties -> new AxeItem(
+            properties -> new com.howierux.mortalexpansion.item.TreeAxeItem(
                     ModTiers.BLOODSTONE,
                     properties.attributes(AxeItem.createAttributes(ModTiers.BLOODSTONE, 9.5F, -3.0F))
             ),
@@ -357,7 +357,7 @@ public final class ModItems {
 
     public static final DeferredItem<AxeItem> SPECTRALITE_AXE = ITEMS.registerItem(
             "spectralite_axe",
-            properties -> new AxeItem(
+            properties -> new com.howierux.mortalexpansion.item.TreeAxeItem(
                     ModTiers.SPECTRALITE,
                     properties.fireResistant().attributes(AxeItem.createAttributes(ModTiers.SPECTRALITE, 12.55F, -3.0F))
             ),

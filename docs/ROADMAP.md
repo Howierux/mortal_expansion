@@ -3,7 +3,7 @@
 **Repository:** https://github.com/Howierux/mortal_expansion  
 **Branches:** `main` (consolidated baseline), `dev` (active work)  
 **Docs:** [Overview](Overview.md), [Notes](Notes.md), [Roadmap](ROADMAP.md)  
-**Last Synced:** 2026-10-05 - Haunt pickaxes and fractional chunk Haunt synchronized to `dev`; build, 94 required server tests, 128-page guide and 418-resource checks passed. Client visuals remain pending.
+**Last Synced:** 2026-10-06 - Tree axes and targeted Haunt commands synchronized to `dev`; build, 103 required server tests and 128-page guide checks passed. Client visuals remain pending.
 **Current Phase:** Ambient/beneficial Haunt effects implemented; automated validation passed. Major encounters and Ghost’s Garb armor remain separate work.
 
 > **Checklist legend:** `[ ]` not started, `[x]` completed, `[~]` partially completed. Implementation status and gameplay verification are tracked separately. Discussion items are proposals, not approved implementation work.
@@ -545,3 +545,7 @@ Bloodstone/Spectralite shovels mine a centred vertical 3x3x1 face; sneaking pres
 ### 2026-10-05 - Worn pickaxe speed and Haunt repair
 
 Bloodstone/Spectralite pickaxes approach 2x mining speed as they wear and repair one durability point at tier-dependent intervals (Natural 60s to Eldritch 2s). Repair costs 0.01 current-chunk Haunt and is disabled at Void. Chunk hundredths preserve the tiny cost; the Precise EMF reader now shows them. Build and 94 server tests pass. See [Haunt pickaxes](HAUNT_PICKAXES.md); client/balance playtesting remains.
+
+### 2026-10-06 - Tree axes and targeted Haunt testing
+
+Bloodstone/Spectralite axes fell connected tree logs with normal harvesting and durability; sneak for one log. Leaves decay normally. Spectralite sapling bonemeal costs 0.10 target-chunk Haunt. Operators can trigger specific or random events with `/mortalexpansion haunt effect <player> <effect|random>`, retaining underlying protections and effect requirements. See [Tree axes](TREE_AXES.md) and [Haunt commands](HAUNT_EFFECT_COMMANDS.md). Build and all 103 required server tests pass; guide validation passes with 30 chapters and 128 pages. Client and balance playtesting remain.
