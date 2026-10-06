@@ -3,7 +3,7 @@
 **Repository:** https://github.com/Howierux/mortal_expansion  
 **Branches:** `main` (consolidated baseline), `dev` (active work)  
 **Docs:** [Overview](Overview.md), [Notes](Notes.md), [Roadmap](ROADMAP.md)  
-**Last Synced:** 2026-10-06 - Garb prevention feedback synchronized to `dev`; build, 105 required server tests, 128-page guide and 418-resource checks passed. Client visuals remain pending.
+**Last Synced:** 2026-10-06 - Shovel face targeting synchronized to `dev`; build, 107 required server tests, 128-page guide and 418-resource checks passed. Client aiming remains pending.
 **Current Phase:** Ambient/beneficial Haunt effects implemented; automated validation passed. Major encounters and Ghost’s Garb armor remain separate work.
 
 > **Checklist legend:** `[ ]` not started, `[x]` completed, `[~]` partially completed. Implementation status and gameplay verification are tracked separately. Discussion items are proposals, not approved implementation work.
@@ -555,3 +555,7 @@ Bloodstone/Spectralite axes fell connected tree logs with normal harvesting and 
 Full Ghost, Haint and Spectralite Haint sets now retain the normal personal-tier negative event chance and weighted selection. A successful roll shows the action-bar message "Your spectral garb prevented a haunting." and starts the existing 60-second risk cooldown without executing the effect, assigning an active negative duration or queuing a ghost. Benefits remain independent. Failed rolls, Void and cooldown suppression produce no prevention message. Blessings/wards without garb keep their existing suppression behavior. No saved-data or networking changes.
 
 Validation: build and all 105 required server tests passed, including all three spectral sets, successful/failed rolls, Void, risk cooldown and independent benefits. Guide and generated-resource checks pass; action-bar visuals remain a client playtest check.
+
+### 2026-10-06 - Shovel face targeting
+
+The normal Bloodstone/Spectralite shovel area follows the targeted block face, independently of player facing: side faces give vertical planes, top/bottom faces give horizontal planes. Mining-start face is retained through STOP and cleared on ABORT; a matching native ray hit supports server-driven breaks. Unknown faces do not trigger an area. The charged connected dig and ordinary harvest/protection semantics remain. Build and 107 server tests pass, including all six faces with both shovels, changed aim during mining and aborted targeting. Guide/resource checks pass; client aiming remains a playtest check. See [Area shovels](AREA_SHOVELS.md).

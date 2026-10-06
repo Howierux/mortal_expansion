@@ -1,6 +1,6 @@
 # Bloodstone and Spectralite area shovels
 
-Implemented 2026-10-05. Both shovels mine a vertical 3x3x1 plane centred on a normally mined shovel-mineable block. The plane faces the player's horizontal direction: looking east/west gives a Y/Z plane, north/south gives an X/Y plane. Looking down still produces a vertical plane. Air, unbreakable blocks, non-shovel materials, unloaded positions and blocks the tool cannot harvest are skipped.
+Updated 2026-10-06. Both shovels mine a 3x3x1 plane centred on a normally mined shovel-mineable block and perpendicular to the targeted block face. East/west faces give a Y/Z plane, north/south faces give an X/Y plane, and top/bottom faces give a horizontal X/Z plane. Player facing does not choose the plane. Air, unbreakable blocks, non-shovel materials, unloaded positions and blocks the tool cannot harvest are skipped.
 
 Sneak while mining to break only the selected block. Sneak right-click retains normal shovel path-making.
 
@@ -14,7 +14,7 @@ Both modes stop when the held tool breaks or changes. Creative mode retains its 
 
 ## Implementation and migration
 
-Normal BreakEvent selection queues a one-tick follow-up. Survival BlockDropsEvent confirms real player harvesting, and the follow-up checks the centre was actually removed and the original tool remains held. Creative breaks verify removal without depending on drops. Drop-event cancellation still retains its ordinary loot meaning. A scoped recursion guard prevents extra breaks from starting their own 3x3 jobs and prevents charged breaks from scheduling additional planes.
+The server LeftClickBlock START event records the targeted face. STOP does not overwrite it; ABORT clears it. Records expire after 60 seconds and require the same level, position and held stack. Server-driven breaks without a record use a matching current ray hit; an unknown face leaves only normal single-block mining. Normal BreakEvent selection queues a one-tick follow-up. Survival BlockDropsEvent confirms real player harvesting, and the follow-up checks the centre was actually removed and the original tool remains held. Creative breaks verify removal without depending on drops. Drop-event cancellation still retains its ordinary loot meaning. A scoped recursion guard prevents extra breaks from starting their own 3x3 jobs and prevents charged breaks from scheduling additional planes.
 
 The charged action uses supported item use/release callbacks and the player's current server eye/aim. Its breadth-first search counts at most 64 actual successful removals. Transient jobs are cleared on level unload and are not persisted. Stable item IDs, attributes, tiers, fire resistance, models and crafting recipes are unchanged. No new mixins, registry entries, saved fields or packets are introduced.
 

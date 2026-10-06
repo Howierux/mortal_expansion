@@ -15,7 +15,7 @@ public final class AreaShovelGameTests {
         var p=h.makeMockServerPlayerInLevel();p.setGameMode(net.minecraft.world.level.GameType.SURVIVAL);p.setNoGravity(true);
         p.setItemInHand(net.minecraft.world.InteractionHand.MAIN_HAND,new ItemStack(tool));
         p.setPos(centre.getX()+0.5-(axis==Direction.Axis.X?4:0),centre.getY(),centre.getZ()+0.5-(axis==Direction.Axis.Z?4:0));
-        p.setYRot(axis==Direction.Axis.X?-90:0);return p;
+        p.lookAt(net.minecraft.commands.arguments.EntityAnchorArgument.Anchor.EYES,centre.getCenter());return p;
     }
     private static void clear(GameTestHelper h,BlockPos centre){for(int x=-2;x<=2;x++)for(int y=-2;y<=2;y++)for(int z=-2;z<=2;z++)h.getLevel().setBlock(centre.offset(x,y,z),Blocks.AIR.defaultBlockState(),3);}
     private static void wall(GameTestHelper h,BlockPos c,Direction.Axis axis,net.minecraft.world.level.block.Block block){
