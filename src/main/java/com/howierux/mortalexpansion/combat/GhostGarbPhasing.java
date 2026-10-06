@@ -6,14 +6,14 @@ import net.minecraft.world.entity.Entity;
 import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.phys.Vec3;
 
-/** Shared client/server horizontal movement rules. Vertical terrain collision stays vanilla. */
+/** Shared client/server garb movement: phase sideways/upward while retaining floors and spectral barriers. */
 public final class GhostGarbPhasing {
     private GhostGarbPhasing() {}
     public static boolean active(Entity entity) {
         return entity instanceof Player player && !player.isSpectator() && HauntProtection.fullGarb(player);
     }
     public static Vec3 collide(Entity entity, Vec3 motion) {
-        double y = Entity.collideBoundingBox(entity, new Vec3(0, motion.y, 0), entity.getBoundingBox(), entity.level(), java.util.List.of()).y;
+        double y = motion.y>0 ? com.howierux.mortalexpansion.entity.mob.UpwardSpectralPhasing.rise(entity,motion.y) : Entity.collideBoundingBox(entity, new Vec3(0, motion.y, 0), entity.getBoundingBox(), entity.level(), java.util.List.of()).y;
         var box = entity.getBoundingBox().move(0, y, 0);
         // Check the swept path rather than only the endpoint, preventing barrier tunnelling.
         int steps = Math.max(1, (int)Math.ceil(Math.max(Math.abs(motion.x), Math.abs(motion.z)) * 4));

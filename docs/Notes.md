@@ -486,3 +486,7 @@ The normal Bloodstone/Spectralite shovel area follows the targeted block face, i
 One Spectralite axe right-click repeats native bonemeal until the sapling grows, charging 0.10 target-chunk Haunt once after the first accepted pulse. Free retries keep normal grower hooks, stages and tree selection. Growth stops on a veto, unsupported target or 64-attempt safety limit; a remaining sapling gets a space/conditions hint. Initial rejection spends nothing, while an accepted blocked attempt pays the single starting cost. No saved-state changes. See [Tree axes](TREE_AXES.md).
 
 Validation: build and all 108 server tests pass, including stage-zero Oak/Spiritwood growth in one click, one-payment retries under blocked growth, insufficient funds and initial bonemeal cancellation. Guide/resource checks pass; client feedback and growth balance remain playtest checks.
+
+### 2026-10-06 - Upward phasing for spectral-garb players
+
+Full Ghost, Haint and Spectralite Haint wearers can move upward through ordinary ceilings using the shared mob swept-volume check. Floors, spectral-solid materials, Holy Salt and Spirit Torch barriers remain; unloaded columns cannot be crossed. No flight or automatic ascent is added. Existing breathing, Respiration and drowning behavior remain. Build and all 110 server tests pass; guide and resource checks pass. Client jumping/swimming and movement feedback remain playtest checks. See [Upward phasing](UPWARD_PHASING.md).

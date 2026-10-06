@@ -11,8 +11,8 @@ Protection is leather strength: hood 1, robe 3, leggings 2, boots 1 (7 total).
 Durability is iron strength: 165, 240, 225, and 195 respectively. There is no
 armor toughness or knockback resistance.
 
-A full four-piece set grants horizontal wall phasing and intangible combat rules.
-Floors and vertical collision remain solid; Spiritwood/other intangible-solid
+A full four-piece set grants horizontal wall and upward ceiling phasing and intangible combat rules.
+Downward floor collision remains solid; Spiritwood/other intangible-solid
 blocks, Holy Salt columns, and Spirit Torch barriers block phasing. Movement is
 checked along the swept path on client and server. There is no spectator mode,
 flight, or downward floor phasing. The body renders at 20% opacity; armor retains
