@@ -73,6 +73,10 @@ public final class EctceteraBookScreen {
             return Component.translatable(UI+"insight_required");
         }
         private void line(GuiGraphics g,int ax,int ay,int bx,int by,int color){int mid=(ax+bx)/2;g.fill(Math.min(ax,mid),ay,Math.max(ax,mid)+1,ay+1,color);g.fill(mid,Math.min(ay,by),mid+1,Math.max(ay,by)+1,color);g.fill(Math.min(mid,bx),by,Math.max(mid,bx)+1,by+1,color);}
+        private void renderWidgets(GuiGraphics graphics,int mouseX,int mouseY,float delta){
+            // Screen.render also blurs the framebuffer. After drawing the atlas, draw only its widgets.
+            for(var widget:renderables)widget.render(graphics,mouseX,mouseY,delta);
+        }
         @Override public void render(GuiGraphics g,int mouseX,int mouseY,float delta){
             renderBackground(g,mouseX,mouseY,delta);g.fill(6,6,width-6,height-6,0xF01B2227);g.fill(left()-2,top()-2,right()+2,bottom()+2,0xFF6B817A);
             g.drawString(font,title,14,17,0xCEE7D3,false);
@@ -91,7 +95,7 @@ public final class EctceteraBookScreen {
                     g.drawCenteredString(font,label(node),x,y+size+5,unlocked?0xD6E6D6:0x8E9990);
                     if(mapContains(mouseX,mouseY) && Math.abs(mouseX-x)<=size+3 && Math.abs(mouseY-y)<=size+3)hovered=node;
                 }
-                g.disableScissor();super.render(g,mouseX,mouseY,delta);
+                g.disableScissor();renderWidgets(g,mouseX,mouseY,delta);
                 if(hovered!=null)g.renderTooltip(font,EctceteraResearchMap.unlocked(hovered.chapter().key(),tier,secrets)?label(hovered):label(hovered).copy().append("\n").append(requirement(hovered)),mouseX,mouseY);
                 g.drawString(font,notice.getString().isEmpty()?Component.translatable(UI+"controls"):notice,left(),height-34,0xB5CBB9,false);
             }else{
@@ -99,7 +103,7 @@ public final class EctceteraBookScreen {
                 int textWidth=Math.max(30,right()-left()-32),textY=top()+32,rows=Math.max(1,(bottom()-textY-12)/font.lineHeight);
                 List<FormattedCharSequence> text=font.split(body(entry.key(),part,secrets),textWidth);bodyScroll=Math.clamp(bodyScroll,0,Math.max(0,text.size()-rows));
                 g.enableScissor(left()+8,textY,right()-8,bottom()-8);for(int i=bodyScroll;i<Math.min(text.size(),bodyScroll+rows);i++)g.drawString(font,text.get(i),left()+16,textY+(i-bodyScroll)*font.lineHeight,0x463D2A,false);g.disableScissor();
-                g.drawCenteredString(font,Component.translatable(UI+"page",part,entry.pages()),(left()+right())/2,height-56+3,0xCAD7CC);super.render(g,mouseX,mouseY,delta);
+                g.drawCenteredString(font,Component.translatable(UI+"page",part,entry.pages()),(left()+right())/2,height-56+3,0xCAD7CC);renderWidgets(g,mouseX,mouseY,delta);
             }
         }
         @Override public boolean mouseClicked(double mx,double my,int button){

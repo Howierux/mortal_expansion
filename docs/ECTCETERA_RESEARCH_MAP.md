@@ -26,3 +26,5 @@ The map checks `EctceteraGuide.chapters(tier,secrets)` for every entry. Clicking
 Build and all 124 existing server tests pass, including book upgrade validation, retained book components and Spectral Insight knowledge/recipe restrictions. The 30-chapter text catalog and legacy 128-page metadata pass guide validation; 428 generated-resource checks pass. Mouse interactions, readability at different GUI scales and client visual layout still require playtesting. No new tests were added solely to mirror rendering code.
 
 Format reference: the original Thaumcraft author's release notes describe the category-based research browser: https://www.curseforge.com/minecraft/mc-mods/thaumcraft/files/2264542 .
+
+Render-order correction: Minecraft Screen.render invokes renderBackground before its widgets. The atlas renders background blur first and draws only the registered renderables at the end, avoiding a second blur over its own map or text. Preserve this ordering during migrations.

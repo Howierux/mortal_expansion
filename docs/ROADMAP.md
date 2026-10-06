@@ -3,7 +3,7 @@
 **Repository:** https://github.com/Howierux/mortal_expansion  
 **Branches:** `main` (consolidated baseline), `dev` (active work)  
 **Docs:** [Overview](Overview.md), [Notes](Notes.md), [Roadmap](ROADMAP.md)  
-**Last Synced:** 2026-10-06 - Ectcetera research map synchronized to `dev`; build, 124 existing server tests and guide/428-resource checks pass. Client UI playtest remains pending.
+**Last Synced:** 2026-10-06 - Book UI blur correction synchronized to `dev`; build passes. Existing 124-test gameplay baseline remains unchanged; client visual confirmation pending.
 **Current Phase:** Ambient/beneficial Haunt effects implemented; automated validation passed. Major encounters and Ghost’s Garb armor remain separate work.
 
 > **Checklist legend:** `[ ]` not started, `[x]` completed, `[~]` partially completed. Implementation status and gameplay verification are tracked separately. Discussion items are proposals, not approved implementation work.
@@ -603,3 +603,7 @@ The tapping HIT Haunt effect plays the supplied Warframe Rell "Rap tap tap" reco
 ### 2026-10-06 - Book research-map UI
 
 The Book of Ectcetera now has four category tabs, a draggable/zoomable connected-entry map, locked-node guidance and parchment entry panels. Existing upgrades, ingredient handoffs, gradual Insight revelations and crafting locks remain authoritative. Unrevealed weaving names stay hidden. No saved-data or networking changes. Build and all 124 existing tests pass; guide/428-resource validation passes. GUI-scale/mouse readability remains a client playtest check. See [Research map](ECTCETERA_RESEARCH_MAP.md).
+
+### 2026-10-06 - Book UI blur correction
+
+The book was drawing its atlas/entry panel before calling Screen.render, whose background pass blurred the already drawn book. Background blur now runs once before custom UI; the final pass renders only registered widgets. Both map and reading panels remain crisp. Build passes; client confirmation remains a playtest check. No gameplay, progression or resource changes, and no new tests were added for this render-order fix.
