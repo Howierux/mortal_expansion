@@ -3,7 +3,7 @@
 **Repository:** https://github.com/Howierux/mortal_expansion  
 **Branches:** `main` (consolidated baseline), `dev` (active work)  
 **Docs:** [Overview](Overview.md), [Notes](Notes.md), [Roadmap](ROADMAP.md)  
-**Last Synced:** 2026-10-06 - Spirit interaction buttons synchronized to `dev`; build, 118 required server tests and guide/resource checks passed. Client layout remains pending.
+**Last Synced:** 2026-10-06 - Graveyard Stone weathering synchronized to `dev`; build, 121 required server tests and guide/resource checks passed. Long-term weathering playtest remains pending.
 **Current Phase:** Ambient/beneficial Haunt effects implemented; automated validation passed. Major encounters and Ghost’s Garb armor remain separate work.
 
 > **Checklist legend:** `[ ]` not started, `[x]` completed, `[~]` partially completed. Implementation status and gameplay verification are tracked separately. Discussion items are proposals, not approved implementation work.
@@ -583,3 +583,7 @@ Spirits offer optional mob-slaying tasks via sneak-right-click and clickable cha
 ### 2026-10-06 - Spirit interaction buttons
 
 Right-clicking a Spirit now opens Trade, Unfinished Business and Leave options. Quest offers have Accept/Decline/Back buttons; active quests show progress. Native merchant behavior remains behind Trade. Temporary Haunt encounters retain chat offers. Server-bound ephemeral tokens validate player, giver, distance and dialog mode and prevent replay. Build and 118 tests pass; guide/resource checks pass. Client layout remains a playtest check. See [Spirit options](SPIRIT_INTERACTION_MENU.md).
+
+### 2026-10-06 - Graveyard Stone weathering
+
+Stone slowly converts to Gravestone anywhere its actual biome is Graveyard, inside or outside cemeteries. Loaded chunks sample at most 64 positions per day and convert at most four blocks, with no Haunt cost or tier requirement. Surface and buried Stone can be chosen; unrelated materials/biomes and unloaded terrain are untouched. Weathering RNG is independent of existing Haunt simulation. Build and all 121 server tests pass; guide/resource checks pass. Visual and long-term rate playtesting remain. See [Graveyard Stone](GRAVEYARD_STONE.md).

@@ -226,6 +226,7 @@ public final class HauntSimulationHandler {
         RandomSource random = level.getRandom();
 
         for (LevelChunk chunk : loadedChunks) {
+            GraveyardStoneWeathering.sample(level, chunk);
             long sourceKey = chunk.getPos().toLong();
             int sourceValue = startingValues.getOrDefault(sourceKey, 0);
             HauntTier sourceTier = HauntTier.fromValue(sourceValue);
