@@ -382,5 +382,7 @@
   "book.mortal_expansion.ectcetera.chapter.ectothread": "Secret: Ectothread",
   "book.mortal_expansion.ectcetera.page.ectothread.1": "Place eight String around one Raw Ectoplasm to weave eight Ectothread. Ghost Garb is another secret, revealed at Dead Rising personal Haunt.",
   "block.mortal_expansion.haunted_farmland": "Haunted Farmland",
-  "book.mortal_expansion.ectcetera.page.equipment.7": "Bloodstone and Spectralite hoes make haunted farmland. Chunk Haunt speeds bonemeal pulses. Dead Rising and higher keep it moist. Returning to dirt ends the bonus."
+  "book.mortal_expansion.ectcetera.page.equipment.7": "Spectralite hoes grow crops on right-click, costing one chunk Haunt per bonemeal pulse. Both spectral hoes make reactive farmland; Dead Rising keeps it moist.",
+  "message.mortal_expansion.crop_haunt_empty": "The chunk has no Haunt left to nourish this crop.",
+  "tooltip.mortal_expansion.spectralite_hoe.growth": "Right-click crops: grow using %s chunk Haunt per bonemeal pulse"
 }

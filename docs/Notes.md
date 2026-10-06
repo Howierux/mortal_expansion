@@ -454,3 +454,7 @@ Ghost, Haint and Spectralite Haint wearers take normal drowning damage underwate
 ### 2026-10-05 - Haunt-reactive farmland
 
 Bloodstone/Spectralite tilling creates special farmland with tier-dependent bonemeal pulses based on chunk Haunt. Dead Rising and higher maintain full moisture. Ordinary farming survival, tool wear and dirt drops remain; losing farmland clears its bonus. Build and 77 server tests pass. See [Haunted farmland](HAUNTED_FARMLAND.md). Visual/balance playtesting remains.
+
+### 2026-10-05 - Active Spectralite Hoe growth
+
+Right-click crops with the Spectralite Hoe to apply repeated bonemeal toward maturity, at one target-chunk Haunt point per accepted pulse. Empty chunks stop further growth; mature/unsupported targets and event vetoes cost nothing. Bloodstone and normal tilling behavior remain unchanged. Build and 82 required server tests pass. See [Spectralite Hoe growth](SPECTRALITE_HOE_GROWTH.md).

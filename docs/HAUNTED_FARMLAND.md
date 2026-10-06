@@ -25,3 +25,5 @@ The implementation subclasses the supported HoeItem and FarmBlock APIs, preservi
 ## Validation
 
 Build and 77 required server GameTests pass. Tests cover actual tilling by both hoes and ordinary hoes, normal wear, chunk-versus-personal tier behavior, exact moisture threshold, tier growth ordering, native bonemeal growth, mature/non-crop guards, saved block-state roundtrips, drying/replacement and scheduled solid-cover reversion. Data-generation checks cover 418 resources; the guide stays within 128 pages. In-game texture/particle appearance and long-run crop balance still require playtesting.
+
+Spectralite hoes also have [active right-click crop growth](SPECTRALITE_HOE_GROWTH.md), paid from the crop's chunk Haunt. This works independently of the passive farmland block.

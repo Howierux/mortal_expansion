@@ -3,7 +3,7 @@
 **Repository:** https://github.com/Howierux/mortal_expansion  
 **Branches:** `main` (consolidated baseline), `dev` (active work)  
 **Docs:** [Overview](Overview.md), [Notes](Notes.md), [Roadmap](ROADMAP.md)  
-**Last Synced:** 2026-10-05 - Spectral Insight book secrets synchronized to `dev`; build, 67 required server tests, 127-page guide and 413-resource checks passed. Client visuals remain pending.
+**Last Synced:** 2026-10-05 - Spectralite Hoe active growth synchronized to `dev`; build, 82 required server tests, 128-page guide and 418-resource checks passed. Client visuals remain pending.
 **Current Phase:** Ambient/beneficial Haunt effects implemented; automated validation passed. Major encounters and Ghost’s Garb armor remain separate work.
 
 > **Checklist legend:** `[ ]` not started, `[x]` completed, `[~]` partially completed. Implementation status and gameplay verification are tracked separately. Discussion items are proposals, not approved implementation work.
@@ -533,3 +533,7 @@ Ghost, Haint and Spectralite Haint wearers take normal drowning damage underwate
 ### 2026-10-05 - Haunt-reactive farmland
 
 Bloodstone/Spectralite tilling creates special farmland with tier-dependent bonemeal pulses based on chunk Haunt. Dead Rising and higher maintain full moisture. Ordinary farming survival, tool wear and dirt drops remain; losing farmland clears its bonus. Build and 77 server tests pass. See [Haunted farmland](HAUNTED_FARMLAND.md). Visual/balance playtesting remains.
+
+### 2026-10-05 - Active Spectralite Hoe growth
+
+Right-click crops with the Spectralite Hoe to apply repeated bonemeal toward maturity, at one target-chunk Haunt point per accepted pulse. Empty chunks stop further growth; mature/unsupported targets and event vetoes cost nothing. Bloodstone and normal tilling behavior remain unchanged. Build and 82 required server tests pass. See [Spectralite Hoe growth](SPECTRALITE_HOE_GROWTH.md).
