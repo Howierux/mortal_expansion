@@ -48,3 +48,5 @@ framework owns JSON schema serialization; custom model geometry and intentional
 legacy stair rotations remain mod-owned content.
 
 The provider setup follows the [NeoForge 1.21.1 model data-generation API](https://docs.neoforged.net/docs/1.21.1/resources/client/models/datagen/).
+
+Spectral Insight recipe families retain generated recipe definitions but omit ingredient-triggered advancements. Successful book revelations award their recipe-book entries; see [Spectral Insight](SPECTRAL_INSIGHT.md).

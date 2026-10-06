@@ -11,7 +11,10 @@
     "HauntFurnaceAccessor",
     "GhostGarbCollisionMixin",
     "GhostGarbServerMovementMixin",
-    "FluidBucketSmeltingMixin"
+    "FluidBucketSmeltingMixin",
+    "EctceteraCraftingKnowledgeMixin",
+    "EctceteraSmithingKnowledgeMixin",
+    "EctceteraCrafterKnowledgeMixin"
   ],
   "client": [
     "SpiritJourneyDeathScreenMixin",

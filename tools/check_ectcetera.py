@@ -39,6 +39,9 @@ for key, count, tier in CHAPTERS:
         assert LANG[page].strip(), page
         assert lines(LANG[page]) <= 9, (page, "body exceeds page budget")
 assert expected == {key for key in LANG if key.startswith(PREFIX)}, "Missing or orphan guide keys"
+for key,text in LANG.items():
+    if key.startswith("insight.mortal_expansion.") and key.endswith((".guidance", ".locked")):
+        assert lines(text) <= 9, (key, "dynamic guidance exceeds page budget")
 assert lines(LANG[PREFIX + "cover"] + "\n\nContents") <= 14
 total = 1 + (len(CHAPTERS) + 4) // 5 + sum(int(count) for _, count, _ in CHAPTERS)
 assert total <= 128

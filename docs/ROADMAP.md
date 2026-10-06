@@ -3,7 +3,7 @@
 **Repository:** https://github.com/Howierux/mortal_expansion  
 **Branches:** `main` (consolidated baseline), `dev` (active work)  
 **Docs:** [Overview](Overview.md), [Notes](Notes.md), [Roadmap](ROADMAP.md)  
-**Last Synced:** 2026-10-05 - Named Spiritwell/Cemetery discoveries and spectral footprints synchronized to `dev`; build, 60 required server GameTests, 124-page guide and 423-resource checks passed. Client visuals remain pending.
+**Last Synced:** 2026-10-05 - Spectral Insight book secrets synchronized to `dev`; build, 67 required server tests, 127-page guide and 413-resource checks passed. Client visuals remain pending.
 **Current Phase:** Ambient/beneficial Haunt effects implemented; automated validation passed. Major encounters and Ghost’s Garb armor remain separate work.
 
 > **Checklist legend:** `[ ]` not started, `[x]` completed, `[~]` partially completed. Implementation status and gameplay verification are tracked separately. Discussion items are proposals, not approved implementation work.
@@ -493,7 +493,7 @@ Implemented a shapeless EMF Reader + Raw Ectoplasm upgrade. Live digits on the h
 
 - [x] Separate benefit/risk rolls and cooldowns, cumulative tier eligibility, localized chat hints on successful effects.
 - [x] Whispers, spectral empowerment, following footsteps, false apparitions, restless visits, furnace interference, marked presence, pursuers and warned breaches.
-- [ ] Hidden inscription revealing, discovery entries, commissions, spirit workers, recognition services and veil revelations: explicit `missing function` comments; excluded until supporting systems exist.
+- [ ] Hidden inscription revealing, commissions, spirit workers, recognition services and veil revelations: explicit `missing function` comments; excluded until supporting systems exist.
 - [ ] Visible harmless follower and further machine interference integrations.
 - [ ] Client effects/hints and extended live-world encounter playtest.
 
@@ -507,3 +507,13 @@ See [Personal Haunt effects](PERSONAL_HAUNT_EFFECTS.md) for exact behavior and m
 - [ ] Manual footprint, Cemetery elevation and restart/death playtesting.
 
 See [Spectral discovery](SPECTRAL_DISCOVERY.md).
+
+### 2026-10-05 - Spectral Insight and aware books
+
+- [x] Raw-or-higher books gradually reveal secret families through beneficial personal-Haunt events, with whispers and next-step recommendations.
+- [x] Ectothread, Ghost Garb, Haint Garb and combined Spectralite Haint recipe knowledge, filtered guide chapters, synchronized book memories and persistent player learning.
+- [x] Actual crafting/smithing locks and teachable vanilla Crafters; legacy recipe unlocks and full guides retain knowledge.
+- [x] Build, 67 required server tests, 127-page guide checks and 413-resource data checks.
+- [ ] Manual guide refresh, whispers and recipe-book visuals; other-mod automation integration remains a missing function.
+
+See [Spectral Insight](SPECTRAL_INSIGHT.md).

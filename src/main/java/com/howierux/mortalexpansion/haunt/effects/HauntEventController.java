@@ -98,6 +98,7 @@ public final class HauntEventController {
         }
     }
     public static void hint(ServerPlayer player, HauntEffectKind kind) {
+        if(kind==HauntEffectKind.SPECTRAL_INSIGHT)return; // Specific book whisper already sent on successful revelation.
         player.displayClientMessage(net.minecraft.network.chat.Component.translatable(
                 "message.mortal_expansion.haunt." + kind.name().toLowerCase(java.util.Locale.ROOT)), false);
     }

@@ -23,6 +23,8 @@ public final class EctceteraGuide {
             new Chapter("salt", 2, 2),
             new Chapter("emf_reader", 4, 2),
             new Chapter("torches", 2, 2),
+            new Chapter("insight", 2, 2),
+            new Chapter("ectothread", 1, 2),
             new Chapter("equipment", 6, 2),
             new Chapter("ghost_garb", 3, 2),
             new Chapter("furnaces", 5, 2),
@@ -39,6 +41,16 @@ public final class EctceteraGuide {
     public static List<Chapter> chapters(int tier) {
         int bounded = Math.clamp(tier, 0, EctceteraProgression.MAX_TIER);
         return CHAPTERS.stream().filter(chapter -> chapter.tier() <= bounded).toList();
+    }
+    public static List<Chapter> chapters(int tier,int secrets) {
+        return CHAPTERS.stream().filter(chapter -> chapter.tier()<=tier
+                || tier>=2 && chapter.key().equals("haint_garb") && (secrets&4)!=0)
+                .filter(chapter -> switch(chapter.key()) {
+                    case "ectothread" -> (secrets&1)!=0;
+                    case "ghost_garb" -> (secrets&2)!=0;
+                    case "haint_garb" -> (secrets&4)!=0;
+                    default -> true;
+                }).toList();
     }
     public static int contentsPages(List<Chapter> chapters) {
         return (chapters.size() + CHAPTERS_PER_CONTENTS_PAGE - 1) / CHAPTERS_PER_CONTENTS_PAGE;

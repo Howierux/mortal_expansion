@@ -111,6 +111,9 @@ public final class ModAttachments {
             ATTACHMENTS.register("discovered_sites", () -> AttachmentType.<java.util.List<com.howierux.mortalexpansion.discovery.SpectralSite>>builder(() -> java.util.List.of())
                     .serialize(com.howierux.mortalexpansion.discovery.SpectralSite.CODEC.listOf()).copyOnDeath().build());
 
+    public static final Supplier<AttachmentType<Integer>> ECTCETERA_KNOWLEDGE = ATTACHMENTS.register("ectcetera_knowledge",
+            () -> AttachmentType.builder(() -> 0).serialize(Codec.intRange(0,15)).copyOnDeath().build());
+
     public static void register(IEventBus modBus) {
         ATTACHMENTS.register(modBus);
     }

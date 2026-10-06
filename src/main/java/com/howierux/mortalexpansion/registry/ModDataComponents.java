@@ -38,6 +38,9 @@ public final class ModDataComponents {
             DATA_COMPONENTS.registerComponentType("ectcetera_tier",
                     builder -> builder.persistent(Codec.intRange(0, 3)).networkSynchronized(ByteBufCodecs.VAR_INT));
 
+    public static final DeferredHolder<DataComponentType<?>, DataComponentType<Integer>> ECTCETERA_SECRETS =
+            DATA_COMPONENTS.registerComponentType("ectcetera_secrets", builder -> builder.persistent(Codec.intRange(0,15)).networkSynchronized(ByteBufCodecs.VAR_INT));
+
     /** Live EMF samples synchronize through inventory updates and intentionally do not persist. */
     public static final DeferredHolder<DataComponentType<?>, DataComponentType<com.howierux.mortalexpansion.haunt.EmfReading>> EMF_READING =
             DATA_COMPONENTS.registerComponentType("emf_reading", builder -> builder.networkSynchronized(

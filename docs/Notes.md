@@ -428,3 +428,13 @@ Benefits and risks now roll independently with separate cooldowns; neither cause
 - [ ] Manual footprint, Cemetery elevation and restart/death playtesting.
 
 See [Spectral discovery](SPECTRAL_DISCOVERY.md).
+
+### 2026-10-05 - Spectral Insight and aware books
+
+- [x] Raw-or-higher books gradually reveal secret families through beneficial personal-Haunt events, with whispers and next-step recommendations.
+- [x] Ectothread, Ghost Garb, Haint Garb and combined Spectralite Haint recipe knowledge, filtered guide chapters, synchronized book memories and persistent player learning.
+- [x] Actual crafting/smithing locks and teachable vanilla Crafters; legacy recipe unlocks and full guides retain knowledge.
+- [x] Build, 67 required server tests, 127-page guide checks and 413-resource data checks.
+- [ ] Manual guide refresh, whispers and recipe-book visuals; other-mod automation integration remains a missing function.
+
+See [Spectral Insight](SPECTRAL_INSIGHT.md).

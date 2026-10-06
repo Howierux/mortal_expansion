@@ -36,25 +36,25 @@ public final class ModRecipes extends RecipeProvider {
                 .define('I', Items.IRON_INGOT).define('S', ModItems.HOLY_SALT.get()).define('R', Items.REDSTONE)
                 .unlockedBy("has_holy_salt", has(ModItems.HOLY_SALT.get())).save(output);
         ShapedRecipeBuilder.shaped(RecipeCategory.MISC, ModItems.ECTOTHREAD.get(), 8).pattern("SSS").pattern("SES").pattern("SSS")
-                .define('S', Items.STRING).define('E', ModItems.RAW_ECTOPLASM.get()).unlockedBy("has_ectoplasm", has(ModItems.RAW_ECTOPLASM.get())).save(output);
+                .define('S', Items.STRING).define('E', ModItems.RAW_ECTOPLASM.get()).unlockedBy("has_ectoplasm", has(ModItems.RAW_ECTOPLASM.get())).save(recipesOnly);
         ShapedRecipeBuilder.shaped(RecipeCategory.MISC, ModItems.PURIFIED_ECTOTHREAD.get(), 8).pattern("SSS").pattern("SES").pattern("SSS")
-                .define('S', Items.STRING).define('E', ModItems.PURE_ECTOPLASM.get()).unlockedBy("has_pure_ectoplasm", has(ModItems.PURE_ECTOPLASM.get())).save(output);
+                .define('S', Items.STRING).define('E', ModItems.PURE_ECTOPLASM.get()).unlockedBy("has_pure_ectoplasm", has(ModItems.PURE_ECTOPLASM.get())).save(recipesOnly);
         ShapedRecipeBuilder.shaped(RecipeCategory.COMBAT, ModItems.GHOST_GARB_HELMET.get()).pattern("EEE").pattern("E E")
-                .define('E', ModItems.ECTOTHREAD.get()).unlockedBy("has_ectothread", has(ModItems.ECTOTHREAD.get())).save(output);
+                .define('E', ModItems.ECTOTHREAD.get()).unlockedBy("has_ectothread", has(ModItems.ECTOTHREAD.get())).save(recipesOnly);
         ShapedRecipeBuilder.shaped(RecipeCategory.COMBAT, ModItems.GHOST_GARB_CHESTPLATE.get()).pattern("E E").pattern("EEE").pattern("EEE")
-                .define('E', ModItems.ECTOTHREAD.get()).unlockedBy("has_ectothread", has(ModItems.ECTOTHREAD.get())).save(output);
+                .define('E', ModItems.ECTOTHREAD.get()).unlockedBy("has_ectothread", has(ModItems.ECTOTHREAD.get())).save(recipesOnly);
         ShapedRecipeBuilder.shaped(RecipeCategory.COMBAT, ModItems.GHOST_GARB_LEGGINGS.get()).pattern("EEE").pattern("E E").pattern("E E")
-                .define('E', ModItems.ECTOTHREAD.get()).unlockedBy("has_ectothread", has(ModItems.ECTOTHREAD.get())).save(output);
+                .define('E', ModItems.ECTOTHREAD.get()).unlockedBy("has_ectothread", has(ModItems.ECTOTHREAD.get())).save(recipesOnly);
         ShapedRecipeBuilder.shaped(RecipeCategory.COMBAT, ModItems.GHOST_GARB_BOOTS.get()).pattern("E E").pattern("E E")
-                .define('E', ModItems.ECTOTHREAD.get()).unlockedBy("has_ectothread", has(ModItems.ECTOTHREAD.get())).save(output);
+                .define('E', ModItems.ECTOTHREAD.get()).unlockedBy("has_ectothread", has(ModItems.ECTOTHREAD.get())).save(recipesOnly);
         ShapedRecipeBuilder.shaped(RecipeCategory.COMBAT, ModItems.HAINT_GARB_HELMET.get()).pattern("EEE").pattern("E E")
-                .define('E', ModItems.PURIFIED_ECTOTHREAD.get()).unlockedBy("has_purified_ectothread", has(ModItems.PURIFIED_ECTOTHREAD.get())).save(output);
+                .define('E', ModItems.PURIFIED_ECTOTHREAD.get()).unlockedBy("has_purified_ectothread", has(ModItems.PURIFIED_ECTOTHREAD.get())).save(recipesOnly);
         ShapedRecipeBuilder.shaped(RecipeCategory.COMBAT, ModItems.HAINT_GARB_CHESTPLATE.get()).pattern("E E").pattern("EEE").pattern("EEE")
-                .define('E', ModItems.PURIFIED_ECTOTHREAD.get()).unlockedBy("has_purified_ectothread", has(ModItems.PURIFIED_ECTOTHREAD.get())).save(output);
+                .define('E', ModItems.PURIFIED_ECTOTHREAD.get()).unlockedBy("has_purified_ectothread", has(ModItems.PURIFIED_ECTOTHREAD.get())).save(recipesOnly);
         ShapedRecipeBuilder.shaped(RecipeCategory.COMBAT, ModItems.HAINT_GARB_LEGGINGS.get()).pattern("EEE").pattern("E E").pattern("E E")
-                .define('E', ModItems.PURIFIED_ECTOTHREAD.get()).unlockedBy("has_purified_ectothread", has(ModItems.PURIFIED_ECTOTHREAD.get())).save(output);
+                .define('E', ModItems.PURIFIED_ECTOTHREAD.get()).unlockedBy("has_purified_ectothread", has(ModItems.PURIFIED_ECTOTHREAD.get())).save(recipesOnly);
         ShapedRecipeBuilder.shaped(RecipeCategory.COMBAT, ModItems.HAINT_GARB_BOOTS.get()).pattern("E E").pattern("E E")
-                .define('E', ModItems.PURIFIED_ECTOTHREAD.get()).unlockedBy("has_purified_ectothread", has(ModItems.PURIFIED_ECTOTHREAD.get())).save(output);
+                .define('E', ModItems.PURIFIED_ECTOTHREAD.get()).unlockedBy("has_purified_ectothread", has(ModItems.PURIFIED_ECTOTHREAD.get())).save(recipesOnly);
         recipesOnly.accept(ResourceLocation.fromNamespaceAndPath(MortalExpansion.MOD_ID, "haint_garb_helmet_smithing"),
                 new com.howierux.mortalexpansion.recipe.TemplateFreeSmithingRecipe(Ingredient.of(ModItems.GHOST_GARB_HELMET.get()),
                         Ingredient.of(ModItems.PURE_ECTOPLASM.get()), new net.minecraft.world.item.ItemStack(ModItems.HAINT_GARB_HELMET.get())), null);

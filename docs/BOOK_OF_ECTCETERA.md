@@ -48,7 +48,7 @@ The build and all 46 required server GameTests pass, including actual inventory
 crafting with consumed inputs, three sequential upgrades, component preservation,
 skip/repeat/extra-input rejection, legacy behavior, saved-item and network recipe
 roundtrips, cumulative chapters and navigation offsets. Resource checks cover
-28 chapters and 124 pages in the complete book, per-tier endings, translation/page
+30 chapters and 127 pages in the complete book, per-tier endings, translation/page
 budgets, the starter component and three generated upgrade recipes. Data generation
 checks pass for 403 resources. Manual client page appearance remains for playtest.
 
@@ -59,3 +59,7 @@ The EMF chapter also covers upgrading with Raw Ectoplasm for decimal readings.
 Starter knowledge now includes independent Haunt visits, hints and protection.
 
 Spiritwell guidance now describes named discovery and spectral footprint trails.
+
+## Aware books and Spectral Insight
+
+Raw Ectoplasm books now gradually learn Ectothread, Ghost Garb and Haint Garb through beneficial Insight events, rather than showing their recipes immediately. Pure-upgraded books can learn the combined Spectralite Haint secret. Chapters and recommendations follow remembered knowledge; known book secrets can be shared. See [Spectral Insight](SPECTRAL_INSIGHT.md) for thresholds, actual crafting gates and compatibility.

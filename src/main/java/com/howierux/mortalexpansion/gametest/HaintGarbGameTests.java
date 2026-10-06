@@ -43,6 +43,7 @@ public final class HaintGarbGameTests {
     @GameTest(template = "deferred_items_test")
     public static void smithing_upgrades_without_templates_preserve_base_components(GameTestHelper helper) {
         var player = helper.makeMockServerPlayerInLevel();
+        com.howierux.mortalexpansion.guide.SpectralInsight.learnPlayer(player,15);
         var level = helper.getLevel();
         var enchantment = level.registryAccess().lookupOrThrow(net.minecraft.core.registries.Registries.ENCHANTMENT).getOrThrow(Enchantments.UNBREAKING);
         for (int i = 0; i < 4; i++) for (int step = 0; step < 2; step++) {
