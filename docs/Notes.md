@@ -520,3 +520,7 @@ Added generated crafting recipes for the Enchantment Generator (Grindstone, Reds
 ### 2026-10-06 - User-supplied tapping audio
 
 The tapping HIT Haunt effect plays the supplied Warframe Rell "Rap tap tap" recording. Converted to positional mono Ogg Vorbis; generated sound definition, stable registry key, original pitch and subtitle added. Playback remains private to the affected player with existing protection/cooldown behavior. Third-party source attribution is recorded. Build, data generation, 428-resource/guide checks and all 124 existing server tests pass. Client audibility/volume remains a playtest check. See [Tapping audio](TAPPING_AUDIO.md).
+
+### 2026-10-06 - Book research-map UI
+
+The Book of Ectcetera now has four category tabs, a draggable/zoomable connected-entry map, locked-node guidance and parchment entry panels. Existing upgrades, ingredient handoffs, gradual Insight revelations and crafting locks remain authoritative. Unrevealed weaving names stay hidden. No saved-data or networking changes. Build and all 124 existing tests pass; guide/428-resource validation passes. GUI-scale/mouse readability remains a client playtest check. See [Research map](ECTCETERA_RESEARCH_MAP.md).

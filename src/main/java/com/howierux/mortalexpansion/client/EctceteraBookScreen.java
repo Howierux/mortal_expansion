@@ -1,82 +1,128 @@
 package com.howierux.mortalexpansion.client;
 
-import com.howierux.mortalexpansion.guide.EctceteraGuide;
-import net.minecraft.ChatFormatting;
+import com.howierux.mortalexpansion.guide.*;
+import com.howierux.mortalexpansion.registry.ModItems;
 import net.minecraft.client.Minecraft;
-import net.minecraft.client.gui.screens.inventory.BookViewScreen;
-import net.minecraft.network.chat.*;
-import java.util.ArrayList;
-import java.util.List;
+import net.minecraft.client.gui.GuiGraphics;
+import net.minecraft.client.gui.components.Button;
+import net.minecraft.client.gui.screens.Screen;
+import net.minecraft.network.chat.Component;
+import net.minecraft.util.FormattedCharSequence;
+import net.minecraft.world.InteractionHand;
+import net.minecraft.world.item.*;
+import java.util.*;
 
-/** Vanilla page turning, clickable chapters, and links back to contents. */
+/** Original spectral research atlas, backed by the existing book/Insight state. */
 public final class EctceteraBookScreen {
-    private EctceteraBookScreen() {}
-    private static final String PREFIX = "book.mortal_expansion.ectcetera.";
-
-    private static MutableComponent link(Component label, int page) {
-        return label.copy().withStyle(style -> style.withColor(ChatFormatting.DARK_BLUE)
-                .withUnderlined(true).withClickEvent(
-                        new ClickEvent(ClickEvent.Action.CHANGE_PAGE, Integer.toString(page + 1))));
-    }
-
-    private static List<Component> pages(int tier,int secrets) {
-        var chapters = EctceteraGuide.chapters(tier,secrets);
-        List<Component> pages = new ArrayList<>();
-        pages.add(Component.translatable(PREFIX + "cover").append("\n\n")
-                .append(link(Component.translatable(PREFIX + "contents"), 1)));
-        for (int contents = 0; contents < EctceteraGuide.contentsPages(chapters); contents++) {
-            MutableComponent page = Component.empty()
-                    .append(Component.translatable(PREFIX + "contents").withStyle(ChatFormatting.BOLD))
-                    .append("\n\n");
-            int begin = contents * EctceteraGuide.CHAPTERS_PER_CONTENTS_PAGE;
-            int end = Math.min(chapters.size(),
-                    begin + EctceteraGuide.CHAPTERS_PER_CONTENTS_PAGE);
-            for (int chapter = begin; chapter < end; chapter++) {
-                var entry = chapters.get(chapter);
-                page.append(link(Component.translatable(PREFIX + "chapter." + entry.key()),
-                        EctceteraGuide.firstPage(chapters, chapter))).append("\n");
-            }
-            pages.add(page);
-        }
-        for (int chapter = 0; chapter < chapters.size(); chapter++) {
-            var entry = chapters.get(chapter);
-            for (int part = 1; part <= entry.pages(); part++) {
-                MutableComponent page = Component.empty()
-                        .append(Component.translatable(PREFIX + "chapter." + entry.key())
-                                .withStyle(ChatFormatting.BOLD))
-                        .append("\n\n")
-                        .append(body(entry.key(),part,tier,secrets))
-                        .append("\n\n")
-                        .append(link(Component.translatable(PREFIX + "contents"),
-                                1 + chapter / EctceteraGuide.CHAPTERS_PER_CONTENTS_PAGE));
-                pages.add(page);
-            }
-        }
-        return pages;
-    }
-    private static Component body(String chapter,int part,int tier,int secrets){
-        if(chapter.equals("insight") && part==2) {
-            String key=(secrets&1)==0?"ectothread":(secrets&2)==0?"ghost_garb":(secrets&4)==0?"haint_garb":(secrets&8)==0?"spectralite_haint":"complete";
-            return Component.translatable("insight.mortal_expansion."+key+".guidance");
-        }
+    private EctceteraBookScreen(){}
+    private static final String BOOK="book.mortal_expansion.ectcetera.",UI="gui.mortal_expansion.ectcetera.";
+    public static void open(InteractionHand hand){Minecraft.getInstance().setScreen(new ResearchScreen(hand));}
+    private static Component body(String chapter,int part,int secrets){
+        if(chapter.equals("insight") && part==2){String key=(secrets&1)==0?"ectothread":(secrets&2)==0?"ghost_garb":(secrets&4)==0?"haint_garb":(secrets&8)==0?"spectralite_haint":"complete";return Component.translatable("insight.mortal_expansion."+key+".guidance");}
         if(chapter.equals("haint_garb") && part==3 && (secrets&8)==0)return Component.translatable("insight.mortal_expansion.spectralite_haint.locked");
-        return Component.translatable(PREFIX+"page."+chapter+"."+part);
+        return Component.translatable(BOOK+"page."+chapter+"."+part);
     }
-    public static void open(net.minecraft.world.InteractionHand hand){
-        Minecraft.getInstance().setScreen(new AwareBookScreen(hand));
-    }
-    private static final class AwareBookScreen extends BookViewScreen {
-        private final net.minecraft.world.InteractionHand hand;private int tier, secrets;
-        private AwareBookScreen(net.minecraft.world.InteractionHand hand){
-            super(new BookAccess(pages(com.howierux.mortalexpansion.guide.EctceteraProgression.tier(Minecraft.getInstance().player.getItemInHand(hand)),
-                    com.howierux.mortalexpansion.guide.SpectralInsight.secrets(Minecraft.getInstance().player.getItemInHand(hand)))));this.hand=hand;
-            tier=-1;secrets=-1;
+    private static Item icon(String key){return switch(key){
+        case "first_steps","insight","mastery"->ModItems.BOOK_OF_ECTCETERA.get();case "haunt","personal","haunt_events"->Items.SOUL_LANTERN;
+        case "biomes"->Items.GRASS_BLOCK;case "unlock_bone"->Items.BONE;case "graves"->ModItems.GRAVE.get();
+        case "intangibles"->Items.GLASS;case "creatures"->Items.ROTTEN_FLESH;case "spiritwells"->Items.NETHER_STAR;
+        case "unlock_raw","ectoplasm"->ModItems.RAW_ECTOPLASM.get();case "cauldrons"->Items.CAULDRON;case "salt"->ModItems.HOLY_SALT.get();
+        case "emf_reader"->ModItems.EMF_READER.get();case "torches"->ModItems.SPIRIT_TORCH.get();case "ectothread"->ModItems.ECTOTHREAD.get();
+        case "equipment"->ModItems.BLOODSTONE_SWORD.get();case "ghost_garb"->ModItems.GHOST_GARB_HELMET.get();case "furnaces"->ModItems.HAUNT_FURNACE.get();
+        case "unlock_pure","sanctified"->ModItems.PURE_ECTOPLASM.get();case "wards"->ModItems.PURIFICATION_WARD.get();
+        case "ectchantment"->ModItems.ECTCHANTMENT_MACHINE.get();case "generators"->ModItems.ECTOPLASMIC_GENERATOR.get();
+        case "station"->Items.SMITHING_TABLE;case "haint_garb"->ModItems.HAINT_GARB_HELMET.get();case "scepter"->ModItems.PHARAOHL_SCEPTER.get();default->Items.BOOK;
+    };}
+    private static final class ResearchScreen extends Screen {
+        private final InteractionHand hand;private int tier=-1,secrets=-1,category,part=1,bodyScroll;
+        private EctceteraGuide.Chapter entry;private double panX,panY,zoom=1;private boolean dragging;
+        private Component notice=Component.empty();
+        private ResearchScreen(InteractionHand hand){super(Component.translatable("item.mortal_expansion.book_of_ectcetera"));this.hand=hand;}
+        @Override protected void init(){refresh();controls();}
+        private void refresh(){
+            var p=minecraft.player;if(p==null)return;var book=p.getItemInHand(hand);
+            if(!book.is(ModItems.BOOK_OF_ECTCETERA.get())){onClose();return;}
+            int nextTier=EctceteraProgression.tier(book),nextSecrets=SpectralInsight.secrets(book);
+            if(nextTier!=tier || nextSecrets!=secrets){tier=nextTier;secrets=nextSecrets;
+                if(entry!=null && !EctceteraResearchMap.unlocked(entry.key(),tier,secrets))entry=null;
+                if(width>0)controls();
+            }
         }
-        @Override public void tick(){
-            super.tick();var p=Minecraft.getInstance().player;if(p==null)return;var book=p.getItemInHand(hand);
-            if(!book.is(com.howierux.mortalexpansion.registry.ModItems.BOOK_OF_ECTCETERA.get())){onClose();return;}
-            int newTier=com.howierux.mortalexpansion.guide.EctceteraProgression.tier(book),newSecrets=com.howierux.mortalexpansion.guide.SpectralInsight.secrets(book);
-            if(newTier!=tier || newSecrets!=secrets){tier=newTier;secrets=newSecrets;setBookAccess(new BookAccess(pages(tier,secrets)));}
+        @Override public void tick(){super.tick();refresh();}
+        private Button add(String key,int x,int y,int w,Runnable action){var b=Button.builder(Component.translatable(UI+key),button->action.run()).bounds(x,y,w,20).build();addRenderableWidget(b);return b;}
+        private void controls(){
+            clearWidgets();
+            if(entry==null){
+                for(int c=0;c<4;c++){final int tab=c;add("category."+c,12,62+c*Math.max(20,Math.min(32,(height-118)/4)),86,()->{category=tab;panX=panY=0;notice=Component.empty();});}
+                if(height>=230)add("center",12,height-62,86,()->{panX=panY=0;zoom=1;});
+            }else{
+                add("back",12,62,86,()->{entry=null;notice=Component.empty();controls();});
+                var previous=add("previous",width/2-104,height-46,90,()->{part--;bodyScroll=0;controls();});previous.active=part>1;
+                var next=add("next",width/2+14,height-46,90,()->{part++;bodyScroll=0;controls();});next.active=part<entry.pages();
+            }
+            add("close",12,height-34,86,this::onClose);
         }
+        private int left(){return 108;}private int top(){return 62;}private int right(){return width-12;}private int bottom(){return height-56;}
+        private boolean mapContains(double x,double y){return entry==null && x>=left() && x<right() && y>=top() && y<bottom();}
+        private int x(EctceteraResearchMap.Node n){return left()+(int)(panX+n.x()*zoom);}
+        private int y(EctceteraResearchMap.Node n){return top()+(int)(panY+n.y()*zoom);}
+        private Component label(EctceteraResearchMap.Node n){return EctceteraResearchMap.secret(n.chapter().key())!=0 && !EctceteraResearchMap.unlocked(n.chapter().key(),tier,secrets)?Component.translatable(UI+"secret"):Component.translatable(BOOK+"chapter."+n.chapter().key());}
+        private Component requirement(EctceteraResearchMap.Node n){
+            if(n.chapter().tier()>tier && !(n.chapter().key().equals("haint_garb") && tier>=2 && (secrets&4)!=0))
+                return Component.translatable(UI+"upgrade",Component.translatable(UI+"material."+n.chapter().tier()));
+            return Component.translatable(UI+"insight_required");
+        }
+        private void line(GuiGraphics g,int ax,int ay,int bx,int by,int color){int mid=(ax+bx)/2;g.fill(Math.min(ax,mid),ay,Math.max(ax,mid)+1,ay+1,color);g.fill(mid,Math.min(ay,by),mid+1,Math.max(ay,by)+1,color);g.fill(Math.min(mid,bx),by,Math.max(mid,bx)+1,by+1,color);}
+        @Override public void render(GuiGraphics g,int mouseX,int mouseY,float delta){
+            renderBackground(g,mouseX,mouseY,delta);g.fill(6,6,width-6,height-6,0xF01B2227);g.fill(left()-2,top()-2,right()+2,bottom()+2,0xFF6B817A);
+            g.drawString(font,title,14,17,0xCEE7D3,false);
+            g.drawString(font,Component.translatable(UI+"tier",Component.translatable(UI+"tier."+Math.max(0,tier))),left(),36,0xACBDB3,false);
+            if(entry==null){
+                g.fill(left(),top(),right(),bottom(),0xFF242E2B);g.enableScissor(left(),top(),right(),bottom());
+                for(int gx=left()+(int)(panX%32);gx<right();gx+=32)g.fill(gx,top(),gx+1,bottom(),0xFF303A35);
+                for(int gy=top()+(int)(panY%32);gy<bottom();gy+=32)g.fill(left(),gy,right(),gy+1,0xFF303A35);
+                var nodes=EctceteraResearchMap.nodes(category);
+                for(var node:nodes)nodes.stream().filter(parent->parent.chapter().key().equals(node.parent())).findFirst().ifPresent(parent->line(g,x(parent),y(parent),x(node),y(node),EctceteraResearchMap.unlocked(node.chapter().key(),tier,secrets)?0xFF759C81:0xFF505A54));
+                EctceteraResearchMap.Node hovered=null;
+                for(var node:nodes){boolean unlocked=EctceteraResearchMap.unlocked(node.chapter().key(),tier,secrets);int x=x(node),y=y(node),size=(int)(15*zoom);
+                    g.fill(x-size-2,y-size-2,x+size+2,y+size+2,unlocked?0xFF9ECB9F:0xFF5B6461);g.fill(x-size,y-size,x+size,y+size,unlocked?0xFF344B3B:0xFF222A27);
+                    g.pose().pushPose();g.pose().translate(x-8*zoom,y-8*zoom,0);g.pose().scale((float)zoom,(float)zoom,1);
+                    g.renderItem(new ItemStack(unlocked?icon(node.chapter().key()):Items.BOOK),0,0);g.pose().popPose();
+                    g.drawCenteredString(font,label(node),x,y+size+5,unlocked?0xD6E6D6:0x8E9990);
+                    if(mapContains(mouseX,mouseY) && Math.abs(mouseX-x)<=size+3 && Math.abs(mouseY-y)<=size+3)hovered=node;
+                }
+                g.disableScissor();super.render(g,mouseX,mouseY,delta);
+                if(hovered!=null)g.renderTooltip(font,EctceteraResearchMap.unlocked(hovered.chapter().key(),tier,secrets)?label(hovered):label(hovered).copy().append("\n").append(requirement(hovered)),mouseX,mouseY);
+                g.drawString(font,notice.getString().isEmpty()?Component.translatable(UI+"controls"):notice,left(),height-34,0xB5CBB9,false);
+            }else{
+                g.fill(left(),top(),right(),bottom(),0xFFE0D3AF);g.drawCenteredString(font,Component.translatable(BOOK+"chapter."+entry.key()),(left()+right())/2,top()+10,0x463D2A);
+                int textWidth=Math.max(30,right()-left()-32),textY=top()+32,rows=Math.max(1,(bottom()-textY-12)/font.lineHeight);
+                List<FormattedCharSequence> text=font.split(body(entry.key(),part,secrets),textWidth);bodyScroll=Math.clamp(bodyScroll,0,Math.max(0,text.size()-rows));
+                g.enableScissor(left()+8,textY,right()-8,bottom()-8);for(int i=bodyScroll;i<Math.min(text.size(),bodyScroll+rows);i++)g.drawString(font,text.get(i),left()+16,textY+(i-bodyScroll)*font.lineHeight,0x463D2A,false);g.disableScissor();
+                g.drawCenteredString(font,Component.translatable(UI+"page",part,entry.pages()),(left()+right())/2,height-56+3,0xCAD7CC);super.render(g,mouseX,mouseY,delta);
+            }
+        }
+        @Override public boolean mouseClicked(double mx,double my,int button){
+            if(super.mouseClicked(mx,my,button))return true;
+            if(button==0 && mapContains(mx,my)){
+                for(var node:EctceteraResearchMap.nodes(category))if(Math.abs(mx-x(node))<=18*zoom && Math.abs(my-y(node))<=18*zoom){
+                    if(EctceteraResearchMap.unlocked(node.chapter().key(),tier,secrets)){entry=node.chapter();part=1;bodyScroll=0;controls();}
+                    else notice=requirement(node);return true;
+                }dragging=true;return true;
+            }return false;
+        }
+        @Override public boolean mouseDragged(double mx,double my,int button,double dx,double dy){
+            if(entry==null && dragging && button==0){panX=Math.clamp(panX+dx,-650,250);panY=Math.clamp(panY+dy,-650,250);return true;}return super.mouseDragged(mx,my,button,dx,dy);
+        }
+        @Override public boolean mouseReleased(double mx,double my,int button){dragging=false;return super.mouseReleased(mx,my,button);}
+        @Override public boolean mouseScrolled(double mx,double my,double horizontal,double vertical){
+            if(entry!=null){bodyScroll=Math.max(0,bodyScroll-(int)vertical*3);return true;}
+            if(mapContains(mx,my)){double next=Math.clamp(zoom+vertical*.1,.65,1.5);double ratio=next/zoom;panX=(mx-left())-((mx-left())-panX)*ratio;panY=(my-top())-((my-top())-panY)*ratio;zoom=next;return true;}
+            return super.mouseScrolled(mx,my,horizontal,vertical);
+        }
+        @Override public boolean keyPressed(int key,int scan,int modifiers){
+            if(key==256 && entry!=null){entry=null;controls();return true;}return super.keyPressed(key,scan,modifiers);
+        }
+        @Override public boolean isPauseScreen(){return false;}
     }
 }

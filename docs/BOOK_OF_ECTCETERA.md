@@ -11,8 +11,10 @@ the same book with one ingredient at a time in any crafting-grid arrangement:
 | 2: Raw Ectoplasm | Raw Ectoplasm | Ectoplasm, cauldrons, salt, torches, equipment, Ghost Garb, furnaces | Make purified cauldron fluid, collect it, and smelt the bucket into Pure Ectoplasm |
 | 3: Purified Ectoplasm | Pure Ectoplasm (solid item) | Sanctification, wards, ectchantments, generators, Purification Station, Haint/Spectralite Haint garb, scepter | All chapters unlocked; guidance for combining the systems |
 
-Chapters unlock cumulatively. Locked chapters are absent from both contents and
-body pages, and contents/back links use offsets calculated from the current tier.
+Chapters unlock cumulatively. The client now presents a tabbed research map,
+with locked nodes showing upgrade or Insight requirements. Locked body text
+cannot be opened; unrevealed weaving nodes hide their names behind a secret
+label. Node access delegates to the existing tier-and-secret chapter rules.
 Each tier ends with its ingredient guidance. The final tier has no further book
 upgrade. Tooltip text identifies the tier and next ingredient.
 
@@ -67,3 +69,5 @@ Raw Ectoplasm books now gradually learn Ectothread, Ghost Garb and Haint Garb th
 Equipment guidance includes Haunt-reactive soil made by Bloodstone and Spectralite hoes.
 
 Equipment guidance includes wear-based pickaxe speed and fractional chunk-Haunt repair costs.
+
+The current interface is described in [Research map](ECTCETERA_RESEARCH_MAP.md). Existing page offsets are retained as guide metadata/validation; the UI no longer uses vanilla book contents links.
