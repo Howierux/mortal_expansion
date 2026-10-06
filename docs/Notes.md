@@ -500,3 +500,7 @@ Validation: build and all 110 required server tests passed, including successful
 ### 2026-10-06 - Spirit unfinished-business mini-quests
 
 Spirits offer optional mob-slaying tasks via sneak-right-click and clickable chat acceptance. Target selection favors hostile types 75%; three generated difficulty tags control mob pools, kill quotas and tiered emerald/ectoplasm/XP rewards. Progress persists without the giver, and final credited kills pay immediately with inventory-overflow drops. The previously missing Spirit Commission Haunt benefit now offers the same quest directly without a permanent NPC. Build and 115 server tests pass; guide/resource checks pass. Client/respawn/balance playtesting remains. See [Spirit quests](SPIRIT_QUESTS.md).
+
+### 2026-10-06 - Spirit interaction buttons
+
+Right-clicking a Spirit now opens Trade, Unfinished Business and Leave options. Quest offers have Accept/Decline/Back buttons; active quests show progress. Native merchant behavior remains behind Trade. Temporary Haunt encounters retain chat offers. Server-bound ephemeral tokens validate player, giver, distance and dialog mode and prevent replay. Build and 118 tests pass; guide/resource checks pass. Client layout remains a playtest check. See [Spirit options](SPIRIT_INTERACTION_MENU.md).

@@ -116,7 +116,10 @@ public final class SpiritVillagerGameTests {
         var pos = helper.absolutePos(new BlockPos(5, 2, 5));
         spirit.moveTo(pos.getX(), pos.getY(), pos.getZ()); helper.getLevel().addFreshEntity(spirit);
         var player = helper.makeMockServerPlayerInLevel();
-        helper.assertTrue(spirit.mobInteract(player, InteractionHand.MAIN_HAND).consumesAction(), "Trading interaction accepted");
+        player.setPos(spirit.position());
+        helper.assertTrue(spirit.mobInteract(player, InteractionHand.MAIN_HAND).consumesAction(), "Options interaction accepted");
+        helper.assertTrue(!(player.containerMenu instanceof MerchantMenu), "Right click does not skip the options");
+        helper.assertTrue(com.howierux.mortalexpansion.quest.SpiritInteraction.choose(player,com.howierux.mortalexpansion.quest.SpiritInteraction.token(player),0), "Trade button is accepted");
         helper.assertTrue(player.containerMenu instanceof MerchantMenu, "Vanilla trading screen opens");
         var menu = (MerchantMenu)player.containerMenu;
         for (int i = 0; i < 5; i++) spirit.notifyTrade(spirit.getOffers().getFirst());

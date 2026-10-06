@@ -43,6 +43,7 @@ public final class MortalExpansion {
         com.howierux.mortalexpansion.registry.ModEffects.register(modBus);
         ModDataComponents.register(modBus);
         GraveNamePayloads.register(modBus);
+        com.howierux.mortalexpansion.network.SpiritInteractionPayloads.register(modBus);
         com.howierux.mortalexpansion.network.HauntEffectPayloads.register(modBus);
         com.howierux.mortalexpansion.network.SpectralTracksPayload.register(modBus);
         com.howierux.mortalexpansion.network.SpiritJourneyPayloads.register(modBus);

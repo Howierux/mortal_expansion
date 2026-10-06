@@ -74,17 +74,8 @@ public final class SpiritEntity extends AbstractVillager implements HorizontalPh
     }
     @Override public InteractionResult mobInteract(Player player, InteractionHand hand) {
         if (!isAlive() || isBaby() || isTrading()) return super.mobInteract(player, hand);
-        if(player.isSecondaryUseActive()){
-            if(player instanceof net.minecraft.server.level.ServerPlayer server){
-                if(!com.howierux.mortalexpansion.quest.SpiritQuests.offer(server,getDisplayName().getString()))
-                    com.howierux.mortalexpansion.quest.SpiritQuests.status(server);
-            }
-            return InteractionResult.sidedSuccess(level().isClientSide);
-        }
-        if (!level().isClientSide && !getOffers().isEmpty()) {
-            setTradingPlayer(player);
-            openTradingScreen(player, getDisplayName(), getExpertise());
-        }
+        if(player instanceof net.minecraft.server.level.ServerPlayer server)
+            com.howierux.mortalexpansion.quest.SpiritInteraction.open(server,this);
         return InteractionResult.sidedSuccess(level().isClientSide);
     }
     @Override protected void updateTrades() { SpiritTrades.populate(getOffers(), getExpertise()); }

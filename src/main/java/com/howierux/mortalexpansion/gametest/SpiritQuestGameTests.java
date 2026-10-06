@@ -20,7 +20,8 @@ public final class SpiritQuestGameTests {
     private static int count(net.minecraft.server.level.ServerPlayer p,Item item){return p.getInventory().items.stream().filter(s->s.is(item)).mapToInt(ItemStack::getCount).sum();}
     @GameTest(template="deferred_items_test")
     public static void spirit_offers_require_acceptance_and_survive_giver_departure(GameTestHelper h) throws Exception {
-        var p=player(h);var spirit=ModEntities.SPIRIT.get().create(h.getLevel());p.setShiftKeyDown(true);spirit.mobInteract(p,net.minecraft.world.InteractionHand.MAIN_HAND);
+        var p=player(h);var spirit=ModEntities.SPIRIT.get().create(h.getLevel());p.setShiftKeyDown(true);spirit.setPos(p.position());h.getLevel().addFreshEntity(spirit);spirit.mobInteract(p,net.minecraft.world.InteractionHand.MAIN_HAND);
+        SpiritInteraction.choose(p,SpiritInteraction.token(p),1);
         var offered=SpiritQuests.state(p).offer().orElseThrow();h.assertTrue(SpiritQuests.state(p).active().isEmpty(),"Spirit interaction only offers a quest");
         h.assertFalse(SpiritQuests.accept(p,"stale"),"Stale chat tokens cannot accept another offer");
         var dispatcher=new com.mojang.brigadier.CommandDispatcher<net.minecraft.commands.CommandSourceStack>();SpiritQuestCommands.register(dispatcher);

@@ -25,7 +25,8 @@ public final class SpiritQuests {
             && (type.getCategory()==MobCategory.MONSTER)==hostile
             && (p.serverLevel().getDifficulty()!=net.minecraft.world.Difficulty.PEACEFUL || !hostile)).toList();
     }
-    public static boolean offer(ServerPlayer p,String giver){
+    public static boolean offer(ServerPlayer p,String giver){return offer(p,giver,true);}
+    public static boolean offer(ServerPlayer p,String giver,boolean announce){
         var state=state(p);long now=now(p);
         if(state.active().isPresent() || state.offer().filter(q->q.expires()>now).isPresent() || state.offerAfter()>now)return false;
         boolean hostile=p.getRandom().nextInt(4)!=0;var pool=candidates(p,hostile);
@@ -33,12 +34,13 @@ public final class SpiritQuests {
         var type=pool.get(p.getRandom().nextInt(pool.size()));int difficulty=difficulty(type);
         int count=difficulty==2?3+p.getRandom().nextInt(3):1+p.getRandom().nextInt(3);
         var quest=new SpiritQuest(UUID.randomUUID().toString(),BuiltInRegistries.ENTITY_TYPE.getKey(type),count,0,difficulty,giver,now+6000);
-        state(p,new SpiritQuestState(Optional.of(quest),Optional.empty(),now+1200));showOffer(p,quest);return true;
+        state(p,new SpiritQuestState(Optional.of(quest),Optional.empty(),now+1200));if(announce)showOffer(p,quest);return true;
     }
     private static Component target(SpiritQuest q){return Component.translatable(BuiltInRegistries.ENTITY_TYPE.get(q.target()).getDescriptionId());}
     private static String tier(int difficulty){return switch(difficulty){case 1->"Easy";case 2->"Standard";default->"Dangerous";};}
+    public static Component describe(SpiritQuest q){return Component.translatable("message.mortal_expansion.quest.offer",q.giver(),q.required(),target(q),tier(q.difficulty()),rewardDescription(q));}
     public static void showOffer(ServerPlayer p,SpiritQuest q){
-        p.sendSystemMessage(Component.translatable("message.mortal_expansion.quest.offer",q.giver(),q.required(),target(q),tier(q.difficulty()),rewardDescription(q)));
+        p.sendSystemMessage(describe(q));
         p.sendSystemMessage(Component.literal("[Accept] ").withStyle(s->s.withColor(net.minecraft.ChatFormatting.GREEN)
             .withClickEvent(new ClickEvent(ClickEvent.Action.RUN_COMMAND,"/spiritquest accept "+q.id())))
             .append(Component.literal("[Decline]").withStyle(s->s.withColor(net.minecraft.ChatFormatting.GRAY)
