@@ -28,6 +28,7 @@ public final class ModBlockLoot extends BlockLootSubProvider {
         add(ModBlocks.BLOODSTONE_ORE.get(), createOreDrop(ModBlocks.BLOODSTONE_ORE.get(), ModItems.BLOODSTONE.get()));
         add(ModBlocks.BLOODSTONE_ORE_STONE.get(), createOreDrop(ModBlocks.BLOODSTONE_ORE_STONE.get(), ModItems.BLOODSTONE.get()));
         dropSelf(ModBlocks.ECTCHANTMENT_MACHINE.get());
+        dropSelf(ModBlocks.ALTAR_OF_PURITY.get());
         dropSelf(ModBlocks.ECTOPLASMIC_GENERATOR.get());
         dropSelf(ModBlocks.ENCHANTMENT_GENERATOR.get());
         dropSelf(ModBlocks.GRAVE.get());
@@ -72,7 +73,7 @@ public final class ModBlockLoot extends BlockLootSubProvider {
     @Override protected Iterable<Block> getKnownBlocks() {
         // Only blocks with existing drop definitions: fluids, the well, and currently
         // non-dropping blocks must not acquire new loot as part of a schema migration.
-        return List.of(ModBlocks.HAUNTED_FARMLAND.get(),
+        return List.of(ModBlocks.ALTAR_OF_PURITY.get(),ModBlocks.HAUNTED_FARMLAND.get(),
                 ModBlocks.BLOODSTONE_ORE.get(),
                 ModBlocks.BLOODSTONE_ORE_STONE.get(),
                 ModBlocks.ECTCHANTMENT_MACHINE.get(),

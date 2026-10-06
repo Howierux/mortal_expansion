@@ -108,6 +108,8 @@ public final class ModItems {
     public static final DeferredItem<BlockItem> PURIFIED_SPIRITWOOD_BUTTON =
             ITEMS.registerSimpleBlockItem(ModBlocks.PURIFIED_SPIRITWOOD_BUTTON);
 
+    public static final DeferredItem<BlockItem> ALTAR_OF_PURITY = ITEMS.registerSimpleBlockItem(ModBlocks.ALTAR_OF_PURITY);
+
     public static final DeferredItem<BlockItem> ECTCHANTMENT_MACHINE =
             ITEMS.registerSimpleBlockItem(ModBlocks.ECTCHANTMENT_MACHINE);
 

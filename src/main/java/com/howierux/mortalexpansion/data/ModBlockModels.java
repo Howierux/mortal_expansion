@@ -1,6 +1,7 @@
 package com.howierux.mortalexpansion.data;
 
 import com.howierux.mortalexpansion.MortalExpansion;
+import net.minecraft.resources.ResourceLocation;
 import com.howierux.mortalexpansion.block.GraveBlock;
 import com.howierux.mortalexpansion.registry.ModBlocks;
 import net.minecraft.core.Direction;
@@ -17,6 +18,9 @@ public final class ModBlockModels extends BlockStateProvider {
         super(output, MortalExpansion.MOD_ID, helper);
     }
     @Override protected void registerStatesAndModels() {
+        var altarOff=models().cubeAll("altar_of_purity",ResourceLocation.fromNamespaceAndPath(MortalExpansion.MOD_ID,"block/purified_gravestone"));
+        var altarOn=models().cubeAll("altar_of_purity_lit",ResourceLocation.withDefaultNamespace("block/glowstone"));
+        getVariantBuilder(ModBlocks.ALTAR_OF_PURITY.get()).partialState().with(net.minecraft.world.level.block.state.properties.BlockStateProperties.LIT,false).modelForState().modelFile(altarOff).addModel().partialState().with(net.minecraft.world.level.block.state.properties.BlockStateProperties.LIT,true).modelForState().modelFile(altarOn).addModel();
         var dry=models().getBuilder("haunted_farmland").parent(new ModelFile.UncheckedModelFile("minecraft:block/farmland"));
         var wet=models().getBuilder("haunted_farmland_moist").parent(new ModelFile.UncheckedModelFile("minecraft:block/farmland_moist"));
         getVariantBuilder(com.howierux.mortalexpansion.registry.ModBlocks.HAUNTED_FARMLAND.get()).forAllStates(state ->

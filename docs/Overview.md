@@ -135,3 +135,5 @@ The planned Spiritwell-spawn Haunt effect retains its trigger if no loaded Spiri
 ### Ambient effects
 
 Personal Haunt alone drives 30-second rolls and accepted tier probabilities; each delivered event has a sixty-second player cooldown. Held Spiritwell selections start that cooldown on delivery. Effects range from sounds and fleeting render-only shadows to brief potions, safe one-block shoves, main-inventory swaps, passive Spirits, and Spiritwell Ghosts. Beneficial effects finish one active cooking operation or convert one carried material, with a shared sixty-second chunk cooldown. Holy Water grants sixty seconds of negative-event protection, removes only unchanged haunting-owned negative potions, and cleanses one personal point per minute. Wards protect their covered chunks. Ghost’s Garb immunity/repair hooks exist through an empty item tag; the armor and major encounters are not yet added.
+
+The Altar of Purity stores offering burn time and cleanses loaded chunks in its 3x3 area. See [Altar of Purity](ALTAR_OF_PURITY.md) for fuel, crafting, GUI and persistence details.

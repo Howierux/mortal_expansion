@@ -1,0 +1,24 @@
+{
+  "type": "minecraft:crafting_shaped",
+  "category": "misc",
+  "key": {
+    "C": {
+      "item": "minecraft:campfire"
+    },
+    "P": {
+      "item": "mortal_expansion:purified_gravestone"
+    },
+    "S": {
+      "item": "mortal_expansion:holy_salt"
+    }
+  },
+  "pattern": [
+    "PCP",
+    "PSP",
+    "PPP"
+  ],
+  "result": {
+    "count": 1,
+    "id": "mortal_expansion:altar_of_purity"
+  }
+}

@@ -3,7 +3,7 @@
 **Repository:** https://github.com/Howierux/mortal_expansion  
 **Branches:** `main` (consolidated baseline), `dev` (active work)  
 **Docs:** [Overview](Overview.md), [Notes](Notes.md), [Roadmap](ROADMAP.md)  
-**Last Synced:** 2026-10-06 - Secrets of the Dead organization synchronized to `dev`; build and guide checks pass. Existing Insight mechanics remain unchanged; client layout confirmation pending.
+**Last Synced:** 2026-10-06 - Altar of Purity synchronized to `dev`; build, 130 server tests and guide/436-resource checks pass. Client GUI/balance playtest pending.
 **Current Phase:** Ambient/beneficial Haunt effects implemented; automated validation passed. Major encounters and Ghost’s Garb armor remain separate work.
 
 > **Checklist legend:** `[ ]` not started, `[x]` completed, `[~]` partially completed. Implementation status and gameplay verification are tracked separately. Discussion items are proposals, not approved implementation work.
@@ -611,3 +611,7 @@ The book was drawing its atlas/entry panel before calling Screen.render, whose b
 ### 2026-10-06 - Secrets of the Dead book section
 
 Added a dedicated Secrets of the Dead research tab/chapter from the Raw Ectoplasm book stage onward. Insight guidance, Ectothread, Ghost Garb, purified weaving/Haint Garb and Spectralite Haint entries are grouped there, rather than scattered across material tabs. Spectralite Haint now has a separate presentation node using the existing Haint page text; the Haint entry displays only its first two pages. Each secret keeps its own Insight bit and existing personal/book-tier gates. Unrevealed entries hide their titles and text. No recipes, saved data or unlock events changed. Build and existing server/guide checks pass; client tab/layout confirmation remains pending.
+
+### 2026-10-06 - Altar of Purity
+
+Added a furnace-style offering altar with accumulated, persisted burn time and a bonfire-fill GUI/remaining-time tooltip. Grave Moss and Spiritwood Log add 30s; Holy Salt and Purified Spiritwood Log add 60s; Purified Ectoplasm adds 120s. One offering is consumed at most every 12.5s, with a one-hour reserve and no item waste at capacity. While burning, loaded chunks in the centered 3x3 square lose 0.10 Haunt every 10s. No chunkloading tickets or personal protection are added. Native automation, container returns, menu transfers, break drops and a generated survival recipe are included. Build, 130 server tests and guide/436-resource checks pass. Client GUI and balance playtesting remain. See [Altar of Purity](ALTAR_OF_PURITY.md).

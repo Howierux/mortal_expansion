@@ -174,6 +174,8 @@ public final class ModBlocks {
             BlockBehaviour.Properties.ofFullCopy(Blocks.OAK_BUTTON)
     );
 
+    public static final DeferredBlock<com.howierux.mortalexpansion.block.AltarOfPurityBlock> ALTAR_OF_PURITY = BLOCKS.registerBlock("altar_of_purity",com.howierux.mortalexpansion.block.AltarOfPurityBlock::new,BlockBehaviour.Properties.ofFullCopy(Blocks.STONE).lightLevel(state->state.getValue(net.minecraft.world.level.block.state.properties.BlockStateProperties.LIT)?10:0));
+
     public static final DeferredBlock<EctchantmentMachineBlock> ECTCHANTMENT_MACHINE = BLOCKS.registerBlock(
             "ectchantment_machine",
             EctchantmentMachineBlock::new,

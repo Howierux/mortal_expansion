@@ -21,6 +21,8 @@ public final class ModBlockEntities {
     public static final DeferredRegister<BlockEntityType<?>> BLOCK_ENTITY_TYPES =
             DeferredRegister.create(Registries.BLOCK_ENTITY_TYPE, MortalExpansion.MOD_ID);
 
+    public static final Supplier<BlockEntityType<com.howierux.mortalexpansion.blockentity.AltarOfPurityBlockEntity>> ALTAR_OF_PURITY = BLOCK_ENTITY_TYPES.register("altar_of_purity",()->BlockEntityType.Builder.of(com.howierux.mortalexpansion.blockentity.AltarOfPurityBlockEntity::new,ModBlocks.ALTAR_OF_PURITY.get()).build(null));
+
     public static final Supplier<BlockEntityType<EctchantmentMachineBlockEntity>> ECTCHANTMENT_MACHINE =
             BLOCK_ENTITY_TYPES.register(
                     "ectchantment_machine",

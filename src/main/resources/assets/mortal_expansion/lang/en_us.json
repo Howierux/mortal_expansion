@@ -1,4 +1,10 @@
 {
+  "block.mortal_expansion.altar_of_purity": "Altar of Purity",
+  "gui.mortal_expansion.altar_of_purity.title": "Altar of Purity",
+  "gui.mortal_expansion.altar.offering": "Offering",
+  "gui.mortal_expansion.altar.return": "Returned",
+  "gui.mortal_expansion.altar.remaining": "Remaining burn time: %s",
+
   "gui.mortal_expansion.ectcetera.category.4": "Secrets of the Dead",
   "gui.mortal_expansion.ectcetera.category.0": "Foundations",
   "gui.mortal_expansion.ectcetera.category.1": "Spirits",
@@ -246,7 +252,7 @@
   "book.mortal_expansion.ectcetera.page.sanctified.1": "Close a boundary with Holy Salt, Spirit Torch links, or both. Mobs inside gain Sanctified.",
   "book.mortal_expansion.ectcetera.page.sanctified.2": "Smite-sensitive mobs take one damage every two seconds. An open boundary stops refreshing the effect.",
   "book.mortal_expansion.ectcetera.page.sanctified.3": "Enclosures use horizontal columns, regardless of height. A lone torch is not a wall; linked endpoints are required.",
-  "book.mortal_expansion.ectcetera.page.sanctified.4": "Keep the area loaded. Interiors above 4,096 columns are too large to sanctify.",
+  "book.mortal_expansion.ectcetera.page.sanctified.4": "Keep the area loaded. Interiors above 4,096 columns cannot sanctify. An Altar of Purity burns offerings to cleanse a 3x3 chunk area.",
   "book.mortal_expansion.ectcetera.page.wards.1": "Wards keep their 3 x 3 cleansing area loaded and ticking, even when players leave.\n\nChunkloading resumes after a restart.",
   "book.mortal_expansion.ectcetera.page.wards.2": "Protected loaded chunks lose one Haunt point per day. Wards block incoming and outgoing spread and player leakage. Overlapping Wards do not stack.",
   "book.mortal_expansion.ectcetera.page.wards.3": "Ward recipe:\nGrave Moss in four corners; Purified Spiritwood Planks in the remaining five slots.",
