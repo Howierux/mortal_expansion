@@ -87,7 +87,7 @@ Intangible creatures use custom combat and movement rules. Demi-tangible equipme
 
 ### Ectoplasm and machines
 
-- The Ectoplasmic Generator burns raw or pure ectoplasm for FE; output increases with local Haunt.
+- The Ectoplasmic Generator burns raw or pure ectoplasm for FE; output increases with local Haunt. Completed raw burns add one chunk Haunt, pure burns add three.
 - The Enchantment Generator extracts energy from enchanted items.
 - The Ectchantment Machine transmutates materials and supports demi-tangible upgrades using ectoplasmic charge or FE.
 - The Purification Station consumes raw ectoplasm, Grave Moss, water, and FE to produce pure ectoplasm, adding local Haunt per completed craft.

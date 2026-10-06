@@ -30,6 +30,10 @@ public final class EctoplasmicGeneratorBlockEntity extends BlockEntity {
     public static final int RAW_BASE_FE_PER_TICK = 20;
     public static final int PURE_BASE_FE_PER_TICK = 40;
 
+    public static final int RAW_HAUNT_PER_BURN = 1;
+    public static final int PURE_HAUNT_PER_BURN = 3;
+    private static final String BURN_HAUNT_TAG = "BurnHaunt";
+
     private static final String ENERGY_TAG = "Energy";
     private static final String BURN_TICKS_TAG = "BurnTicks";
     private static final String BASE_GENERATION_TAG = "BaseGeneration";
@@ -68,6 +72,7 @@ public final class EctoplasmicGeneratorBlockEntity extends BlockEntity {
 
     private int burnTicksRemaining;
     private int baseGenerationPerTick;
+    private int hauntPerBurn;
 
     public EctoplasmicGeneratorBlockEntity(BlockPos pos, BlockState state) {
         super(ModBlockEntities.ECTOPLASMIC_GENERATOR.get(), pos, state);
@@ -135,6 +140,7 @@ public final class EctoplasmicGeneratorBlockEntity extends BlockEntity {
 
         burnTicksRemaining = getBurnTicks(stack);
         baseGenerationPerTick = getBaseGeneration(stack);
+        hauntPerBurn = getHauntPerBurn(stack);
         setChanged();
         return true;
     }
@@ -181,6 +187,10 @@ public final class EctoplasmicGeneratorBlockEntity extends BlockEntity {
             if (accepted > 0) {
                 blockEntity.burnTicksRemaining--;
                 if (blockEntity.burnTicksRemaining <= 0) {
+                    int emitted = blockEntity.hauntPerBurn;
+                    blockEntity.hauntPerBurn = 0;
+                    if (level instanceof ServerLevel server && emitted > 0)
+                        HauntManager.addPoints(server, pos, emitted);
                     blockEntity.baseGenerationPerTick = 0;
                 }
                 blockEntity.setChanged();
@@ -200,6 +210,7 @@ public final class EctoplasmicGeneratorBlockEntity extends BlockEntity {
 
         burnTicksRemaining = getBurnTicks(ecto);
         baseGenerationPerTick = getBaseGeneration(ecto);
+        hauntPerBurn = getHauntPerBurn(ecto);
         items.extractItem(SLOT_ECTO, 1, false);
         setChanged();
     }
@@ -267,6 +278,11 @@ public final class EctoplasmicGeneratorBlockEntity extends BlockEntity {
         }
     }
 
+    private static int getHauntPerBurn(ItemStack stack) {
+        return stack.is(ModItems.PURE_ECTOPLASM.get()) ? PURE_HAUNT_PER_BURN
+                : stack.is(ModItems.RAW_ECTOPLASM.get()) ? RAW_HAUNT_PER_BURN : 0;
+    }
+
     private static int getBaseGeneration(ItemStack stack) {
         if (stack.is(ModItems.PURE_ECTOPLASM.get())) {
             return PURE_BASE_FE_PER_TICK;
@@ -288,6 +304,11 @@ public final class EctoplasmicGeneratorBlockEntity extends BlockEntity {
         }
         burnTicksRemaining = Math.max(0, tag.getInt(BURN_TICKS_TAG));
         baseGenerationPerTick = Math.max(0, tag.getInt(BASE_GENERATION_TAG));
+        // Legacy saves identify their active fuel by the already persisted base FE rate.
+        int legacyHaunt = baseGenerationPerTick == PURE_BASE_FE_PER_TICK ? PURE_HAUNT_PER_BURN
+                : baseGenerationPerTick == RAW_BASE_FE_PER_TICK ? RAW_HAUNT_PER_BURN : 0;
+        hauntPerBurn = burnTicksRemaining > 0 ? net.minecraft.util.Mth.clamp(
+                tag.contains(BURN_HAUNT_TAG) ? tag.getInt(BURN_HAUNT_TAG) : legacyHaunt, 0, PURE_HAUNT_PER_BURN) : 0;
     }
 
     @Override
@@ -297,6 +318,7 @@ public final class EctoplasmicGeneratorBlockEntity extends BlockEntity {
         tag.put("Items", items.serializeNBT(registries));
         tag.putInt(BURN_TICKS_TAG, burnTicksRemaining);
         tag.putInt(BASE_GENERATION_TAG, baseGenerationPerTick);
+        tag.putInt(BURN_HAUNT_TAG, hauntPerBurn);
     }
 
     private final class GeneratorEnergyStorage extends EnergyStorage {

@@ -233,7 +233,7 @@
   "book.mortal_expansion.ectcetera.page.ectchantment.5": "Suitable weapons and tools can gain Demi-Tangible, letting them hurt intangible mobs.",
   "book.mortal_expansion.ectcetera.page.ectchantment.6": "Matching stackable outputs merge up to their stack limit. Clear blocked output space before processing can continue.",
   "book.mortal_expansion.ectcetera.page.generators.1": "The Ectoplasmic Generator burns Ectoplasm for FE. Pure Ectoplasm gives more energy over a longer burn.",
-  "book.mortal_expansion.ectcetera.page.generators.2": "Output improves with local Haunt. Adjacent machines and compatible cables can receive its power.",
+  "book.mortal_expansion.ectcetera.page.generators.2": "Output improves with local Haunt. Completed raw burns add 1 chunk Haunt; pure burns add 3. Adjacent machines and cables receive power.",
   "book.mortal_expansion.ectcetera.page.generators.3": "The Enchantment Generator extracts FE from an enchanted item and removes its enchantments.",
   "book.mortal_expansion.ectcetera.page.generators.4": "When extraction finishes, retrieve the disenchanted item with an empty hand. It generates power; processing machines only accept power.",
   "book.mortal_expansion.ectcetera.page.station.1": "Supply one Ectoplasm, one Grave Moss, one bucket of water (1,000 mB), and 100,000 FE.",

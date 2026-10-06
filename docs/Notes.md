@@ -508,3 +508,7 @@ Right-clicking a Spirit now opens Trade, Unfinished Business and Leave options. 
 ### 2026-10-06 - Graveyard Stone weathering
 
 Stone slowly converts to Gravestone anywhere its actual biome is Graveyard, inside or outside cemeteries. Loaded chunks sample at most 64 positions per day and convert at most four blocks, with no Haunt cost or tier requirement. Surface and buried Stone can be chosen; unrelated materials/biomes and unloaded terrain are untouched. Weathering RNG is independent of existing Haunt simulation. Build and all 121 server tests pass; guide/resource checks pass. Visual and long-term rate playtesting remain. See [Graveyard Stone](GRAVEYARD_STONE.md).
+
+### 2026-10-06 - Ectoplasmic Generator Haunt emissions
+
+Completed raw ectoplasm burns add 1 chunk Haunt; purified burns add 3. Emission happens once on the final productive tick, so full-buffer stalls and unfinished burns cannot emit early. The fuel's pending output persists with burn progress, and old active saves infer their output from the existing base FE rate. Existing fractions and the 69-point cap are preserved. Build and 124 server tests pass; guide/resource checks pass. Long-term energy/Haunt balance remains a playtest check. See [Generator Haunt](ECTOPLASMIC_GENERATOR_HAUNT.md).
