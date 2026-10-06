@@ -104,8 +104,8 @@ public abstract class AbstractMortalMonster extends Monster {
             return;
         }
 
-        // Keep Minecraft's ordinary Y-axis collision so spectral mobs stand on
-        // floors, but apply X/Z motion directly so walls do not block them.
+        // Downward collision preserves floors; the shared collision hook permits
+        // upward phasing. Apply X/Z directly so ordinary walls do not block them.
         super.move(moverType, new Vec3(0.0D, safeMovement.y, 0.0D));
 
         if (safeMovement.x != 0.0D || safeMovement.z != 0.0D) {

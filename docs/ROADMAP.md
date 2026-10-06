@@ -521,3 +521,7 @@ See [Spectral Insight](SPECTRAL_INSIGHT.md).
 ### 2026-10-05 - Basic EMF reader presentation
 
 Corrected the basic reader face orientation for both hands and personal scanning, and removed its HUD overlay. The Precise reader retains its numeric display/HUD. Revised in-game visual verification remains pending.
+
+### 2026-10-05 - Upward intangible mob movement
+
+Intangible mobs now rise through ordinary blocks while floors still block descent. Spectral materials, Holy Salt and Spirit Torch barriers remain effective across swept upward movement. Spectral pursuit steers toward higher targets; tangible phases and player garb movement are unchanged. See [Upward phasing](UPWARD_PHASING.md). Build and 71 server tests pass; live movement playtesting remains.

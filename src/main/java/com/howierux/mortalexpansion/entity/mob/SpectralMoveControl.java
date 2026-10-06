@@ -5,8 +5,8 @@ import net.minecraft.world.entity.ai.attributes.Attributes;
 import net.minecraft.world.entity.ai.control.MoveControl;
 
 /**
- * Steers horizontal phasing without vanilla's jump-out-of-an-obstructing-block
- * behavior. A genuinely higher destination may still request a terrain jump.
+ * Steers spectral movement without vanilla's jump-out-of-an-obstructing-block
+ * behavior. Higher destinations request a controlled upward rise.
  * Tangible phases retain the ordinary movement controller.
  */
 public final class SpectralMoveControl extends MoveControl {
@@ -36,12 +36,14 @@ public final class SpectralMoveControl extends MoveControl {
         mob.setYRot(rotlerp(mob.getYRot(), yaw, 90.0F));
         mob.setSpeed((float) (speedModifier * mob.getAttributeValue(Attributes.MOVEMENT_SPEED)));
 
-        // Do not inspect the collision shape at the mob's feet here: occupying
-        // an ordinary wall is expected while phasing, not a reason to jump.
-        if (dy > mob.maxUpStep()
-                && dx * dx + dz * dz < Math.max(1.0F, mob.getBbWidth())) {
-            mob.getJumpControl().jump();
-            operation = Operation.JUMPING;
+        if(dx*dx+dz*dz < 2.5000003E-7D)mob.setZza(0.0F);
+
+        // Rise deliberately toward higher destinations rather than repeatedly jumping into a ceiling.
+        // Only upward velocity is added: gravity and normal floor collision handle descent.
+        if (dy > 0.1D) {
+            var velocity=mob.getDeltaMovement();
+            mob.setDeltaMovement(velocity.x,Math.min(0.25D,dy),velocity.z);
+            mob.setOnGround(false);
         }
     }
 }

@@ -6,7 +6,7 @@ import net.minecraft.world.entity.ai.goal.Goal;
 import java.util.EnumSet;
 
 /**
- * Direct same-level pursuit used by intangible hostile mobs.
+ * Direct spectral pursuit used by intangible hostile mobs.
  *
  * This deliberately bypasses ordinary path navigation so a wall between the
  * mob and its target is not treated as an obstacle. The entity's movement
@@ -31,7 +31,7 @@ public final class SpectralMeleeAttackGoal extends Goal {
         return canPhase()
                 && target != null
                 && target.isAlive()
-                && isSameLevel(target)
+                && withinVerticalRange(target)
                 && SpectralPhasingRules.canTrackThroughBlocks(mob, target);
     }
 
@@ -73,7 +73,7 @@ public final class SpectralMeleeAttackGoal extends Goal {
 
         mob.getMoveControl().setWantedPosition(
                 target.getX(),
-                mob.getY(),
+                target.getY(),
                 target.getZ(),
                 speedModifier
         );
@@ -95,7 +95,7 @@ public final class SpectralMeleeAttackGoal extends Goal {
                 && phasing.canPhaseHorizontally();
     }
 
-    private boolean isSameLevel(LivingEntity target) {
-        return Math.abs(target.getY() - mob.getY()) <= 1.5D;
+    private boolean withinVerticalRange(LivingEntity target) {
+        return Math.abs(target.getY() - mob.getY()) <= mob.getAttributeValue(net.minecraft.world.entity.ai.attributes.Attributes.FOLLOW_RANGE);
     }
 }

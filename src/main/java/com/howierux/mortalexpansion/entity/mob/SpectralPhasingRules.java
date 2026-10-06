@@ -80,7 +80,7 @@ public final class SpectralPhasingRules {
 
     /**
      * Intangible mobs may pass ordinary horizontal collision, but never enter
-     * blocks tagged as spectral-solid.
+     * blocks tagged as spectral-solid. Also used to validate upward swept volumes.
      */
     public static boolean canEnterHorizontally(Entity mob, AABB destination) {
         Level level = mob.level();

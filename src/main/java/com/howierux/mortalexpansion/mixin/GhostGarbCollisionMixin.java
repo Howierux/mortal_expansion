@@ -15,5 +15,7 @@ public abstract class GhostGarbCollisionMixin {
     private void mortalExpansion$phase(Vec3 movement, CallbackInfoReturnable<Vec3> cir) {
         Entity entity = (Entity)(Object)this;
         if (GhostGarbPhasing.active(entity)) cir.setReturnValue(GhostGarbPhasing.collide(entity, movement));
+        else if(com.howierux.mortalexpansion.entity.mob.UpwardSpectralPhasing.active(entity,movement))
+            cir.setReturnValue(com.howierux.mortalexpansion.entity.mob.UpwardSpectralPhasing.collide(entity,movement));
     }
 }
