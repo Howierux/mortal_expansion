@@ -28,6 +28,19 @@ public final class ModRecipes extends RecipeProvider {
                 output.accept(id, recipe, null, conditions);
             }
         };
+        ShapedRecipeBuilder.shaped(RecipeCategory.REDSTONE, ModItems.ENCHANTMENT_GENERATOR.get())
+                .pattern("IRI").pattern("IGI").pattern("IFI")
+                .define('I', Items.IRON_INGOT).define('G', Items.GRINDSTONE).define('R', Items.REDSTONE)
+                .define('F', ModItems.HAUNT_FURNACE.get())
+                .unlockedBy("has_haunt_furnace", has(ModItems.HAUNT_FURNACE.get())).save(output);
+        ShapedRecipeBuilder.shaped(RecipeCategory.REDSTONE, ModItems.ECTOPLASMIC_GENERATOR.get())
+                .pattern("GGG").pattern("GEG").pattern("GFG")
+                .define('G', Items.GOLD_INGOT).define('E', ModItems.RAW_ECTOPLASM.get()).define('F', ModItems.HAUNT_FURNACE.get())
+                .unlockedBy("has_haunt_furnace", has(ModItems.HAUNT_FURNACE.get())).save(output);
+        ShapedRecipeBuilder.shaped(RecipeCategory.REDSTONE, ModItems.ECTCHANTMENT_MACHINE.get())
+                .pattern("PPP").pattern("PEP").pattern("PCP")
+                .define('P', ModItems.PURIFIED_GRAVESTONE.get()).define('E', Items.ENCHANTING_TABLE).define('C', ModItems.PURE_ECTOPLASM.get())
+                .unlockedBy("has_pure_ectoplasm", has(ModItems.PURE_ECTOPLASM.get())).save(output);
         ShapelessRecipeBuilder.shapeless(RecipeCategory.TOOLS, ModItems.PRECISE_EMF_READER.get())
                 .requires(ModItems.EMF_READER.get()).requires(ModItems.RAW_ECTOPLASM.get())
                 .unlockedBy("has_emf_reader", has(ModItems.EMF_READER.get())).save(output);

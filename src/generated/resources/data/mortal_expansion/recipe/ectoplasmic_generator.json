@@ -1,0 +1,24 @@
+{
+  "type": "minecraft:crafting_shaped",
+  "category": "redstone",
+  "key": {
+    "E": {
+      "item": "mortal_expansion:raw_ectoplasm"
+    },
+    "F": {
+      "item": "mortal_expansion:haunt_furnace"
+    },
+    "G": {
+      "item": "minecraft:gold_ingot"
+    }
+  },
+  "pattern": [
+    "GGG",
+    "GEG",
+    "GFG"
+  ],
+  "result": {
+    "count": 1,
+    "id": "mortal_expansion:ectoplasmic_generator"
+  }
+}

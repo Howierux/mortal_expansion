@@ -1,0 +1,32 @@
+{
+  "parent": "minecraft:recipes/root",
+  "criteria": {
+    "has_pure_ectoplasm": {
+      "conditions": {
+        "items": [
+          {
+            "items": "mortal_expansion:pure_ectoplasm"
+          }
+        ]
+      },
+      "trigger": "minecraft:inventory_changed"
+    },
+    "has_the_recipe": {
+      "conditions": {
+        "recipe": "mortal_expansion:ectchantment_machine"
+      },
+      "trigger": "minecraft:recipe_unlocked"
+    }
+  },
+  "requirements": [
+    [
+      "has_the_recipe",
+      "has_pure_ectoplasm"
+    ]
+  ],
+  "rewards": {
+    "recipes": [
+      "mortal_expansion:ectchantment_machine"
+    ]
+  }
+}

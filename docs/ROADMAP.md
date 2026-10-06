@@ -3,7 +3,7 @@
 **Repository:** https://github.com/Howierux/mortal_expansion  
 **Branches:** `main` (consolidated baseline), `dev` (active work)  
 **Docs:** [Overview](Overview.md), [Notes](Notes.md), [Roadmap](ROADMAP.md)  
-**Last Synced:** 2026-10-06 - Generator fuel Haunt output synchronized to `dev`; build, 124 required server tests and guide/resource checks passed. Energy/Haunt balance remains pending.
+**Last Synced:** 2026-10-06 - Machine recipes synchronized to `dev`; data generation, build, guide and 427-resource checks pass. Existing gameplay-test baseline remains 124.
 **Current Phase:** Ambient/beneficial Haunt effects implemented; automated validation passed. Major encounters and Ghost’s Garb armor remain separate work.
 
 > **Checklist legend:** `[ ]` not started, `[x]` completed, `[~]` partially completed. Implementation status and gameplay verification are tracked separately. Discussion items are proposals, not approved implementation work.
@@ -591,3 +591,7 @@ Stone slowly converts to Gravestone anywhere its actual biome is Graveyard, insi
 ### 2026-10-06 - Ectoplasmic Generator Haunt emissions
 
 Completed raw ectoplasm burns add 1 chunk Haunt; purified burns add 3. Emission happens once on the final productive tick, so full-buffer stalls and unfinished burns cannot emit early. The fuel's pending output persists with burn progress, and old active saves infer their output from the existing base FE rate. Existing fractions and the 69-point cap are preserved. Build and 124 server tests pass; guide/resource checks pass. Long-term energy/Haunt balance remains a playtest check. See [Generator Haunt](ECTOPLASMIC_GENERATOR_HAUNT.md).
+
+### 2026-10-06 - Machine crafting recipes
+
+Added generated crafting recipes for the Enchantment Generator (Grindstone, Redstone, Haunt Furnace and 6 Iron), Ectoplasmic Generator (Raw Ectoplasm, Haunt Furnace and 7 Gold), and Ectchantment Machine (Enchanting Table, Purified Ectoplasm and 7 Purified Gravestone). Each yields one machine and has a recipe-book unlock advancement. Data generation, build and guide/resource validation pass; the existing 124 gameplay tests are unchanged. See [Machine recipes](MACHINE_RECIPES.md).
