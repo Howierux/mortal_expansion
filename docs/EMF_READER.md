@@ -8,7 +8,7 @@ Redstone  Holy Salt  Redstone
 Iron      Iron       Iron
 ```
 
-Hold it in either hand to read the current chunk. Hold Use (right-click) to turn it inward and read personal Haunt; release to resume chunk readings. A labeled HUD displays the exact whole Haunt value and tier alongside six colored bulbs. The item itself lights the same bulbs.
+Hold it in either hand to read the current chunk. Hold Use (right-click) to turn it inward and read personal Haunt; release to resume chunk readings. The basic reader shows its six tier bulbs on the held device with no HUD overlay. Its face stays toward the player in either hand and during personal scanning. The upgraded Precise EMF Reader retains its decimal device display and labeled HUD.
 
 | Haunt | Tier | Lit bulbs |
 | --- | --- | --- |
@@ -35,3 +35,5 @@ Combine one EMF Reader with one Raw Ectoplasm in any arrangement, including the 
 A supported client item renderer combines registered baked bulb models with font rendering, avoiding a mixin or hundreds of pre-generated digit models. Renderer model coordinates and first/third-person transforms need manual visual playtesting. Unknown or out-of-scope samples display --.--.
 
 The existing network-only sample now transmits personal hundredths as an integer, retaining the existing whole-point accessor for basic-reader behavior. Server and clients must run the same build; no persistent item or world format changes. Integer arithmetic and explicit formatting avoid floating-point drift or locale-dependent decimal punctuation.
+
+2026-10-05 playtest correction: basic reader first-person model and hand poses now face the camera in both modes; the basic HUD is removed. Verify the revised appearance in-game.

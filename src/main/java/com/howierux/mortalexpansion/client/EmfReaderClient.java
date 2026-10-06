@@ -26,6 +26,7 @@ public final class EmfReaderClient {
         else if (player.getMainHandItem().getItem() instanceof EmfReaderItem) stack = player.getMainHandItem();
         else if (player.getOffhandItem().getItem() instanceof EmfReaderItem) stack = player.getOffhandItem();
         else return;
+        if (!stack.is(ModItems.PRECISE_EMF_READER.get())) return;
         boolean personal = EmfReaderItem.personal(stack, player);
         int value = EmfReaderItem.value(stack, player), lit = value < 0 ? 0 : EmfScale.litBulbs(value);
         int x = graphics.guiWidth() / 2 - 66, y = graphics.guiHeight() - 106;

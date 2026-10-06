@@ -517,3 +517,7 @@ See [Spectral discovery](SPECTRAL_DISCOVERY.md).
 - [ ] Manual guide refresh, whispers and recipe-book visuals; other-mod automation integration remains a missing function.
 
 See [Spectral Insight](SPECTRAL_INSIGHT.md).
+
+### 2026-10-05 - Basic EMF reader presentation
+
+Corrected the basic reader face orientation for both hands and personal scanning, and removed its HUD overlay. The Precise reader retains its numeric display/HUD. Revised in-game visual verification remains pending.

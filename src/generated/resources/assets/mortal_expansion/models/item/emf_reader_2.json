@@ -1,5 +1,21 @@
 {
   "parent": "minecraft:block/block",
+  "display": {
+    "firstperson_lefthand": {
+      "scale": [
+        0.8,
+        0.8,
+        0.8
+      ]
+    },
+    "firstperson_righthand": {
+      "scale": [
+        0.8,
+        0.8,
+        0.8
+      ]
+    }
+  },
   "elements": [
     {
       "faces": {

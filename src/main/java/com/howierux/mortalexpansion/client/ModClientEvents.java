@@ -98,6 +98,15 @@ public final class ModClientEvents {
             @Override public boolean applyForgeHandTransform(com.mojang.blaze3d.vertex.PoseStack pose,
                     net.minecraft.client.player.LocalPlayer player, net.minecraft.world.entity.HumanoidArm arm,
                     net.minecraft.world.item.ItemStack stack, float partialTick, float equip, float swing) {
+                if (stack.is(ModItems.EMF_READER.get())) {
+                    int side = arm == net.minecraft.world.entity.HumanoidArm.RIGHT ? 1 : -1;
+                    boolean personal = com.howierux.mortalexpansion.item.EmfReaderItem.personal(stack, player);
+                    // The bulb face is +Z. Keep it toward the camera in both hands and modes.
+                    pose.translate(side * (personal ? 0.30F : 0.42F), (personal ? -0.25F : -0.35F) - equip * 0.6F,
+                            personal ? -0.62F : -0.78F);
+                    if (personal) pose.mulPose(com.mojang.math.Axis.XP.rotationDegrees(-15.0F));
+                    return true;
+                }
                 if (!com.howierux.mortalexpansion.item.EmfReaderItem.personal(stack, player)) return false;
                 int side = arm == net.minecraft.world.entity.HumanoidArm.RIGHT ? 1 : -1;
                 pose.translate(side * 0.42F, -0.35F - equip * 0.6F, -0.55F);

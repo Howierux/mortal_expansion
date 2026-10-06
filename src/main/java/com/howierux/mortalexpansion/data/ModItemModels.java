@@ -20,6 +20,11 @@ public final class ModItemModels extends ItemModelProvider {
             var model = getBuilder("emf_reader_" + lit).parent(new ModelFile.UncheckedModelFile("minecraft:block/block"))
                     .texture("particle", "minecraft:block/iron_block").texture("case", "minecraft:block/iron_block")
                     .texture("panel", "minecraft:block/black_concrete");
+            for (var hand : new net.minecraft.world.item.ItemDisplayContext[]{
+                    net.minecraft.world.item.ItemDisplayContext.FIRST_PERSON_RIGHT_HAND,
+                    net.minecraft.world.item.ItemDisplayContext.FIRST_PERSON_LEFT_HAND}) {
+                model.transforms().transform(hand).rotation(0, 0, 0).translation(0, 0, 0).scale(0.8F).end();
+            }
             model.element().from(3, 4, 6).to(13, 14, 9).allFaces((dir, face) -> face.texture("#case")).end();
             model.element().from(6, 0, 6.5F).to(10, 5, 8.5F).allFaces((dir, face) -> face.texture("#panel")).end();
             model.element().from(3.5F, 8, 9).to(12.5F, 13.5F, 9.2F).allFaces((dir, face) -> face.texture("#panel")).end();
