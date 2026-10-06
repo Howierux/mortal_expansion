@@ -3,7 +3,7 @@
 **Repository:** https://github.com/Howierux/mortal_expansion  
 **Branches:** `main` (consolidated baseline), `dev` (active work)  
 **Docs:** [Overview](Overview.md), [Notes](Notes.md), [Roadmap](ROADMAP.md)  
-**Last Synced:** 2026-10-06 - Player upward phasing synchronized to `dev`; build, 110 required server tests, 128-page guide and 418-resource checks passed. Client movement remains pending.
+**Last Synced:** 2026-10-06 - 15-attempt sapling growth limit synchronized to `dev`; build, 110 required server tests, 128-page guide and 418-resource checks passed. Client movement remains pending.
 **Current Phase:** Ambient/beneficial Haunt effects implemented; automated validation passed. Major encounters and Ghost’s Garb armor remain separate work.
 
 > **Checklist legend:** `[ ]` not started, `[x]` completed, `[~]` partially completed. Implementation status and gameplay verification are tracked separately. Discussion items are proposals, not approved implementation work.
@@ -569,3 +569,9 @@ Validation: build and all 108 server tests pass, including stage-zero Oak/Spirit
 ### 2026-10-06 - Upward phasing for spectral-garb players
 
 Full Ghost, Haint and Spectralite Haint wearers can move upward through ordinary ceilings using the shared mob swept-volume check. Floors, spectral-solid materials, Holy Salt and Spirit Torch barriers remain; unloaded columns cannot be crossed. No flight or automatic ascent is added. Existing breathing, Respiration and drowning behavior remain. Build and all 110 server tests pass; guide and resource checks pass. Client jumping/swimming and movement feedback remain playtest checks. See [Upward phasing](UPWARD_PHASING.md).
+
+### 2026-10-06 - Sapling growth attempt limit
+
+Spectralite axe sapling growth stops after 15 total native bonemeal attempts per click if the tree has not grown. The initial accepted attempt is included in that total and the single 0.10 chunk Haunt payment remains unchanged. The blocked-growth test asserts exactly 15 attempts.
+
+Validation: build and all 110 required server tests passed, including successful Oak/Spiritwood growth and the exact 15-attempt blocked-growth limit.

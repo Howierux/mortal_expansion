@@ -6,7 +6,7 @@ import net.minecraft.world.item.context.UseOnContext;
 
 /** Repeated native sapling bonemeal, paid once from the target chunk. */
 public final class SpectralSaplingGrowth {
-    public static final int COST_HUNDREDTHS=10,GROWTH_RADIUS=16,MAX_PULSES=64;
+    public static final int COST_HUNDREDTHS=10,GROWTH_RADIUS=16,MAX_PULSES=15;
     private SpectralSaplingGrowth(){}
     public static InteractionResult use(UseOnContext context){
         var level=context.getLevel();var pos=context.getClickedPos();var state=level.getBlockState(pos);

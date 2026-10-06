@@ -6,7 +6,7 @@ Discovery requires natural foliage (non-persistent leaves or wart blocks) near t
 
 Right-click a sapling with the Spectralite axe to grow a tree using repeated native bonemeal applications for **0.10 Haunt from the sapling's chunk, charged once at the start**. The first accepted application pays the full cost; further pulses in the same click are free and stop when the sapling becomes a tree. Normal tree selection, sapling stages, native growth hooks and space requirements remain. Spiritwood uses its existing sapling grower and gravemoss decoration.
 
-Insufficient Haunt, unsupported targets and an initial canceled bonemeal event spend nothing. A later veto stops further pulses without another charge. Blocked growth is limited to 64 attempts per click to protect the server thread; a remaining sapling displays a growing-conditions hint. An accepted but blocked attempt still pays the one starting cost. Personal Haunt and axe durability are unchanged by growth. No persistent retry jobs are created.
+Insufficient Haunt, unsupported targets and an initial canceled bonemeal event spend nothing. A later veto stops further pulses without another charge. Blocked growth is limited to 15 attempts per click to protect the server thread; a remaining sapling displays a growing-conditions hint. An accepted but blocked attempt still pays the one starting cost. Personal Haunt and axe durability are unchanged by growth. No persistent retry jobs are created.
 
 Implementation uses NeoForge harvest/tick events and native player destruction and bonemeal hooks. No new saved data, mixins, recipes or registry IDs are introduced. Migration checks: preserve per-log harvesting/protections, early item-use hooks, native sapling growth events and wood-family tag membership.
 

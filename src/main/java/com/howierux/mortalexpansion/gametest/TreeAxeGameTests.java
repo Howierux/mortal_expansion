@@ -100,7 +100,7 @@ public final class TreeAxeGameTests {
         int[] pulses={0};java.util.function.Consumer<net.neoforged.neoforge.event.entity.player.BonemealEvent> count=e->{if(e.getPlayer()==p && e.getPos().equals(pos))pulses[0]++;};
         net.neoforged.neoforge.common.NeoForge.EVENT_BUS.addListener(count);
         try{use(h,p,pos);
-            h.assertTrue(pulses[0]==com.howierux.mortalexpansion.item.SpectralSaplingGrowth.MAX_PULSES,"A blocked tree cannot loop indefinitely");
+            h.assertTrue(pulses[0]==15,"A blocked tree cannot loop indefinitely");
             h.assertTrue(h.getLevel().getBlockState(pos).is(Blocks.OAK_SAPLING) && HauntManager.getHundredths(h.getLevel(),pos)==0,"All retry pulses share one starting cost even with exactly 0.10 Haunt");
         }finally{net.neoforged.neoforge.common.NeoForge.EVENT_BUS.unregister(count);p.discard();}h.succeed();
     }
