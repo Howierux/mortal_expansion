@@ -3,7 +3,7 @@
 **Repository:** https://github.com/Howierux/mortal_expansion  
 **Branches:** `main` (consolidated baseline), `dev` (active work)  
 **Docs:** [Overview](Overview.md), [Notes](Notes.md), [Roadmap](ROADMAP.md)  
-**Last Synced:** 2026-10-06 - Mortality Research Station synchronized to `dev`; build, 143 tests and guide/446-resource checks pass. GUI/balance playtest pending.
+**Last Synced:** 2026-10-06 - First research whisper synchronized to `dev`; build and 145 tests pass. Client whisper/early-tab playtest pending.
 **Current Phase:** Ambient/beneficial Haunt effects implemented; automated validation passed. Major encounters and Ghost’s Garb armor remain separate work.
 
 > **Checklist legend:** `[ ]` not started, `[x]` completed, `[~]` partially completed. Implementation status and gameplay verification are tracked separately. Discussion items are proposals, not approved implementation work.
@@ -627,3 +627,7 @@ Added the Altar of Impurity with the same offering/storage rules and opposite ni
 ### 2026-10-06 - Mortality Research Station
 
 Added an Enchanting Table-style station recipe using four Obsidian, two Holy Salt and a Book of Ectcetera returned with its components intact. Study materials add player-owned research percentage points: Rotten Flesh 1, Bone 5, Raw Ectoplasm 10, Purified Ectoplasm 20. Bonuses stack to 100; raw/purified types cannot mix within one pending bonus. An eligible next Haunt selection gains the stated Insight probability points; books, personal Haunt and actual secret prerequisites remain required. Pending bonuses/types persist across death/logout and reset when spent. Natural rolls and random test commands share the bias; explicit named commands retain research. Build and 143 tests pass; guide/446-resource checks pass. Client GUI/balance remains pending. See [Mortality Research](MORTALITY_RESEARCH_STATION.md).
+
+### 2026-10-06 - First research whisper
+
+Mortality Research is now the first Secrets of the Dead reveal, available by whispered Insight at Natural personal Haunt with any book tier. Its blueprint stays locked until learned; the book remains unawakened and later secrets keep their existing gates. The section appears from the starter book, with research as its root. Expanded seven-bit masks preserve previous knowledge and support research in low-tier books. Build and 145 tests pass; client whisper/early-tab feedback pending. See [First whisper](FIRST_RESEARCH_WHISPER.md).

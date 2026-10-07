@@ -16,19 +16,19 @@ public final class SpectralInsightGameTests {
     @GameTest(template="deferred_items_test")
     public static void aware_books_reveal_secrets_gradually_with_both_tier_rules(GameTestHelper h){
         var p=h.makeMockServerPlayerInLevel();var book=EctceteraProgression.book(1);p.getInventory().setItem(0,book);
-        PlayerHauntManager.setTier(p,HauntTier.ELDRITCH);h.assertFalse(SpectralInsight.perform(p),"Bone books are not aware");
+        PlayerHauntManager.setTier(p,HauntTier.ELDRITCH);h.assertTrue(SpectralInsight.perform(p) && (SpectralInsight.secrets(book)&64)!=0,"A Bone book can receive the first research whisper before awareness");
         book=EctceteraProgression.book(2);p.getInventory().setItem(0,book);PlayerHauntManager.setTier(p,HauntTier.NATURAL);
         h.assertFalse(SpectralInsight.perform(p),"Awareness alone does not bypass personal Haunt thresholds");
         PlayerHauntManager.setTier(p,HauntTier.SUPERNATURAL);h.assertTrue(SpectralInsight.perform(p),"First Insight teaches Ectothread");
-        h.assertTrue(SpectralInsight.secrets(book)==1 && p.getData(ModAttachments.ECTCETERA_KNOWLEDGE)==1,"One event reveals only one family");
+        h.assertTrue(SpectralInsight.secrets(book)==65 && p.getData(ModAttachments.ECTCETERA_KNOWLEDGE)==65,"One event reveals only one family");
         h.assertFalse(SpectralInsight.perform(p),"Next family waits for Dead Rising");
         PlayerHauntManager.setTier(p,HauntTier.DEAD_RISING);h.assertTrue(SpectralInsight.perform(p),"Ghost Garb follows thread knowledge");
         PlayerHauntManager.setTier(p,HauntTier.DEMONIC);h.assertTrue(SpectralInsight.perform(p),"Raw upgraded book can reveal Haint weaving");
-        h.assertTrue(SpectralInsight.secrets(book)==7,"Thread and both garb types remembered");
-        PlayerHauntManager.setTier(p,HauntTier.ELDRITCH);h.assertTrue(SpectralInsight.perform(p) && SpectralInsight.secrets(book)==23,"Raw book reveals Impurity but still excludes Spectralite Haint and Purity");
+        h.assertTrue(SpectralInsight.secrets(book)==71,"Thread and both garb types remembered");
+        PlayerHauntManager.setTier(p,HauntTier.ELDRITCH);h.assertTrue(SpectralInsight.perform(p) && SpectralInsight.secrets(book)==87,"Raw book reveals Impurity but still excludes Spectralite Haint and Purity");
         var upgraded=book.copy();upgraded.set(ModDataComponents.ECTCETERA_TIER.get(),3);p.getInventory().setItem(0,upgraded);
-        h.assertTrue(SpectralInsight.perform(p) && SpectralInsight.secrets(upgraded)==31,"Purified awareness enables Spectralite Haint secret");
-        h.assertTrue(SpectralInsight.perform(p) && SpectralInsight.secrets(upgraded)==63,"A separate Insight reveals Purity after Impurity");
+        h.assertTrue(SpectralInsight.perform(p) && SpectralInsight.secrets(upgraded)==95,"Purified awareness enables Spectralite Haint secret");
+        h.assertTrue(SpectralInsight.perform(p) && SpectralInsight.secrets(upgraded)==127,"A separate Insight reveals Purity after Impurity");
         h.assertFalse(SpectralInsight.perform(p),"No repeated fake revelation after all secrets are known");p.discard();h.succeed();
     }
     @GameTest(template="deferred_items_test")
@@ -87,7 +87,7 @@ public final class SpectralInsightGameTests {
         h.assertTrue((other.getData(ModAttachments.ECTCETERA_KNOWLEDGE)&7)==7,"A learned book can teach another player");
         var mixed=h.makeMockServerPlayerInLevel();mixed.getInventory().setItem(0,EctceteraProgression.book(2));mixed.getInventory().setItem(1,new ItemStack(ModItems.BOOK_OF_ECTCETERA.get()));
         PlayerHauntManager.setTier(mixed,HauntTier.ELDRITCH);
-        h.assertTrue(SpectralInsight.perform(mixed) && (mixed.getData(ModAttachments.ECTCETERA_KNOWLEDGE)&15)==15 && (mixed.getData(ModAttachments.ECTCETERA_KNOWLEDGE)&16)!=0,"Legacy weaving knowledge is retained while a genuinely new altar secret can be revealed");
+        h.assertTrue(SpectralInsight.perform(mixed) && (mixed.getData(ModAttachments.ECTCETERA_KNOWLEDGE)&15)==15 && (mixed.getData(ModAttachments.ECTCETERA_KNOWLEDGE)&64)!=0,"Legacy weaving knowledge is retained while the research whisper is revealed first");
         p.discard();other.discard();mixed.discard();h.succeed();
     }
     @GameTest(template="deferred_items_test")

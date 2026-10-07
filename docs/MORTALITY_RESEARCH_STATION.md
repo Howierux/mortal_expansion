@@ -42,3 +42,5 @@ Migration checks: native recipe remainder behavior, player attachment codecs/cop
 ## Verification
 
 Build and all 143 server tests pass. Research tests cover exact material values, repeated same-type stacking, rejected mixing, cap/no wasted extra items, native station crafting with book-component retention, exact salt/Obsidian consumption, a real protected-player risk redirected to Insight, separate cooldown handling, waiting for eligible knowledge, random/named command behavior, player ownership, saved bonus/type and remote button rejection. GUI layout/opening and long-term selection balance still need client playtesting.
+
+The research station is now the first secret, whispered into even a starter book at Natural personal Haunt. Secrets of the Dead is available from the starting book; other secrets keep their upgrade gates. Its blueprint requires this first reveal, and knowledge masks now support 0–127. See [First research whisper](FIRST_RESEARCH_WHISPER.md).

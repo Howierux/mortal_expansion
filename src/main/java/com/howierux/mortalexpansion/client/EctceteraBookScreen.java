@@ -17,11 +17,11 @@ public final class EctceteraBookScreen {
     private EctceteraBookScreen(){}
     private static final String BOOK="book.mortal_expansion.ectcetera.",UI="gui.mortal_expansion.ectcetera.";
     public static void open(InteractionHand hand){Minecraft.getInstance().setScreen(new ResearchScreen(hand));}
-    private static Component chapterTitle(String key){return key.equals("spectralite_haint") || key.startsWith("altar_of_")?Component.translatable("insight.mortal_expansion."+key+".name"):Component.translatable(BOOK+"chapter."+key);}
+    private static Component chapterTitle(String key){return key.equals("spectralite_haint") || key.startsWith("altar_of_") || key.equals("mortality_research_station")?Component.translatable("insight.mortal_expansion."+key+".name"):Component.translatable(BOOK+"chapter."+key);}
     private static Component body(String chapter,int part,int secrets){
-        if(chapter.startsWith("altar_of_"))return Component.translatable("insight.mortal_expansion."+chapter+".body");
+        if(chapter.startsWith("altar_of_") || chapter.equals("mortality_research_station"))return Component.translatable("insight.mortal_expansion."+chapter+".body");
         if(chapter.equals("spectralite_haint"))return Component.translatable(BOOK+"page.haint_garb.3");
-        if(chapter.equals("insight") && part==2){String key=(secrets&1)==0?"ectothread":(secrets&2)==0?"ghost_garb":(secrets&4)==0?"haint_garb":(secrets&8)==0?"spectralite_haint":(secrets&16)==0?"altar_of_impurity":(secrets&32)==0?"altar_of_purity":"complete";return Component.translatable("insight.mortal_expansion."+key+".guidance");}
+        if(chapter.equals("insight") && part==2){String key=(secrets&64)==0?"mortality_research_station":(secrets&1)==0?"ectothread":(secrets&2)==0?"ghost_garb":(secrets&4)==0?"haint_garb":(secrets&8)==0?"spectralite_haint":(secrets&16)==0?"altar_of_impurity":(secrets&32)==0?"altar_of_purity":"complete";return Component.translatable("insight.mortal_expansion."+key+".guidance");}
         if(chapter.equals("haint_garb") && part==3 && (secrets&8)==0)return Component.translatable("insight.mortal_expansion.spectralite_haint.locked");
         return Component.translatable(BOOK+"page."+chapter+"."+part);
     }
@@ -34,7 +34,7 @@ public final class EctceteraBookScreen {
         case "equipment"->ModItems.BLOODSTONE_SWORD.get();case "ghost_garb"->ModItems.GHOST_GARB_HELMET.get();case "furnaces"->ModItems.HAUNT_FURNACE.get();
         case "unlock_pure","sanctified"->ModItems.PURE_ECTOPLASM.get();case "wards"->ModItems.PURIFICATION_WARD.get();
         case "ectchantment"->ModItems.ECTCHANTMENT_MACHINE.get();case "generators"->ModItems.ECTOPLASMIC_GENERATOR.get();
-        case "station"->Items.SMITHING_TABLE;case "haint_garb"->ModItems.HAINT_GARB_HELMET.get();case "spectralite_haint"->ModItems.SPECTRALITE_HAINT_HELMET.get();case "altar_of_impurity"->ModItems.ALTAR_OF_IMPURITY.get();case "altar_of_purity"->ModItems.ALTAR_OF_PURITY.get();case "scepter"->ModItems.PHARAOHL_SCEPTER.get();default->Items.BOOK;
+        case "station"->Items.SMITHING_TABLE;case "haint_garb"->ModItems.HAINT_GARB_HELMET.get();case "spectralite_haint"->ModItems.SPECTRALITE_HAINT_HELMET.get();case "mortality_research_station"->ModItems.MORTALITY_RESEARCH_STATION.get();case "altar_of_impurity"->ModItems.ALTAR_OF_IMPURITY.get();case "altar_of_purity"->ModItems.ALTAR_OF_PURITY.get();case "scepter"->ModItems.PHARAOHL_SCEPTER.get();default->Items.BOOK;
     };}
     private static final class ResearchScreen extends Screen {
         private final InteractionHand hand;private int tier=-1,secrets=-1,category,part=1,bodyScroll;
@@ -47,7 +47,7 @@ public final class EctceteraBookScreen {
             if(!book.is(ModItems.BOOK_OF_ECTCETERA.get())){onClose();return;}
             int nextTier=EctceteraProgression.tier(book),nextSecrets=SpectralInsight.secrets(book);
             if(nextTier!=tier || nextSecrets!=secrets){tier=nextTier;secrets=nextSecrets;
-                if(tier<2 && category==4){category=0;panX=panY=0;}
+
                 if(entry!=null && !EctceteraResearchMap.unlocked(entry.key(),tier,secrets))entry=null;
                 if(width>0)controls();
             }
@@ -57,7 +57,7 @@ public final class EctceteraBookScreen {
         private void controls(){
             clearWidgets();
             if(entry==null){
-                int tabs=tier>=2?5:4;int tabTop=Math.min(62,Math.max(30,height-34-tabs*24));int spacing=Math.max(20,Math.min(28,(height-100)/tabs));
+                int tabs=5;int tabTop=Math.min(62,Math.max(30,height-34-tabs*24));int spacing=Math.max(20,Math.min(28,(height-100)/tabs));
                 for(int c=0;c<tabs;c++){final int tab=c;add("category."+c,12,tabTop+c*spacing,86,()->{category=tab;panX=panY=0;notice=Component.empty();});}
                 if(tabTop+(tabs-1)*spacing+26<=height-62)add("center",12,height-62,86,()->{panX=panY=0;zoom=1;});
             }else{
@@ -73,6 +73,7 @@ public final class EctceteraBookScreen {
         private int y(EctceteraResearchMap.Node n){return top()+(int)(panY+n.y()*zoom);}
         private Component label(EctceteraResearchMap.Node n){return EctceteraResearchMap.secret(n.chapter().key())!=0 && !EctceteraResearchMap.unlocked(n.chapter().key(),tier,secrets)?Component.translatable(UI+"secret"):chapterTitle(n.chapter().key());}
         private Component requirement(EctceteraResearchMap.Node n){
+            if(n.chapter().key().equals("mortality_research_station"))return Component.translatable("insight.mortal_expansion.mortality_research_station.guidance");
             if(n.chapter().tier()>tier && !(n.chapter().key().equals("haint_garb") && tier>=2 && (secrets&4)!=0))
                 return Component.translatable(UI+"upgrade",Component.translatable(UI+"material."+n.chapter().tier()));
             return Component.translatable(UI+"insight_required");

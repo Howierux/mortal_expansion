@@ -9,10 +9,10 @@ import net.minecraft.world.item.ItemStack;
 import net.neoforged.bus.api.SubscribeEvent;
 
 public final class SpectralInsight {
-    public static final int ALL=63,LEGACY_KNOWLEDGE=15;
+    public static final int ALL=127,LEGACY_KNOWLEDGE=15;
     private SpectralInsight(){}
     public static int secrets(ItemStack book){return !book.has(ModDataComponents.ECTCETERA_TIER.get())?LEGACY_KNOWLEDGE:book.getOrDefault(ModDataComponents.ECTCETERA_SECRETS.get(),0)&ALL;}
-    public static int allowedAtTier(int tier){return tier<2?0:tier==2?23:ALL;}
+    public static int allowedAtTier(int tier){return tier<2?64:tier==2?87:ALL;}
     public static boolean canCraft(Player player,net.minecraft.resources.ResourceLocation id){
         int required=InsightSecret.required(id);
         return required==0 || (player.getData(ModAttachments.ECTCETERA_KNOWLEDGE)&required)!=0
@@ -31,7 +31,7 @@ public final class SpectralInsight {
         }
     }
     public static void absorb(ServerPlayer p,ItemStack book){
-        if(!book.is(ModItems.BOOK_OF_ECTCETERA.get()) || EctceteraProgression.tier(book)<2)return;
+        if(!book.is(ModItems.BOOK_OF_ECTCETERA.get()))return;
         if(!book.has(ModDataComponents.ECTCETERA_TIER.get())){
             book.set(ModDataComponents.ECTCETERA_TIER.get(),3);book.set(ModDataComponents.ECTCETERA_SECRETS.get(),LEGACY_KNOWLEDGE);
         }
@@ -52,13 +52,17 @@ public final class SpectralInsight {
         ItemStack selected=ItemStack.EMPTY;InsightSecret chosen=null;
         for(int slot=0;slot<p.getInventory().getContainerSize();slot++){
             var book=p.getInventory().getItem(slot);
-            if(!book.is(ModItems.BOOK_OF_ECTCETERA.get()) || EctceteraProgression.tier(book)<2)continue;
+            if(!book.is(ModItems.BOOK_OF_ECTCETERA.get()))continue;
             absorb(p,book);var candidate=next(EctceteraProgression.tier(book),secrets(book),PlayerHauntManager.getTier(p).id());
             if(candidate!=null && (selected.isEmpty() || EctceteraProgression.tier(book)>EctceteraProgression.tier(selected))){selected=book;chosen=candidate;}
         }
         if(chosen==null)return false;
         selected.set(ModDataComponents.ECTCETERA_SECRETS.get(),secrets(selected)|chosen.bit);
         learnPlayer(p,chosen.bit);p.getInventory().setChanged();p.containerMenu.broadcastChanges();
+        if(chosen==InsightSecret.MORTALITY_RESEARCH_STATION){
+            com.howierux.mortalexpansion.haunt.effects.HauntEffects.sound(p,net.minecraft.sounds.SoundEvents.SOUL_ESCAPE.value(),p.position(),.35F);
+            p.displayClientMessage(Component.translatable("message.mortal_expansion.insight.first_whisper"),false);
+        }
         p.displayClientMessage(Component.translatable("message.mortal_expansion.insight.revealed",
                 Component.translatable("insight.mortal_expansion."+chosen.key()+".name"),Component.translatable("insight.mortal_expansion."+chosen.key()+".next")),false);
         return true;

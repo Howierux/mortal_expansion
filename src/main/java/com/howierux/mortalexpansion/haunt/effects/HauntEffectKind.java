@@ -9,7 +9,7 @@ public enum HauntEffectKind {
     SPIRIT(1, 8, false, 0), GHOST(3, 2, true, 0),
     FURNACE(2, 4, false, 0), PLANKS(2, 3, false, 0), COBBLE(2, 3, false, 0),
     HELPFUL_WHISPERS(1, 6, false, 0), SECOND_SIGHT(2, 4, false, 0),
-    SPECTRAL_INSIGHT(2, 4, false, 0), SPIRIT_COMMISSION(3, 3, false, 0),
+    SPECTRAL_INSIGHT(1, 4, false, 0), SPIRIT_COMMISSION(3, 3, false, 0),
     HELPFUL_VISITATION(3, 3, false, 0), EMPOWERMENT(4, 4, false, 400),
     SPIRIT_RECOGNITION(5, 3, false, 0), VEIL_REVELATION(6, 2, false, 0),
     UNWANTED_COMPANY(1, 8, true, 120), FALSE_TRACES(2, 5, true, 40),

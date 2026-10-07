@@ -25,7 +25,7 @@ public final class InverseAltarGameTests {
     }
     @GameTest(template="deferred_items_test")
     public static void beacon_furnace_recipes_require_separate_actual_insight_revelations(GameTestHelper h){
-        var p=h.makeMockServerPlayerInLevel();var book=EctceteraProgression.book(3);book.set(ModDataComponents.ECTCETERA_SECRETS.get(),15);p.getInventory().setItem(0,book);PlayerHauntManager.setTier(p,HauntTier.DEMONIC);
+        var p=h.makeMockServerPlayerInLevel();var book=EctceteraProgression.book(3);book.set(ModDataComponents.ECTCETERA_SECRETS.get(),79);p.getInventory().setItem(0,book);PlayerHauntManager.setTier(p,HauntTier.DEMONIC);
         var table=h.absolutePos(new BlockPos(4,2,4));h.getLevel().setBlock(table,net.minecraft.world.level.block.Blocks.CRAFTING_TABLE.defaultBlockState(),3);var menu=new CraftingMenu(1,p.getInventory(),ContainerLevelAccess.create(h.getLevel(),table));p.containerMenu=menu;
         menu.getSlot(1).set(new ItemStack(Items.BEACON));menu.getSlot(4).set(new ItemStack(ModItems.HAUNT_FURNACE.get()));h.assertTrue(menu.getSlot(0).getItem().isEmpty(),"Knowing the Impurity layout does not bypass its secret");
         h.assertTrue(SpectralInsight.perform(p) && menu.getSlot(0).getItem().is(ModItems.ALTAR_OF_IMPURITY.get()),"Impurity event refreshes actual crafting output");menu.quickMoveStack(p,0);

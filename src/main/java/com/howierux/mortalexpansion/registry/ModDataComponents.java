@@ -39,7 +39,7 @@ public final class ModDataComponents {
                     builder -> builder.persistent(Codec.intRange(0, 3)).networkSynchronized(ByteBufCodecs.VAR_INT));
 
     public static final DeferredHolder<DataComponentType<?>, DataComponentType<Integer>> ECTCETERA_SECRETS =
-            DATA_COMPONENTS.registerComponentType("ectcetera_secrets", builder -> builder.persistent(Codec.intRange(0,63)).networkSynchronized(ByteBufCodecs.VAR_INT));
+            DATA_COMPONENTS.registerComponentType("ectcetera_secrets", builder -> builder.persistent(Codec.intRange(0,127)).networkSynchronized(ByteBufCodecs.VAR_INT));
 
     public static final DeferredHolder<DataComponentType<?>, DataComponentType<Long>> PICKAXE_REPAIR_TIME =
             DATA_COMPONENTS.registerComponentType("pickaxe_repair_time", builder -> builder.persistent(Codec.LONG).networkSynchronized(ByteBufCodecs.VAR_LONG));

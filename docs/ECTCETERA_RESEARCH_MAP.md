@@ -30,3 +30,5 @@ Format reference: the original Thaumcraft author's release notes describe the ca
 Render-order correction: Minecraft Screen.render invokes renderBackground before its widgets. The atlas renders background blur first and draws only the registered renderables at the end, avoiding a second blur over its own map or text. Preserve this ordering during migrations.
 
 Secret organization: Ectothread, Ghost Garb, purified weaving/Haint Garb and Spectralite Haint are dedicated secret entries. The separate Spectralite Haint presentation reuses the original third Haint page, leaving the stored 30-chapter/128-page text catalog unchanged. Book upgrades reveal the section and its introduction only, not the individual secrets. Existing inherited/shared book knowledge remains respected.
+
+The research station is now the first secret, whispered into even a starter book at Natural personal Haunt. Secrets of the Dead is available from the starting book; other secrets keep their upgrade gates. Its blueprint requires this first reveal, and knowledge masks now support 0–127. See [First research whisper](FIRST_RESEARCH_WHISPER.md).

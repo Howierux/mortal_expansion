@@ -40,3 +40,5 @@ Build and 67 server GameTests pass. New tests cover gradual thresholds/prerequis
 Two additional Secrets of the Dead now gate altar crafting: Impurity (bit 16, book tier 2, personal Dead Rising) and Purity (bit 32, book tier 3, personal Demonic, prerequisite bit 16). Knowledge masks support 0–63. Old weaving bits and books migrate without granting these new secrets; prior ordinary Purity recipe unlocks cannot bypass revelation. See [Paired altars](ALTARS_AND_SECRETS.md).
 
 The Mortality Research Station can bias the next eligible Haunt selection toward Spectral Insight using player-owned research points. It does not bypass the book/personal-tier/secret prerequisites. See [Mortality Research](MORTALITY_RESEARCH_STATION.md).
+
+The research station is now the first secret, whispered into even a starter book at Natural personal Haunt. Secrets of the Dead is available from the starting book; other secrets keep their upgrade gates. Its blueprint requires this first reveal, and knowledge masks now support 0–127. See [First research whisper](FIRST_RESEARCH_WHISPER.md).

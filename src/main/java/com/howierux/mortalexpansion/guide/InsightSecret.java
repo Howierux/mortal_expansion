@@ -5,13 +5,14 @@ import java.util.List;
 
 /** Ordered secret families; thresholds are independent of recipe ingredient availability. */
 public enum InsightSecret {
-    ECTOTHREAD(1,2,2,0), GHOST_GARB(2,2,3,1), HAINT_GARB(4,2,4,3), SPECTRALITE_HAINT(8,3,5,7), ALTAR_OF_IMPURITY(16,2,3,0), ALTAR_OF_PURITY(32,3,4,16);
+    MORTALITY_RESEARCH_STATION(64,0,1,0), ECTOTHREAD(1,2,2,0), GHOST_GARB(2,2,3,1), HAINT_GARB(4,2,4,3), SPECTRALITE_HAINT(8,3,5,7), ALTAR_OF_IMPURITY(16,2,3,0), ALTAR_OF_PURITY(32,3,4,16);
     public final int bit,bookTier,personalTier,prerequisites;
     InsightSecret(int bit,int bookTier,int personalTier,int prerequisites){this.bit=bit;this.bookTier=bookTier;this.personalTier=personalTier;this.prerequisites=prerequisites;}
     public String key(){return name().toLowerCase(java.util.Locale.ROOT);}
     public List<ResourceLocation> recipes(){
         List<String> paths=new ArrayList<>();
         switch(this){
+            case MORTALITY_RESEARCH_STATION -> paths.add("mortality_research_station");
             case ALTAR_OF_IMPURITY -> paths.add("altar_of_impurity");
             case ALTAR_OF_PURITY -> paths.add("altar_of_purity");
             case ECTOTHREAD -> paths.add("ectothread");
