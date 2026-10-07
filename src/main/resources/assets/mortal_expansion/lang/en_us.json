@@ -1,4 +1,6 @@
 {
+  "message.mortal_expansion.haunt.offering_gift": "A grateful spirit leaves Holy Salt upon a nearby altar.",
+  "message.mortal_expansion.haunt.offering_blessing": "A spirit blesses the altar: its next offering will burn longer.",
   "block.mortal_expansion.altar_of_purity": "Altar of Purity",
   "gui.mortal_expansion.altar_of_purity.title": "Altar of Purity",
   "gui.mortal_expansion.altar.offering": "Offering",
@@ -404,7 +406,7 @@
   "book.mortal_expansion.ectcetera.page.haunt_events.1": "Benefits and risks roll separately every 30 seconds. Each pool has a 60-second cooldown. Personal Haunt sets eligibility; higher tiers retain earlier effects.",
   "book.mortal_expansion.ectcetera.page.haunt_events.2": "Helpful whispers point toward nearby moss or graves. At Demonic Haunt, spectral melee weapons may gain 25% damage for 20 seconds. Chat hints announce successful effects.",
   "book.mortal_expansion.ectcetera.page.haunt_events.3": "Risks include footsteps, false figures and hostile visitors. At higher Haunt, spirits may notice you farther away or pursue you. Haunted furnaces may pause briefly.",
-  "book.mortal_expansion.ectcetera.page.haunt_events.4": "Veil breaches warn five seconds before spirits cross. Full garb, Holy Water blessings and wards block risks. Quests and advanced services await future updates.",
+  "book.mortal_expansion.ectcetera.page.haunt_events.4": "Veil breaches give a five-second warning. Full garb, blessings and wards block risks. Nearby altars may receive salt or a blessing for their next offering.",
   "message.mortal_expansion.site.discovered": "Discovered: %s",
   "message.mortal_expansion.haunt.second_sight": "Spectral footprints lead toward an undiscovered resting place.",
   "message.mortal_expansion.site.none": "No Spiritwells or Cemeteries discovered yet.",

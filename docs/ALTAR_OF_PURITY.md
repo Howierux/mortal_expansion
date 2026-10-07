@@ -45,3 +45,16 @@ Migration checks: menu data slots, native container remainder API, item capabili
 ## Verification
 
 Build and 130 required server tests pass. Altar tests cover all five fuel durations, invalid fuel, accumulated time, 12.5-second item consumption, reserve capacity/no wasted offers, exact nine-chunk footprint, unaffected outside chunks, idle/exhausted stopping, fractional clamping, save/load phases, long reserve synchronization, inventory transfers, menu validity and unspent break drops. Headless mock clients cannot negotiate the NeoForge advanced-menu opening payload, so inventory behavior is tested directly using the registered menu. Real-client opening, bonfire fill/hover and balance need playtesting.
+
+## Positive Haunt offering events
+
+- **Offering Gift** (`offering_gift`): Natural personal Haunt or higher, selection weight 3. A loaded altar within eight blocks receives one Holy Salt if its input can accept it. Empty/salt inputs qualify; full slots or different offering types do not get overwritten. Normal consumption later burns that gift.
+- **Offering Blessing** (`offering_blessing`): Supernatural personal Haunt or higher, selection weight 3. A nearby altar with an eligible offering and enough reserve capacity has its next consumed offering's duration increased by 50%. It still consumes exactly one item and keeps the normal consumption interval. A pending blessing cannot stack; it persists until the next accepted offering and clears on use.
+
+Both are positive events in the existing benefit pool, with the normal 30-second rolls, personal-tier chance and independent 60-second benefit cooldown. Full spectral garb, blessings and wards do not suppress them. Successful effects show chat hints and particles. Missing/ineligible altars cause no success or spent event cooldown. The altar's chunk shares the existing 60-second world-event cooldown with material conversion and furnace benefits, preventing multiplayer spam. If several eligible altars are nearby, the nearest qualifying one is selected.
+
+Operator tests: `/mortalexpansion haunt effect @s offering_gift` and `/mortalexpansion haunt effect @s offering_blessing`. Named commands skip normal tier/player cooldown but retain altar requirements and shared chunk cooldown. These events do not charge personal or chunk Haunt. The offering itself still uses its ordinary ingredients and burn rules.
+
+Persistence adds only the optional `OfferingBlessed` boolean to altar NBT, defaulting false in older saves. No new network payloads or resources. Existing GUI burn-time synchronization shows the increased reserve once the blessed offering is consumed.
+
+Validation: build and 134 server tests pass, including full-garb positive eligibility, independent benefit/risk cooldowns, one-item bonus consumption, ordinary following fuel, actual gift insertion, multiple players/shared cooldown, full/incompatible slots, capacity, pending-blessing replay and save/load. Client hints and long-term balance remain playtest checks.

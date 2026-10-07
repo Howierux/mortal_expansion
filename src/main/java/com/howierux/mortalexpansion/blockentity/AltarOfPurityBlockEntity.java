@@ -16,6 +16,7 @@ import net.neoforged.neoforge.items.*;
 public final class AltarOfPurityBlockEntity extends BlockEntity {
     public static final int MAX_BURN_TICKS=72000,OFFERING_INTERVAL=250,CLEANSE_INTERVAL=200,CLEANSE_HUNDREDTHS=10;
     private int burnTicks,offeringDelay,cleanseProgress;
+    private boolean offeringBlessed;
     private final ItemStackHandler items=new ItemStackHandler(2){
         @Override public boolean isItemValid(int slot,ItemStack stack){return slot==0 && PurityOfferings.burnTicks(stack)>0;}
         @Override protected void onContentsChanged(int slot){setChanged();}
@@ -33,15 +34,27 @@ public final class AltarOfPurityBlockEntity extends BlockEntity {
         public int get(int index){return switch(index){case 0->burnTicks&65535;case 1->burnTicks>>>16;default->offeringDelay;};}
         public void set(int index,int value){}public int getCount(){return 3;}
     };}
+    public boolean blessNextOffering(){
+        int duration=PurityOfferings.burnTicks(items.getStackInSlot(0));
+        if(offeringBlessed || duration<=0 || duration+duration/2>MAX_BURN_TICKS-burnTicks)return false;
+        offeringBlessed=true;setChanged();return true;
+    }
+    public boolean hasBlessedOffering(){return offeringBlessed;}
+    public boolean addOfferingGift(){
+        var gift=new ItemStack(ModItems.HOLY_SALT.get());
+        if(!items.insertItem(0,gift,true).isEmpty())return false;
+        if(!items.insertItem(0,gift,false).isEmpty())return false;
+        setChanged();return true;
+    }
     private boolean consumeOffering(){
-        var input=items.getStackInSlot(0);int duration=PurityOfferings.burnTicks(input);
+        var input=items.getStackInSlot(0);int duration=PurityOfferings.burnTicks(input);if(offeringBlessed)duration+=duration/2;
         if(duration<=0 || duration>MAX_BURN_TICKS-burnTicks)return false;
         var remainder=input.copyWithCount(1).getCraftingRemainingItem();var output=items.getStackInSlot(1);
         if(!remainder.isEmpty() && !output.isEmpty() && (!ItemStack.isSameItemSameComponents(output,remainder)
             || output.getCount()+remainder.getCount()>Math.min(output.getMaxStackSize(),items.getSlotLimit(1))))return false;
         items.extractItem(0,1,false);
         if(!remainder.isEmpty()){if(output.isEmpty())items.setStackInSlot(1,remainder);else{output.grow(remainder.getCount());items.setStackInSlot(1,output);}}
-        burnTicks+=duration;offeringDelay=OFFERING_INTERVAL;setChanged();return true;
+        burnTicks+=duration;offeringBlessed=false;offeringDelay=OFFERING_INTERVAL;setChanged();return true;
     }
     public static int cleanse(ServerLevel level,BlockPos pos){
         var center=new net.minecraft.world.level.ChunkPos(pos);int changed=0;
@@ -64,6 +77,6 @@ public final class AltarOfPurityBlockEntity extends BlockEntity {
         if(state.getValue(BlockStateProperties.LIT)!=lit)level.setBlock(pos,state.setValue(BlockStateProperties.LIT,lit),3);
     }
     public void dropInventory(ServerLevel level){for(int slot=0;slot<2;slot++){Containers.dropItemStack(level,worldPosition.getX()+.5,worldPosition.getY()+.5,worldPosition.getZ()+.5,items.getStackInSlot(slot).copy());items.setStackInSlot(slot,ItemStack.EMPTY);}}
-    @Override protected void saveAdditional(CompoundTag tag,HolderLookup.Provider registries){super.saveAdditional(tag,registries);tag.put("Items",items.serializeNBT(registries));tag.putInt("BurnTicks",burnTicks);tag.putInt("OfferingDelay",offeringDelay);tag.putInt("CleanseProgress",cleanseProgress);}
-    @Override public void loadAdditional(CompoundTag tag,HolderLookup.Provider registries){super.loadAdditional(tag,registries);if(tag.contains("Items"))items.deserializeNBT(registries,tag.getCompound("Items"));burnTicks=net.minecraft.util.Mth.clamp(tag.getInt("BurnTicks"),0,MAX_BURN_TICKS);offeringDelay=net.minecraft.util.Mth.clamp(tag.getInt("OfferingDelay"),0,OFFERING_INTERVAL);cleanseProgress=net.minecraft.util.Mth.clamp(tag.getInt("CleanseProgress"),0,CLEANSE_INTERVAL-1);}
+    @Override protected void saveAdditional(CompoundTag tag,HolderLookup.Provider registries){super.saveAdditional(tag,registries);tag.put("Items",items.serializeNBT(registries));tag.putInt("BurnTicks",burnTicks);tag.putInt("OfferingDelay",offeringDelay);tag.putInt("CleanseProgress",cleanseProgress);tag.putBoolean("OfferingBlessed",offeringBlessed);}
+    @Override public void loadAdditional(CompoundTag tag,HolderLookup.Provider registries){super.loadAdditional(tag,registries);if(tag.contains("Items"))items.deserializeNBT(registries,tag.getCompound("Items"));burnTicks=net.minecraft.util.Mth.clamp(tag.getInt("BurnTicks"),0,MAX_BURN_TICKS);offeringDelay=net.minecraft.util.Mth.clamp(tag.getInt("OfferingDelay"),0,OFFERING_INTERVAL);cleanseProgress=net.minecraft.util.Mth.clamp(tag.getInt("CleanseProgress"),0,CLEANSE_INTERVAL-1);offeringBlessed=tag.getBoolean("OfferingBlessed");}
 }

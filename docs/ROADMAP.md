@@ -3,7 +3,7 @@
 **Repository:** https://github.com/Howierux/mortal_expansion  
 **Branches:** `main` (consolidated baseline), `dev` (active work)  
 **Docs:** [Overview](Overview.md), [Notes](Notes.md), [Roadmap](ROADMAP.md)  
-**Last Synced:** 2026-10-06 - Altar of Purity synchronized to `dev`; build, 130 server tests and guide/436-resource checks pass. Client GUI/balance playtest pending.
+**Last Synced:** 2026-10-06 - Positive altar offerings synchronized to `dev`; build, 134 server tests and guide/resource checks pass. Client feedback/balance pending.
 **Current Phase:** Ambient/beneficial Haunt effects implemented; automated validation passed. Major encounters and Ghost’s Garb armor remain separate work.
 
 > **Checklist legend:** `[ ]` not started, `[x]` completed, `[~]` partially completed. Implementation status and gameplay verification are tracked separately. Discussion items are proposals, not approved implementation work.
@@ -615,3 +615,7 @@ Added a dedicated Secrets of the Dead research tab/chapter from the Raw Ectoplas
 ### 2026-10-06 - Altar of Purity
 
 Added a furnace-style offering altar with accumulated, persisted burn time and a bonfire-fill GUI/remaining-time tooltip. Grave Moss and Spiritwood Log add 30s; Holy Salt and Purified Spiritwood Log add 60s; Purified Ectoplasm adds 120s. One offering is consumed at most every 12.5s, with a one-hour reserve and no item waste at capacity. While burning, loaded chunks in the centered 3x3 square lose 0.10 Haunt every 10s. No chunkloading tickets or personal protection are added. Native automation, container returns, menu transfers, break drops and a generated survival recipe are included. Build, 130 server tests and guide/436-resource checks pass. Client GUI and balance playtesting remain. See [Altar of Purity](ALTAR_OF_PURITY.md).
+
+### 2026-10-06 - Positive altar offering Haunt events
+
+Added Offering Gift (Natural+, one Holy Salt delivered to a nearby compatible altar) and Offering Blessing (Supernatural+, next offering adds 50% extra burn time without extra consumption). Both use loaded altars within eight blocks, normal benefit rolls/hints and shared world cooldowns. Blessings persist, cannot stack and clear on one consumption; full/incompatible storage and absent altars fail without mutation. Build and 134 tests pass; guide/resource checks pass. Client feedback/balance remains pending. See [Altar of Purity](ALTAR_OF_PURITY.md).

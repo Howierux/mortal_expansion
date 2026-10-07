@@ -2,6 +2,7 @@ package com.howierux.mortalexpansion.haunt.effects;
 
 /** Minimum personal tier, selection weight, negative protection, and active ticks. */
 public enum HauntEffectKind {
+    OFFERING_GIFT(1,3,false,0), OFFERING_BLESSING(2,3,false,0),
     HIT(1, 30, true, 0), SHADOW(2, 20, true, 40),
     SLOW(2, 6, true, 60), SHOVE(4, 3, true, 0), SHUFFLE(4, 3, true, 0),
     GOOD_POTION(2, 5, false, 100), BAD_POTION(2, 5, true, 100),
