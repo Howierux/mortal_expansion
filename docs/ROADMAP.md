@@ -3,7 +3,7 @@
 **Repository:** https://github.com/Howierux/mortal_expansion  
 **Branches:** `main` (consolidated baseline), `dev` (active work)  
 **Docs:** [Overview](Overview.md), [Notes](Notes.md), [Roadmap](ROADMAP.md)  
-**Last Synced:** 2026-10-06 - Paired altar secrets and furnace tints synchronized to `dev`; build and 138 tests pass. Client colors/balance pending.
+**Last Synced:** 2026-10-06 - Mortality Research Station synchronized to `dev`; build, 143 tests and guide/446-resource checks pass. GUI/balance playtest pending.
 **Current Phase:** Ambient/beneficial Haunt effects implemented; automated validation passed. Major encounters and Ghost’s Garb armor remain separate work.
 
 > **Checklist legend:** `[ ]` not started, `[x]` completed, `[~]` partially completed. Implementation status and gameplay verification are tracked separately. Discussion items are proposals, not approved implementation work.
@@ -623,3 +623,7 @@ Added Offering Gift (Natural+, one Holy Salt delivered to a nearby compatible al
 ### 2026-10-06 - Inverse altar, secret recipes and furnace tints
 
 Added the Altar of Impurity with the same offering/storage rules and opposite nine-chunk Haunt pulses. Both altar recipes are now separately revealed Secrets of the Dead: Beacon over Haunt Furnace for Impurity, Beacon over Haint Furnace for Purity. Expanded knowledge masks preserve old weaving data without auto-granting new recipes; existing altars remain functional. Haunt/Haint furnaces use recognizable vanilla textures with dark-gray/icy-blue tints. Build and 138 tests pass; data/guide checks pass. Client colors and balance remain pending. See [Paired altars](ALTARS_AND_SECRETS.md).
+
+### 2026-10-06 - Mortality Research Station
+
+Added an Enchanting Table-style station recipe using four Obsidian, two Holy Salt and a Book of Ectcetera returned with its components intact. Study materials add player-owned research percentage points: Rotten Flesh 1, Bone 5, Raw Ectoplasm 10, Purified Ectoplasm 20. Bonuses stack to 100; raw/purified types cannot mix within one pending bonus. An eligible next Haunt selection gains the stated Insight probability points; books, personal Haunt and actual secret prerequisites remain required. Pending bonuses/types persist across death/logout and reset when spent. Natural rolls and random test commands share the bias; explicit named commands retain research. Build and 143 tests pass; guide/446-resource checks pass. Client GUI/balance remains pending. See [Mortality Research](MORTALITY_RESEARCH_STATION.md).

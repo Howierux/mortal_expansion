@@ -45,16 +45,22 @@ public final class HauntEffectCommands {
             }
             candidates=new ArrayList<>(List.of(kind));
         }
+        boolean researchApplicable=name.equalsIgnoreCase("random") && com.howierux.mortalexpansion.haunt.MortalityResearch.bonus(target)>0
+            && com.howierux.mortalexpansion.haunt.MortalityResearch.ready(target);
+        boolean firstSelection=true;
         while(!candidates.isEmpty()) {
             int roll=target.getRandom().nextInt(candidates.stream().mapToInt(kind->kind.weight).sum());
             HauntEffectKind chosen=candidates.getFirst();
             for(var kind:candidates) { roll-=kind.weight;if(roll<0){chosen=kind;break;} }
+            if(firstSelection && researchApplicable)chosen=com.howierux.mortalexpansion.haunt.MortalityResearch.biasedChoice(target,candidates);
+            firstSelection=false;
             candidates.remove(chosen);
             // Targeted commands must not defer a ghost to an unrelated player later.
             boolean success=chosen==HauntEffectKind.GHOST
                 ? !HauntProtection.protectedPlayer(target) && HauntEffects.spawnGhostNear(target)
                 : HauntEffects.perform(target,chosen);
             if(!success)continue;
+            if(researchApplicable)com.howierux.mortalexpansion.haunt.MortalityResearch.spent(target);
             HauntEventController.hint(target,chosen);
             String id=chosen.name().toLowerCase(Locale.ROOT);
             source.sendSuccess(()->Component.literal("Triggered "+id+" for "+target.getGameProfile().getName()+"."),true);

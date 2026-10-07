@@ -177,6 +177,7 @@ public final class ModBlocks {
     public static final DeferredBlock<com.howierux.mortalexpansion.block.AltarOfImpurityBlock> ALTAR_OF_IMPURITY = BLOCKS.registerBlock("altar_of_impurity",com.howierux.mortalexpansion.block.AltarOfImpurityBlock::new,BlockBehaviour.Properties.ofFullCopy(Blocks.STONE).lightLevel(state->state.getValue(net.minecraft.world.level.block.state.properties.BlockStateProperties.LIT)?10:0));
     public static final DeferredBlock<com.howierux.mortalexpansion.block.AltarOfPurityBlock> ALTAR_OF_PURITY = BLOCKS.registerBlock("altar_of_purity",com.howierux.mortalexpansion.block.AltarOfPurityBlock::new,BlockBehaviour.Properties.ofFullCopy(Blocks.STONE).lightLevel(state->state.getValue(net.minecraft.world.level.block.state.properties.BlockStateProperties.LIT)?10:0));
 
+    public static final DeferredBlock<com.howierux.mortalexpansion.block.MortalityResearchStationBlock> MORTALITY_RESEARCH_STATION=BLOCKS.registerBlock("mortality_research_station",com.howierux.mortalexpansion.block.MortalityResearchStationBlock::new,BlockBehaviour.Properties.ofFullCopy(Blocks.ENCHANTING_TABLE));
     public static final DeferredBlock<EctchantmentMachineBlock> ECTCHANTMENT_MACHINE = BLOCKS.registerBlock(
             "ectchantment_machine",
             EctchantmentMachineBlock::new,

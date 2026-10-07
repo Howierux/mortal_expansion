@@ -28,6 +28,7 @@ public final class ModRecipes extends RecipeProvider {
                 output.accept(id, recipe, null, conditions);
             }
         };
+        recipesOnly.accept(ResourceLocation.fromNamespaceAndPath(MortalExpansion.MOD_ID,"mortality_research_station"),new com.howierux.mortalexpansion.recipe.MortalityResearchStationRecipe(),null);
         ShapedRecipeBuilder.shaped(RecipeCategory.DECORATIONS,ModItems.ALTAR_OF_IMPURITY.get()).pattern("B").pattern("F")
                 .define('B',Items.BEACON).define('F',ModItems.HAUNT_FURNACE.get()).unlockedBy("has_beacon",has(Items.BEACON)).save(recipesOnly);
         ShapedRecipeBuilder.shaped(RecipeCategory.DECORATIONS,ModItems.ALTAR_OF_PURITY.get()).pattern("B").pattern("F")

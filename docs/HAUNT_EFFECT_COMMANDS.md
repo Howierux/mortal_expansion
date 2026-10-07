@@ -18,3 +18,5 @@ Successful events show their normal player hint and an operator confirmation. Un
 No persistent data or network changes. This uses Brigadier/vanilla entity arguments and the existing server effect operations. Validation covers native command parsing, single-target resolution, permission checks, explicit tier/cooldown bypass, unchanged Haunt/cooldown, random eligibility, missing functions and spectator rejection. Manual feedback and effect-specific world scenarios remain playtest checks.
 
 `spirit_commission` now creates an optional unfinished-business kill quest offer. Accept it from chat; completion pays without returning to an NPC. The target must have no active/unexpired quest and the offer cooldown must be ready.
+
+Random effect commands honor Mortality Research bonuses and spend them on a successful eligible selection. Explicit named commands neither redirect nor spend that bonus.

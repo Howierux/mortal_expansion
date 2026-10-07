@@ -111,6 +111,7 @@ public final class ModItems {
     public static final DeferredItem<BlockItem> ALTAR_OF_IMPURITY = ITEMS.registerSimpleBlockItem(ModBlocks.ALTAR_OF_IMPURITY);
     public static final DeferredItem<BlockItem> ALTAR_OF_PURITY = ITEMS.registerSimpleBlockItem(ModBlocks.ALTAR_OF_PURITY);
 
+    public static final DeferredItem<BlockItem> MORTALITY_RESEARCH_STATION=ITEMS.registerSimpleBlockItem(ModBlocks.MORTALITY_RESEARCH_STATION);
     public static final DeferredItem<BlockItem> ECTCHANTMENT_MACHINE =
             ITEMS.registerSimpleBlockItem(ModBlocks.ECTCHANTMENT_MACHINE);
 

@@ -18,6 +18,7 @@ public final class ModBlockModels extends BlockStateProvider {
         super(output, MortalExpansion.MOD_ID, helper);
     }
     @Override protected void registerStatesAndModels() {
+        simpleBlock(ModBlocks.MORTALITY_RESEARCH_STATION.get(),new ModelFile.UncheckedModelFile("minecraft:block/enchanting_table"));
         var impurityOff=models().cubeAll("altar_of_impurity",ResourceLocation.fromNamespaceAndPath(MortalExpansion.MOD_ID,"block/gravestone"));
         var impurityOn=models().cubeAll("altar_of_impurity_lit",ResourceLocation.withDefaultNamespace("block/magma"));
         getVariantBuilder(ModBlocks.ALTAR_OF_IMPURITY.get()).partialState().with(BlockStateProperties.LIT,false).modelForState().modelFile(impurityOff).addModel().partialState().with(BlockStateProperties.LIT,true).modelForState().modelFile(impurityOn).addModel();

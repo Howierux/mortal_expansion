@@ -87,6 +87,9 @@ public final class HauntEventController {
         if (negative && HauntProtection.protectedPlayer(player) && !garb) return;
         if (player.getRandom().nextDouble() >= HauntEffectKind.chance(tier)) return;
         var choices = new ArrayList<>(choices(tier, !garb && HauntProtection.protectedPlayer(player), negative));
+        boolean researchApplicable=com.howierux.mortalexpansion.haunt.MortalityResearch.bonus(player)>0
+                && ready(player,false) && com.howierux.mortalexpansion.haunt.MortalityResearch.ready(player);
+        boolean firstSelection=true;
         while (!choices.isEmpty()) {
             int roll = player.getRandom().nextInt(choices.stream().mapToInt(kind -> kind.weight).sum());
             HauntEffectKind chosen = choices.getFirst();
@@ -94,16 +97,19 @@ public final class HauntEventController {
                 roll -= kind.weight;
                 if (roll < 0) { chosen = kind; break; }
             }
+            if(firstSelection && researchApplicable)chosen=com.howierux.mortalexpansion.haunt.MortalityResearch.biasedChoice(player,choices);
+            firstSelection=false;
             choices.remove(chosen);
-            if (garb) {
+            if (garb && chosen.negative) {
                 // Roll and select normally, but never execute a prevented risk or defer a ghost.
                 // Use the existing risk cooldown so feedback does not spam or delay benefits.
                 completed(player, 0, true);
+                if(researchApplicable)com.howierux.mortalexpansion.haunt.MortalityResearch.spent(player);
                 player.displayClientMessage(net.minecraft.network.chat.Component.translatable(
                     "message.mortal_expansion.haunt.garb_prevented"), true);
                 return;
             }
-            if (tryEffect(player, chosen)) return;
+            if (tryEffect(player, chosen)){if(researchApplicable)com.howierux.mortalexpansion.haunt.MortalityResearch.spent(player);return;}
         }
     }
     public static void hint(ServerPlayer player, HauntEffectKind kind) {

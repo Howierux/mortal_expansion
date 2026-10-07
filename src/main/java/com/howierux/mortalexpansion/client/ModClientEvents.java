@@ -181,6 +181,7 @@ public final class ModClientEvents {
     @SubscribeEvent
     public static void registerMenuScreens(RegisterMenuScreensEvent event) {
         event.register(ModMenus.ALTAR_OF_IMPURITY.get(), com.howierux.mortalexpansion.client.screen.AltarOfPurityScreen::new);
+        event.register(ModMenus.MORTALITY_RESEARCH_STATION.get(),com.howierux.mortalexpansion.client.screen.MortalityResearchStationScreen::new);
         event.register(ModMenus.ALTAR_OF_PURITY.get(), com.howierux.mortalexpansion.client.screen.AltarOfPurityScreen::new);
         event.register(ModMenus.ECTCHANTMENT_MACHINE.get(), EctchantmentMachineScreen::new);
         event.register(ModMenus.ECTOPLASMIC_GENERATOR.get(), EctoplasmicGeneratorScreen::new);

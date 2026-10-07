@@ -24,6 +24,7 @@ public final class ModBlockEntities {
     public static final Supplier<BlockEntityType<com.howierux.mortalexpansion.blockentity.AltarOfPurityBlockEntity>> ALTAR_OF_IMPURITY = BLOCK_ENTITY_TYPES.register("altar_of_impurity",()->BlockEntityType.Builder.of(com.howierux.mortalexpansion.blockentity.AltarOfPurityBlockEntity::impurity,ModBlocks.ALTAR_OF_IMPURITY.get()).build(null));
     public static final Supplier<BlockEntityType<com.howierux.mortalexpansion.blockentity.AltarOfPurityBlockEntity>> ALTAR_OF_PURITY = BLOCK_ENTITY_TYPES.register("altar_of_purity",()->BlockEntityType.Builder.of(com.howierux.mortalexpansion.blockentity.AltarOfPurityBlockEntity::new,ModBlocks.ALTAR_OF_PURITY.get()).build(null));
 
+    public static final Supplier<BlockEntityType<com.howierux.mortalexpansion.blockentity.MortalityResearchStationBlockEntity>> MORTALITY_RESEARCH_STATION=BLOCK_ENTITY_TYPES.register("mortality_research_station",()->BlockEntityType.Builder.of(com.howierux.mortalexpansion.blockentity.MortalityResearchStationBlockEntity::new,ModBlocks.MORTALITY_RESEARCH_STATION.get()).build(null));
     public static final Supplier<BlockEntityType<EctchantmentMachineBlockEntity>> ECTCHANTMENT_MACHINE =
             BLOCK_ENTITY_TYPES.register(
                     "ectchantment_machine",

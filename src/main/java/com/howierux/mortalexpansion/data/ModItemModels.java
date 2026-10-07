@@ -42,6 +42,7 @@ public final class ModItemModels extends ItemModelProvider {
         }
     }
     @Override protected void registerModels() {
+        withExistingParent("mortality_research_station",ResourceLocation.withDefaultNamespace("block/enchanting_table"));
         withExistingParent("altar_of_impurity",ResourceLocation.fromNamespaceAndPath(MortalExpansion.MOD_ID,"block/altar_of_impurity"));
         withExistingParent("altar_of_purity",ResourceLocation.fromNamespaceAndPath(MortalExpansion.MOD_ID,"block/altar_of_purity"));
         emfModels();
