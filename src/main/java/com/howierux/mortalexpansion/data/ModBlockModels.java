@@ -18,6 +18,9 @@ public final class ModBlockModels extends BlockStateProvider {
         super(output, MortalExpansion.MOD_ID, helper);
     }
     @Override protected void registerStatesAndModels() {
+        var impurityOff=models().cubeAll("altar_of_impurity",ResourceLocation.fromNamespaceAndPath(MortalExpansion.MOD_ID,"block/gravestone"));
+        var impurityOn=models().cubeAll("altar_of_impurity_lit",ResourceLocation.withDefaultNamespace("block/magma"));
+        getVariantBuilder(ModBlocks.ALTAR_OF_IMPURITY.get()).partialState().with(BlockStateProperties.LIT,false).modelForState().modelFile(impurityOff).addModel().partialState().with(BlockStateProperties.LIT,true).modelForState().modelFile(impurityOn).addModel();
         var altarOff=models().cubeAll("altar_of_purity",ResourceLocation.fromNamespaceAndPath(MortalExpansion.MOD_ID,"block/purified_gravestone"));
         var altarOn=models().cubeAll("altar_of_purity_lit",ResourceLocation.withDefaultNamespace("block/glowstone"));
         getVariantBuilder(ModBlocks.ALTAR_OF_PURITY.get()).partialState().with(net.minecraft.world.level.block.state.properties.BlockStateProperties.LIT,false).modelForState().modelFile(altarOff).addModel().partialState().with(net.minecraft.world.level.block.state.properties.BlockStateProperties.LIT,true).modelForState().modelFile(altarOn).addModel();
@@ -164,27 +167,31 @@ public final class ModBlockModels extends BlockStateProvider {
         }
         {
             var model = models().getBuilder("haint_furnace").parent(new ModelFile.UncheckedModelFile("minecraft:block/cube_orientable"));
-            model.texture("side", "mortal_expansion:block/purified_gravestone");
-            model.texture("top", "mortal_expansion:block/purified_gravestone");
+            model.texture("side", "minecraft:block/furnace_side");
+            model.texture("top", "minecraft:block/furnace_top");
             model.texture("front", "minecraft:block/furnace_front");
+            model.element().from(0,0,0).to(16,16,16).allFaces((direction,face)->face.texture(direction==Direction.UP||direction==Direction.DOWN?"#top":direction==Direction.NORTH?"#front":"#side").tintindex(0).cullface(direction)).end();
         }
         {
             var model = models().getBuilder("haint_furnace_on").parent(new ModelFile.UncheckedModelFile("minecraft:block/cube_orientable"));
-            model.texture("side", "mortal_expansion:block/purified_gravestone");
-            model.texture("top", "mortal_expansion:block/purified_gravestone");
+            model.texture("side", "minecraft:block/furnace_side");
+            model.texture("top", "minecraft:block/furnace_top");
             model.texture("front", "minecraft:block/furnace_front_on");
+            model.element().from(0,0,0).to(16,16,16).allFaces((direction,face)->face.texture(direction==Direction.UP||direction==Direction.DOWN?"#top":direction==Direction.NORTH?"#front":"#side").tintindex(0).cullface(direction)).end();
         }
         {
             var model = models().getBuilder("haunt_furnace").parent(new ModelFile.UncheckedModelFile("minecraft:block/cube_orientable"));
-            model.texture("side", "mortal_expansion:block/gravestone");
-            model.texture("top", "mortal_expansion:block/gravestone");
+            model.texture("side", "minecraft:block/furnace_side");
+            model.texture("top", "minecraft:block/furnace_top");
             model.texture("front", "minecraft:block/furnace_front");
+            model.element().from(0,0,0).to(16,16,16).allFaces((direction,face)->face.texture(direction==Direction.UP||direction==Direction.DOWN?"#top":direction==Direction.NORTH?"#front":"#side").tintindex(0).cullface(direction)).end();
         }
         {
             var model = models().getBuilder("haunt_furnace_on").parent(new ModelFile.UncheckedModelFile("minecraft:block/cube_orientable"));
-            model.texture("side", "mortal_expansion:block/gravestone");
-            model.texture("top", "mortal_expansion:block/gravestone");
+            model.texture("side", "minecraft:block/furnace_side");
+            model.texture("top", "minecraft:block/furnace_top");
             model.texture("front", "minecraft:block/furnace_front_on");
+            model.element().from(0,0,0).to(16,16,16).allFaces((direction,face)->face.texture(direction==Direction.UP||direction==Direction.DOWN?"#top":direction==Direction.NORTH?"#front":"#side").tintindex(0).cullface(direction)).end();
         }
         {
             var model = models().getBuilder("holy_salt").parent(new ModelFile.UncheckedModelFile("minecraft:block/redstone_dust_dot"));

@@ -28,9 +28,10 @@ public final class ModRecipes extends RecipeProvider {
                 output.accept(id, recipe, null, conditions);
             }
         };
-        ShapedRecipeBuilder.shaped(RecipeCategory.DECORATIONS,ModItems.ALTAR_OF_PURITY.get()).pattern("PCP").pattern("PSP").pattern("PPP")
-                .define('P',ModItems.PURIFIED_GRAVESTONE.get()).define('C',Items.CAMPFIRE).define('S',ModItems.HOLY_SALT.get())
-                .unlockedBy("has_holy_salt",has(ModItems.HOLY_SALT.get())).save(output);
+        ShapedRecipeBuilder.shaped(RecipeCategory.DECORATIONS,ModItems.ALTAR_OF_IMPURITY.get()).pattern("B").pattern("F")
+                .define('B',Items.BEACON).define('F',ModItems.HAUNT_FURNACE.get()).unlockedBy("has_beacon",has(Items.BEACON)).save(recipesOnly);
+        ShapedRecipeBuilder.shaped(RecipeCategory.DECORATIONS,ModItems.ALTAR_OF_PURITY.get()).pattern("B").pattern("F")
+                .define('B',Items.BEACON).define('F',ModItems.HAINT_FURNACE.get()).unlockedBy("has_beacon",has(Items.BEACON)).save(recipesOnly);
         ShapedRecipeBuilder.shaped(RecipeCategory.REDSTONE, ModItems.ENCHANTMENT_GENERATOR.get())
                 .pattern("IRI").pattern("IGI").pattern("IFI")
                 .define('I', Items.IRON_INGOT).define('G', Items.GRINDSTONE).define('R', Items.REDSTONE)

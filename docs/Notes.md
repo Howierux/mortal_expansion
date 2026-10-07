@@ -540,3 +540,7 @@ Added a furnace-style offering altar with accumulated, persisted burn time and a
 ### 2026-10-06 - Positive altar offering Haunt events
 
 Added Offering Gift (Natural+, one Holy Salt delivered to a nearby compatible altar) and Offering Blessing (Supernatural+, next offering adds 50% extra burn time without extra consumption). Both use loaded altars within eight blocks, normal benefit rolls/hints and shared world cooldowns. Blessings persist, cannot stack and clear on one consumption; full/incompatible storage and absent altars fail without mutation. Build and 134 tests pass; guide/resource checks pass. Client feedback/balance remains pending. See [Altar of Purity](ALTAR_OF_PURITY.md).
+
+### 2026-10-06 - Inverse altar, secret recipes and furnace tints
+
+Added the Altar of Impurity with the same offering/storage rules and opposite nine-chunk Haunt pulses. Both altar recipes are now separately revealed Secrets of the Dead: Beacon over Haunt Furnace for Impurity, Beacon over Haint Furnace for Purity. Expanded knowledge masks preserve old weaving data without auto-granting new recipes; existing altars remain functional. Haunt/Haint furnaces use recognizable vanilla textures with dark-gray/icy-blue tints. Build and 138 tests pass; data/guide checks pass. Client colors and balance remain pending. See [Paired altars](ALTARS_AND_SECRETS.md).

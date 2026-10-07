@@ -112,7 +112,7 @@ public final class ModAttachments {
                     .serialize(com.howierux.mortalexpansion.discovery.SpectralSite.CODEC.listOf()).copyOnDeath().build());
 
     public static final Supplier<AttachmentType<Integer>> ECTCETERA_KNOWLEDGE = ATTACHMENTS.register("ectcetera_knowledge",
-            () -> AttachmentType.builder(() -> 0).serialize(Codec.intRange(0,15)).copyOnDeath().build());
+            () -> AttachmentType.builder(() -> 0).serialize(Codec.intRange(0,63)).copyOnDeath().build());
 
     /** Exact hundredths retained beside existing chunk tier/progress fields; old chunks default to zero. */
     public static final Supplier<AttachmentType<Integer>> HAUNT_FRACTION = ATTACHMENTS.register("haunt_fraction",

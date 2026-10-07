@@ -20,6 +20,7 @@ public final class ModMenus {
     public static final DeferredRegister<MenuType<?>> MENUS =
             DeferredRegister.create(Registries.MENU, MortalExpansion.MOD_ID);
 
+    public static final Supplier<MenuType<com.howierux.mortalexpansion.menu.AltarOfPurityMenu>> ALTAR_OF_IMPURITY = MENUS.register("altar_of_impurity",()->IMenuTypeExtension.create(com.howierux.mortalexpansion.menu.AltarOfPurityMenu::new));
     public static final Supplier<MenuType<com.howierux.mortalexpansion.menu.AltarOfPurityMenu>> ALTAR_OF_PURITY = MENUS.register("altar_of_purity",()->IMenuTypeExtension.create(com.howierux.mortalexpansion.menu.AltarOfPurityMenu::new));
 
     public static final Supplier<MenuType<EctchantmentMachineMenu>> ECTCHANTMENT_MACHINE =

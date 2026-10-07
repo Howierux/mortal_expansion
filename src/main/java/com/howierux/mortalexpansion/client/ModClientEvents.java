@@ -180,6 +180,7 @@ public final class ModClientEvents {
 
     @SubscribeEvent
     public static void registerMenuScreens(RegisterMenuScreensEvent event) {
+        event.register(ModMenus.ALTAR_OF_IMPURITY.get(), com.howierux.mortalexpansion.client.screen.AltarOfPurityScreen::new);
         event.register(ModMenus.ALTAR_OF_PURITY.get(), com.howierux.mortalexpansion.client.screen.AltarOfPurityScreen::new);
         event.register(ModMenus.ECTCHANTMENT_MACHINE.get(), EctchantmentMachineScreen::new);
         event.register(ModMenus.ECTOPLASMIC_GENERATOR.get(), EctoplasmicGeneratorScreen::new);
@@ -189,6 +190,8 @@ public final class ModClientEvents {
 
     @SubscribeEvent
     public static void registerBlockColors(RegisterColorHandlersEvent.Block event) {
+        event.register((state,level,pos,tint)->0xFF686868,ModBlocks.HAUNT_FURNACE.get());
+        event.register((state,level,pos,tint)->0xFFC4E8FF,ModBlocks.HAINT_FURNACE.get());
         event.register(
                 (state, level, pos, tintIndex) -> 0xFFE7EEEE,
                 ModBlocks.SPIRITWOOD_LOG.get()
@@ -230,6 +233,8 @@ public final class ModClientEvents {
 
     @SubscribeEvent
     public static void registerItemColors(RegisterColorHandlersEvent.Item event) {
+        event.register((stack,tint)->0xFF686868,ModItems.HAUNT_FURNACE.get());
+        event.register((stack,tint)->0xFFC4E8FF,ModItems.HAINT_FURNACE.get());
         event.register(
                 (stack, tintIndex) -> 0xFFE7EEEE,
                 ModItems.SPIRITWOOD_LOG.get()

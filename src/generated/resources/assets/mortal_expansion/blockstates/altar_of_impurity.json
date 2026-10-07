@@ -1,0 +1,10 @@
+{
+  "variants": {
+    "lit=false": {
+      "model": "mortal_expansion:block/altar_of_impurity"
+    },
+    "lit=true": {
+      "model": "mortal_expansion:block/altar_of_impurity_lit"
+    }
+  }
+}

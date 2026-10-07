@@ -21,7 +21,7 @@ import net.minecraft.world.level.block.state.BlockState;
 import net.minecraft.world.phys.BlockHitResult;
 import org.jetbrains.annotations.Nullable;
 
-public final class AltarOfPurityBlock extends BaseEntityBlock {
+public class AltarOfPurityBlock extends BaseEntityBlock {
     public static final MapCodec<AltarOfPurityBlock> CODEC =
             simpleCodec(AltarOfPurityBlock::new);
 
@@ -85,9 +85,7 @@ public final class AltarOfPurityBlock extends BaseEntityBlock {
                                             inventory,
                                             generator
                                     ),
-                            Component.translatable(
-                                    "gui.mortal_expansion.altar_of_purity.title"
-                            )
+                            getName()
                     ),
                     pos
             );

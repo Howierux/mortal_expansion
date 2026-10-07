@@ -42,6 +42,7 @@ public final class ModItemModels extends ItemModelProvider {
         }
     }
     @Override protected void registerModels() {
+        withExistingParent("altar_of_impurity",ResourceLocation.fromNamespaceAndPath(MortalExpansion.MOD_ID,"block/altar_of_impurity"));
         withExistingParent("altar_of_purity",ResourceLocation.fromNamespaceAndPath(MortalExpansion.MOD_ID,"block/altar_of_purity"));
         emfModels();
         var precise = getBuilder("precise_emf_reader").parent(new ModelFile.UncheckedModelFile("minecraft:builtin/entity"))

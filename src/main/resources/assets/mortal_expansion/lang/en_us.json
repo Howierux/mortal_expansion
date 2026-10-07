@@ -1,4 +1,14 @@
 {
+  "block.mortal_expansion.altar_of_impurity": "Altar of Impurity",
+  "insight.mortal_expansion.altar_of_impurity.name": "Altar of Impurity",
+  "insight.mortal_expansion.altar_of_purity.name": "Altar of Purity",
+  "insight.mortal_expansion.altar_of_impurity.next": "Place a Beacon above a Haunt Furnace in a crafting grid. Its offerings raise nearby chunk Haunt.",
+  "insight.mortal_expansion.altar_of_purity.next": "Place a Beacon above a Haint Furnace in a crafting grid. Its offerings cleanse nearby chunk Haunt.",
+  "insight.mortal_expansion.altar_of_impurity.guidance": "At Dead Rising personal Haunt, an aware book may reveal the Altar of Impurity.",
+  "insight.mortal_expansion.altar_of_purity.guidance": "Learn Impurity, purify this book, and reach Demonic personal Haunt to reveal the Altar of Purity.",
+  "insight.mortal_expansion.altar_of_impurity.body": "Craft a Beacon directly above a Haunt Furnace. Burn offerings in the Altar of Impurity to add 0.10 Haunt to each loaded chunk in its 3x3 area every 10 seconds. Items are consumed every 12.5 seconds and their burn time stacks. Hover over the bonfire for remaining time.",
+  "insight.mortal_expansion.altar_of_purity.body": "Craft a Beacon directly above a Haint Furnace. Burn offerings in the Altar of Purity to remove 0.10 Haunt from each loaded chunk in its 3x3 area every 10 seconds. Items are consumed every 12.5 seconds and their burn time stacks. Spirits may gift or bless offerings.",
+
   "message.mortal_expansion.haunt.offering_gift": "A grateful spirit leaves Holy Salt upon a nearby altar.",
   "message.mortal_expansion.haunt.offering_blessing": "A spirit blesses the altar: its next offering will burn longer.",
   "block.mortal_expansion.altar_of_purity": "Altar of Purity",

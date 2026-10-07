@@ -12,7 +12,7 @@ public final class AltarHauntBenefits {
         var data=HauntEventData.get(player.serverLevel());long now=HauntProtection.now(player);
         var altars=HauntEffects.loadedAnchors(player.serverLevel(),player.position(),8).stream()
             .filter(be->be instanceof AltarOfPurityBlockEntity && !be.isRemoved() && Vec3.atCenterOf(be.getBlockPos()).distanceToSqr(player.position())<=64)
-            .map(be->(AltarOfPurityBlockEntity)be).sorted(java.util.Comparator.comparingDouble(a->Vec3.atCenterOf(a.getBlockPos()).distanceToSqr(player.position()))).toList();
+            .map(be->(AltarOfPurityBlockEntity)be).filter(altar->!altar.isImpure()).sorted(java.util.Comparator.comparingDouble(a->Vec3.atCenterOf(a.getBlockPos()).distanceToSqr(player.position()))).toList();
         for(var altar:altars){long chunk=new ChunkPos(altar.getBlockPos()).toLong();if(!data.chunkReady(chunk,now))continue;
             boolean success=kind==HauntEffectKind.OFFERING_GIFT?altar.addOfferingGift():altar.blessNextOffering();
             if(!success)continue;data.coolChunk(chunk,now);HauntEffects.particles(player);return true;

@@ -2,20 +2,16 @@
   "type": "minecraft:crafting_shaped",
   "category": "misc",
   "key": {
-    "C": {
-      "item": "minecraft:campfire"
+    "B": {
+      "item": "minecraft:beacon"
     },
-    "P": {
-      "item": "mortal_expansion:purified_gravestone"
-    },
-    "S": {
-      "item": "mortal_expansion:holy_salt"
+    "F": {
+      "item": "mortal_expansion:haint_furnace"
     }
   },
   "pattern": [
-    "PCP",
-    "PSP",
-    "PPP"
+    "B",
+    "F"
   ],
   "result": {
     "count": 1,

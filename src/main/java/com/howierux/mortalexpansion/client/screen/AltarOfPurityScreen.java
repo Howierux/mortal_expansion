@@ -11,7 +11,7 @@ public final class AltarOfPurityScreen extends AbstractContainerScreen<AltarOfPu
     private float visualBurn;
     public AltarOfPurityScreen(AltarOfPurityMenu menu,Inventory inventory,Component title){super(menu,inventory,title);imageWidth=176;imageHeight=208;inventoryLabelY=114;visualBurn=menu.getBurnTicks();}
     @Override protected void renderBg(GuiGraphics g,float partial,int mouseX,int mouseY){
-        int x=leftPos,y=topPos;g.fill(x,y,x+176,y+112,0xFF253731);g.fill(x+5,y+5,x+171,y+111,0xFF43594C);
+        int x=leftPos,y=topPos;g.fill(x,y,x+176,y+112,menu.isImpure()?0xFF35252C:0xFF253731);g.fill(x+5,y+5,x+171,y+111,menu.isImpure()?0xFF5D3B48:0xFF43594C);
         g.blit(ResourceLocation.withDefaultNamespace("textures/gui/container/generic_54.png"),x,y+112,0,126,176,96);
         for(int sy:new int[]{45,79}){g.fill(x+29,y+sy,x+47,y+sy+18,0xFF15251B);g.fill(x+30,y+sy+1,x+46,y+sy+17,0xFF81937D);}
         g.fill(x+97,y+23,x+165,y+99,0xFF1C2922);

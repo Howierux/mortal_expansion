@@ -9,14 +9,14 @@ import net.minecraft.world.item.ItemStack;
 import net.neoforged.bus.api.SubscribeEvent;
 
 public final class SpectralInsight {
-    public static final int ALL=15;
+    public static final int ALL=63,LEGACY_KNOWLEDGE=15;
     private SpectralInsight(){}
-    public static int secrets(ItemStack book){return !book.has(ModDataComponents.ECTCETERA_TIER.get())?ALL:book.getOrDefault(ModDataComponents.ECTCETERA_SECRETS.get(),0)&ALL;}
-    public static int allowedAtTier(int tier){return tier<2?0:tier==2?7:ALL;}
+    public static int secrets(ItemStack book){return !book.has(ModDataComponents.ECTCETERA_TIER.get())?LEGACY_KNOWLEDGE:book.getOrDefault(ModDataComponents.ECTCETERA_SECRETS.get(),0)&ALL;}
+    public static int allowedAtTier(int tier){return tier<2?0:tier==2?23:ALL;}
     public static boolean canCraft(Player player,net.minecraft.resources.ResourceLocation id){
         int required=InsightSecret.required(id);
         return required==0 || (player.getData(ModAttachments.ECTCETERA_KNOWLEDGE)&required)!=0
-                || player instanceof ServerPlayer server && server.getRecipeBook().contains(id);
+                || required<16 && player instanceof ServerPlayer server && server.getRecipeBook().contains(id);
     }
     public static void learnPlayer(ServerPlayer p,int bits){
         int before=p.getData(ModAttachments.ECTCETERA_KNOWLEDGE),after=(before|bits)&ALL;
@@ -32,6 +32,9 @@ public final class SpectralInsight {
     }
     public static void absorb(ServerPlayer p,ItemStack book){
         if(!book.is(ModItems.BOOK_OF_ECTCETERA.get()) || EctceteraProgression.tier(book)<2)return;
+        if(!book.has(ModDataComponents.ECTCETERA_TIER.get())){
+            book.set(ModDataComponents.ECTCETERA_TIER.get(),3);book.set(ModDataComponents.ECTCETERA_SECRETS.get(),LEGACY_KNOWLEDGE);
+        }
         int bits=secrets(book)&allowedAtTier(EctceteraProgression.tier(book));
         int playerBits=p.getData(ModAttachments.ECTCETERA_KNOWLEDGE);
         if((bits&~playerBits)!=0)learnPlayer(p,bits);
@@ -64,7 +67,12 @@ public final class SpectralInsight {
         if(!(event.getEntity() instanceof ServerPlayer p))return;
         // Migrate existing recipe-book unlocks; generated ingredient advancements no longer grant these secrets.
         int bits=p.getData(ModAttachments.ECTCETERA_KNOWLEDGE);
-        for(var secret:InsightSecret.values())if(secret.recipes().stream().anyMatch(id->p.getRecipeBook().contains(id)))bits|=secret.bit|secret.prerequisites;
+        for(var secret:InsightSecret.values())if(secret.bit<16 && secret.recipes().stream().anyMatch(id->p.getRecipeBook().contains(id)))bits|=secret.bit|secret.prerequisites;
+        // Old ingredient advancements must not grant the newly secret altar blueprints.
+        var lockedAltars=new java.util.ArrayList<net.minecraft.world.item.crafting.RecipeHolder<?>>();
+        for(var secret:InsightSecret.values())if(secret.bit>=16 && (bits&secret.bit)==0)
+            for(var id:secret.recipes())p.serverLevel().getRecipeManager().byKey(id).ifPresent(lockedAltars::add);
+        p.resetRecipes(lockedAltars);
         learnPlayer(p,bits);
     }
     @SubscribeEvent public static void teachCrafter(net.neoforged.neoforge.event.entity.player.PlayerInteractEvent.RightClickBlock event){

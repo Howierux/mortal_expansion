@@ -26,15 +26,7 @@ Only loaded chunks are affected. This altar does not load or generate neighborin
 
 Right-click to open the inventory. The GUI has an offering slot, a returned-container slot and a bonfire image formed from native flame artwork and drawn logs. Flame fill follows the stored reserve with a smoothed visual transition; hover displays exact remaining time as minutes:seconds. The world block uses Purified Gravestone when idle and a glowing texture/light while burning.
 
-Craft one Altar of Purity with this 3x3 recipe:
-
-```text
-Purified Gravestone  Campfire             Purified Gravestone
-Purified Gravestone  Holy Salt            Purified Gravestone
-Purified Gravestone  Purified Gravestone  Purified Gravestone
-```
-
-Total: 7 Purified Gravestone blocks, 1 Campfire and 1 Holy Salt. The recipe-book unlock requires Holy Salt. The altar is also in the mod's Creative tab, and a short introduction appears in the book's sanctification entry.
+Craft one Altar of Purity by placing a Beacon directly above a Haint Furnace. Its blueprint must first be revealed through Spectral Insight in Secrets of the Dead; ingredients alone do not unlock it. The earlier seven-Gravestone/Campfire/Salt recipe is replaced. See [Paired altars](ALTARS_AND_SECRETS.md) for both new recipes and migration details.
 
 ## Persistence and migration
 
