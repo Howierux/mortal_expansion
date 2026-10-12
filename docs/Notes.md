@@ -556,3 +556,7 @@ Mortality Research is now the first Secrets of the Dead reveal, available by whi
 ### 2026-10-12 - New players start at Natural Haunt
 
 The personal tier attachment now defaults to Natural instead of Void, giving new players the normal Natural midpoint (15.00 Haunt). Saved player values remain authoritative, including explicit Void; death-copy behavior and chunk defaults are unchanged. The existing first-whisper test now verifies the new start without commands and loading a saved Void value. Build and all 145 server tests pass.
+
+### 2026-10-12 - Temporary ingredient-informed item art
+
+Replaced ten block/borrowed foliage inventory icons with transparent pixel sprites: both threads, three machines, Mortality Research Station, both altars, Grave Moss and Spiritwood sapling. Designs reflect crafting ingredients or natural sources, and use distinct temporary filenames. Java-generated item models point to the new sprites; world blocks and gameplay are unchanged. Build/data generation and guide/resource checks pass. Client readability remains a playtest check. See [Item art and prompts](TEMPORARY_ITEM_ART.md).

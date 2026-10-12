@@ -1,3 +1,6 @@
 {
-  "parent": "mortal_expansion:block/ectoplasmic_generator"
+  "parent": "minecraft:item/generated",
+  "textures": {
+    "layer0": "mortal_expansion:item/ectoplasmic_generator_temporary"
+  }
 }

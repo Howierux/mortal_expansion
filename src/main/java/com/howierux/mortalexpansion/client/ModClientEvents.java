@@ -247,12 +247,12 @@ public final class ModClientEvents {
         );
 
         event.register(
-                (stack, tintIndex) -> 0xFFE8FFE8,
+                (stack, tintIndex) -> 0xFFFFFFFF,
                 ModItems.SPIRITWOOD_SAPLING.get()
         );
 
         event.register(
-                (stack, tintIndex) -> 0xFF3FA63A,
+                (stack, tintIndex) -> 0xFFFFFFFF,
                 ModItems.GRAVE_MOSS.get()
         );
 

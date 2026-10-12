@@ -1,7 +1,7 @@
 # Ghost's Garb
 
 Ectothread is crafted from eight String around one Raw Ectoplasm, producing eight
-Ectothread. It uses the vanilla lime wool model as a placeholder. Craft the four
+Ectothread. It uses a temporary green ectoplasm-infused thread sprite. Craft the four
 Ghost's Garb pieces with standard helmet, chestplate, leggings, and boots patterns
 using Ectothread. Default lime-dyed leather item/armor textures are placeholders.
 The items appear in the Mortal Expansion creative tab and support normal armor
@@ -55,7 +55,7 @@ and registry tag loading before enabling combat.
 ## Haint's Garb
 
 Eight String surrounding one Pure Ectoplasm produce eight Purified Ectothread.
-Purified Ectothread uses light blue wool as its placeholder. The four Haint's
+Purified Ectothread uses a temporary icy-blue ectoplasm-infused thread sprite. The four Haint's
 Garb pieces use standard armor crafting patterns with Purified Ectothread, and
 light blue dyed leather item and worn armor placeholders. Haint's Garb has the
 same defense, durability, enchantability, intangibility, and haunt protection
