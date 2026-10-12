@@ -246,11 +246,32 @@ public final class ModBlockModels extends BlockStateProvider {
             }
         }
         {
-            var model = models().getBuilder("purification_station").parent(new ModelFile.UncheckedModelFile("minecraft:block/cube_all"));
-            model.texture("all", "minecraft:block/iron_block");
+            models().cube("purification_station", temporaryTexture("purification_station", "bottom"),
+                    temporaryTexture("purification_station", "top"), temporaryTexture("purification_station", "front"),
+                    temporaryTexture("purification_station", "side"), temporaryTexture("purification_station", "side"),
+                    temporaryTexture("purification_station", "side"))
+                    .texture("particle", temporaryTexture("purification_station", "side"));
         }
         {
-            var model = models().getBuilder("purification_ward").parent(new ModelFile.UncheckedModelFile("minecraft:block/beacon"));
+            var model = models().getBuilder("purification_ward")
+                    .parent(new ModelFile.UncheckedModelFile("minecraft:block/block"));
+            for(String face : new String[]{"front", "side", "top", "bottom"})
+                model.texture(face, temporaryTexture("purification_ward", face));
+            model.texture("particle", "#side");
+            var base = model.element().from(0, 0, 0).to(16, 6, 16);
+            for(Direction direction : Direction.values()) {
+                String texture = direction == Direction.UP ? "#top" : direction == Direction.DOWN ? "#bottom"
+                        : direction == Direction.NORTH ? "#front" : "#side";
+                base.face(direction).texture(texture).uvs(0, 0, 16, 16);
+            }
+            // Raised wooden carving replaces the generic Beacon glass/core; behavior stays in the block entity.
+            var carving = model.element().from(4, 6, 4).to(12, 9, 12);
+            for(Direction direction : Direction.values()) {
+                if(direction == Direction.DOWN)continue; // Hidden against the base.
+                var face = carving.face(direction).texture(direction == Direction.UP ? "#top" : "#bottom");
+                if(direction == Direction.UP)face.uvs(4, 4, 12, 12);
+                else face.uvs(0, 0, 16, 6);
+            }
         }
         {
             var model = models().getBuilder("purified_gravestone").parent(new ModelFile.UncheckedModelFile("minecraft:block/cube_all"));

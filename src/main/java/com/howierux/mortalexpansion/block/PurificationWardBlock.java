@@ -17,7 +17,7 @@ import net.minecraft.world.level.block.state.BlockState;
 import org.jetbrains.annotations.Nullable;
 
 /**
- * Beacon-shaped Haunt cleansing block. It deliberately has no Beacon block
+ * Wood-and-moss Haunt cleansing ward. It deliberately has no Beacon block
  * entity, so it never creates a beacon beam.
  */
 public final class PurificationWardBlock extends BaseEntityBlock {
