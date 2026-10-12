@@ -10,7 +10,8 @@ import net.minecraft.world.entity.player.Inventory;
 public final class PurificationStationScreen
         extends AbstractContainerScreen<PurificationStationMenu> {
 
-    private static final int MACHINE_HEIGHT = 112;
+    private static final int MACHINE_HEIGHT = PurificationStationMenu.MACHINE_HEIGHT;
+    private static final float LABEL_SCALE = 0.9F;
     private static final ResourceLocation INVENTORY_BACKGROUND =
             ResourceLocation.withDefaultNamespace(
                     "textures/gui/container/generic_54.png"
@@ -23,8 +24,8 @@ public final class PurificationStationScreen
     ) {
         super(menu, inventory, title);
         this.imageWidth = 176;
-        this.imageHeight = 208;
-        this.inventoryLabelY = 114;
+        this.imageHeight = MACHINE_HEIGHT + 96;
+        this.inventoryLabelY = MACHINE_HEIGHT + 2;
     }
 
     @Override
@@ -56,54 +57,33 @@ public final class PurificationStationScreen
         slotFrame(graphics, x + 12, y + 87);
 
         drawVerticalBar(
-                graphics, x + 15, y + 35, 14, 50,
+                graphics, x + 15, y + 44, 14, 41,
                 menu.getWater(), menu.getWaterCapacity(), 0xFF4D8DFF
         );
 
         drawVerticalBar(
-                graphics, x + 147, y + 35, 14, 50,
+                graphics, x + 147, y + 44, 14, 41,
                 menu.getEnergy(), menu.getEnergyCapacity(), 0xFFD34BFF
         );
 
         drawHorizontalBar(
-                graphics, x + 68, y + 99, 35, 8,
+                graphics, x + 20, y + 124, 136, 8,
                 menu.getProgress(), menu.getMaxProgress(), 0xFFE8F7F2
         );
     }
 
     @Override
     protected void renderLabels(GuiGraphics graphics, int mouseX, int mouseY) {
-        graphics.drawString(font, title, 8, 8, 0xFFFFFF, false);
-
-        graphics.drawString(
-                font,
-                Component.translatable(
-                        "gui.mortal_expansion.purification_station.water",
-                        menu.getWater(),
-                        menu.getWaterCapacity()
-                ),
-                8, 20, 0xFFFFFF, false
-        );
-
-        graphics.drawString(
-                font,
-                Component.translatable(
-                        "gui.mortal_expansion.purification_station.fe",
-                        menu.getEnergy(),
-                        menu.getEnergyCapacity()
-                ),
-                92, 20, 0xFFFFFF, false
-        );
-
-        graphics.drawString(
-                font,
-                Component.translatable(
-                        "gui.mortal_expansion.purification_station.progress",
-                        menu.getProgress(),
-                        menu.getMaxProgress()
-                ),
-                62, 88, 0xFFFFFF, false
-        );
+        drawMachineLabel(graphics, title, 8, 8);
+        drawMachineLabel(graphics, Component.translatable(
+                "gui.mortal_expansion.purification_station.water",
+                menu.getWater(), menu.getWaterCapacity()), 8, 20);
+        drawMachineLabel(graphics, Component.translatable(
+                "gui.mortal_expansion.purification_station.fe",
+                menu.getEnergy(), menu.getEnergyCapacity()), 8, 32);
+        drawMachineLabel(graphics, Component.translatable(
+                "gui.mortal_expansion.purification_station.progress",
+                menu.getProgress(), menu.getMaxProgress()), 8, 112);
 
         graphics.drawString(
                 font,
@@ -113,6 +93,15 @@ public final class PurificationStationScreen
                 0x404040,
                 false
         );
+    }
+
+    private void drawMachineLabel(GuiGraphics graphics, Component text, int x, int y) {
+        float scale = Math.min(LABEL_SCALE, (imageWidth - x - 8F) / Math.max(1, font.width(text)));
+        graphics.pose().pushPose();
+        graphics.pose().translate(x, y, 0);
+        graphics.pose().scale(scale, scale, 1);
+        graphics.drawString(font, text, 0, 0, 0xFFFFFF, false);
+        graphics.pose().popPose();
     }
 
     private static void slotFrame(GuiGraphics graphics, int x, int y) {

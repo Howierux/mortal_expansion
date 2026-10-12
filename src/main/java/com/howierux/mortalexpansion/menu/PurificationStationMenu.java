@@ -15,6 +15,7 @@ import net.neoforged.neoforge.items.SlotItemHandler;
 
 public final class PurificationStationMenu extends AbstractContainerMenu {
     public static final int DATA_COUNT = 8;
+    public static final int MACHINE_HEIGHT = 136;
     private static final int MACHINE_SLOTS = 4;
 
     private final ContainerData data;
@@ -103,7 +104,7 @@ public final class PurificationStationMenu extends AbstractContainerMenu {
                         inventory,
                         col + row * 9 + 9,
                         8 + col * 18,
-                        125 + row * 18
+                        MACHINE_HEIGHT + 13 + row * 18
                 ));
             }
         }
@@ -113,7 +114,7 @@ public final class PurificationStationMenu extends AbstractContainerMenu {
                     inventory,
                     col,
                     8 + col * 18,
-                    183
+                    MACHINE_HEIGHT + 71
             ));
         }
     }

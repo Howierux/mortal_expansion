@@ -77,3 +77,7 @@ Master: `C:\Users\scott\.codex\generated_images\01a10808-7c57-7922-a619-5f19e36d
 
 Master: `C:\Users\scott\.codex\generated_images\01a10808-7c57-7922-a619-5f19e36de671\exec-04deeedf-4ccb-44b4-8975-493f20b81979.png`.
 
+
+## Purification Station screen spacing
+
+The machine panel is 24 GUI pixels taller. Its labels render at 90% size (fitting further only if translated text is too wide), with separate water and energy rows and a dedicated lower progress row/bar. Inventory slots and background move together through the shared menu MACHINE_HEIGHT constant; machine slot positions and indices, recipe behavior, and saved data are unchanged.
