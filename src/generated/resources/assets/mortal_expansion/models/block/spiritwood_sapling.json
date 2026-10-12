@@ -94,7 +94,7 @@
   ],
   "render_type": "minecraft:cutout",
   "textures": {
-    "cross": "minecraft:block/oak_sapling",
+    "cross": "mortal_expansion:block/spiritwood_sapling_temporary",
     "particle": "#cross"
   }
 }

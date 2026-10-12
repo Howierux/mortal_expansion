@@ -32,7 +32,7 @@
   ],
   "render_type": "minecraft:cutout",
   "textures": {
-    "grave_moss": "minecraft:block/glow_lichen",
-    "particle": "minecraft:block/glow_lichen"
+    "grave_moss": "mortal_expansion:block/grave_moss_temporary",
+    "particle": "mortal_expansion:block/grave_moss_temporary"
   }
 }

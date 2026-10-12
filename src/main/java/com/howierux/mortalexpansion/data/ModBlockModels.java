@@ -18,12 +18,21 @@ public final class ModBlockModels extends BlockStateProvider {
         super(output, MortalExpansion.MOD_ID, helper);
     }
     @Override protected void registerStatesAndModels() {
-        simpleBlock(ModBlocks.MORTALITY_RESEARCH_STATION.get(),new ModelFile.UncheckedModelFile("minecraft:block/enchanting_table"));
-        var impurityOff=models().cubeAll("altar_of_impurity",ResourceLocation.fromNamespaceAndPath(MortalExpansion.MOD_ID,"block/gravestone"));
-        var impurityOn=models().cubeAll("altar_of_impurity_lit",ResourceLocation.withDefaultNamespace("block/magma"));
+        var research = models().getBuilder("mortality_research_station").parent(new ModelFile.UncheckedModelFile("minecraft:block/block"));
+        research.texture("side", temporaryTexture("mortality_research_station", "side"));
+        research.texture("top", temporaryTexture("mortality_research_station", "top"));
+        research.texture("particle", "#side");
+        var desk = research.element().from(0, 0, 0).to(16, 12, 16);
+        for (Direction direction : Direction.values()) {
+            desk.face(direction).texture(direction == Direction.UP ? "#top" : "#side")
+                    .uvs(0, 0, 16, 16);
+        }
+        simpleBlock(ModBlocks.MORTALITY_RESEARCH_STATION.get(), research);
+        var impurityOff = temporaryMachine("altar_of_impurity", "altar_of_impurity", false);
+        var impurityOn = temporaryMachine("altar_of_impurity_lit", "altar_of_impurity", true);
         getVariantBuilder(ModBlocks.ALTAR_OF_IMPURITY.get()).partialState().with(BlockStateProperties.LIT,false).modelForState().modelFile(impurityOff).addModel().partialState().with(BlockStateProperties.LIT,true).modelForState().modelFile(impurityOn).addModel();
-        var altarOff=models().cubeAll("altar_of_purity",ResourceLocation.fromNamespaceAndPath(MortalExpansion.MOD_ID,"block/purified_gravestone"));
-        var altarOn=models().cubeAll("altar_of_purity_lit",ResourceLocation.withDefaultNamespace("block/glowstone"));
+        var altarOff = temporaryMachine("altar_of_purity", "altar_of_purity", false);
+        var altarOn = temporaryMachine("altar_of_purity_lit", "altar_of_purity", true);
         getVariantBuilder(ModBlocks.ALTAR_OF_PURITY.get()).partialState().with(net.minecraft.world.level.block.state.properties.BlockStateProperties.LIT,false).modelForState().modelFile(altarOff).addModel().partialState().with(net.minecraft.world.level.block.state.properties.BlockStateProperties.LIT,true).modelForState().modelFile(altarOn).addModel();
         var dry=models().getBuilder("haunted_farmland").parent(new ModelFile.UncheckedModelFile("minecraft:block/farmland"));
         var wet=models().getBuilder("haunted_farmland_moist").parent(new ModelFile.UncheckedModelFile("minecraft:block/farmland_moist"));
@@ -33,6 +42,19 @@ public final class ModBlockModels extends BlockStateProvider {
         blockModels();
         blockStates();
     }
+    // Keep texture mapping in the provider so regeneration and framework upgrades retain the art.
+    private ResourceLocation temporaryTexture(String block, String face) {
+        return modLoc("block/" + block + "_" + face + "_temporary");
+    }
+
+    private net.neoforged.neoforge.client.model.generators.BlockModelBuilder temporaryMachine(
+            String modelName, String block, boolean lit) {
+        return models().cube(modelName, temporaryTexture(block, "side"), temporaryTexture(block, "top"),
+                temporaryTexture(block, lit ? "front_lit" : "front"), temporaryTexture(block, "side"),
+                temporaryTexture(block, "side"), temporaryTexture(block, "side"))
+                .texture("particle", temporaryTexture(block, "side"));
+    }
+
     private void blockModels() {
         {
             var model = models().getBuilder("bloodstone_ore").parent(new ModelFile.UncheckedModelFile("minecraft:block/cube_all"));
@@ -43,16 +65,13 @@ public final class ModBlockModels extends BlockStateProvider {
             model.texture("all", "mortal_expansion:block/bloodstone_ore_stone");
         }
         {
-            var model = models().getBuilder("ectchantment_machine").parent(new ModelFile.UncheckedModelFile("minecraft:block/cube_all"));
-            model.texture("all", "minecraft:block/iron_block");
+            temporaryMachine("ectchantment_machine", "ectchantment_machine", false);
         }
         {
-            var model = models().getBuilder("ectoplasmic_generator").parent(new ModelFile.UncheckedModelFile("minecraft:block/cube_all"));
-            model.texture("all", "minecraft:block/crying_obsidian");
+            temporaryMachine("ectoplasmic_generator", "ectoplasmic_generator", false);
         }
         {
-            var model = models().getBuilder("enchantment_generator").parent(new ModelFile.UncheckedModelFile("minecraft:block/cube_all"));
-            model.texture("all", "minecraft:block/enchanting_table_side");
+            temporaryMachine("enchantment_generator", "enchantment_generator", false);
         }
         {
             var model = models().getBuilder("grave").parent(new ModelFile.UncheckedModelFile("minecraft:block/block"));
@@ -154,8 +173,8 @@ public final class ModBlockModels extends BlockStateProvider {
         }
         {
             var model = models().getBuilder("grave_moss").ao(false).renderType("minecraft:cutout");
-            model.texture("particle", "minecraft:block/glow_lichen");
-            model.texture("grave_moss", "minecraft:block/glow_lichen");
+            model.texture("particle", "mortal_expansion:block/grave_moss_temporary");
+            model.texture("grave_moss", "mortal_expansion:block/grave_moss_temporary");
             {
             var element = model.element().from(0F, 0F, 0.1F).to(16F, 16F, 0.1F);
             element.face(Direction.NORTH).texture("#grave_moss").tintindex(0).uvs(16F, 0F, 0F, 16F);
@@ -525,7 +544,7 @@ public final class ModBlockModels extends BlockStateProvider {
         }
         {
             var model = models().getBuilder("spiritwood_sapling").ao(false).renderType("minecraft:cutout");
-            model.texture("cross", "minecraft:block/oak_sapling");
+            model.texture("cross", "mortal_expansion:block/spiritwood_sapling_temporary");
             model.texture("particle", "#cross");
             {
             var element = model.element().from(0.8F, 0F, 8F).to(15.2F, 16F, 8F).shade(false).rotation().origin(8F, 8F, 8F).axis(Direction.Axis.Y).angle(45F).rescale(true).end();

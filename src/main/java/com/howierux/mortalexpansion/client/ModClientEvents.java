@@ -209,12 +209,12 @@ public final class ModClientEvents {
         );
 
         event.register(
-                (state, level, pos, tintIndex) -> 0xFFE8FFE8,
+                (state, level, pos, tintIndex) -> 0xFFFFFFFF,
                 ModBlocks.SPIRITWOOD_SAPLING.get()
         );
 
         event.register(
-                (state, level, pos, tintIndex) -> 0xFF3FA63A,
+                (state, level, pos, tintIndex) -> 0xFFFFFFFF,
                 ModBlocks.GRAVE_MOSS.get()
         );
 

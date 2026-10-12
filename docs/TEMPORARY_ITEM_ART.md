@@ -4,7 +4,7 @@ Ten generic block/borrowed plant item icons are replaced with original temporary
 
 The two thread icons show string coils infused with raw green or purified blue ectoplasm. Generator icons reflect gold, iron, furnaces, grindstone and redstone; the Ectchantment Machine reflects purified stone, enchanting book/table and purified ectoplasm. The research station reflects its Obsidian base, book and Holy Salt. The paired altars reflect Beacon/Nether Star over dark or icy-blue furnaces. Grave Moss and the sapling reflect their natural haunted-plant sources rather than invented crafting recipes.
 
-These are inventory/held-item sprites. Placed block textures and models, recipes, live EMF model/readings, registered IDs and gameplay are unchanged. Full-color Grave Moss and sapling sprites use neutral inventory tint; their world foliage tinting is retained. Java data generation owns all affected item models. No new shaders, model loaders or networking are introduced.
+These are inventory/held-item sprites. Matching placed-block art is documented in [TEMPORARY_BLOCK_ART.md](TEMPORARY_BLOCK_ART.md). Recipes, live EMF model/readings, registered IDs and gameplay are unchanged. Full-color Grave Moss and sapling sprites use neutral inventory tint; their matching world textures also use neutral tint. Java data generation owns all affected item models. No new shaders, model loaders or networking are introduced.
 
 ## Saved asset paths
 
