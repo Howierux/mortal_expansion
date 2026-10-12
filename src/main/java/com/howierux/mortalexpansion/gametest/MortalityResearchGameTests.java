@@ -15,6 +15,45 @@ import net.neoforged.neoforge.gametest.*;
 @PrefixGameTestTemplate(false)
 public final class MortalityResearchGameTests {
     @GameTest(template="deferred_items_test")
+    public static void full_research_immediately_reveals_once_even_during_benefit_cooldown(GameTestHelper h){
+        var p=h.makeMockServerPlayerInLevel();var book=EctceteraProgression.book(2);
+        p.getInventory().setItem(0,book);SpectralInsight.learnPlayer(p,64);
+        PlayerHauntManager.setTier(p,HauntTier.SUPERNATURAL);
+        var protection=HauntProtection.state(p);
+        protection.putLong("BenefitCooldownUntil",HauntProtection.now(p)+1200);
+        HauntProtection.state(p,protection);
+        var material=new ItemStack(ModItems.PURE_ECTOPLASM.get(),5);
+        for(int i=0;i<4;i++)h.assertTrue(MortalityResearch.contribute(p,material),"Research accepts the chosen material");
+        h.assertTrue(MortalityResearch.bonus(p)==80 && SpectralInsight.secrets(book)==0,"Partial research does not force a revelation");
+        h.assertTrue(MortalityResearch.contribute(p,material) && material.isEmpty(),"The final offering is consumed once");
+        h.assertTrue(SpectralInsight.secrets(book)==65 && p.getData(ModAttachments.ECTCETERA_KNOWLEDGE)==65,
+                "Reaching 100 immediately reveals Ectothread without a random event");
+        h.assertTrue(MortalityResearch.bonus(p)==0 && p.getData(ModAttachments.MORTALITY_RESEARCH_ECTO)==0,
+                "Successful revelation clears the charge and checkbox selection");
+        h.assertTrue(!MortalityResearch.complete(p) && SpectralInsight.secrets(book)==65,
+                "Completion cannot reveal multiple secrets or run again with an empty charge");
+        h.assertTrue(!HauntEventController.ready(p,false) && HauntEventController.ready(p,true),
+                "Research starts only the benefit cooldown");
+        p.discard();h.succeed();
+    }
+    @GameTest(template="deferred_items_test")
+    public static void blocked_full_research_survives_until_book_and_haunt_are_eligible(GameTestHelper h){
+        var p=h.makeMockServerPlayerInLevel();var book=EctceteraProgression.book(0);
+        p.getInventory().setItem(0,book);SpectralInsight.learnPlayer(p,64);
+        PlayerHauntManager.setTier(p,HauntTier.NATURAL);
+        p.setData(ModAttachments.MORTALITY_RESEARCH_BONUS,95);
+        var bone=new ItemStack(Items.BONE,2);
+        h.assertTrue(MortalityResearch.contribute(p,bone) && MortalityResearch.bonus(p)==100 && bone.getCount()==1,
+                "Ineligible full charge is stored instead of lost");
+        h.assertFalse(MortalityResearch.contribute(p,bone),"A full waiting charge does not consume more materials");
+        book.set(ModDataComponents.ECTCETERA_TIER.get(),2);
+        h.assertFalse(MortalityResearch.complete(p),"Book upgrade alone cannot bypass personal Haunt requirements");
+        PlayerHauntManager.setTier(p,HauntTier.SUPERNATURAL);
+        h.assertTrue(MortalityResearch.complete(p) && SpectralInsight.secrets(book)==65 && MortalityResearch.bonus(p)==0,
+                "Stored charge reveals the next recipe as soon as it is eligible");
+        p.discard();h.succeed();
+    }
+    @GameTest(template="deferred_items_test")
     public static void loaded_recipes_sync_in_the_login_packet(GameTestHelper h){
         var recipes = h.getLevel().getRecipeManager().getRecipes();
         var station = recipes.stream().filter(holder -> holder.value() instanceof

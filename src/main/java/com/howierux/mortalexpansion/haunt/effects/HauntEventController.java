@@ -42,6 +42,14 @@ public final class HauntEventController {
         }
         return true;
     }
+    /** Research buys an immediate Insight; preserve eligibility but bypass the natural event cooldown. */
+    public static boolean researchInsight(ServerPlayer player) {
+        if(!player.isAlive() || player.isSpectator()
+                || !HauntEffectKind.SPECTRAL_INSIGHT.eligible(PlayerHauntManager.getTier(player).id(), false)
+                || !HauntEffects.perform(player, HauntEffectKind.SPECTRAL_INSIGHT))return false;
+        completed(player, HauntEffectKind.SPECTRAL_INSIGHT.activeTicks, false);
+        return true;
+    }
     public static boolean deliverPendingTo(ServerPlayer player) {
         HauntEventData data = HauntEventData.get(player.serverLevel());
         if (data.pendingGhosts() == 0 || !ready(player) || HauntProtection.protectedPlayer(player)
@@ -57,6 +65,10 @@ public final class HauntEventController {
     @SubscribeEvent public static void tick(LevelTickEvent.Post event) {
         if (!(event.getLevel() instanceof ServerLevel level) || level.players().isEmpty()
                 || level.getGameTime() % 20 != 0) return;
+        // Retry a stored full charge when a carried book or personal Haunt becomes eligible.
+        // This also handles full research restored from older saves without spending it on failure.
+        for(ServerPlayer player : level.players())
+            com.howierux.mortalexpansion.haunt.MortalityResearch.complete(player);
         HauntEventData data = HauntEventData.get(level);
         // A stored selection needs no new Haunt roll/tier. Any eligible player
         // in this dimension can receive it when a loaded well is within 100.

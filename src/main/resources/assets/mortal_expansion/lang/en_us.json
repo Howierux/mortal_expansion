@@ -13,6 +13,7 @@
   "gui.mortal_expansion.research.raw": "Ecto 10%",
   "gui.mortal_expansion.research.purified": "Purified 20%",
   "message.mortal_expansion.research.added": "Your next eligible haunting favors a secret by +%s percentage points.",
+  "message.mortal_expansion.research.waiting": "Research is complete. Carry an eligible Book of Ectcetera and meet the next secret's personal Haunt requirement to hear its whisper.",
   "message.mortal_expansion.research.blocked": "Research cannot be added: check the material, remaining secrets, bonus cap or your chosen ectoplasm type.",
 
   "block.mortal_expansion.altar_of_impurity": "Altar of Impurity",

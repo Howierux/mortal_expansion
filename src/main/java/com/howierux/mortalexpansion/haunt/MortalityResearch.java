@@ -26,7 +26,19 @@ public final class MortalityResearch {
         int amount=amount(item),type=ecto(item),chosen=p.getData(ModAttachments.MORTALITY_RESEARCH_ECTO);
         if(!p.isAlive() || p.gameMode.getGameModeForPlayer()==net.minecraft.world.level.GameType.SPECTATOR || amount==0 || bonus(p)>=100 || !remaining(p) || type!=0 && chosen!=0 && type!=chosen)return false;
         p.setData(ModAttachments.MORTALITY_RESEARCH_BONUS,Math.min(100,bonus(p)+amount));if(type!=0)p.setData(ModAttachments.MORTALITY_RESEARCH_ECTO,type);
-        item.shrink(1);p.sendSystemMessage(Component.translatable("message.mortal_expansion.research.added",bonus(p)));return true;
+        item.shrink(1);
+        p.sendSystemMessage(Component.translatable("message.mortal_expansion.research.added",bonus(p)));
+        if(bonus(p)==100 && !complete(p))
+            p.sendSystemMessage(Component.translatable("message.mortal_expansion.research.waiting"));
+        return true;
+    }
+    /** A full charge reveals one eligible secret immediately, independently of random-roll cooldowns. */
+    public static boolean complete(ServerPlayer p){
+        if(bonus(p)<100 || !p.isAlive() || p.isSpectator() || !ready(p))return false;
+        if(!com.howierux.mortalexpansion.haunt.effects.HauntEventController.researchInsight(p))return false;
+        spent(p);
+        p.containerMenu.broadcastChanges();
+        return true;
     }
     public static void spent(ServerPlayer p){p.setData(ModAttachments.MORTALITY_RESEARCH_BONUS,0);p.setData(ModAttachments.MORTALITY_RESEARCH_ECTO,0);}
     public static com.howierux.mortalexpansion.haunt.effects.HauntEffectKind biasedChoice(ServerPlayer p,java.util.List<com.howierux.mortalexpansion.haunt.effects.HauntEffectKind> candidates){
