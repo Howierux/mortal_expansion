@@ -3,7 +3,7 @@
 **Repository:** https://github.com/Howierux/mortal_expansion  
 **Branches:** `main` (consolidated baseline), `dev` (active work)  
 **Docs:** [Overview](Overview.md), [Notes](Notes.md), [Roadmap](ROADMAP.md)  
-**Last Synced:** 2026-10-06 - First research whisper synchronized to `dev`; build and 145 tests pass. Client whisper/early-tab playtest pending.
+**Last Synced:** 2026-10-12 - New-player Natural Haunt synchronized to `dev`; build and 145 tests pass. Existing player saves retain their Haunt.
 **Current Phase:** Ambient/beneficial Haunt effects implemented; automated validation passed. Major encounters and Ghost’s Garb armor remain separate work.
 
 > **Checklist legend:** `[ ]` not started, `[x]` completed, `[~]` partially completed. Implementation status and gameplay verification are tracked separately. Discussion items are proposals, not approved implementation work.
@@ -631,3 +631,7 @@ Added an Enchanting Table-style station recipe using four Obsidian, two Holy Sal
 ### 2026-10-06 - First research whisper
 
 Mortality Research is now the first Secrets of the Dead reveal, available by whispered Insight at Natural personal Haunt with any book tier. Its blueprint stays locked until learned; the book remains unawakened and later secrets keep their existing gates. The section appears from the starter book, with research as its root. Expanded seven-bit masks preserve previous knowledge and support research in low-tier books. Build and 145 tests pass; client whisper/early-tab feedback pending. See [First whisper](FIRST_RESEARCH_WHISPER.md).
+
+### 2026-10-12 - New players start at Natural Haunt
+
+The personal tier attachment now defaults to Natural instead of Void, giving new players the normal Natural midpoint (15.00 Haunt). Saved player values remain authoritative, including explicit Void; death-copy behavior and chunk defaults are unchanged. The existing first-whisper test now verifies the new start without commands and loading a saved Void value. Build and all 145 server tests pass.

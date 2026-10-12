@@ -43,10 +43,10 @@ public final class ModAttachments {
                     .build()
     );
 
-    /** Named personal haunt tier, preserved across death. */
+    /** New players start at Natural; saved values and death-copy behavior remain authoritative. */
     public static final Supplier<AttachmentType<Integer>> PLAYER_HAUNT_TIER = ATTACHMENTS.register(
             "player_haunt_tier",
-            () -> AttachmentType.builder(() -> HauntTier.VOID.id())
+            () -> AttachmentType.builder(() -> HauntTier.NATURAL.id())
                     .serialize(Codec.intRange(HauntTier.MIN_ID, HauntTier.MAX_ID))
                     .copyOnDeath()
                     .build()
