@@ -44,3 +44,11 @@ Use case: stylized-concept. Asset type: Minecraft block texture atlas. Input ima
 
 Master: `C:\Users\scott\.codex\generated_images\01a10808-7c57-7922-a619-5f19e36de671\exec-5d6fc5cf-1720-4372-af44-7a6969a5bc1e.png`.
 
+
+## Sapling bark revision
+
+The Spiritwood Sapling item and placed sprites now share darker oak-like brown bark and muted cool green leaves, matching the current placed log and foliage. Both 64×64 transparent assets retain their existing filenames, cross geometry and neutral tint. Generated using the built-in imagegen tool and exported with nearest-neighbor sampling; original master: `C:\Users\scott\.codex\generated_images\01a10808-7c57-7922-a619-5f19e36de671\exec-7a50a81b-9615-464c-be8f-95b87d26a7cf.png`.
+
+Prompt: Use case: precise-object-edit. Asset type: Minecraft transparent pixel-art sapling sprite, used identically for inventory and placed crossed-plane block. First image is edit target, second is current Spiritwood leaf texture reference. Replace the pale white trunk, branches and roots with darker oak-like medium/dark brown bark, vertically streaked with muted warm brown highlights and very dark brown grooves. Adjust foliage to muted oak green with subtle cool blue-green tint matching the second reference; keep tiny pale cool accents sparingly, not glowing cyan ornamentation. Keep the existing sapling silhouette, branching placement, roots, leaf clusters and crisp low-resolution pixel-art aesthetic. One centered upright tree sapling, fully visible with small clear margins, no ground plane, no shadow, no backdrop, no lettering. Genuine transparent background. It must look like a young oak-barked Spiritwood tree rather than white deadwood.
+
+
