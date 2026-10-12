@@ -5,15 +5,13 @@
   "insight.mortal_expansion.mortality_research_station.body": "Place a Book of Ectcetera above two Holy Salt with Obsidian between them and three Obsidian beneath. Crafting returns the book intact. Study flesh, bones or one ectoplasm type here to favor later revelations. Later secrets still need an aware or purified book.",
   "message.mortal_expansion.insight.first_whisper": "A whisper from the dead sketches a Mortality Research Station in your book.",
 
-  "gui.mortal_expansion.research.type.0": "None",
-  "gui.mortal_expansion.research.type.1": "Raw",
-  "gui.mortal_expansion.research.type.2": "Purified",
   "block.mortal_expansion.mortality_research_station": "Mortality Research Station",
   "gui.mortal_expansion.mortality_research_station.title": "Mortality Research",
   "gui.mortal_expansion.research.study": "Research",
   "gui.mortal_expansion.research.bonus": "Next Insight bonus: +%s%%",
-  "gui.mortal_expansion.research.rates": "Flesh 1% | Bone 5% | Ecto 10%",
-  "gui.mortal_expansion.research.exclusive": "Pure 20% | Ectoplasm: %s",
+  "gui.mortal_expansion.research.rates": "Flesh 1% | Bone 5%",
+  "gui.mortal_expansion.research.raw": "Ecto 10%",
+  "gui.mortal_expansion.research.purified": "Purified 20%",
   "message.mortal_expansion.research.added": "Your next eligible haunting favors a secret by +%s percentage points.",
   "message.mortal_expansion.research.blocked": "Research cannot be added: check the material, remaining secrets, bonus cap or your chosen ectoplasm type.",
 

@@ -35,7 +35,7 @@ The two salts and four Obsidian are consumed. The book is returned with its orig
 
 ## Persistence and migration
 
-Two new player attachments store `mortality_research_bonus` (0â€“100) and `mortality_research_ecto` (0: none, 1: raw, 2: purified), copied on death and defaulting to zero in old saves. A new block/item/entity/menu ID stores only native item-handler inventory. The custom supported ShapedRecipe serializer uses a fixed typed pattern and overrides remaining items only for the book. The recipe, model/state, loot and mining tag are generated from Java. Native menu buttons/data slots handle contributions and display; no custom payloads, new mixins or automatic crafting integrations are introduced.
+Two new player attachments store `mortality_research_bonus` (0Ã¢â‚¬â€œ100) and `mortality_research_ecto` (0: none, 1: raw, 2: purified), copied on death and defaulting to zero in old saves. A new block/item/entity/menu ID stores only native item-handler inventory. The custom supported ShapedRecipe serializer uses a fixed typed pattern and overrides remaining items only for the book. The recipe, model/state, loot and mining tag are generated from Java. Native menu buttons/data slots handle contributions and display; no custom payloads, new mixins or automatic crafting integrations are introduced.
 
 Migration checks: native recipe remainder behavior, player attachment codecs/copy-on-death, menu action validation, held book eligibility and Haunt selection weighting. Bonus selection is isolated in MortalityResearch and shared by natural rolls and random test commands.
 
@@ -43,8 +43,10 @@ Migration checks: native recipe remainder behavior, player attachment codecs/cop
 
 Build and all 143 server tests pass. Research tests cover exact material values, repeated same-type stacking, rejected mixing, cap/no wasted extra items, native station crafting with book-component retention, exact salt/Obsidian consumption, a real protected-player risk redirected to Insight, separate cooldown handling, waiting for eligible knowledge, random/named command behavior, player ownership, saved bonus/type and remote button rejection. GUI layout/opening and long-term selection balance still need client playtesting.
 
-The research station is now the first secret, whispered into even a starter book at Natural personal Haunt. Secrets of the Dead is available from the starting book; other secrets keep their upgrade gates. Its blueprint requires this first reveal, and knowledge masks now support 0â€“127. See [First research whisper](FIRST_RESEARCH_WHISPER.md).
+The research station is now the first secret, whispered into even a starter book at Natural personal Haunt. Secrets of the Dead is available from the starting book; other secrets keep their upgrade gates. Its blueprint requires this first reveal, and knowledge masks now support 0Ã¢â‚¬â€œ127. See [First research whisper](FIRST_RESEARCH_WHISPER.md).
 
 ## Recipe synchronization
 
 The fixed station recipe uses a stateless stream codec that reconstructs a new instance on decode. Do not replace it with StreamCodec.unit: shaped recipe instances use identity equality, so a unit codec rejects the separately loaded recipe when the server sends the login recipe-update packet. The packet roundtrip GameTest covers all loaded recipes and checks the reconstructed station pattern and book remainder. No recipe ID, JSON format, or saved-world migration is changed. If the recipe gains configurable fields, serialize those fields explicitly.
+
+The screen lists Flesh/Bone rates separately, then Ecto 10% and Purified 20% with read-only checkboxes after each label. A check marks the ectoplasm type already contributed to the pending bonus. Both are empty before choosing a type and after the bonus is spent; only the chosen type can be checked. Indicators use existing synchronized menu data and do not change contribution or stacking rules.
