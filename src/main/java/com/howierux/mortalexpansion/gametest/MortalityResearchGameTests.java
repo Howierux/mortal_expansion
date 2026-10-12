@@ -15,6 +15,36 @@ import net.neoforged.neoforge.gametest.*;
 @PrefixGameTestTemplate(false)
 public final class MortalityResearchGameTests {
     @GameTest(template="deferred_items_test")
+    public static void loaded_recipes_sync_in_the_login_packet(GameTestHelper h){
+        var recipes = h.getLevel().getRecipeManager().getRecipes();
+        var station = recipes.stream().filter(holder -> holder.value() instanceof
+                com.howierux.mortalexpansion.recipe.MortalityResearchStationRecipe).findFirst().orElseThrow();
+        var buffer = new net.minecraft.network.RegistryFriendlyByteBuf(
+                io.netty.buffer.Unpooled.buffer(), h.getLevel().registryAccess());
+        try {
+            var codec = net.minecraft.network.protocol.game.ClientboundUpdateRecipesPacket.STREAM_CODEC;
+            codec.encode(buffer, new net.minecraft.network.protocol.game.ClientboundUpdateRecipesPacket(recipes));
+            var decoded = codec.decode(buffer);
+            h.assertTrue(decoded.getRecipes().size() == recipes.size() && buffer.readableBytes() == 0,
+                    "The complete login recipe packet roundtrips without desynchronizing the buffer");
+            var received = decoded.getRecipes().stream().filter(holder -> holder.id().equals(station.id()))
+                    .findFirst().orElseThrow().value();
+            h.assertTrue(received instanceof com.howierux.mortalexpansion.recipe.MortalityResearchStationRecipe
+                            && received.getResultItem(h.getLevel().registryAccess()).is(ModItems.MORTALITY_RESEARCH_STATION.get()),
+                    "The client receives the research station recipe with the correct serializer and result");
+            var book = EctceteraProgression.book(2);
+            var input = net.minecraft.world.item.crafting.CraftingInput.of(3, 3, java.util.List.of(
+                    ItemStack.EMPTY, book, ItemStack.EMPTY,
+                    new ItemStack(ModItems.HOLY_SALT.get()), new ItemStack(Items.OBSIDIAN), new ItemStack(ModItems.HOLY_SALT.get()),
+                    new ItemStack(Items.OBSIDIAN), new ItemStack(Items.OBSIDIAN), new ItemStack(Items.OBSIDIAN)));
+            var research = (com.howierux.mortalexpansion.recipe.MortalityResearchStationRecipe) received;
+            h.assertTrue(research.matches(input, h.getLevel())
+                            && ItemStack.isSameItemSameComponents(research.getRemainingItems(input).get(1), book),
+                    "The network-decoded recipe keeps its crafting pattern and retained upgraded book");
+        } finally { buffer.release(); }
+        h.succeed();
+    }
+    @GameTest(template="deferred_items_test")
     public static void materials_stack_but_raw_and_purified_types_cannot_mix(GameTestHelper h){
         var p=h.makeMockServerPlayerInLevel();var raw=new ItemStack(ModItems.RAW_ECTOPLASM.get(),2);
         h.assertTrue(MortalityResearch.contribute(p,new ItemStack(Items.ROTTEN_FLESH)) && MortalityResearch.bonus(p)==1,"Flesh adds one point");

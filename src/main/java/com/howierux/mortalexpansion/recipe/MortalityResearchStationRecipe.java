@@ -12,6 +12,10 @@ public final class MortalityResearchStationRecipe extends ShapedRecipe {
     @Override public RecipeSerializer<?> getSerializer(){return ModRecipeSerializers.MORTALITY_RESEARCH_STATION.get();}
     public static final class Serializer implements RecipeSerializer<MortalityResearchStationRecipe>{
         public MapCodec<MortalityResearchStationRecipe> codec(){return MapCodec.unit(MortalityResearchStationRecipe::new);}
-        public StreamCodec<RegistryFriendlyByteBuf,MortalityResearchStationRecipe> streamCodec(){return StreamCodec.unit(new MortalityResearchStationRecipe());}
+        public StreamCodec<RegistryFriendlyByteBuf,MortalityResearchStationRecipe> streamCodec(){
+            // This fixed recipe has no per-instance fields. A unit codec checks object equality,
+            // which rejects separately loaded recipe instances during the login recipe packet.
+            return StreamCodec.of((buffer, recipe) -> {}, buffer -> new MortalityResearchStationRecipe());
+        }
     }
 }
