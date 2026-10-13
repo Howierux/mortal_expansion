@@ -21,6 +21,9 @@ public final class ModBlockEntities {
     public static final DeferredRegister<BlockEntityType<?>> BLOCK_ENTITY_TYPES =
             DeferredRegister.create(Registries.BLOCK_ENTITY_TYPE, MortalExpansion.MOD_ID);
 
+    public static final Supplier<BlockEntityType<com.howierux.mortalexpansion.blockentity.WispLanternBlockEntity>> WISP_O_LANTERN =
+            BLOCK_ENTITY_TYPES.register("wisp_o_lantern",()->BlockEntityType.Builder.of(
+                    com.howierux.mortalexpansion.blockentity.WispLanternBlockEntity::new,ModBlocks.WISP_O_LANTERN.get()).build(null));
     public static final Supplier<BlockEntityType<com.howierux.mortalexpansion.blockentity.DreamcatcherBlockEntity>> DREAMCATCHER =
             BLOCK_ENTITY_TYPES.register("dreamcatcher", () -> BlockEntityType.Builder.of(
                     com.howierux.mortalexpansion.blockentity.DreamcatcherBlockEntity::new, ModBlocks.DREAMCATCHER.get(), ModBlocks.PURIFIED_DREAMCATCHER.get()).build(null));

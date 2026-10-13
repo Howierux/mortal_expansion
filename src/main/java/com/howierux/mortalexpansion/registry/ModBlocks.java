@@ -32,6 +32,9 @@ public final class ModBlocks {
     public static final DeferredRegister.Blocks BLOCKS =
             DeferredRegister.createBlocks(MortalExpansion.MOD_ID);
 
+    public static final DeferredBlock<com.howierux.mortalexpansion.block.WispLanternBlock> WISP_O_LANTERN =
+            BLOCKS.registerBlock("wisp_o_lantern",com.howierux.mortalexpansion.block.WispLanternBlock::new,
+                    BlockBehaviour.Properties.ofFullCopy(Blocks.JACK_O_LANTERN).lightLevel(state -> 4));
     public static final DeferredBlock<com.howierux.mortalexpansion.block.DreamcatcherBlock> PURIFIED_DREAMCATCHER =
             BLOCKS.registerBlock("purified_dreamcatcher", com.howierux.mortalexpansion.block.DreamcatcherBlock::new,
                     BlockBehaviour.Properties.of().strength(0.5F).noOcclusion().noCollission()

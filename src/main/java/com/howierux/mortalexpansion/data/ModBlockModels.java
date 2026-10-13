@@ -18,6 +18,9 @@ public final class ModBlockModels extends BlockStateProvider {
         super(output, MortalExpansion.MOD_ID, helper);
     }
     @Override protected void registerStatesAndModels() {
+        var wisp=models().orientable("wisp_o_lantern",ResourceLocation.withDefaultNamespace("block/pumpkin_side"),
+                modLoc("block/wisp_o_lantern_front_temporary"),ResourceLocation.withDefaultNamespace("block/pumpkin_top"));
+        horizontalBlock(ModBlocks.WISP_O_LANTERN.get(),wisp);
         for(String name : new String[]{"dreamcatcher", "purified_dreamcatcher"}) {
         var catcher = models().getBuilder(name)
                 .parent(new ModelFile.UncheckedModelFile("minecraft:block/block")).renderType("minecraft:cutout").ao(false);

@@ -25,6 +25,7 @@ public final class ModCreativeTabs {
                         output.accept(com.howierux.mortalexpansion.guide.EctceteraProgression.book(0));
                         output.accept(ModItems.RAW_ECTOPLASM.get());
                         output.accept(ModItems.DREAMCATCHER.get());
+                        output.accept(ModItems.WISP_O_LANTERN.get());
                         output.accept(ModItems.PURIFIED_DREAMCATCHER.get());
                         output.accept(ModItems.ALTAR_OF_PURITY.get());
                         output.accept(ModItems.MORTALITY_RESEARCH_STATION.get());

@@ -21,6 +21,7 @@ public final class ModItems {
             ITEMS.registerItem("precise_emf_reader", com.howierux.mortalexpansion.item.EmfReaderItem::new, new Item.Properties().stacksTo(1));
     public static final DeferredItem<com.howierux.mortalexpansion.item.EmfReaderItem> EMF_READER =
             ITEMS.registerItem("emf_reader", com.howierux.mortalexpansion.item.EmfReaderItem::new, new Item.Properties().stacksTo(1));
+    public static final DeferredItem<BlockItem> WISP_O_LANTERN = ITEMS.registerSimpleBlockItem(ModBlocks.WISP_O_LANTERN);
     public static final DeferredItem<BlockItem> PURIFIED_DREAMCATCHER = ITEMS.registerSimpleBlockItem(ModBlocks.PURIFIED_DREAMCATCHER);
     public static final DeferredItem<BlockItem> DREAMCATCHER = ITEMS.registerSimpleBlockItem(ModBlocks.DREAMCATCHER);
     public static final DeferredItem<Item> ECTOTHREAD = ITEMS.registerSimpleItem("ectothread");

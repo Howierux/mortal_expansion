@@ -1,0 +1,15 @@
+# Wisp o' Lantern
+
+A loaded Carved Pumpkin in a chunk at Supernatural Haunt or higher has a 2% chance each minute during nighttime (13,000–23,000 day ticks, in dimensions with skylight) to become a Wisp o' Lantern. Chunk checks are staggered across sixty one-second phases; sections without Carved Pumpkins are skipped. Existing pumpkins, player placements and moved pumpkins all qualify. No vanilla random-tick mixin or forced chunk loading is needed.
+
+Conversion retains facing and reduces chunk Haunt by exactly one fine-grained point, preserving fractional Haunt. It pays once at conversion; the converted block never repeats that reduction. There is no crafting recipe. Breaking the lantern—including with Silk Touch—drops one normal Carved Pumpkin.
+
+The orange pumpkin has a spectral green-lit face and a faint light level of 4. Minecraft's native light emission is used; colored environmental lighting requires an external lighting renderer. The model/item use vanilla pumpkin top/sides and an original green front variant at `src/main/resources/assets/mortal_expansion/textures/block/wisp_o_lantern_front_temporary.png` (16×16 opaque PNG).
+
+Each lantern attempts to spawn one real Ghost every 24,000 loaded nighttime ticks (20 minutes). Daylight and unloaded chunks pause the persisted timer. A failed attempt resets the same full interval; there is no backlog or burst on reload. Spawning requires a living nonspectator player within 32 blocks, non-Peaceful difficulty, mob spawning enabled, clear loaded space nearby, and fewer than four living Ghosts within 16 blocks. Spawned Ghosts use the supported SPAWNER finalization hook and normal Ghost behavior/despawning. This block-origin spawner is separate from player Haunt event rolls.
+
+Balance constants are in WispLanternConversion and WispLanternBlockEntity. Registration, all horizontal orientations, item model, loot and axe tag are generated through Java providers. New block entity data stores only SpawnDelay; missing/invalid values use or clamp to the full interval. Existing world data is unchanged.
+
+Art was edited with the built-in imagegen tool from the vanilla front reference, then exported with nearest-neighbor sampling. Master: `C:\Users\scott\.codex\generated_images\01a10808-7c57-7922-a619-5f19e36de671\exec-044a33aa-4006-43c1-a5dd-59161f13cfa4.png`.
+
+Prompt: Use case: precise-object-edit. Asset type: Minecraft block FRONT texture. Edit this vanilla Jack o Lantern front texture into a Wisp o Lantern with GREEN internal light. Preserve the exact square texture filling the canvas, orange pumpkin rind pixels, carved eyes/nose/mouth shapes and positions. Change ONLY the bright yellow/orange carved interior lighting to spectral lime green, emerald green shadows and pale mint-green brightest inner pixels. Strict flat orthographic block face texture, no perspective, no background or extra margin, no object render, no lettering. Crisp 16x16 pixel-art pattern enlarged with hard pixel boundaries. Entire texture is opaque.
