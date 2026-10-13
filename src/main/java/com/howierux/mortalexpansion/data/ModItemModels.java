@@ -324,7 +324,7 @@ public final class ModItemModels extends ItemModelProvider {
             var model = this.getBuilder("stone_fence").parent(new ModelFile.UncheckedModelFile("mortal_expansion:block/stone_fence_inventory"));
         }
         // Dedicated temporary inventory art; placed block models remain independent.
-        for(String item:new String[]{"ectothread","purified_ectothread","ectoplasmic_generator","enchantment_generator","ectchantment_machine","mortality_research_station","altar_of_purity","altar_of_impurity","grave_moss","spiritwood_sapling","purification_station","purification_ward","dreamcatcher"}){
+        for(String item:new String[]{"ectothread","purified_ectothread","ectoplasmic_generator","enchantment_generator","ectchantment_machine","mortality_research_station","altar_of_purity","altar_of_impurity","grave_moss","spiritwood_sapling","purification_station","purification_ward","dreamcatcher","purified_dreamcatcher"}){
             getBuilder(item).parent(new ModelFile.UncheckedModelFile("minecraft:item/generated"))
                     .texture("layer0", "mortal_expansion:item/"+item+"_temporary");
         }

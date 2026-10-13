@@ -32,6 +32,11 @@ public final class ModBlocks {
     public static final DeferredRegister.Blocks BLOCKS =
             DeferredRegister.createBlocks(MortalExpansion.MOD_ID);
 
+    public static final DeferredBlock<com.howierux.mortalexpansion.block.DreamcatcherBlock> PURIFIED_DREAMCATCHER =
+            BLOCKS.registerBlock("purified_dreamcatcher", com.howierux.mortalexpansion.block.DreamcatcherBlock::new,
+                    BlockBehaviour.Properties.of().strength(0.5F).noOcclusion().noCollission()
+                            .sound(SoundType.WOOD).pushReaction(net.minecraft.world.level.material.PushReaction.DESTROY));
+
     public static final DeferredBlock<com.howierux.mortalexpansion.block.DreamcatcherBlock> DREAMCATCHER =
             BLOCKS.registerBlock("dreamcatcher", com.howierux.mortalexpansion.block.DreamcatcherBlock::new,
                     BlockBehaviour.Properties.of().strength(0.5F).noOcclusion().noCollission()

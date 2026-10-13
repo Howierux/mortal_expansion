@@ -26,6 +26,65 @@ public final class DreamcatcherGameTests {
         return (DreamcatcherBlockEntity)h.getLevel().getBlockEntity(pos);
     }
     @GameTest(template="deferred_items_test")
+    public static void purified_protection_is_guaranteed_and_falls_back_when_unloaded(GameTestHelper h) {
+        var p=h.makeMockServerPlayerInLevel();var other=h.makeMockServerPlayerInLevel();
+        place(h,p,3);
+        var pos=h.absolutePos(new BlockPos(5,2,3));h.getLevel().setBlock(pos.south(),Blocks.STONE.defaultBlockState(),3);
+        var state=ModBlocks.PURIFIED_DREAMCATCHER.get().defaultBlockState();
+        h.getLevel().setBlock(pos,state,3);
+        ModBlocks.PURIFIED_DREAMCATCHER.get().setPlacedBy(h.getLevel(),pos,state,p,new ItemStack(ModItems.PURIFIED_DREAMCATCHER.get()));
+        var catcher=(DreamcatcherBlockEntity)h.getLevel().getBlockEntity(pos);
+        h.assertTrue(Dreamcatchers.protectionPercent(p)==100 && Dreamcatchers.protectionPercent(other)==0,
+                "Purified protection takes precedence and belongs only to its placer");
+        for(var kind:HauntEffectKind.values())if(kind.implemented()) {
+            h.assertTrue(HauntEffects.perform(p,kind) && Dreamcatchers.consumeFeedback(p),
+                    "Purified protection catches every implemented good and bad effect before it runs");
+        }
+        for(int i=0;i<100;i++) {
+            p.getRandom().setSeed(i*7919L);
+            h.assertTrue(Dreamcatchers.prevent(p),"Purified protection never fails a coin flip");
+            Dreamcatchers.consumeFeedback(p);
+        }
+        var saved=catcher.saveWithoutMetadata(h.getLevel().registryAccess());
+        catcher.onChunkUnloaded();
+        h.assertTrue(Dreamcatchers.protectionPercent(p)==50,"Unloading purified decoration restores regular 50% protection");
+        catcher.loadAdditional(saved,h.getLevel().registryAccess());catcher.onLoad();
+        h.assertTrue(Dreamcatchers.protectionPercent(p)==100 && p.getUUID().equals(catcher.owner()),
+                "Saved purified decoration reloads with the same owner and strength");
+        h.getLevel().setBlock(pos,Blocks.AIR.defaultBlockState(),3);
+        h.assertTrue(Dreamcatchers.protectionPercent(p)==50,"Breaking purified decoration immediately restores the regular rate");
+        h.getLevel().setBlock(h.absolutePos(new BlockPos(3,2,3)),Blocks.AIR.defaultBlockState(),3);
+        h.assertTrue(Dreamcatchers.protectionPercent(p)==0,"Breaking all decorations removes protection");
+        p.discard();other.discard();h.succeed();
+    }
+    @GameTest(template="deferred_items_test")
+    public static void purified_recipes_and_book_upgrade_share_the_dreamcatcher_secret(GameTestHelper h) {
+        var p=h.makeMockServerPlayerInLevel();
+        var direct=net.minecraft.resources.ResourceLocation.fromNamespaceAndPath(MortalExpansion.MOD_ID,"purified_dreamcatcher");
+        var upgrade=net.minecraft.resources.ResourceLocation.fromNamespaceAndPath(MortalExpansion.MOD_ID,"purified_dreamcatcher_upgrade");
+        h.assertFalse(SpectralInsight.canCraft(p,direct) || SpectralInsight.canCraft(p,upgrade),"Both recipes require learned thread knowledge");
+        SpectralInsight.learnPlayer(p,1);
+        h.assertTrue(p.getRecipeBook().contains(direct) && p.getRecipeBook().contains(upgrade),"Existing thread knowledge teaches both alternatives");
+        var conversion=(net.minecraft.world.item.crafting.CraftingRecipe)h.getLevel().getRecipeManager().byKey(upgrade).orElseThrow().value();
+        var input=net.minecraft.world.item.crafting.CraftingInput.of(2,2,java.util.List.of(ItemStack.EMPTY,
+                new ItemStack(ModItems.PURIFIED_ECTOTHREAD.get()),new ItemStack(ModItems.DREAMCATCHER.get()),ItemStack.EMPTY));
+        h.assertTrue(conversion.matches(input,h.getLevel())
+                && conversion.assemble(input,h.getLevel().registryAccess()).is(ModItems.PURIFIED_DREAMCATCHER.get()),
+                "One existing Dreamcatcher plus one purified thread upgrades in any grid");
+        var recipe=(net.minecraft.world.item.crafting.CraftingRecipe)h.getLevel().getRecipeManager().byKey(direct).orElseThrow().value();
+        var pattern=net.minecraft.world.item.crafting.CraftingInput.of(3,3,java.util.List.of(
+                new ItemStack(Items.STICK),new ItemStack(ModItems.PURIFIED_ECTOTHREAD.get()),new ItemStack(Items.STICK),
+                new ItemStack(ModItems.PURIFIED_ECTOTHREAD.get()),new ItemStack(ModItems.PURIFIED_ECTOTHREAD.get()),new ItemStack(ModItems.PURIFIED_ECTOTHREAD.get()),
+                new ItemStack(Items.STICK),new ItemStack(ModItems.PURIFIED_ECTOTHREAD.get()),new ItemStack(Items.STICK)));
+        h.assertTrue(recipe.matches(pattern,h.getLevel())
+                && recipe.assemble(pattern,h.getLevel().registryAccess()).is(ModItems.PURIFIED_DREAMCATCHER.get()),
+                "Direct recipe uses exactly five purified thread and four sticks");
+        var node=EctceteraResearchMap.nodes(4).stream().filter(n->n.chapter().key().equals("purified_dreamcatcher")).findFirst().orElseThrow();
+        h.assertTrue(node.parent().equals("dreamcatcher") && EctceteraResearchMap.unlocked("purified_dreamcatcher",2,1),
+                "Purified variant branches from the regular Dreamcatcher with the same revelation");
+        p.discard();h.succeed();
+    }
+    @GameTest(template="deferred_items_test")
     public static void ownership_persists_and_unload_removal_disable_protection(GameTestHelper h) {
         var owner=h.makeMockServerPlayerInLevel();var other=h.makeMockServerPlayerInLevel();
         var catcher=place(h,owner,3);

@@ -122,6 +122,14 @@ public final class ModRecipes extends RecipeProvider {
                 .unlockedBy("has_ingredient", has(ModItems.HOLY_WATER_BUCKET.get()))
                 .save(recipesOnly, ResourceLocation.fromNamespaceAndPath(MortalExpansion.MOD_ID, "holy_water_bucket_smelting"));
         SimpleCookingRecipeBuilder.smelting(Ingredient.of(ModItems.LIQUID_ECTOPLASM_BUCKET.get()), RecipeCategory.MISC, ModItems.RAW_ECTOPLASM.get(), 0.0F, 200).unlockedBy("has_ingredient", has(ModItems.LIQUID_ECTOPLASM_BUCKET.get())).save(recipesOnly, ResourceLocation.fromNamespaceAndPath(MortalExpansion.MOD_ID, "liquid_ectoplasm_bucket_smelting"));
+        ShapelessRecipeBuilder.shapeless(RecipeCategory.DECORATIONS, ModItems.PURIFIED_DREAMCATCHER.get())
+                .requires(ModItems.DREAMCATCHER.get()).requires(ModItems.PURIFIED_ECTOTHREAD.get())
+                .unlockedBy("has_ectothread", has(ModItems.ECTOTHREAD.get()))
+                .save(recipesOnly, ResourceLocation.fromNamespaceAndPath(MortalExpansion.MOD_ID, "purified_dreamcatcher_upgrade"));
+        ShapedRecipeBuilder.shaped(RecipeCategory.DECORATIONS, ModItems.PURIFIED_DREAMCATCHER.get())
+                .pattern("SES").pattern("EEE").pattern("SES")
+                .define('S', Items.STICK).define('E', ModItems.PURIFIED_ECTOTHREAD.get())
+                .unlockedBy("has_purified_ectothread", has(ModItems.PURIFIED_ECTOTHREAD.get())).save(recipesOnly);
         ShapedRecipeBuilder.shaped(RecipeCategory.DECORATIONS, ModItems.DREAMCATCHER.get())
                 .pattern("SES").pattern("EEE").pattern("SES")
                 .define('S', Items.STICK).define('E', ModItems.ECTOTHREAD.get())

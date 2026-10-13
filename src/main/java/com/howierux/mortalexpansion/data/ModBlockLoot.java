@@ -40,6 +40,7 @@ public final class ModBlockLoot extends BlockLootSubProvider {
         dropSelf(ModBlocks.HAUNT_FURNACE.get());
         dropSelf(ModBlocks.PURIFICATION_WARD.get());
         dropSelf(ModBlocks.DREAMCATCHER.get());
+        dropSelf(ModBlocks.PURIFIED_DREAMCATCHER.get());
         dropSelf(ModBlocks.PURIFIED_GRAVESTONE.get());
         dropSelf(ModBlocks.PURIFIED_SPIRITWOOD_BUTTON.get());
         add(ModBlocks.PURIFIED_SPIRITWOOD_DOOR.get(), LootTable.lootTable().withPool(LootPool.lootPool().setRolls(ConstantValue.exactly(1))
@@ -76,7 +77,7 @@ public final class ModBlockLoot extends BlockLootSubProvider {
     @Override protected Iterable<Block> getKnownBlocks() {
         // Only blocks with existing drop definitions: fluids, the well, and currently
         // non-dropping blocks must not acquire new loot as part of a schema migration.
-        return List.of(ModBlocks.DREAMCATCHER.get(),ModBlocks.MORTALITY_RESEARCH_STATION.get(),ModBlocks.ALTAR_OF_IMPURITY.get(),ModBlocks.ALTAR_OF_PURITY.get(),ModBlocks.HAUNTED_FARMLAND.get(),
+        return List.of(ModBlocks.PURIFIED_DREAMCATCHER.get(),ModBlocks.DREAMCATCHER.get(),ModBlocks.MORTALITY_RESEARCH_STATION.get(),ModBlocks.ALTAR_OF_IMPURITY.get(),ModBlocks.ALTAR_OF_PURITY.get(),ModBlocks.HAUNTED_FARMLAND.get(),
                 ModBlocks.BLOODSTONE_ORE.get(),
                 ModBlocks.BLOODSTONE_ORE_STONE.get(),
                 ModBlocks.ECTCHANTMENT_MACHINE.get(),

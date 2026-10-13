@@ -18,13 +18,15 @@ public final class ModBlockModels extends BlockStateProvider {
         super(output, MortalExpansion.MOD_ID, helper);
     }
     @Override protected void registerStatesAndModels() {
-        var catcher = models().getBuilder("dreamcatcher")
+        for(String name : new String[]{"dreamcatcher", "purified_dreamcatcher"}) {
+        var catcher = models().getBuilder(name)
                 .parent(new ModelFile.UncheckedModelFile("minecraft:block/block")).renderType("minecraft:cutout").ao(false);
-        catcher.texture("web", modLoc("item/dreamcatcher_temporary")).texture("particle", "#web");
+        catcher.texture("web", modLoc("item/" + name + "_temporary")).texture("particle", "#web");
         var web = catcher.element().from(0, 0, 15.5F).to(16, 16, 15.5F).shade(false);
         web.face(Direction.NORTH).texture("#web").uvs(0, 0, 16, 16);
         web.face(Direction.SOUTH).texture("#web").uvs(16, 0, 0, 16);
-        horizontalBlock(ModBlocks.DREAMCATCHER.get(), catcher);
+        horizontalBlock(name.equals("purified_dreamcatcher") ? ModBlocks.PURIFIED_DREAMCATCHER.get() : ModBlocks.DREAMCATCHER.get(), catcher);
+        }
         var research = models().getBuilder("mortality_research_station").parent(new ModelFile.UncheckedModelFile("minecraft:block/block"));
         research.texture("side", temporaryTexture("mortality_research_station", "side"));
         research.texture("top", temporaryTexture("mortality_research_station", "top"));

@@ -26,7 +26,9 @@ public final class Dreamcatchers {
             if (entries.isEmpty()) LOADED.remove(level);
         }
     }
-    public static boolean active(ServerPlayer player) {
+    public static boolean active(ServerPlayer player) { return protectionPercent(player) > 0; }
+    public static int protectionPercent(ServerPlayer player) {
+        int protection = 0;
         for (ServerLevel level : player.getServer().getAllLevels()) {
             var entries = LOADED.get(level);
             if (entries == null) continue;
@@ -34,15 +36,19 @@ public final class Dreamcatchers {
                 if (!player.getUUID().equals(entry.getValue())
                         || level.getChunkSource().getChunkNow(entry.getKey().getX() >> 4, entry.getKey().getZ() >> 4) == null) continue;
                 if (level.getBlockEntity(entry.getKey()) instanceof DreamcatcherBlockEntity catcher
-                        && player.getUUID().equals(catcher.owner()) && !catcher.isRemoved()) return true;
+                        && player.getUUID().equals(catcher.owner()) && !catcher.isRemoved()) {
+                    if(catcher.getBlockState().is(com.howierux.mortalexpansion.registry.ModBlocks.PURIFIED_DREAMCATCHER.get())) return 100;
+                    protection = 50;
+                }
             }
         }
-        return false;
+        return protection;
     }
-    /** One coin flip per selected event, regardless of decoration count. A caught event counts as handled. */
+    /** Strongest loaded decoration wins; no stacking. Regular protection uses one coin flip per selected event, regardless of decoration count. A caught event counts as handled. */
     public static boolean prevent(ServerPlayer player) {
         PREVENTED.remove(player);
-        if (!active(player) || !player.getRandom().nextBoolean()) return false;
+        int protection = protectionPercent(player);
+        if (protection == 0 || protection == 50 && !player.getRandom().nextBoolean()) return false;
         PREVENTED.add(player);
         player.displayClientMessage(Component.translatable("message.mortal_expansion.dreamcatcher.caught"), true);
         return true;

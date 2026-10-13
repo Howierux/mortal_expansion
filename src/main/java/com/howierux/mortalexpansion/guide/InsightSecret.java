@@ -15,7 +15,7 @@ public enum InsightSecret {
             case MORTALITY_RESEARCH_STATION -> paths.add("mortality_research_station");
             case ALTAR_OF_IMPURITY -> paths.add("altar_of_impurity");
             case ALTAR_OF_PURITY -> paths.add("altar_of_purity");
-            case ECTOTHREAD -> {paths.add("ectothread");paths.add("dreamcatcher");}
+            case ECTOTHREAD -> {paths.add("ectothread");paths.add("dreamcatcher");paths.add("purified_dreamcatcher");paths.add("purified_dreamcatcher_upgrade");}
             case GHOST_GARB -> {for(String part:parts())paths.add("ghost_garb_"+part);}
             case HAINT_GARB -> {paths.add("purified_ectothread");for(String part:parts()){paths.add("haint_garb_"+part);paths.add("haint_garb_"+part+"_smithing");}}
             case SPECTRALITE_HAINT -> {for(String part:parts())paths.add("spectralite_haint_"+part+"_smithing");}
