@@ -15,6 +15,21 @@
         }
       ],
       "rolls": 1.0
+    },
+    {
+      "bonus_rolls": 0.0,
+      "conditions": [
+        {
+          "condition": "minecraft:survives_explosion"
+        }
+      ],
+      "entries": [
+        {
+          "type": "minecraft:item",
+          "name": "mortal_expansion:raw_ectoplasm"
+        }
+      ],
+      "rolls": 1.0
     }
   ]
 }

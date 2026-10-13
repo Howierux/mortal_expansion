@@ -40,7 +40,10 @@ public final class ModBlockLoot extends BlockLootSubProvider {
         dropSelf(ModBlocks.HAUNT_FURNACE.get());
         dropSelf(ModBlocks.PURIFICATION_WARD.get());
         dropSelf(ModBlocks.DREAMCATCHER.get());
-        dropOther(ModBlocks.WISP_O_LANTERN.get(),net.minecraft.world.item.Items.CARVED_PUMPKIN);
+        add(ModBlocks.WISP_O_LANTERN.get(), createSingleItemTable(net.minecraft.world.item.Items.CARVED_PUMPKIN)
+                .withPool(LootPool.lootPool().setRolls(ConstantValue.exactly(1))
+                        .when(ExplosionCondition.survivesExplosion())
+                        .add(LootItem.lootTableItem(ModItems.RAW_ECTOPLASM.get()))));
         dropSelf(ModBlocks.PURIFIED_DREAMCATCHER.get());
         dropSelf(ModBlocks.PURIFIED_GRAVESTONE.get());
         dropSelf(ModBlocks.PURIFIED_SPIRITWOOD_BUTTON.get());

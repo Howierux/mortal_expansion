@@ -48,8 +48,10 @@ public final class WispLanternGameTests {
             var lantern=lantern(h);var state=lantern.getBlockState();
             h.assertTrue(state.getLightEmission()==4,"Lantern has a faint light level rather than full Jack o Lantern brightness");
             var drops=Block.getDrops(state,level,lantern.getBlockPos(),lantern);
-            h.assertTrue(drops.size()==1 && drops.getFirst().is(Items.CARVED_PUMPKIN)
-                    && drops.getFirst().getCount()==1,"Breaking drops exactly one regular Carved Pumpkin");
+            h.assertTrue(drops.size()==2
+                    && drops.stream().filter(stack->stack.is(Items.CARVED_PUMPKIN)).mapToInt(ItemStack::getCount).sum()==1
+                    && drops.stream().filter(stack->stack.is(ModItems.RAW_ECTOPLASM.get())).mapToInt(ItemStack::getCount).sum()==1,
+                    "Breaking drops exactly one regular Carved Pumpkin and one raw Ectoplasm");
             level.setDayTime(6000);
             WispLanternBlockEntity.serverTick(level,lantern.getBlockPos(),state,lantern);
             h.assertTrue(lantern.spawnDelay()==24000,"Daylight pauses the twenty-minute nighttime timer");

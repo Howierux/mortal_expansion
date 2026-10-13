@@ -2,7 +2,7 @@
 
 A loaded Carved Pumpkin in a chunk at Supernatural Haunt or higher has a 2% chance each minute during nighttime (13,000–23,000 day ticks, in dimensions with skylight) to become a Wisp o' Lantern. Chunk checks are staggered across sixty one-second phases; sections without Carved Pumpkins are skipped. Existing pumpkins, player placements and moved pumpkins all qualify. No vanilla random-tick mixin or forced chunk loading is needed.
 
-Conversion retains facing and reduces chunk Haunt by exactly one fine-grained point, preserving fractional Haunt. It pays once at conversion; the converted block never repeats that reduction. There is no crafting recipe. Breaking the lantern—including with Silk Touch—drops one normal Carved Pumpkin.
+Conversion retains facing and reduces chunk Haunt by exactly one fine-grained point, preserving fractional Haunt. It pays once at conversion; the converted block never repeats that reduction. There is no crafting recipe. Breaking the lantern—including with Silk Touch—drops one normal Carved Pumpkin plus one raw Ectoplasm.
 
 The orange pumpkin has a spectral green-lit face and a faint light level of 4. Minecraft's native light emission is used; colored environmental lighting requires an external lighting renderer. The model/item use vanilla pumpkin top/sides and an original green front variant at `src/main/resources/assets/mortal_expansion/textures/block/wisp_o_lantern_front_temporary.png` (16×16 opaque PNG).
 
