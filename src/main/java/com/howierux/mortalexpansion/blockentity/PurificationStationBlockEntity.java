@@ -22,6 +22,11 @@ import net.neoforged.neoforge.items.IItemHandler;
 import net.neoforged.neoforge.items.ItemStackHandler;
 
 public final class PurificationStationBlockEntity extends BlockEntity {
+    public static final net.minecraft.tags.TagKey<net.minecraft.world.item.Item> PURIFICATION_REAGENTS =
+            net.minecraft.tags.TagKey.create(net.minecraft.core.registries.Registries.ITEM,
+                    net.minecraft.resources.ResourceLocation.fromNamespaceAndPath(
+                            com.howierux.mortalexpansion.MortalExpansion.MOD_ID, "purification_reagents"));
+
     public static final int WATER_PER_CRAFT = 1000;
     public static final int WATER_CAPACITY = WATER_PER_CRAFT * 10;
     public static final int FE_PER_CRAFT = 100_000;
@@ -45,7 +50,7 @@ public final class PurificationStationBlockEntity extends BlockEntity {
         public boolean isItemValid(int slot, ItemStack stack) {
             return switch (slot) {
                 case SLOT_RAW_ECTOPLASM -> stack.is(ModItems.RAW_ECTOPLASM.get());
-                case SLOT_GRAVE_MOSS -> stack.is(ModItems.GRAVE_MOSS.get());
+                case SLOT_GRAVE_MOSS -> stack.is(PURIFICATION_REAGENTS);
                 case SLOT_WATER_BUCKET -> stack.is(Items.WATER_BUCKET);
                 default -> false;
             };
@@ -174,7 +179,7 @@ public final class PurificationStationBlockEntity extends BlockEntity {
 
     private boolean hasCompleteRecipeReady() {
         ItemStack raw = items.getStackInSlot(SLOT_RAW_ECTOPLASM);
-        ItemStack moss = items.getStackInSlot(SLOT_GRAVE_MOSS);
+        ItemStack reagent = items.getStackInSlot(SLOT_GRAVE_MOSS);
         ItemStack output = items.getStackInSlot(SLOT_OUTPUT);
 
         boolean outputSpace = output.isEmpty()
@@ -182,7 +187,7 @@ public final class PurificationStationBlockEntity extends BlockEntity {
                 && output.getCount() < output.getMaxStackSize());
 
         return raw.is(ModItems.RAW_ECTOPLASM.get())
-                && moss.is(ModItems.GRAVE_MOSS.get())
+                && reagent.is(PURIFICATION_REAGENTS)
                 && waterTank.getFluidAmount() >= WATER_PER_CRAFT
                 && outputSpace;
     }
