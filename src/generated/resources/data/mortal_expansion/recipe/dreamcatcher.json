@@ -1,0 +1,21 @@
+{
+  "type": "minecraft:crafting_shaped",
+  "category": "misc",
+  "key": {
+    "E": {
+      "item": "mortal_expansion:ectothread"
+    },
+    "S": {
+      "item": "minecraft:stick"
+    }
+  },
+  "pattern": [
+    "SES",
+    "EEE",
+    "SES"
+  ],
+  "result": {
+    "count": 1,
+    "id": "mortal_expansion:dreamcatcher"
+  }
+}

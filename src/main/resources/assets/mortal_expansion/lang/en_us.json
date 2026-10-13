@@ -1,4 +1,8 @@
 {
+  "block.mortal_expansion.dreamcatcher": "Dreamcatcher",
+  "message.mortal_expansion.dreamcatcher.caught": "Your Dreamcatcher catches a stirring beyond the veil.",
+  "insight.mortal_expansion.dreamcatcher.name": "Dreamcatcher",
+  "insight.mortal_expansion.dreamcatcher.body": "Craft with Sticks in four corners and Ectothread in the other five slots. Hang it on a wall. While loaded, its placer can sleep near monsters. It catches half of all good and bad haunt events. Multiple catchers do not stack.",
   "insight.mortal_expansion.mortality_research_station.name": "Mortality Research Station",
   "insight.mortal_expansion.mortality_research_station.next": "Use Obsidian and Holy Salt around this book. The book returns intact; study remains to favor later secrets.",
   "insight.mortal_expansion.mortality_research_station.guidance": "Carry even a starting book at Natural personal Haunt. A whisper may reveal your first research secret.",

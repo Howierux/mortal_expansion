@@ -122,6 +122,10 @@ public final class ModRecipes extends RecipeProvider {
                 .unlockedBy("has_ingredient", has(ModItems.HOLY_WATER_BUCKET.get()))
                 .save(recipesOnly, ResourceLocation.fromNamespaceAndPath(MortalExpansion.MOD_ID, "holy_water_bucket_smelting"));
         SimpleCookingRecipeBuilder.smelting(Ingredient.of(ModItems.LIQUID_ECTOPLASM_BUCKET.get()), RecipeCategory.MISC, ModItems.RAW_ECTOPLASM.get(), 0.0F, 200).unlockedBy("has_ingredient", has(ModItems.LIQUID_ECTOPLASM_BUCKET.get())).save(recipesOnly, ResourceLocation.fromNamespaceAndPath(MortalExpansion.MOD_ID, "liquid_ectoplasm_bucket_smelting"));
+        ShapedRecipeBuilder.shaped(RecipeCategory.DECORATIONS, ModItems.DREAMCATCHER.get())
+                .pattern("SES").pattern("EEE").pattern("SES")
+                .define('S', Items.STICK).define('E', ModItems.ECTOTHREAD.get())
+                .unlockedBy("has_ectothread", has(ModItems.ECTOTHREAD.get())).save(recipesOnly);
         ShapedRecipeBuilder.shaped(RecipeCategory.MISC, ModItems.PURIFICATION_STATION.get(), 1).pattern("III").pattern("RIR").pattern("IPI").define('I', Items.IRON_INGOT).define('R', Items.REDSTONE).define('P', ModItems.PURIFIED_SPIRITWOOD_PLANKS.get()).unlockedBy("has_ingredient", has(Items.IRON_INGOT)).save(recipesOnly, ResourceLocation.fromNamespaceAndPath(MortalExpansion.MOD_ID, "purification_station"));
         ShapedRecipeBuilder.shaped(RecipeCategory.MISC, ModItems.PURIFICATION_WARD.get(), 1).pattern("MPM").pattern("PPP").pattern("MPM").define('M', ModItems.GRAVE_MOSS.get()).define('P', ModItems.PURIFIED_SPIRITWOOD_PLANKS.get()).unlockedBy("has_ingredient", has(ModItems.GRAVE_MOSS.get())).save(recipesOnly, ResourceLocation.fromNamespaceAndPath(MortalExpansion.MOD_ID, "purification_ward"));
         SimpleCookingRecipeBuilder.smelting(Ingredient.of(ModItems.PURIFIED_ECTOPLASM_BUCKET.get()), RecipeCategory.MISC, ModItems.PURE_ECTOPLASM.get(), 0.0F, 200).unlockedBy("has_ingredient", has(ModItems.PURIFIED_ECTOPLASM_BUCKET.get())).save(recipesOnly, ResourceLocation.fromNamespaceAndPath(MortalExpansion.MOD_ID, "purified_ectoplasm_bucket_smelting"));

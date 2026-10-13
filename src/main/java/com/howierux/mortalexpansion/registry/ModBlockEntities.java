@@ -21,6 +21,10 @@ public final class ModBlockEntities {
     public static final DeferredRegister<BlockEntityType<?>> BLOCK_ENTITY_TYPES =
             DeferredRegister.create(Registries.BLOCK_ENTITY_TYPE, MortalExpansion.MOD_ID);
 
+    public static final Supplier<BlockEntityType<com.howierux.mortalexpansion.blockentity.DreamcatcherBlockEntity>> DREAMCATCHER =
+            BLOCK_ENTITY_TYPES.register("dreamcatcher", () -> BlockEntityType.Builder.of(
+                    com.howierux.mortalexpansion.blockentity.DreamcatcherBlockEntity::new, ModBlocks.DREAMCATCHER.get()).build(null));
+
     public static final Supplier<BlockEntityType<com.howierux.mortalexpansion.blockentity.AltarOfPurityBlockEntity>> ALTAR_OF_IMPURITY = BLOCK_ENTITY_TYPES.register("altar_of_impurity",()->BlockEntityType.Builder.of(com.howierux.mortalexpansion.blockentity.AltarOfPurityBlockEntity::impurity,ModBlocks.ALTAR_OF_IMPURITY.get()).build(null));
     public static final Supplier<BlockEntityType<com.howierux.mortalexpansion.blockentity.AltarOfPurityBlockEntity>> ALTAR_OF_PURITY = BLOCK_ENTITY_TYPES.register("altar_of_purity",()->BlockEntityType.Builder.of(com.howierux.mortalexpansion.blockentity.AltarOfPurityBlockEntity::new,ModBlocks.ALTAR_OF_PURITY.get()).build(null));
 

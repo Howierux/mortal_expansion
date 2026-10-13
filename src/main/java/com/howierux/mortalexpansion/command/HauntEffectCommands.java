@@ -57,7 +57,7 @@ public final class HauntEffectCommands {
             candidates.remove(chosen);
             // Targeted commands must not defer a ghost to an unrelated player later.
             boolean success=chosen==HauntEffectKind.GHOST
-                ? !HauntProtection.protectedPlayer(target) && HauntEffects.spawnGhostNear(target)
+                ? !HauntProtection.protectedPlayer(target) && (com.howierux.mortalexpansion.haunt.Dreamcatchers.prevent(target) || HauntEffects.spawnGhostNear(target))
                 : HauntEffects.perform(target,chosen);
             if(!success)continue;
             if(researchApplicable)com.howierux.mortalexpansion.haunt.MortalityResearch.spent(target);

@@ -48,12 +48,14 @@ public final class HauntEventController {
                 || !HauntEffectKind.SPECTRAL_INSIGHT.eligible(PlayerHauntManager.getTier(player).id(), false)
                 || !HauntEffects.perform(player, HauntEffectKind.SPECTRAL_INSIGHT))return false;
         completed(player, HauntEffectKind.SPECTRAL_INSIGHT.activeTicks, false);
+        hint(player, HauntEffectKind.SPECTRAL_INSIGHT);
         return true;
     }
     public static boolean deliverPendingTo(ServerPlayer player) {
         HauntEventData data = HauntEventData.get(player.serverLevel());
-        if (data.pendingGhosts() == 0 || !ready(player) || HauntProtection.protectedPlayer(player)
-                || !HauntEffects.spawnGhostNear(player)) return false;
+        if (data.pendingGhosts() == 0 || !ready(player) || HauntProtection.protectedPlayer(player)) return false;
+        if (!com.howierux.mortalexpansion.haunt.Dreamcatchers.prevent(player)
+                && !HauntEffects.spawnGhostNear(player)) return false;
         data.deliveredGhost();
         completed(player, 0);
         hint(player, HauntEffectKind.GHOST);
@@ -125,6 +127,7 @@ public final class HauntEventController {
         }
     }
     public static void hint(ServerPlayer player, HauntEffectKind kind) {
+        if(com.howierux.mortalexpansion.haunt.Dreamcatchers.consumeFeedback(player))return;
         if(kind==HauntEffectKind.SPECTRAL_INSIGHT)return; // Specific book whisper already sent on successful revelation.
         player.displayClientMessage(net.minecraft.network.chat.Component.translatable(
                 "message.mortal_expansion.haunt." + kind.name().toLowerCase(java.util.Locale.ROOT)), false);

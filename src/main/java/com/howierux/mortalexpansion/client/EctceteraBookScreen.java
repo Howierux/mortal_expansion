@@ -17,9 +17,9 @@ public final class EctceteraBookScreen {
     private EctceteraBookScreen(){}
     private static final String BOOK="book.mortal_expansion.ectcetera.",UI="gui.mortal_expansion.ectcetera.";
     public static void open(InteractionHand hand){Minecraft.getInstance().setScreen(new ResearchScreen(hand));}
-    private static Component chapterTitle(String key){return key.equals("spectralite_haint") || key.startsWith("altar_of_") || key.equals("mortality_research_station")?Component.translatable("insight.mortal_expansion."+key+".name"):Component.translatable(BOOK+"chapter."+key);}
+    private static Component chapterTitle(String key){return key.equals("dreamcatcher") || key.equals("spectralite_haint") || key.startsWith("altar_of_") || key.equals("mortality_research_station")?Component.translatable("insight.mortal_expansion."+key+".name"):Component.translatable(BOOK+"chapter."+key);}
     private static Component body(String chapter,int part,int secrets){
-        if(chapter.startsWith("altar_of_") || chapter.equals("mortality_research_station"))return Component.translatable("insight.mortal_expansion."+chapter+".body");
+        if(chapter.equals("dreamcatcher") || chapter.startsWith("altar_of_") || chapter.equals("mortality_research_station"))return Component.translatable("insight.mortal_expansion."+chapter+".body");
         if(chapter.equals("spectralite_haint"))return Component.translatable(BOOK+"page.haint_garb.3");
         if(chapter.equals("insight") && part==2){String key=(secrets&64)==0?"mortality_research_station":(secrets&1)==0?"ectothread":(secrets&2)==0?"ghost_garb":(secrets&4)==0?"haint_garb":(secrets&8)==0?"spectralite_haint":(secrets&16)==0?"altar_of_impurity":(secrets&32)==0?"altar_of_purity":"complete";return Component.translatable("insight.mortal_expansion."+key+".guidance");}
         if(chapter.equals("haint_garb") && part==3 && (secrets&8)==0)return Component.translatable("insight.mortal_expansion.spectralite_haint.locked");
@@ -30,7 +30,7 @@ public final class EctceteraBookScreen {
         case "biomes"->Items.GRASS_BLOCK;case "unlock_bone"->Items.BONE;case "graves"->ModItems.GRAVE.get();
         case "intangibles"->Items.GLASS;case "creatures"->Items.ROTTEN_FLESH;case "spiritwells"->Items.NETHER_STAR;
         case "unlock_raw","ectoplasm"->ModItems.RAW_ECTOPLASM.get();case "cauldrons"->Items.CAULDRON;case "salt"->ModItems.HOLY_SALT.get();
-        case "emf_reader"->ModItems.EMF_READER.get();case "torches"->ModItems.SPIRIT_TORCH.get();case "ectothread"->ModItems.ECTOTHREAD.get();
+        case "dreamcatcher"->ModItems.DREAMCATCHER.get();case "emf_reader"->ModItems.EMF_READER.get();case "torches"->ModItems.SPIRIT_TORCH.get();case "ectothread"->ModItems.ECTOTHREAD.get();
         case "equipment"->ModItems.BLOODSTONE_SWORD.get();case "ghost_garb"->ModItems.GHOST_GARB_HELMET.get();case "furnaces"->ModItems.HAUNT_FURNACE.get();
         case "unlock_pure","sanctified"->ModItems.PURE_ECTOPLASM.get();case "wards"->ModItems.PURIFICATION_WARD.get();
         case "ectchantment"->ModItems.ECTCHANTMENT_MACHINE.get();case "generators"->ModItems.ECTOPLASMIC_GENERATOR.get();
