@@ -25,18 +25,18 @@ public final class MortalGolemGameTests {
         var base=(MortalGolemBaseBlockEntity)h.getLevel().getBlockEntity(pos);base.addFlesh(flesh);return base;
     }
     @GameTest(template="deferred_items_test")
-    public static void flesh_applies_in_sixteens_preserves_axis_caps_and_survives_save(GameTestHelper h) {
+    public static void flesh_applies_one_at_a_time_preserves_axis_caps_and_survives_save(GameTestHelper h) {
         var p=h.makeMockServerPlayerInLevel();p.setGameMode(net.minecraft.world.level.GameType.SURVIVAL);
         var pos=h.absolutePos(new BlockPos(5,2,5));p.setPos(pos.getCenter().add(8,0,0));
         h.getLevel().setBlock(pos,Blocks.BONE_BLOCK.defaultBlockState().setValue(RotatedPillarBlock.AXIS,Direction.Axis.X),3);
         p.setItemInHand(InteractionHand.MAIN_HAND,new ItemStack(Items.ROTTEN_FLESH,64));
-        for(int tier=1;tier<=4;tier++) {
+        for(int flesh=1;flesh<=64;flesh++) {
             var event=new PlayerInteractEvent.RightClickBlock(p,InteractionHand.MAIN_HAND,pos,new BlockHitResult(pos.getCenter(),Direction.UP,pos,false));
             net.neoforged.neoforge.common.NeoForge.EVENT_BUS.post(event);
             var frame=(MortalGolemBaseBlockEntity)h.getLevel().getBlockEntity(pos);
-            h.assertTrue(event.isCanceled() && frame.flesh()==tier*16
-                    && p.getMainHandItem().getCount()==64-tier*16,"Each use consumes exactly sixteen flesh");
-            h.assertTrue(frame.getBlockState().getValue(MortalGolemBaseBlock.FLESH_STAGE)==tier
+            h.assertTrue(event.isCanceled() && frame.flesh()==flesh
+                    && p.getMainHandItem().getCount()==64-flesh,"Each use adds and consumes exactly one flesh");
+            h.assertTrue(frame.getBlockState().getValue(MortalGolemBaseBlock.FLESH_STAGE)==flesh/16
                     && frame.getBlockState().getValue(MortalGolemBaseBlock.AXIS)==Direction.Axis.X,"Visible stages retain original bone orientation");
         }
         var frame=(MortalGolemBaseBlockEntity)h.getLevel().getBlockEntity(pos);

@@ -29,7 +29,7 @@ public final class MortalGolemFormation {
             if(!level.setBlock(pos,frame,3))return;
         }
         if(!(level.getBlockEntity(pos) instanceof MortalGolemBaseBlockEntity base))return;
-        int added=base.addFlesh(player.getAbilities().instabuild?16:Math.min(16,stack.getCount()));
+        int added=base.addFlesh(1);
         if(!player.getAbilities().instabuild)stack.shrink(added);
         player.displayClientMessage(Component.translatable("message.mortal_expansion.mortal_golem.flesh",base.flesh()),true);
         tryForm(server,pos.above());

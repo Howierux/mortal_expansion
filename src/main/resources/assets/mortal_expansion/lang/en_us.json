@@ -7,7 +7,7 @@
   "block.mortal_expansion.mortal_golem_base": "Fleshed Bone Frame",
   "message.mortal_expansion.mortal_golem.flesh": "Flesh applied: %s / 64",
   "guide.mortal_expansion.mortal_golem.name": "Mortal Golem",
-  "guide.mortal_expansion.mortal_golem.page.1": "Place a Bone Block. Apply Rotten Flesh to build a body. Each use adds up to 16 flesh, to a maximum of 64.",
+  "guide.mortal_expansion.mortal_golem.page.1": "Place a Bone Block. Apply Rotten Flesh to build a body. Each use adds one flesh, to a maximum of 64.",
   "guide.mortal_expansion.mortal_golem.page.2": "Appearance changes at 16, 32, 48 and 64 flesh. At least 16 is needed to form. Finish fleshing before adding the lantern head.",
   "guide.mortal_expansion.mortal_golem.page.3": "Put a Wisp o' Lantern on top, or let a Carved Pumpkin awaken there at night. The prepared frame and lantern become one golem.",
   "guide.mortal_expansion.mortal_golem.page.4": "Leave clear space around and above the frame. Mortal Golems wander passively for now. They do not attack or retaliate.",
