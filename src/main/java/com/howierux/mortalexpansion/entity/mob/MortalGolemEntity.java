@@ -17,6 +17,9 @@ import com.howierux.mortalexpansion.haunt.HauntTier;
 
 /** Persistent construct which hunts entities in the native Smite tag. */
 public final class MortalGolemEntity extends IronGolem {
+    public static final net.minecraft.tags.TagKey<net.minecraft.world.item.Item> LURE_ITEMS = net.minecraft.tags.TagKey.create(
+            net.minecraft.core.registries.Registries.ITEM,
+            net.minecraft.resources.ResourceLocation.fromNamespaceAndPath("mortal_expansion", "mortal_golem_lures"));
     private static final EntityDataAccessor<Integer> FLESH=SynchedEntityData.defineId(MortalGolemEntity.class,EntityDataSerializers.INT);
     public MortalGolemEntity(EntityType<? extends IronGolem> type,Level level) {super(type,level);setPlayerCreated(true);setPersistenceRequired();setHealth(getMaxHealth());}
     @Override protected void defineSynchedData(SynchedEntityData.Builder builder) {super.defineSynchedData(builder);builder.define(FLESH,16);}
@@ -44,14 +47,16 @@ public final class MortalGolemEntity extends IronGolem {
     @Override protected void registerGoals() {
         goalSelector.addGoal(0,new FloatGoal(this));
         goalSelector.addGoal(1,new MeleeAttackGoal(this,1.0,true));
+        goalSelector.addGoal(2,new TemptGoal(this,1.0,net.minecraft.world.item.crafting.Ingredient.of(LURE_ITEMS),false));
         goalSelector.addGoal(3,new WaterAvoidingRandomStrollGoal(this,0.6));
         targetSelector.addGoal(1,new NearestAttackableTargetGoal<>(this,LivingEntity.class,10,true,false,
-                target -> target.getType().is(EntityTypeTags.SENSITIVE_TO_SMITE)));
+                target -> canAttackType(target.getType())));
         goalSelector.addGoal(4,new LookAtPlayerGoal(this,Player.class,8));
         goalSelector.addGoal(5,new RandomLookAroundGoal(this));
     }
     @Override public boolean canAttackType(EntityType<?> type) {
-        return type.is(EntityTypeTags.SENSITIVE_TO_SMITE) && super.canAttackType(type);
+        return type!=EntityType.PLAYER && (type.is(EntityTypeTags.SENSITIVE_TO_SMITE)
+                || type.is(com.howierux.mortalexpansion.entity.ModEntityTags.INTANGIBLE));
     }
     @Override public void setTarget(LivingEntity target){
         super.setTarget(target != null && canAttackType(target.getType()) ? target : null);

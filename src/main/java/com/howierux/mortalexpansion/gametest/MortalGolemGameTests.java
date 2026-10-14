@@ -148,7 +148,39 @@ public final class MortalGolemGameTests {
         zombie.setTarget(golem);h.assertTrue(zombie.getTarget()==golem,"Smiteable mobs can fight back");
         float before=zombie.getHealth();golem.doHurtTarget(zombie);
         h.assertTrue(zombie.getHealth()<before,"Golem attacks deal real damage to Smite-sensitive enemies");
-        zombie.discard();golem.discard();cow.discard();h.succeed();
+        var ghost=ModEntities.GHOST.get().create(h.getLevel());
+        var ordinary=net.minecraft.world.entity.EntityType.IRON_GOLEM.create(h.getLevel());
+        float ghostHealth=ghost.getHealth();ordinary.doHurtTarget(ghost);
+        h.assertTrue(ghost.getHealth()==ghostHealth,"Ordinary golem attacks remain blocked by intangibility");
+        golem.setTarget(ghost);h.assertTrue(golem.getTarget()==ghost,"Intangible mobs are valid targets");
+        var source=golem.damageSources().mobAttack(golem);
+        h.assertTrue(source.is(net.neoforged.neoforge.common.Tags.DamageTypes.IS_MAGIC) && source.getEntity()==golem,
+                "Mortal Golem melee is magic and retains attacker attribution");
+        golem.doHurtTarget(ghost);h.assertTrue(ghost.getHealth()<ghostHealth,"Mortal Golem attacks damage intangible ghosts");
+        h.assertTrue(golem.canAttackType(net.minecraft.world.entity.EntityType.GHAST),"Intangible targets need not also be Smite-sensitive");
+        ghost.discard();ordinary.discard();zombie.discard();golem.discard();cow.discard();h.succeed();
+    }
+    @GameTest(template="deferred_items_test")
+    public static void lure_items_in_either_hand_activate_registered_follow_goal_without_consumption(GameTestHelper h) {
+        var player=h.makeMockServerPlayerInLevel();var origin=h.absolutePos(new BlockPos(5,2,5));
+        player.setPos(origin.getCenter().add(4,0,0));
+        for(var item:java.util.List.of(Items.ROTTEN_FLESH,Items.BONE,ModItems.RAW_ECTOPLASM.get(),ModItems.PURE_ECTOPLASM.get())) {
+            for(var hand:InteractionHand.values()) {
+                var golem=ModEntities.MORTAL_GOLEM.get().create(h.getLevel());golem.setPos(origin.getCenter());
+                player.setItemInHand(InteractionHand.MAIN_HAND,ItemStack.EMPTY);player.setItemInHand(InteractionHand.OFF_HAND,ItemStack.EMPTY);
+                var goal=(net.minecraft.world.entity.ai.goal.TemptGoal)golem.goalSelector.getAvailableGoals().stream()
+                        .map(net.minecraft.world.entity.ai.goal.WrappedGoal::getGoal)
+                        .filter(g->g instanceof net.minecraft.world.entity.ai.goal.TemptGoal).findFirst().orElseThrow();
+                player.setItemInHand(hand,new ItemStack(Items.STICK));
+                h.assertFalse(goal.canUse(),"Ordinary held items do not lure the golem");
+                player.setItemInHand(hand,new ItemStack(item,3));
+                h.assertTrue(goal.canUse(),"Each configured item lures from either hand");goal.start();goal.tick();
+                h.assertTrue(goal.isRunning() && player.getItemInHand(hand).getCount()==3 && golem.flesh()==16,
+                        "Following neither consumes the lure nor changes flesh");
+                goal.stop();golem.discard();
+            }
+        }
+        player.discard();h.succeed();
     }
     @GameTest(template="deferred_items_test")
     public static void canceled_entity_spawn_leaves_the_complete_build_intact(GameTestHelper h) {

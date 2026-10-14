@@ -27,7 +27,8 @@ public abstract class DemiTangibleDamageSourcesMixin {
 
     @Inject(method = "mobAttack", at = @At("RETURN"), cancellable = true)
     private void mortalExpansion$mobMagic(LivingEntity mob, CallbackInfoReturnable<DamageSource> callback) {
-        if (DemiTangibleDamage.isDemiTangibleWeapon(mob.getMainHandItem())) {
+        if (mob instanceof com.howierux.mortalexpansion.entity.mob.MortalGolemEntity
+                || DemiTangibleDamage.isDemiTangibleWeapon(mob.getMainHandItem())) {
             callback.setReturnValue(new DamageSource(damageTypes.getHolderOrThrow(ModDamageTypes.DEMI_TANGIBLE_MOB), mob));
         }
     }

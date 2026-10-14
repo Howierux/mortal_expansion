@@ -50,6 +50,11 @@ public abstract class ModTags<T> extends TagsProvider<T> {
             super(output, Registries.ITEM, lookup, helper);
         }
         @Override protected void addTags(HolderLookup.Provider lookup) {
+            tag(com.howierux.mortalexpansion.entity.mob.MortalGolemEntity.LURE_ITEMS)
+                    .add(net.minecraft.core.registries.BuiltInRegistries.ITEM.getResourceKey(net.minecraft.world.item.Items.ROTTEN_FLESH).orElseThrow(),
+                            net.minecraft.core.registries.BuiltInRegistries.ITEM.getResourceKey(net.minecraft.world.item.Items.BONE).orElseThrow(),
+                            com.howierux.mortalexpansion.registry.ModItems.RAW_ECTOPLASM.getKey(),
+                            com.howierux.mortalexpansion.registry.ModItems.PURE_ECTOPLASM.getKey());
             tag(com.howierux.mortalexpansion.blockentity.PurificationStationBlockEntity.PURIFICATION_REAGENTS)
                     .add(com.howierux.mortalexpansion.registry.ModItems.GRAVE_MOSS.getKey(),
                             com.howierux.mortalexpansion.registry.ModItems.HOLY_SALT.getKey());
