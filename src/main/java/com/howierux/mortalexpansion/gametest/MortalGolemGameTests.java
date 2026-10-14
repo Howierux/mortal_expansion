@@ -182,6 +182,38 @@ public final class MortalGolemGameTests {
         }
         player.discard();h.succeed();
     }
+    private static void splash(GameTestHelper h,BlockPos head,net.minecraft.core.Holder<net.minecraft.world.item.alchemy.Potion> type,
+            net.minecraft.world.item.Item item,boolean canceled){
+        var potion=new net.minecraft.world.entity.projectile.ThrownPotion(h.getLevel(),head.getX()+0.5,head.getY()+0.5,head.getZ()+0.5);
+        var stack=new ItemStack(item);stack.set(net.minecraft.core.component.DataComponents.POTION_CONTENTS,
+                new net.minecraft.world.item.alchemy.PotionContents(type));potion.setItem(stack);
+        var event=new net.neoforged.neoforge.event.entity.ProjectileImpactEvent(potion,
+                new BlockHitResult(head.getCenter(),Direction.UP,head,false));event.setCanceled(canceled);
+        net.neoforged.neoforge.common.NeoForge.EVENT_BUS.post(event);potion.discard();
+    }
+    @GameTest(template="deferred_items_test")
+    public static void regeneration_splash_awakens_carved_frames_and_rejected_builds_keep_components(GameTestHelper h){
+        var frame=base(h,15);var head=frame.getBlockPos().above();
+        h.getLevel().setBlock(head,Blocks.CARVED_PUMPKIN.defaultBlockState(),3);
+        splash(h,head,net.minecraft.world.item.alchemy.Potions.REGENERATION,Items.SPLASH_POTION,false);
+        h.assertTrue(frame.flesh()==15 && h.getLevel().getBlockState(head).is(Blocks.CARVED_PUMPKIN),"Incomplete frames cannot awaken");
+        frame.addFlesh(17);
+        splash(h,head,net.minecraft.world.item.alchemy.Potions.HEALING,Items.SPLASH_POTION,false);
+        splash(h,head,net.minecraft.world.item.alchemy.Potions.REGENERATION,Items.LINGERING_POTION,false);
+        splash(h,head,net.minecraft.world.item.alchemy.Potions.REGENERATION,Items.SPLASH_POTION,true);
+        h.assertTrue(!frame.isRemoved(),"Other effects, lingering potions and canceled impacts leave the build alone");
+        h.getLevel().setBlock(head.above(),Blocks.STONE.defaultBlockState(),3);
+        splash(h,head,net.minecraft.world.item.alchemy.Potions.REGENERATION,Items.SPLASH_POTION,false);
+        h.assertTrue(frame.flesh()==32 && h.getLevel().getBlockState(head).is(Blocks.CARVED_PUMPKIN),"Obstructed splash formation preserves flesh and pumpkin");
+        h.getLevel().setBlock(head.above(),Blocks.AIR.defaultBlockState(),3);
+        HauntManager.setTier(h.getLevel(),head,HauntTier.VOID);
+        splash(h,head,net.minecraft.world.item.alchemy.Potions.LONG_REGENERATION,Items.SPLASH_POTION,false);
+        var golems=h.getLevel().getEntitiesOfClass(MortalGolemEntity.class,new AABB(head).inflate(4));
+        h.assertTrue(golems.size()==1 && golems.getFirst().flesh()==32 && golems.getFirst().getHealth()==50
+                && h.getLevel().getBlockState(head).isAir() && h.getLevel().getBlockState(head.below()).isAir()
+                && HauntManager.getTier(h.getLevel(),head)==HauntTier.VOID,"Regeneration forms exactly one selected-tier golem without a Haunt requirement or cost");
+        golems.forEach(net.minecraft.world.entity.Entity::discard);h.succeed();
+    }
     @GameTest(template="deferred_items_test")
     public static void canceled_entity_spawn_leaves_the_complete_build_intact(GameTestHelper h) {
         var frame=base(h,64);var head=frame.getBlockPos().above();

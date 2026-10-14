@@ -43,9 +43,30 @@ public final class MortalGolemFormation {
             event.setNewAboutToBeSetTarget(null);
         }
     }
-    public static boolean tryForm(ServerLevel level,BlockPos head){
+    @SubscribeEvent(priority=net.neoforged.bus.api.EventPriority.LOWEST)
+    public static void regenerationSplash(net.neoforged.neoforge.event.entity.ProjectileImpactEvent event){
+        if(event.isCanceled() || !(event.getProjectile() instanceof net.minecraft.world.entity.projectile.ThrownPotion potion)
+                || !(potion.level() instanceof ServerLevel level) || !potion.getItem().is(Items.SPLASH_POTION))return;
+        var contents=potion.getItem().getOrDefault(net.minecraft.core.component.DataComponents.POTION_CONTENTS,
+                net.minecraft.world.item.alchemy.PotionContents.EMPTY);
+        boolean regeneration=false;
+        for(var effect:contents.getAllEffects()) {
+            if(effect.getEffect().equals(net.minecraft.world.effect.MobEffects.REGENERATION) && effect.getDuration()>0)regeneration=true;
+        }
+        if(!regeneration)return;
+        var impact=event.getRayTraceResult().getLocation();var center=BlockPos.containing(impact);
+        // Match splash reach: four blocks radially, with a two-block vertical band.
+        for(var head:BlockPos.betweenClosed(center.offset(-4,-2,-4),center.offset(4,2,4))){
+            if(head.getCenter().distanceToSqr(impact)<16 && Math.abs(head.getCenter().y-impact.y)<=2
+                    && level.getChunkSource().getChunkNow(head.getX()>>4,head.getZ()>>4)!=null
+                    && level.getBlockState(head).is(Blocks.CARVED_PUMPKIN))tryForm(level,head,true);
+        }
+    }
+    public static boolean tryForm(ServerLevel level,BlockPos head){return tryForm(level,head,false);}
+    private static boolean tryForm(ServerLevel level,BlockPos head,boolean allowCarvedPumpkin){
         if(level.getChunkSource().getChunkNow(head.getX()>>4,head.getZ()>>4)==null
-                || !level.getBlockState(head).is(ModBlocks.WISP_O_LANTERN.get())
+                || !(level.getBlockState(head).is(ModBlocks.WISP_O_LANTERN.get())
+                || (allowCarvedPumpkin && level.getBlockState(head).is(Blocks.CARVED_PUMPKIN)))
                 || !(level.getBlockEntity(head.below()) instanceof MortalGolemBaseBlockEntity base)
                 || base.flesh()<16)return false;
         var golem=ModEntities.MORTAL_GOLEM.get().create(level);
