@@ -17,8 +17,9 @@ public final class EctceteraBookScreen {
     private EctceteraBookScreen(){}
     private static final String BOOK="book.mortal_expansion.ectcetera.",UI="gui.mortal_expansion.ectcetera.";
     public static void open(InteractionHand hand){Minecraft.getInstance().setScreen(new ResearchScreen(hand));}
-    private static Component chapterTitle(String key){return key.equals("dreamcatcher") || key.equals("purified_dreamcatcher") || key.equals("spectralite_haint") || key.startsWith("altar_of_") || key.equals("mortality_research_station")?Component.translatable("insight.mortal_expansion."+key+".name"):Component.translatable(BOOK+"chapter."+key);}
+    private static Component chapterTitle(String key){if(key.equals("wisp_o_lantern"))return Component.translatable("guide.mortal_expansion.wisp_o_lantern.name");return key.equals("dreamcatcher") || key.equals("purified_dreamcatcher") || key.equals("spectralite_haint") || key.startsWith("altar_of_") || key.equals("mortality_research_station")?Component.translatable("insight.mortal_expansion."+key+".name"):Component.translatable(BOOK+"chapter."+key);}
     private static Component body(String chapter,int part,int secrets){
+        if(chapter.equals("wisp_o_lantern"))return Component.translatable("guide.mortal_expansion.wisp_o_lantern.page."+part);
         if(chapter.equals("dreamcatcher") || chapter.equals("purified_dreamcatcher") || chapter.startsWith("altar_of_") || chapter.equals("mortality_research_station"))return Component.translatable("insight.mortal_expansion."+chapter+".body");
         if(chapter.equals("spectralite_haint"))return Component.translatable(BOOK+"page.haint_garb.3");
         if(chapter.equals("insight") && part==2){String key=(secrets&64)==0?"mortality_research_station":(secrets&1)==0?"ectothread":(secrets&2)==0?"ghost_garb":(secrets&4)==0?"haint_garb":(secrets&8)==0?"spectralite_haint":(secrets&16)==0?"altar_of_impurity":(secrets&32)==0?"altar_of_purity":"complete";return Component.translatable("insight.mortal_expansion."+key+".guidance");}
@@ -27,7 +28,7 @@ public final class EctceteraBookScreen {
     }
     private static Item icon(String key){return switch(key){
         case "first_steps","insight","mastery"->ModItems.BOOK_OF_ECTCETERA.get();case "haunt","personal","haunt_events"->Items.SOUL_LANTERN;
-        case "biomes"->Items.GRASS_BLOCK;case "unlock_bone"->Items.BONE;case "graves"->ModItems.GRAVE.get();
+        case "wisp_o_lantern"->ModItems.WISP_O_LANTERN.get();case "biomes"->Items.GRASS_BLOCK;case "unlock_bone"->Items.BONE;case "graves"->ModItems.GRAVE.get();
         case "intangibles"->Items.GLASS;case "creatures"->Items.ROTTEN_FLESH;case "spiritwells"->Items.NETHER_STAR;
         case "unlock_raw","ectoplasm"->ModItems.RAW_ECTOPLASM.get();case "cauldrons"->Items.CAULDRON;case "salt"->ModItems.HOLY_SALT.get();
         case "purified_dreamcatcher"->ModItems.PURIFIED_DREAMCATCHER.get();case "dreamcatcher"->ModItems.DREAMCATCHER.get();case "emf_reader"->ModItems.EMF_READER.get();case "torches"->ModItems.SPIRIT_TORCH.get();case "ectothread"->ModItems.ECTOTHREAD.get();

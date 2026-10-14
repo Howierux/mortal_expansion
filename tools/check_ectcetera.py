@@ -42,6 +42,11 @@ assert expected == {key for key in LANG if key.startswith(PREFIX)}, "Missing or 
 for key,text in LANG.items():
     if key.startswith("insight.mortal_expansion.") and key.endswith((".guidance", ".locked")):
         assert lines(text) <= 9, (key, "dynamic guidance exceeds page budget")
+# Research-map-only entries have their own text without changing legacy linear-book offsets.
+for part in range(1, 4):
+    key = "guide.mortal_expansion.wisp_o_lantern.page." + str(part)
+    assert LANG[key].strip() and lines(LANG[key]) <= 9, (key, "map entry exceeds page budget")
+assert LANG["guide.mortal_expansion.wisp_o_lantern.name"].strip()
 assert lines(LANG[PREFIX + "cover"] + "\n\nContents") <= 14
 total = 1 + (len(CHAPTERS) + 4) // 5 + sum(int(count) for _, count, _ in CHAPTERS)
 assert total <= 128
