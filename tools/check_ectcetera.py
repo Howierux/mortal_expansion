@@ -47,7 +47,7 @@ for part in range(1, 4):
     key = "guide.mortal_expansion.wisp_o_lantern.page." + str(part)
     assert LANG[key].strip() and lines(LANG[key]) <= 9, (key, "map entry exceeds page budget")
 assert LANG["guide.mortal_expansion.wisp_o_lantern.name"].strip()
-for part in range(1, 6):
+for part in range(1, 7):
     key = "guide.mortal_expansion.mortal_golem.page." + str(part)
     assert LANG[key].strip() and lines(LANG[key]) <= 9, (key, "map entry exceeds page budget")
 assert LANG["guide.mortal_expansion.mortal_golem.name"].strip()
