@@ -58,7 +58,13 @@ public final class HauntFurnaceBlockEntity extends AbstractFurnaceBlockEntity {
             HauntFurnaceBlockEntity furnace) {
         if (!(level instanceof ServerLevel serverLevel)) return;
         if (furnace.getPersistentData().getLong("MortalExpansionInterferenceUntil")
-                > serverLevel.getServer().overworld().getGameTime()) return;
+                > serverLevel.getServer().overworld().getGameTime()) {
+            var paused=level.getBlockState(pos);
+            if(paused.hasProperty(com.howierux.mortalexpansion.block.HaintFurnaceBlock.HAUNT_POWERED)
+                    && paused.getValue(com.howierux.mortalexpansion.block.HaintFurnaceBlock.HAUNT_POWERED))
+                level.setBlock(pos,paused.setValue(com.howierux.mortalexpansion.block.HaintFurnaceBlock.HAUNT_POWERED,false),3);
+            return;
+        }
         // Initialize once after placement/load. Later changes are pushed by HauntManager.
         if (furnace.cachedTier == null) {
             var chunk = serverLevel.getChunkSource().getChunkNow(pos.getX() >> 4, pos.getZ() >> 4);
@@ -103,10 +109,12 @@ public final class HauntFurnaceBlockEntity extends AbstractFurnaceBlockEntity {
         furnace.dataAccess.set(3, targetTicks);
         BlockState currentState = level.getBlockState(pos);
         boolean burning = furnace.dataAccess.get(0) > 0;
-        if (currentState.getValue(net.minecraft.world.level.block.AbstractFurnaceBlock.LIT) != burning) {
-            level.setBlock(pos, currentState.setValue(
-                    net.minecraft.world.level.block.AbstractFurnaceBlock.LIT, burning), 3);
-        }
+        BlockState updatedState=currentState.setValue(
+                net.minecraft.world.level.block.AbstractFurnaceBlock.LIT,burning);
+        if(haint)updatedState=updatedState.setValue(
+                com.howierux.mortalexpansion.block.HaintFurnaceBlock.HAUNT_POWERED,
+                furnace.freeBurn && cooked && burning);
+        if(!updatedState.equals(currentState))level.setBlock(pos,updatedState,3);
         furnace.setChanged();
     }
 }

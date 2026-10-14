@@ -212,6 +212,13 @@ public final class ModBlockModels extends BlockStateProvider {
             model.element().from(0,0,0).to(16,16,16).allFaces((direction,face)->face.texture(direction==Direction.UP||direction==Direction.DOWN?"#top":direction==Direction.NORTH?"#front":"#side").tintindex(0).cullface(direction)).end();
         }
         {
+            var model = models().getBuilder("haint_furnace_haunt").parent(new ModelFile.UncheckedModelFile("minecraft:block/cube_orientable"));
+            model.texture("side", "minecraft:block/furnace_side");
+            model.texture("top", "minecraft:block/furnace_top");
+            model.texture("front", "mortal_expansion:block/haint_furnace_haunt_front_temporary");
+            model.element().from(0,0,0).to(16,16,16).allFaces((direction,face)->face.texture(direction==Direction.UP||direction==Direction.DOWN?"#top":direction==Direction.NORTH?"#front":"#side").tintindex(0).cullface(direction)).end();
+        }
+        {
             var model = models().getBuilder("haunt_furnace").parent(new ModelFile.UncheckedModelFile("minecraft:block/cube_orientable"));
             model.texture("side", "minecraft:block/furnace_side");
             model.texture("top", "minecraft:block/furnace_top");
@@ -690,15 +697,16 @@ public final class ModBlockModels extends BlockStateProvider {
         getMultipartBuilder(ModBlocks.GRAVE_MOSS.get()).part().modelFile(new ModelFile.UncheckedModelFile("mortal_expansion:block/grave_moss")).rotationX(90).uvLock(true).addModel().condition(BlockStateProperties.DOWN, true).end();
         // gravestone
         getVariantBuilder(ModBlocks.GRAVESTONE.get()).partialState().modelForState().modelFile(new ModelFile.UncheckedModelFile("mortal_expansion:block/gravestone")).addModel();
-        // haint_furnace
-        getVariantBuilder(ModBlocks.HAINT_FURNACE.get()).partialState().with(BlockStateProperties.HORIZONTAL_FACING, Direction.NORTH).with(BlockStateProperties.LIT, false).modelForState().modelFile(new ModelFile.UncheckedModelFile("mortal_expansion:block/haint_furnace")).addModel();
-        getVariantBuilder(ModBlocks.HAINT_FURNACE.get()).partialState().with(BlockStateProperties.HORIZONTAL_FACING, Direction.NORTH).with(BlockStateProperties.LIT, true).modelForState().modelFile(new ModelFile.UncheckedModelFile("mortal_expansion:block/haint_furnace_on")).addModel();
-        getVariantBuilder(ModBlocks.HAINT_FURNACE.get()).partialState().with(BlockStateProperties.HORIZONTAL_FACING, Direction.EAST).with(BlockStateProperties.LIT, false).modelForState().modelFile(new ModelFile.UncheckedModelFile("mortal_expansion:block/haint_furnace")).rotationY(90).addModel();
-        getVariantBuilder(ModBlocks.HAINT_FURNACE.get()).partialState().with(BlockStateProperties.HORIZONTAL_FACING, Direction.EAST).with(BlockStateProperties.LIT, true).modelForState().modelFile(new ModelFile.UncheckedModelFile("mortal_expansion:block/haint_furnace_on")).rotationY(90).addModel();
-        getVariantBuilder(ModBlocks.HAINT_FURNACE.get()).partialState().with(BlockStateProperties.HORIZONTAL_FACING, Direction.SOUTH).with(BlockStateProperties.LIT, false).modelForState().modelFile(new ModelFile.UncheckedModelFile("mortal_expansion:block/haint_furnace")).rotationY(180).addModel();
-        getVariantBuilder(ModBlocks.HAINT_FURNACE.get()).partialState().with(BlockStateProperties.HORIZONTAL_FACING, Direction.SOUTH).with(BlockStateProperties.LIT, true).modelForState().modelFile(new ModelFile.UncheckedModelFile("mortal_expansion:block/haint_furnace_on")).rotationY(180).addModel();
-        getVariantBuilder(ModBlocks.HAINT_FURNACE.get()).partialState().with(BlockStateProperties.HORIZONTAL_FACING, Direction.WEST).with(BlockStateProperties.LIT, false).modelForState().modelFile(new ModelFile.UncheckedModelFile("mortal_expansion:block/haint_furnace")).rotationY(270).addModel();
-        getVariantBuilder(ModBlocks.HAINT_FURNACE.get()).partialState().with(BlockStateProperties.HORIZONTAL_FACING, Direction.WEST).with(BlockStateProperties.LIT, true).modelForState().modelFile(new ModelFile.UncheckedModelFile("mortal_expansion:block/haint_furnace_on")).rotationY(270).addModel();
+        // Haint's power-source state is synchronized by the server, including all facing directions.
+        getVariantBuilder(ModBlocks.HAINT_FURNACE.get()).forAllStates(state -> {
+            boolean lit=state.getValue(BlockStateProperties.LIT);
+            boolean haunt=state.getValue(com.howierux.mortalexpansion.block.HaintFurnaceBlock.HAUNT_POWERED);
+            String model=lit?(haunt?"haint_furnace_haunt":"haint_furnace_on"):"haint_furnace";
+            return net.neoforged.neoforge.client.model.generators.ConfiguredModel.builder()
+                    .modelFile(new ModelFile.UncheckedModelFile("mortal_expansion:block/"+model))
+                    .rotationY(((int)state.getValue(BlockStateProperties.HORIZONTAL_FACING).toYRot()+180)%360)
+                    .build();
+        });
         // haunt_furnace
         getVariantBuilder(ModBlocks.HAUNT_FURNACE.get()).partialState().with(BlockStateProperties.HORIZONTAL_FACING, Direction.NORTH).with(BlockStateProperties.LIT, false).modelForState().modelFile(new ModelFile.UncheckedModelFile("mortal_expansion:block/haunt_furnace")).addModel();
         getVariantBuilder(ModBlocks.HAUNT_FURNACE.get()).partialState().with(BlockStateProperties.HORIZONTAL_FACING, Direction.NORTH).with(BlockStateProperties.LIT, true).modelForState().modelFile(new ModelFile.UncheckedModelFile("mortal_expansion:block/haunt_furnace_on")).addModel();
