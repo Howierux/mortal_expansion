@@ -35,6 +35,9 @@ public final class ModLootTables implements DataProvider {
                     throw new IllegalStateException("Duplicate loot table " + id.location());
                 }
             });
+            tables.put(ResourceKey.create(net.minecraft.core.registries.Registries.LOOT_TABLE,
+                    net.minecraft.resources.ResourceLocation.fromNamespaceAndPath("mortal_expansion","entities/mortal_golem")),
+                    LootTable.lootTable().setParamSet(LootContextParamSets.ENTITY).build());
             var problems = new ProblemReporter.Collector();
             var validation = new ValidationContext(problems, LootContextParamSets.BLOCK, registries.asGetterLookup());
             tables.forEach((id, table) -> table.validate(validation.enterElement("{" + id.location() + "}", id)));

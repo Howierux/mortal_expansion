@@ -39,6 +39,7 @@ public final class ModBlockLoot extends BlockLootSubProvider {
         dropSelf(ModBlocks.HAINT_FURNACE.get());
         dropSelf(ModBlocks.HAUNT_FURNACE.get());
         dropSelf(ModBlocks.PURIFICATION_WARD.get());
+        dropOther(ModBlocks.MORTAL_GOLEM_BASE.get(),net.minecraft.world.item.Items.BONE_BLOCK);
         dropSelf(ModBlocks.DREAMCATCHER.get());
         add(ModBlocks.WISP_O_LANTERN.get(), createSingleItemTable(net.minecraft.world.item.Items.CARVED_PUMPKIN)
                 .withPool(LootPool.lootPool().setRolls(ConstantValue.exactly(1))
@@ -81,7 +82,7 @@ public final class ModBlockLoot extends BlockLootSubProvider {
     @Override protected Iterable<Block> getKnownBlocks() {
         // Only blocks with existing drop definitions: fluids, the well, and currently
         // non-dropping blocks must not acquire new loot as part of a schema migration.
-        return List.of(ModBlocks.WISP_O_LANTERN.get(),ModBlocks.PURIFIED_DREAMCATCHER.get(),ModBlocks.DREAMCATCHER.get(),ModBlocks.MORTALITY_RESEARCH_STATION.get(),ModBlocks.ALTAR_OF_IMPURITY.get(),ModBlocks.ALTAR_OF_PURITY.get(),ModBlocks.HAUNTED_FARMLAND.get(),
+        return List.of(ModBlocks.MORTAL_GOLEM_BASE.get(),ModBlocks.WISP_O_LANTERN.get(),ModBlocks.PURIFIED_DREAMCATCHER.get(),ModBlocks.DREAMCATCHER.get(),ModBlocks.MORTALITY_RESEARCH_STATION.get(),ModBlocks.ALTAR_OF_IMPURITY.get(),ModBlocks.ALTAR_OF_PURITY.get(),ModBlocks.HAUNTED_FARMLAND.get(),
                 ModBlocks.BLOODSTONE_ORE.get(),
                 ModBlocks.BLOODSTONE_ORE_STONE.get(),
                 ModBlocks.ECTCHANTMENT_MACHINE.get(),

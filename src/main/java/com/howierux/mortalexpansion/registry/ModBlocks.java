@@ -32,6 +32,9 @@ public final class ModBlocks {
     public static final DeferredRegister.Blocks BLOCKS =
             DeferredRegister.createBlocks(MortalExpansion.MOD_ID);
 
+    public static final DeferredBlock<com.howierux.mortalexpansion.block.MortalGolemBaseBlock> MORTAL_GOLEM_BASE =
+            BLOCKS.registerBlock("mortal_golem_base",com.howierux.mortalexpansion.block.MortalGolemBaseBlock::new,
+                    BlockBehaviour.Properties.ofFullCopy(Blocks.BONE_BLOCK));
     public static final DeferredBlock<com.howierux.mortalexpansion.block.WispLanternBlock> WISP_O_LANTERN =
             BLOCKS.registerBlock("wisp_o_lantern",com.howierux.mortalexpansion.block.WispLanternBlock::new,
                     BlockBehaviour.Properties.ofFullCopy(Blocks.JACK_O_LANTERN).lightLevel(state -> 4));

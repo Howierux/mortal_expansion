@@ -155,6 +155,7 @@ public final class ModClientEvents {
                 ctx -> new PlaceholderHumanoidRenderer<>(ctx, zombie, mob -> true, 0.45F));
         event.registerEntityRenderer(ModEntities.PHANTOM.get(),
                 ctx -> new PlaceholderHumanoidRenderer<>(ctx, zombie, mob -> false, 0.45F));
+        event.registerEntityRenderer(ModEntities.MORTAL_GOLEM.get(), MortalGolemRenderer::new);
         event.registerEntityRenderer(ModEntities.SPIRIT.get(), SpiritVillagerRenderer::new);
         event.registerEntityRenderer(ModEntities.ELEMENTAL.get(),
                 ctx -> new PlaceholderHumanoidRenderer<>(ctx, zombie, mob -> true, 0.55F));

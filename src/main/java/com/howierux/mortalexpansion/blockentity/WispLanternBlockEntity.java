@@ -20,7 +20,9 @@ public final class WispLanternBlockEntity extends BlockEntity {
     public WispLanternBlockEntity(BlockPos pos, BlockState state) {super(ModBlockEntities.WISP_O_LANTERN.get(),pos,state);}
     public int spawnDelay() {return spawnDelay;}
     public static void serverTick(Level level, BlockPos pos, BlockState state, WispLanternBlockEntity lantern) {
-        if(!(level instanceof ServerLevel server) || !WispLanternConversion.nighttime(server))return;
+        if(!(level instanceof ServerLevel server))return;
+        if(com.howierux.mortalexpansion.haunt.MortalGolemFormation.tryForm(server,pos))return;
+        if(!WispLanternConversion.nighttime(server))return;
         if(--lantern.spawnDelay<=0) {
             lantern.spawnDelay=SPAWN_INTERVAL;
             lantern.trySpawn(server);

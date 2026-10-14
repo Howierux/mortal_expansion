@@ -18,6 +18,17 @@ public final class ModBlockModels extends BlockStateProvider {
         super(output, MortalExpansion.MOD_ID, helper);
     }
     @Override protected void registerStatesAndModels() {
+        var baseModels=new ModelFile[5];
+        for(int stage=0;stage<=4;stage++)
+            baseModels[stage]=models().cubeColumn("mortal_golem_base_"+stage,
+                    stage==0?ResourceLocation.withDefaultNamespace("block/bone_block_side"):modLoc("block/mortal_golem_flesh_"+stage),
+                    ResourceLocation.withDefaultNamespace("block/bone_block_top"));
+        getVariantBuilder(ModBlocks.MORTAL_GOLEM_BASE.get()).forAllStates(state -> {
+            var axis=state.getValue(com.howierux.mortalexpansion.block.MortalGolemBaseBlock.AXIS);
+            return net.neoforged.neoforge.client.model.generators.ConfiguredModel.builder()
+                    .modelFile(baseModels[state.getValue(com.howierux.mortalexpansion.block.MortalGolemBaseBlock.FLESH_STAGE)])
+                    .rotationX(axis==Direction.Axis.Y?0:90).rotationY(axis==Direction.Axis.X?90:0).build();
+        });
         var wisp=models().orientable("wisp_o_lantern",ResourceLocation.withDefaultNamespace("block/pumpkin_side"),
                 modLoc("block/wisp_o_lantern_front_temporary"),ResourceLocation.withDefaultNamespace("block/pumpkin_top"));
         horizontalBlock(ModBlocks.WISP_O_LANTERN.get(),wisp);

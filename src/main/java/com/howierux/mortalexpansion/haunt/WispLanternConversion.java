@@ -41,6 +41,7 @@ public final class WispLanternConversion {
                 .setValue(CarvedPumpkinBlock.FACING,state.getValue(CarvedPumpkinBlock.FACING));
         if(!level.setBlock(pos,converted,3))return false;
         HauntManager.addPoints(level,pos,-1);
+        MortalGolemFormation.tryForm(level,pos);
         return true;
     }
     public static int scan(ServerLevel level, LevelChunk chunk) {

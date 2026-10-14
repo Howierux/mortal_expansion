@@ -24,6 +24,12 @@ public final class WispLanternBlock extends BaseEntityBlock {
     @Override protected BlockState rotate(BlockState state,Rotation rotation){return state.setValue(FACING,rotation.rotate(state.getValue(FACING)));}
     @Override protected BlockState mirror(BlockState state,Mirror mirror){return state.rotate(mirror.getRotation(state.getValue(FACING)));}
     @Override protected RenderShape getRenderShape(BlockState state){return RenderShape.MODEL;}
+    @Override public void setPlacedBy(Level level,BlockPos pos,BlockState state,
+            net.minecraft.world.entity.LivingEntity placer,net.minecraft.world.item.ItemStack stack){
+        super.setPlacedBy(level,pos,state,placer,stack);
+        if(level instanceof net.minecraft.server.level.ServerLevel server)
+            com.howierux.mortalexpansion.haunt.MortalGolemFormation.tryForm(server,pos);
+    }
     @Override public BlockEntity newBlockEntity(BlockPos pos,BlockState state){return new WispLanternBlockEntity(pos,state);}
     @Override public <T extends BlockEntity> BlockEntityTicker<T> getTicker(Level level,BlockState state,BlockEntityType<T> type) {
         return level.isClientSide?null:createTickerHelper(type,ModBlockEntities.WISP_O_LANTERN.get(),WispLanternBlockEntity::serverTick);

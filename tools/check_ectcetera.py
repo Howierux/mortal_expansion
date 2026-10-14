@@ -47,6 +47,10 @@ for part in range(1, 4):
     key = "guide.mortal_expansion.wisp_o_lantern.page." + str(part)
     assert LANG[key].strip() and lines(LANG[key]) <= 9, (key, "map entry exceeds page budget")
 assert LANG["guide.mortal_expansion.wisp_o_lantern.name"].strip()
+for part in range(1, 5):
+    key = "guide.mortal_expansion.mortal_golem.page." + str(part)
+    assert LANG[key].strip() and lines(LANG[key]) <= 9, (key, "map entry exceeds page budget")
+assert LANG["guide.mortal_expansion.mortal_golem.name"].strip()
 assert lines(LANG[PREFIX + "cover"] + "\n\nContents") <= 14
 total = 1 + (len(CHAPTERS) + 4) // 5 + sum(int(count) for _, count, _ in CHAPTERS)
 assert total <= 128
