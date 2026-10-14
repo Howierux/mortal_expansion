@@ -64,8 +64,8 @@ public final class MortalGolemEntity extends IronGolem {
         if(!stack.is(net.minecraft.world.item.Items.ROTTEN_FLESH) || !isAlive()
                 || (flesh()==64 && getHealth()>=getMaxHealth()))return InteractionResult.PASS;
         if(!level().isClientSide){
-            if(flesh()<64)setFlesh(flesh()+1);
-            heal(repairAmount());
+            if(getHealth()<getMaxHealth())heal(repairAmount());
+            else if(flesh()<64)setFlesh(flesh()+1);
             stack.consume(1,player);
             playSound(net.minecraft.sounds.SoundEvents.IRON_GOLEM_REPAIR,1.0F,1.0F);
         }

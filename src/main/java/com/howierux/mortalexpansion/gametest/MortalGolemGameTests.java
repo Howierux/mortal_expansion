@@ -112,7 +112,7 @@ public final class MortalGolemGameTests {
             golem.setHealth(1);player.setItemInHand(InteractionHand.MAIN_HAND,new ItemStack(Items.ROTTEN_FLESH,2));
             golem.mobInteract(player,InteractionHand.MAIN_HAND);
             h.assertTrue(Math.abs(golem.getHealth()-(1+tier*25/16.0F))<0.001
-                    && player.getMainHandItem().getCount()==1,"One flesh restores the same fraction of each tier's health");
+                    && player.getMainHandItem().getCount()==1 && golem.flesh()==tier*16,"Damaged golems repair without increasing flesh at every tier");
             HauntManager.setTier(h.getLevel(),golem.blockPosition(),HauntTier.SUPERNATURAL);
             float before=golem.getHealth();golem.repairFromHaunt();
             h.assertTrue(golem.getHealth()==before,"Below Dead Rising has no automatic repair");
