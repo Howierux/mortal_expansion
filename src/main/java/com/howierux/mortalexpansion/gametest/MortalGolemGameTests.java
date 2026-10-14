@@ -86,6 +86,7 @@ public final class MortalGolemGameTests {
             var golem=ModEntities.MORTAL_GOLEM.get().create(h.getLevel());golem.setFlesh(tier*16);
             golem.setTarget(player);
             h.assertTrue(golem.getTarget()==null && !golem.doHurtTarget(player),"Construct cannot target or damage a player");
+            h.assertTrue(golem.getAttributeValue(net.minecraft.world.entity.ai.attributes.Attributes.ATTACK_DAMAGE)==15.0*(tier+1)/4.0,"Damage scales in quarter steps to 1.25 times Iron Golem strength");
             h.assertTrue(golem.getMaxHealth()==tier*25 && golem.getHealth()==tier*25,"Flesh tiers scale health equally before and after formation");
             var zombie=net.minecraft.world.entity.EntityType.ZOMBIE.create(h.getLevel());
             var cow=net.minecraft.world.entity.EntityType.COW.create(h.getLevel());

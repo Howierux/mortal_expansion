@@ -29,6 +29,7 @@ public final class MortalGolemEntity extends IronGolem {
         float previousMax=getMaxHealth();
         entityData.set(FLESH,Math.clamp(amount,16,64));
         getAttribute(Attributes.MAX_HEALTH).setBaseValue(25.0*fleshTier());
+        getAttribute(Attributes.ATTACK_DAMAGE).setBaseValue(15.0*(fleshTier()+1)/4.0);
         // New tissue supplies its added health; building before or after awakening gives the same result.
         setHealth(Math.min(getMaxHealth(),getHealth()+getMaxHealth()-previousMax));
     }
@@ -43,7 +44,7 @@ public final class MortalGolemEntity extends IronGolem {
         super.aiStep();
         if(!level().isClientSide && tickCount%100==0)repairFromHaunt();
     }
-    public static AttributeSupplier.Builder createAttributes(){return IronGolem.createAttributes().add(Attributes.MAX_HEALTH,25);}
+    public static AttributeSupplier.Builder createAttributes(){return IronGolem.createAttributes().add(Attributes.MAX_HEALTH,25).add(Attributes.ATTACK_DAMAGE,7.5);}
     @Override protected void registerGoals() {
         goalSelector.addGoal(0,new FloatGoal(this));
         goalSelector.addGoal(1,new MeleeAttackGoal(this,1.0,true));
