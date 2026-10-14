@@ -49,6 +49,10 @@ public final class ModDataComponents {
             DATA_COMPONENTS.registerComponentType("emf_reading", builder -> builder.networkSynchronized(
                     com.howierux.mortalexpansion.haunt.EmfReading.STREAM_CODEC));
 
+    public static final DeferredHolder<DataComponentType<?>, DataComponentType<Integer>> SCEPTER_CHARGE =
+            DATA_COMPONENTS.registerComponentType("scepter_charge", builder -> builder
+                    .persistent(Codec.intRange(0,12)).networkSynchronized(ByteBufCodecs.VAR_INT));
+
     public static void register(IEventBus modBus) {
         DATA_COMPONENTS.register(modBus);
     }
