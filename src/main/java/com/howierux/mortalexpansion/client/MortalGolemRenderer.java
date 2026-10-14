@@ -7,7 +7,7 @@ import net.minecraft.resources.ResourceLocation;
 import net.minecraft.world.entity.animal.IronGolem;
 
 public final class MortalGolemRenderer extends IronGolemRenderer {
-    public MortalGolemRenderer(EntityRendererProvider.Context context){super(context);layers.clear();}
+    public MortalGolemRenderer(EntityRendererProvider.Context context){super(context);model=new MortalGolemModel(context.bakeLayer(MortalGolemModel.LAYER));layers.clear();}
     @Override public ResourceLocation getTextureLocation(IronGolem golem) {
         int tier=golem instanceof MortalGolemEntity mortal?mortal.fleshTier():1;
         return ResourceLocation.fromNamespaceAndPath(MortalExpansion.MOD_ID,"textures/entity/mortal_golem_"+tier+".png");

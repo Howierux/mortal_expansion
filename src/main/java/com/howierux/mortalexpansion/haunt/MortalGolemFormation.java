@@ -34,6 +34,15 @@ public final class MortalGolemFormation {
         player.displayClientMessage(Component.translatable("message.mortal_expansion.mortal_golem.flesh",base.flesh()),true);
         tryForm(server,pos.above());
     }
+    @SubscribeEvent public static void protectFromUnrelatedMobs(
+            net.neoforged.neoforge.event.entity.living.LivingChangeTargetEvent event) {
+        if (event.getNewAboutToBeSetTarget() instanceof com.howierux.mortalexpansion.entity.mob.MortalGolemEntity
+                && (event.getEntity() instanceof net.minecraft.world.entity.monster.Spider
+                || event.getEntity() instanceof net.minecraft.world.entity.monster.Creeper
+                || event.getEntity() instanceof net.minecraft.world.entity.monster.EnderMan)) {
+            event.setNewAboutToBeSetTarget(null);
+        }
+    }
     public static boolean tryForm(ServerLevel level,BlockPos head){
         if(level.getChunkSource().getChunkNow(head.getX()>>4,head.getZ()>>4)==null
                 || !level.getBlockState(head).is(ModBlocks.WISP_O_LANTERN.get())

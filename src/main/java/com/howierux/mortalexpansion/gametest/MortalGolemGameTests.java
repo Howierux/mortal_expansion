@@ -80,21 +80,75 @@ public final class MortalGolemGameTests {
         h.succeed();
     }
     @GameTest(template="deferred_items_test")
-    public static void all_four_entity_stages_persist_and_have_no_combat_or_retaliation(GameTestHelper h) {
+    public static void all_four_entity_stages_persist_and_only_smiteable_targets_are_attacked(GameTestHelper h) {
         var player=h.makeMockServerPlayerInLevel();
         for(int tier=1;tier<=4;tier++) {
             var golem=ModEntities.MORTAL_GOLEM.get().create(h.getLevel());golem.setFlesh(tier*16);
             golem.setTarget(player);
-            h.assertTrue(golem.getTarget()==null && !golem.doHurtTarget(player),"Passive construct cannot target or damage a player");
+            h.assertTrue(golem.getTarget()==null && !golem.doHurtTarget(player),"Construct cannot target or damage a player");
+            h.assertTrue(golem.getMaxHealth()==tier*25 && golem.getHealth()==tier*25,"Flesh tiers scale health equally before and after formation");
+            var zombie=net.minecraft.world.entity.EntityType.ZOMBIE.create(h.getLevel());
+            var cow=net.minecraft.world.entity.EntityType.COW.create(h.getLevel());
+            golem.setTarget(zombie);h.assertTrue(golem.getTarget()==zombie,"Smiteable mobs are valid targets");
+            golem.setTarget(cow);h.assertTrue(golem.getTarget()==null && !golem.doHurtTarget(cow),"Other mobs remain safe");
+            zombie.discard();cow.discard();
+            golem.setHealth(tier*10);
             var data=new net.minecraft.nbt.CompoundTag();golem.addAdditionalSaveData(data);
             var copy=ModEntities.MORTAL_GOLEM.get().create(h.getLevel());copy.readAdditionalSaveData(data);
-            h.assertTrue(copy.flesh()==tier*16 && copy.fleshTier()==tier && copy.isPersistenceRequired(),"All flesh appearances survive entity save/load");
+            h.assertTrue(copy.flesh()==tier*16 && copy.fleshTier()==tier && copy.isPersistenceRequired()
+                    && copy.getHealth()==tier*10 && copy.getMaxHealth()==tier*25,"All flesh appearances survive entity save/load");
             golem.discard();copy.discard();
         }
         var node=EctceteraResearchMap.nodes(3).stream().filter(n->n.chapter().key().equals("mortal_golem")).findFirst().orElseThrow();
         h.assertTrue(node.parent().equals("sanctified") && EctceteraResearchMap.unlocked("mortal_golem",3,0)
                 && !EctceteraResearchMap.unlocked("mortal_golem",2,127),"Entry is on the Purified tab without an extra secret gate");
         player.discard();h.succeed();
+    }
+    @GameTest(template="deferred_items_test")
+    public static void flesh_repairs_scale_and_spawned_upgrades_match_construction(GameTestHelper h) {
+        var player=h.makeMockServerPlayerInLevel();player.setGameMode(net.minecraft.world.level.GameType.SURVIVAL);
+        for(int tier=1;tier<=4;tier++) {
+            var golem=ModEntities.MORTAL_GOLEM.get().create(h.getLevel());golem.setFlesh(tier*16);
+            golem.setHealth(1);player.setItemInHand(InteractionHand.MAIN_HAND,new ItemStack(Items.ROTTEN_FLESH,2));
+            golem.mobInteract(player,InteractionHand.MAIN_HAND);
+            h.assertTrue(Math.abs(golem.getHealth()-(1+tier*25/16.0F))<0.001
+                    && player.getMainHandItem().getCount()==1,"One flesh restores the same fraction of each tier's health");
+            HauntManager.setTier(h.getLevel(),golem.blockPosition(),HauntTier.SUPERNATURAL);
+            float before=golem.getHealth();golem.repairFromHaunt();
+            h.assertTrue(golem.getHealth()==before,"Below Dead Rising has no automatic repair");
+            HauntManager.setTier(h.getLevel(),golem.blockPosition(),HauntTier.DEAD_RISING);
+            golem.tickCount=99;golem.aiStep();
+            h.assertTrue(golem.getHealth()==before,"Regeneration waits for its five-second interval");
+            golem.tickCount=100;golem.aiStep();
+            h.assertTrue(Math.abs(golem.getHealth()-before-tier*0.25F)<0.001,"Dead Rising restores one percent at the scheduled interval");
+            golem.discard();
+        }
+        var fed=ModEntities.MORTAL_GOLEM.get().create(h.getLevel());
+        player.setItemInHand(InteractionHand.MAIN_HAND,new ItemStack(Items.ROTTEN_FLESH,64));
+        for(int i=17;i<=64;i++)fed.mobInteract(player,InteractionHand.MAIN_HAND);
+        var built=ModEntities.MORTAL_GOLEM.get().create(h.getLevel());built.setFlesh(64);
+        h.assertTrue(fed.flesh()==64 && fed.getMaxHealth()==built.getMaxHealth() && fed.getHealth()==built.getHealth(),
+                "Feeding an awakened golem reaches the same tier and health as preparing all flesh before awakening");
+        int remaining=player.getMainHandItem().getCount();fed.mobInteract(player,InteractionHand.MAIN_HAND);
+        h.assertTrue(player.getMainHandItem().getCount()==remaining,"Full-health tier-four golems consume no flesh");
+        fed.discard();built.discard();player.discard();h.succeed();
+    }
+    @GameTest(template="deferred_items_test")
+    public static void spiders_creepers_and_endermen_ignore_golems_but_not_other_targets(GameTestHelper h) {
+        var golem=ModEntities.MORTAL_GOLEM.get().create(h.getLevel());
+        var cow=net.minecraft.world.entity.EntityType.COW.create(h.getLevel());
+        for(var type:java.util.List.of(net.minecraft.world.entity.EntityType.SPIDER,net.minecraft.world.entity.EntityType.CAVE_SPIDER,
+                net.minecraft.world.entity.EntityType.CREEPER,net.minecraft.world.entity.EntityType.ENDERMAN)) {
+            var mob=type.create(h.getLevel());mob.setTarget(cow);
+            h.assertTrue(mob.getTarget()==cow,"Other targets remain available");
+            mob.setTarget(golem);h.assertTrue(mob.getTarget()==null,"Excluded mob family cannot target a Mortal Golem");
+            mob.discard();
+        }
+        var zombie=net.minecraft.world.entity.EntityType.ZOMBIE.create(h.getLevel());
+        zombie.setTarget(golem);h.assertTrue(zombie.getTarget()==golem,"Smiteable mobs can fight back");
+        float before=zombie.getHealth();golem.doHurtTarget(zombie);
+        h.assertTrue(zombie.getHealth()<before,"Golem attacks deal real damage to Smite-sensitive enemies");
+        zombie.discard();golem.discard();cow.discard();h.succeed();
     }
     @GameTest(template="deferred_items_test")
     public static void canceled_entity_spawn_leaves_the_complete_build_intact(GameTestHelper h) {

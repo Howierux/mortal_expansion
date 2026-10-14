@@ -16,7 +16,7 @@ public final class EctceteraResearchMap {
             : ch.tier()==category && !ch.key().equals("insight") && secret(ch.key())==0)
             .map(ch->ch.key().equals("haint_garb")?new EctceteraGuide.Chapter(ch.key(),2,ch.tier()):ch).toList();
         if(category==2){var expanded=new ArrayList<>(chapters);expanded.add(new EctceteraGuide.Chapter("wisp_o_lantern",3,2));chapters=List.copyOf(expanded);}
-        if(category==3){var expanded=new ArrayList<>(chapters);expanded.add(new EctceteraGuide.Chapter("mortal_golem",4,3));chapters=List.copyOf(expanded);}
+        if(category==3){var expanded=new ArrayList<>(chapters);expanded.add(new EctceteraGuide.Chapter("mortal_golem",5,3));chapters=List.copyOf(expanded);}
         if(category==4){var grouped=new ArrayList<>(chapters);grouped.add(0,new EctceteraGuide.Chapter("mortality_research_station",1,0));grouped.add(new EctceteraGuide.Chapter("dreamcatcher",1,2));grouped.add(new EctceteraGuide.Chapter("purified_dreamcatcher",1,2));grouped.add(new EctceteraGuide.Chapter("spectralite_haint",1,3));grouped.add(new EctceteraGuide.Chapter("altar_of_impurity",1,2));grouped.add(new EctceteraGuide.Chapter("altar_of_purity",1,3));chapters=List.copyOf(grouped);}
         var nodes=new ArrayList<Node>();
         for(int i=0;i<chapters.size();i++)nodes.add(new Node(chapters.get(i),chapters.get(i).key().equals("haint_garb")?"ghost_garb":chapters.get(i).key().equals("spectralite_haint")?"haint_garb":LINKS.getOrDefault(chapters.get(i).key(),""),45+(i%3)*125,40+(i/3)*90));
