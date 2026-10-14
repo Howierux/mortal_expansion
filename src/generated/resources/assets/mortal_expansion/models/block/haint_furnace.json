@@ -47,7 +47,7 @@
     }
   ],
   "textures": {
-    "front": "minecraft:block/furnace_front",
+    "front": "mortal_expansion:block/haint_furnace_closed_front_temporary",
     "side": "minecraft:block/furnace_side",
     "top": "minecraft:block/furnace_top"
   }

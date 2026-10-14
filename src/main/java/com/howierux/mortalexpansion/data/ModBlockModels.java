@@ -212,14 +212,14 @@ public final class ModBlockModels extends BlockStateProvider {
             var model = models().getBuilder("haint_furnace").parent(new ModelFile.UncheckedModelFile("minecraft:block/cube_orientable"));
             model.texture("side", "minecraft:block/furnace_side");
             model.texture("top", "minecraft:block/furnace_top");
-            model.texture("front", "minecraft:block/furnace_front");
+            model.texture("front", "mortal_expansion:block/haint_furnace_closed_front_temporary");
             model.element().from(0,0,0).to(16,16,16).allFaces((direction,face)->face.texture(direction==Direction.UP||direction==Direction.DOWN?"#top":direction==Direction.NORTH?"#front":"#side").tintindex(0).cullface(direction)).end();
         }
         {
             var model = models().getBuilder("haint_furnace_on").parent(new ModelFile.UncheckedModelFile("minecraft:block/cube_orientable"));
             model.texture("side", "minecraft:block/furnace_side");
             model.texture("top", "minecraft:block/furnace_top");
-            model.texture("front", "minecraft:block/furnace_front_on");
+            model.texture("front", "mortal_expansion:block/haint_furnace_closed_front_on_temporary");
             model.element().from(0,0,0).to(16,16,16).allFaces((direction,face)->face.texture(direction==Direction.UP||direction==Direction.DOWN?"#top":direction==Direction.NORTH?"#front":"#side").tintindex(0).cullface(direction)).end();
         }
         {
