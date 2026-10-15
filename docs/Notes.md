@@ -560,3 +560,10 @@ The personal tier attachment now defaults to Natural instead of Void, giving new
 ### 2026-10-12 - Temporary ingredient-informed item art
 
 Replaced ten block/borrowed foliage inventory icons with transparent pixel sprites: both threads, three machines, Mortality Research Station, both altars, Grave Moss and Spiritwood sapling. Designs reflect crafting ingredients or natural sources, and use distinct temporary filenames. Java-generated item models point to the new sprites; world blocks and gameplay are unchanged. Build/data generation and guide/resource checks pass. Client readability remains a playtest check. See [Item art and prompts](TEMPORARY_ITEM_ART.md).
+
+
+### 2026-10-14 - Close superseded cleansing and Spiritwell expansion plans
+
+The user confirmed that Grave Moss fire cleansing is covered by the existing Altar of Purity and Altar of Impurity systems. The separate one-point-per-item dropped-moss fire mechanic and its validation checklist are closed as superseded, not claimed as implemented.
+
+Spiritwells are required only in the Overworld. Nether and End worldgen is removed from future scope. This decision supersedes the 2026-10-04 note about eventual generation in those dimensions; existing dimension-aware indexes are retained. No gameplay code changes are needed for these two planning updates.

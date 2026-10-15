@@ -19,7 +19,7 @@ The user selected these requirements on 2026-10-02. This records the intended wo
 - [x] Validate worldgen, placement rollback, multi-placement, piston movement, and persistence on a headless server; all eight server tests, build, guide, and mod-loading checks passed.
 - [ ] Visually verify floating appearance in a user-requested client session.
 - [~] Personal-Haunt Ghost events and durable deferral are implemented; further Spirit Journey interactions remain planned.
-- [ ] Add Spiritwell worldgen to the Nether and End in a later update. Held triggers remain in their original dimension awaiting wells there.
+- [x] Scope closed: Spiritwells are Overworld-only. Nether and End Spiritwell generation is not required, per the 2026-10-14 decision. Existing dimension-aware indexing is retained.
 
 **Selected deferred-event rule (2026-10-04):** When the Spiritwell-spawn Haunt effect is selected and no loaded Spiritwell is within 100 blocks of the triggering player, retain that effect until a player comes within 100 blocks of a loaded Spiritwell. The later player need not be the original triggering player. Resolve proximity in the player's current dimension, and inspect loaded chunks only; this rule must not generate or force-load a Spiritwell. Retain the pending event across saves/restarts. The 100-block lookup only finds an already loaded destination; personal Haunt alone controls new trigger eligibility. Delivery must still satisfy the effect's mob-cap, protection, and safe-spawn rules; keep it pending if delivery cannot succeed. The scheduler stores a per-dimension count of held selections, keeps every trigger, and delivers at most one per second while preserving player cooldowns and mob limits. Delivery does not reroll or require the later player to retain the original triggering tier.
 
@@ -82,10 +82,10 @@ See [Book progression](BOOK_OF_ECTCETERA.md) for chapter groups, compatibility a
 - [ ] Use **personal Haunt** for Bloodstone tool scaling. Start with +10% power and speed per named tier above Natural: Supernatural +10%, Dead Rising +20%, Demonic +30%, Abominable +40%, Eldritch +50%. Treat these as accepted initial balance values to validate in play.
 - [ ] Define behavior at Void separately, and verify Diamond parity at Natural plus the intended increase at each higher tier. This replaces the historical Diamond-like Void baseline for tools; armor balance remains a separate decision.
 
-### Grave Moss fire cleansing
+### Grave Moss cleansing [Closed: covered by altars]
 
-- [ ] When a Grave Moss item thrown into fire is consumed, decrease Haunt in the chunk containing that fire by **one point per Grave Moss item**.
-- [ ] Verify single items and stacks apply the reduction once per item consumed, clamp at zero, and affect the correct chunk at chunk boundaries. Five consumed items remove five points, subject to that minimum.
+- [x] Cleansing requirement covered by the implemented Altar of Purity and Altar of Impurity systems, per the 2026-10-14 decision. A separate dropped-Grave-Moss-in-fire mechanic is no longer required.
+- [x] Close the superseded fire-consumption validation checklist; altar offering consumption and Haunt changes are covered by their existing implementation and checks.
 
 ### Haunt effects [Accepted proposal]
 

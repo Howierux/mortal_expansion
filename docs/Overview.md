@@ -20,7 +20,7 @@ The selected gameplay direction includes ranged Elemental attacks, intangible mo
 
 Other longer-term design concepts include Spiritwood trees that fight back, Blood Blooms, spiritual armor sets, soul-based upgrades, and consecrated Graves with maintained revival benefits. Ordinary named-Grave respawning is already implemented. The original spirit-only gates are one possible portal design, not a settled travel restriction.
 
-The accepted Haunt effect roadmap adds occasional atmospheric, disruptive, and beneficial events with tier thresholds, cooldowns, and protection from garb, Holy Water, and Wards. The 2026-10-04 correction makes personal Haunt alone control ambient triggers and minimum tiers. Bloodstone tools use personal Haunt, with Diamond parity at Natural and initial +10% power/speed per higher tier. Burning Grave Moss is planned to remove one point per consumed item from the fire's chunk. Ambient/beneficial effects are now implemented; major encounters and actual Ghost’s Garb content remain separate design work.
+The accepted Haunt effect roadmap adds occasional atmospheric, disruptive, and beneficial events with tier thresholds, cooldowns, and protection from garb, Holy Water, and Wards. The 2026-10-04 correction makes personal Haunt alone control ambient triggers and minimum tiers. Bloodstone tools use personal Haunt, with Diamond parity at Natural and initial +10% power/speed per higher tier. Grave Moss cleansing is covered by the Purity/Impurity altar systems; a separate fire-burning mechanic is not planned. Ambient/beneficial effects are now implemented; major encounters and actual Ghost’s Garb content remain separate design work.
 
 ### Design compared with the current baseline
 
@@ -127,7 +127,7 @@ At the start of future work, read this file, the latest entry in [Notes](Notes.m
 
 ### Spiritwells
 
-Rare worldgen-only Overworld anchors appear as a faint Nether Star floating about two blocks above dry land. The star has no collision, cannot be mined/collected, and prevents normal block placement within a two-block spherical radius, including multi-placement and piston movement into the area. The initial rate is one attempt per 256 newly generated chunks, with terrain and clearance checks reducing successful placements. Anchors persist with their chunks; the personal-Haunt controller now uses them for hostile Ghost appearances; active Spirit Journey reveals pale beacon beams over loaded wells.
+Spiritwells are Overworld-only; Nether and End generation is not required. Rare worldgen-only Overworld anchors appear as a faint Nether Star floating about two blocks above dry land. The star has no collision, cannot be mined/collected, and prevents normal block placement within a two-block spherical radius, including multi-placement and piston movement into the area. The initial rate is one attempt per 256 newly generated chunks, with terrain and clearance checks reducing successful placements. Anchors persist with their chunks; the personal-Haunt controller now uses them for hostile Ghost appearances; active Spirit Journey reveals pale beacon beams over loaded wells.
 
 The planned Spiritwell-spawn Haunt effect retains its trigger if no loaded Spiritwell is within 100 blocks. It waits until a player enters that range of a loaded well, without another random roll or forced chunk loading. The server now persists these held selections per dimension and delivers them to eligible nearby players without another tier check; player cooldowns, protection, and mob caps still apply.
 
