@@ -17,7 +17,38 @@ public final class ModBlockModels extends BlockStateProvider {
     public ModBlockModels(PackOutput output, ExistingFileHelper helper) {
         super(output, MortalExpansion.MOD_ID, helper);
     }
+    private void ectoBox(net.neoforged.neoforge.client.model.generators.BlockModelBuilder model,
+            float x1,float y1,float z1,float x2,float y2,float z2,String texture){
+        model.element().from(x1,y1,z1).to(x2,y2,z2).allFaces((direction,face)->face.texture(texture)).end();
+    }
+    private void ectoInfrastructureModels(){
+        for(var block:new net.minecraft.world.level.block.Block[]{ModBlocks.ECTANK.get(),ModBlocks.PURIFIED_ECTANK.get()}){
+            String name=block==ModBlocks.ECTANK.get()?"ectank":"purified_ectank";
+            var model=models().getBuilder(name).parent(new ModelFile.UncheckedModelFile("minecraft:block/block"))
+                    .renderType("minecraft:cutout").texture("stone",modLoc("block/"+(name.equals("ectank")?"gravestone":"purified_gravestone")))
+                    .texture("glass","minecraft:block/glass").texture("particle","#stone");
+            ectoBox(model,0,0,0,16,2,16,"#stone");ectoBox(model,0,14,0,16,16,16,"#stone");
+            for(int x:new int[]{0,14})for(int z:new int[]{0,14})ectoBox(model,x,2,z,x+2,14,z+2,"#stone");
+            ectoBox(model,1,2,1,15,14,15,"#glass");simpleBlock(block,model);
+        }
+        var core=models().getBuilder("ecto_pipe_core").parent(new ModelFile.UncheckedModelFile("minecraft:block/block"))
+                .renderType("minecraft:cutout").texture("stone",modLoc("block/gravestone")).texture("glass","minecraft:block/glass").texture("particle","#stone");
+        ectoBox(core,5,5,5,11,11,11,"#glass");
+        for(float x:new float[]{5,9.5F})for(float y:new float[]{5,9.5F})for(float z:new float[]{5,9.5F})ectoBox(core,x,y,z,x+1.5F,y+1.5F,z+1.5F,"#stone");
+        var arm=models().getBuilder("ecto_pipe_arm").parent(new ModelFile.UncheckedModelFile("minecraft:block/block"))
+                .renderType("minecraft:cutout").texture("stone",modLoc("block/gravestone")).texture("glass","minecraft:block/glass").texture("particle","#stone");
+        ectoBox(arm,5,5,0,11,11,5,"#glass");ectoBox(arm,5,5,0,11,11,1.5F,"#stone");
+        var multipart=getMultipartBuilder(ModBlocks.ECTO_PIPE.get());multipart.part().modelFile(core).addModel().end();
+        for(var direction:Direction.values())multipart.part().modelFile(arm)
+                .rotationX(direction==Direction.UP?270:direction==Direction.DOWN?90:0)
+                .rotationY(direction.getAxis().isHorizontal()?((int)direction.toYRot()+180)%360:0)
+                .addModel().condition(net.minecraft.world.level.block.PipeBlock.PROPERTY_BY_DIRECTION.get(direction),true).end();
+        var item=models().getBuilder("ecto_pipe_inventory").parent(new ModelFile.UncheckedModelFile("minecraft:block/block"))
+                .renderType("minecraft:cutout").texture("stone",modLoc("block/gravestone")).texture("glass","minecraft:block/glass").texture("particle","#stone");
+        ectoBox(item,5,5,0,11,11,16,"#glass");ectoBox(item,5,5,0,11,11,2,"#stone");ectoBox(item,5,5,14,11,11,16,"#stone");
+    }
     @Override protected void registerStatesAndModels() {
+        ectoInfrastructureModels();
         var baseModels=new ModelFile[5];
         for(int stage=0;stage<=4;stage++)
             baseModels[stage]=models().cubeColumn("mortal_golem_base_"+stage,

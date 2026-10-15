@@ -32,6 +32,14 @@ public final class ModBlocks {
     public static final DeferredRegister.Blocks BLOCKS =
             DeferredRegister.createBlocks(MortalExpansion.MOD_ID);
 
+    public static final DeferredBlock<Block> ECTANK = BLOCKS.registerSimpleBlock("ectank",
+            BlockBehaviour.Properties.ofFullCopy(Blocks.STONE).strength(2.0F).noOcclusion());
+    public static final DeferredBlock<Block> PURIFIED_ECTANK = BLOCKS.registerSimpleBlock("purified_ectank",
+            BlockBehaviour.Properties.ofFullCopy(Blocks.STONE).strength(2.0F).noOcclusion());
+    public static final DeferredBlock<com.howierux.mortalexpansion.block.EctoPipeBlock> ECTO_PIPE =
+            BLOCKS.registerBlock("ecto_pipe",com.howierux.mortalexpansion.block.EctoPipeBlock::new,
+                    BlockBehaviour.Properties.ofFullCopy(Blocks.STONE).strength(1.5F).noOcclusion());
+
     public static final DeferredBlock<com.howierux.mortalexpansion.block.MortalGolemBaseBlock> MORTAL_GOLEM_BASE =
             BLOCKS.registerBlock("mortal_golem_base",com.howierux.mortalexpansion.block.MortalGolemBaseBlock::new,
                     BlockBehaviour.Properties.ofFullCopy(Blocks.BONE_BLOCK));

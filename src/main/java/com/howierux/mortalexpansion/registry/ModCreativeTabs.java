@@ -28,6 +28,9 @@ public final class ModCreativeTabs {
                         output.accept(ModItems.WISP_O_LANTERN.get());
                         output.accept(ModItems.PURIFIED_DREAMCATCHER.get());
                         output.accept(ModItems.ALTAR_OF_PURITY.get());
+                        output.accept(ModItems.ECTANK.get());
+                        output.accept(ModItems.PURIFIED_ECTANK.get());
+                        output.accept(ModItems.ECTO_PIPE.get());
                         output.accept(ModItems.MORTALITY_RESEARCH_STATION.get());
                         output.accept(ModItems.ALTAR_OF_IMPURITY.get());
                         output.accept(ModItems.PURE_ECTOPLASM.get());

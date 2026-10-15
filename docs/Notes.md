@@ -586,3 +586,8 @@ Raised the existing daily flower-tended naturalization chance from 5% to 20%. Su
 ### 2026-10-14 - Visible green square spectral footprints
 
 Changed Second Sight trails from lightning/weather-target bootprints to full-bright green square steps with a soft halo on the main world render target. Explicit buffer flush, downward surface collision rays and a short packet grace interval address hidden/flickering marks. Server site discovery and effect timing are unchanged. See [Spectral discovery](SPECTRAL_DISCOVERY.md).
+
+
+### 2026-10-14 - Decorative Ecto Pipes and Ectanks
+
+Added Ectank, Purified Ectank and Ecto Pipe block/item shells with original framed-glass native models using their recipe materials. Tanks craft from eight matching Gravestone around Glass; sixteen pipes craft from Gravestone top/bottom rows and Glass middle sides. Pipes connect visually in six directions. Fluid storage, transport and capacity values are explicitly deferred, with Purified Ectank intended as the capacity upgrade. No ticking block entities or fluid networks are introduced. Generated recipes/models/states/loot/tags accompany providers. The Book includes a raw-Ectoplasm-tab entry describing recipes and the decorative-only scope.

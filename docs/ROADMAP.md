@@ -649,3 +649,12 @@ Replaced ten block/borrowed foliage inventory icons with transparent pixel sprit
 - [x] Book guidance and dedicated documentation: [Grave Porting](GRAVE_PORTING.md).
 
 This implements Grave Porting, not the broader linked portal/ritual network proposal. Nether/End Spiritwell generation remains out of scope.
+
+
+### 2026-10-14 - Ecto infrastructure decorative blocks
+
+- [x] Ectank and higher-capacity-intended Purified Ectank block/item shells, framed-glass native models and stone-around-glass recipes.
+- [x] Ecto Pipes, 16 per specified Gravestone/glass craft, with six-way cosmetic pipe/tank connections.
+- [ ] Fluid storage/transfer, capacity values, tank leakage and processing behavior are deferred to a later functional stage.
+
+See [Ecto infrastructure](ECTO_INFRASTRUCTURE.md). The historical Liquefactor remains a separate unimplemented feature.

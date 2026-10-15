@@ -82,6 +82,10 @@ public final class ModItems {
     public static final DeferredItem<BlockItem> SPIRITWOOD_BUTTON =
             ITEMS.registerSimpleBlockItem(ModBlocks.SPIRITWOOD_BUTTON);
 
+    public static final DeferredItem<BlockItem> ECTANK = ITEMS.registerSimpleBlockItem(ModBlocks.ECTANK);
+    public static final DeferredItem<BlockItem> PURIFIED_ECTANK = ITEMS.registerSimpleBlockItem(ModBlocks.PURIFIED_ECTANK);
+    public static final DeferredItem<BlockItem> ECTO_PIPE = ITEMS.registerSimpleBlockItem(ModBlocks.ECTO_PIPE);
+
     public static final DeferredItem<BlockItem> GRAVESTONE =
             ITEMS.registerSimpleBlockItem(ModBlocks.GRAVESTONE);
 

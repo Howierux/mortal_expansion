@@ -1,0 +1,32 @@
+{
+  "parent": "minecraft:recipes/root",
+  "criteria": {
+    "has_gravestone": {
+      "conditions": {
+        "items": [
+          {
+            "items": "mortal_expansion:gravestone"
+          }
+        ]
+      },
+      "trigger": "minecraft:inventory_changed"
+    },
+    "has_the_recipe": {
+      "conditions": {
+        "recipe": "mortal_expansion:ecto_pipe"
+      },
+      "trigger": "minecraft:recipe_unlocked"
+    }
+  },
+  "requirements": [
+    [
+      "has_the_recipe",
+      "has_gravestone"
+    ]
+  ],
+  "rewards": {
+    "recipes": [
+      "mortal_expansion:ecto_pipe"
+    ]
+  }
+}

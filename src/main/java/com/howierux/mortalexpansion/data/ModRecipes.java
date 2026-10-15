@@ -28,6 +28,12 @@ public final class ModRecipes extends RecipeProvider {
                 output.accept(id, recipe, null, conditions);
             }
         };
+        ShapedRecipeBuilder.shaped(RecipeCategory.DECORATIONS,ModItems.ECTANK.get()).pattern("SSS").pattern("SGS").pattern("SSS")
+                .define('S',ModItems.GRAVESTONE.get()).define('G',Items.GLASS).unlockedBy("has_gravestone",has(ModItems.GRAVESTONE.get())).save(output);
+        ShapedRecipeBuilder.shaped(RecipeCategory.DECORATIONS,ModItems.PURIFIED_ECTANK.get()).pattern("SSS").pattern("SGS").pattern("SSS")
+                .define('S',ModItems.PURIFIED_GRAVESTONE.get()).define('G',Items.GLASS).unlockedBy("has_purified_gravestone",has(ModItems.PURIFIED_GRAVESTONE.get())).save(output);
+        ShapedRecipeBuilder.shaped(RecipeCategory.DECORATIONS,ModItems.ECTO_PIPE.get(),16).pattern("SSS").pattern("G G").pattern("SSS")
+                .define('S',ModItems.GRAVESTONE.get()).define('G',Items.GLASS).unlockedBy("has_gravestone",has(ModItems.GRAVESTONE.get())).save(output);
         recipesOnly.accept(ResourceLocation.fromNamespaceAndPath(MortalExpansion.MOD_ID,"mortality_research_station"),new com.howierux.mortalexpansion.recipe.MortalityResearchStationRecipe(),null);
         ShapedRecipeBuilder.shaped(RecipeCategory.DECORATIONS,ModItems.ALTAR_OF_IMPURITY.get()).pattern("B").pattern("F")
                 .define('B',Items.BEACON).define('F',ModItems.HAUNT_FURNACE.get()).unlockedBy("has_beacon",has(Items.BEACON)).save(recipesOnly);

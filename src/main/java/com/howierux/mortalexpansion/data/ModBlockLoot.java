@@ -29,6 +29,7 @@ public final class ModBlockLoot extends BlockLootSubProvider {
         add(ModBlocks.BLOODSTONE_ORE_STONE.get(), createOreDrop(ModBlocks.BLOODSTONE_ORE_STONE.get(), ModItems.BLOODSTONE.get()));
         dropSelf(ModBlocks.ECTCHANTMENT_MACHINE.get());
         dropSelf(ModBlocks.ALTAR_OF_PURITY.get());
+        dropSelf(ModBlocks.ECTANK.get());dropSelf(ModBlocks.PURIFIED_ECTANK.get());dropSelf(ModBlocks.ECTO_PIPE.get());
         dropSelf(ModBlocks.MORTALITY_RESEARCH_STATION.get());
         dropSelf(ModBlocks.ALTAR_OF_IMPURITY.get());
         dropSelf(ModBlocks.ECTOPLASMIC_GENERATOR.get());
@@ -82,7 +83,7 @@ public final class ModBlockLoot extends BlockLootSubProvider {
     @Override protected Iterable<Block> getKnownBlocks() {
         // Only blocks with existing drop definitions: fluids, the well, and currently
         // non-dropping blocks must not acquire new loot as part of a schema migration.
-        return List.of(ModBlocks.MORTAL_GOLEM_BASE.get(),ModBlocks.WISP_O_LANTERN.get(),ModBlocks.PURIFIED_DREAMCATCHER.get(),ModBlocks.DREAMCATCHER.get(),ModBlocks.MORTALITY_RESEARCH_STATION.get(),ModBlocks.ALTAR_OF_IMPURITY.get(),ModBlocks.ALTAR_OF_PURITY.get(),ModBlocks.HAUNTED_FARMLAND.get(),
+        return List.of(ModBlocks.ECTANK.get(),ModBlocks.PURIFIED_ECTANK.get(),ModBlocks.ECTO_PIPE.get(),ModBlocks.MORTAL_GOLEM_BASE.get(),ModBlocks.WISP_O_LANTERN.get(),ModBlocks.PURIFIED_DREAMCATCHER.get(),ModBlocks.DREAMCATCHER.get(),ModBlocks.MORTALITY_RESEARCH_STATION.get(),ModBlocks.ALTAR_OF_IMPURITY.get(),ModBlocks.ALTAR_OF_PURITY.get(),ModBlocks.HAUNTED_FARMLAND.get(),
                 ModBlocks.BLOODSTONE_ORE.get(),
                 ModBlocks.BLOODSTONE_ORE_STONE.get(),
                 ModBlocks.ECTCHANTMENT_MACHINE.get(),
