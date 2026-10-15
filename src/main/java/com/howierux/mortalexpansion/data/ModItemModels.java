@@ -45,6 +45,7 @@ public final class ModItemModels extends ItemModelProvider {
         withExistingParent("ectank",modLoc("block/ectank"));
         withExistingParent("purified_ectank",modLoc("block/purified_ectank"));
         withExistingParent("ecto_pipe",modLoc("block/ecto_pipe_inventory"));
+        withExistingParent("purified_ecto_pipe",modLoc("block/purified_ecto_pipe_inventory"));
         withExistingParent("mortality_research_station",ResourceLocation.withDefaultNamespace("block/enchanting_table"));
         withExistingParent("altar_of_impurity",ResourceLocation.fromNamespaceAndPath(MortalExpansion.MOD_ID,"block/altar_of_impurity"));
         withExistingParent("altar_of_purity",ResourceLocation.fromNamespaceAndPath(MortalExpansion.MOD_ID,"block/altar_of_purity"));

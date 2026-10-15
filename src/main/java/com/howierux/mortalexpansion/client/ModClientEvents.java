@@ -27,6 +27,9 @@ import net.neoforged.neoforge.client.model.DynamicFluidContainerModel;
 @EventBusSubscriber(modid = MortalExpansion.MOD_ID, bus = EventBusSubscriber.Bus.MOD, value = Dist.CLIENT)
 public final class ModClientEvents {
     private ModClientEvents() {}
+    @SubscribeEvent public static void ectankRenderer(EntityRenderersEvent.RegisterRenderers event){
+        event.registerBlockEntityRenderer(com.howierux.mortalexpansion.registry.ModBlockEntities.ECTO_FLUID.get(),EctankRenderer::new);
+    }
     @SubscribeEvent public static void mortalGolemLayer(EntityRenderersEvent.RegisterLayerDefinitions event) {
         event.registerLayerDefinition(MortalGolemModel.LAYER, MortalGolemModel::createBodyLayer);
     }

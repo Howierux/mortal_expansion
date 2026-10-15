@@ -21,6 +21,9 @@ public final class ModBlockEntities {
     public static final DeferredRegister<BlockEntityType<?>> BLOCK_ENTITY_TYPES =
             DeferredRegister.create(Registries.BLOCK_ENTITY_TYPE, MortalExpansion.MOD_ID);
 
+    public static final Supplier<BlockEntityType<com.howierux.mortalexpansion.blockentity.EctoFluidBlockEntity>> ECTO_FLUID =
+            BLOCK_ENTITY_TYPES.register("ecto_fluid",()->BlockEntityType.Builder.of(com.howierux.mortalexpansion.blockentity.EctoFluidBlockEntity::new,
+                    ModBlocks.ECTANK.get(),ModBlocks.PURIFIED_ECTANK.get(),ModBlocks.ECTO_PIPE.get(),ModBlocks.PURIFIED_ECTO_PIPE.get()).build(null));
     public static final Supplier<BlockEntityType<com.howierux.mortalexpansion.blockentity.MortalGolemBaseBlockEntity>> MORTAL_GOLEM_BASE =
             BLOCK_ENTITY_TYPES.register("mortal_golem_base",()->BlockEntityType.Builder.of(
                     com.howierux.mortalexpansion.blockentity.MortalGolemBaseBlockEntity::new,ModBlocks.MORTAL_GOLEM_BASE.get()).build(null));

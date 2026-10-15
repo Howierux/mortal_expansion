@@ -32,6 +32,8 @@ public final class ModRecipes extends RecipeProvider {
                 .define('S',ModItems.GRAVESTONE.get()).define('G',Items.GLASS).unlockedBy("has_gravestone",has(ModItems.GRAVESTONE.get())).save(output);
         ShapedRecipeBuilder.shaped(RecipeCategory.DECORATIONS,ModItems.PURIFIED_ECTANK.get()).pattern("SSS").pattern("SGS").pattern("SSS")
                 .define('S',ModItems.PURIFIED_GRAVESTONE.get()).define('G',Items.GLASS).unlockedBy("has_purified_gravestone",has(ModItems.PURIFIED_GRAVESTONE.get())).save(output);
+        ShapedRecipeBuilder.shaped(RecipeCategory.DECORATIONS,ModItems.PURIFIED_ECTO_PIPE.get(),16).pattern("SSS").pattern("G G").pattern("SSS")
+                .define('S',ModItems.PURIFIED_GRAVESTONE.get()).define('G',Items.GLASS).unlockedBy("has_purified_gravestone",has(ModItems.PURIFIED_GRAVESTONE.get())).save(output);
         ShapedRecipeBuilder.shaped(RecipeCategory.DECORATIONS,ModItems.ECTO_PIPE.get(),16).pattern("SSS").pattern("G G").pattern("SSS")
                 .define('S',ModItems.GRAVESTONE.get()).define('G',Items.GLASS).unlockedBy("has_gravestone",has(ModItems.GRAVESTONE.get())).save(output);
         recipesOnly.accept(ResourceLocation.fromNamespaceAndPath(MortalExpansion.MOD_ID,"mortality_research_station"),new com.howierux.mortalexpansion.recipe.MortalityResearchStationRecipe(),null);

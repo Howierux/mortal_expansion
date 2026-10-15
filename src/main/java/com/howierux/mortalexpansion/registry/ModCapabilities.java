@@ -12,6 +12,7 @@ public final class ModCapabilities {
     }
 
     private static void registerCapabilities(RegisterCapabilitiesEvent event) {
+        event.registerBlockEntity(Capabilities.FluidHandler.BLOCK,ModBlockEntities.ECTO_FLUID.get(),(tank,side)->tank.handler(side));
         event.registerBlockEntity(Capabilities.ItemHandler.BLOCK,ModBlockEntities.ALTAR_OF_IMPURITY.get(),(altar,side)->altar.getAutomationItems());
         event.registerBlockEntity(Capabilities.ItemHandler.BLOCK,ModBlockEntities.ALTAR_OF_PURITY.get(),(altar,side)->altar.getAutomationItems());
         event.registerBlockEntity(Capabilities.ItemHandler.BLOCK,

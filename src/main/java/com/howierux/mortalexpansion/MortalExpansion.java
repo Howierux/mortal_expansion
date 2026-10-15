@@ -44,6 +44,7 @@ public final class MortalExpansion {
         ModDataComponents.register(modBus);
         com.howierux.mortalexpansion.registry.ModSounds.register(modBus);
         GraveNamePayloads.register(modBus);
+        NeoForge.EVENT_BUS.register(com.howierux.mortalexpansion.fluid.EctoFluidNetworks.class);
         com.howierux.mortalexpansion.network.GravePortPayloads.register(modBus);
         com.howierux.mortalexpansion.network.SpiritInteractionPayloads.register(modBus);
         com.howierux.mortalexpansion.network.HauntEffectPayloads.register(modBus);

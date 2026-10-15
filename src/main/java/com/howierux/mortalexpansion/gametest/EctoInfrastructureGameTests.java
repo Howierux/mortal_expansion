@@ -27,7 +27,8 @@ public final class EctoInfrastructureGameTests {
         level.setBlock(pos.north(),ModBlocks.PURIFIED_ECTANK.get().defaultBlockState(),3);h.assertTrue(level.getBlockState(pos).getValue(PipeBlock.NORTH),"Purified tank is also a visual endpoint");
         level.setBlock(pos.east(),ModBlocks.ECTO_PIPE.get().defaultBlockState(),3);
         h.assertTrue(level.getBlockState(pos).getValue(PipeBlock.EAST),"Pipes connect to other pipes");
-        h.assertTrue(level.getBlockEntity(pos)==null && level.getBlockEntity(pos.north())==null,"Decorative blocks have no processing block entities");
+        h.assertTrue(level.getBlockEntity(pos) instanceof com.howierux.mortalexpansion.blockentity.EctoFluidBlockEntity
+                && level.getBlockEntity(pos.north()) instanceof com.howierux.mortalexpansion.blockentity.EctoFluidBlockEntity,"Pipes and tanks expose their fluid storage block entities");
         player.discard();h.succeed();
     }
 }

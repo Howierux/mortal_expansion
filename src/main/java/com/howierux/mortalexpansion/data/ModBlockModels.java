@@ -31,20 +31,24 @@ public final class ModBlockModels extends BlockStateProvider {
             for(int x:new int[]{0,14})for(int z:new int[]{0,14})ectoBox(model,x,2,z,x+2,14,z+2,"#stone");
             ectoBox(model,1,2,1,15,14,15,"#glass");simpleBlock(block,model);
         }
-        var core=models().getBuilder("ecto_pipe_core").parent(new ModelFile.UncheckedModelFile("minecraft:block/block"))
-                .renderType("minecraft:cutout").texture("stone",modLoc("block/gravestone")).texture("glass","minecraft:block/glass").texture("particle","#stone");
+        pipeModels(ModBlocks.ECTO_PIPE.get(),"ecto_pipe","gravestone");
+        pipeModels(ModBlocks.PURIFIED_ECTO_PIPE.get(),"purified_ecto_pipe","purified_gravestone");
+    }
+    private void pipeModels(net.minecraft.world.level.block.Block pipe,String prefix,String stone){
+        var core=models().getBuilder(prefix+"_core").parent(new ModelFile.UncheckedModelFile("minecraft:block/block"))
+                .renderType("minecraft:cutout").texture("stone",modLoc("block/"+stone)).texture("glass","minecraft:block/glass").texture("particle","#stone");
         ectoBox(core,5,5,5,11,11,11,"#glass");
         for(float x:new float[]{5,9.5F})for(float y:new float[]{5,9.5F})for(float z:new float[]{5,9.5F})ectoBox(core,x,y,z,x+1.5F,y+1.5F,z+1.5F,"#stone");
-        var arm=models().getBuilder("ecto_pipe_arm").parent(new ModelFile.UncheckedModelFile("minecraft:block/block"))
-                .renderType("minecraft:cutout").texture("stone",modLoc("block/gravestone")).texture("glass","minecraft:block/glass").texture("particle","#stone");
+        var arm=models().getBuilder(prefix+"_arm").parent(new ModelFile.UncheckedModelFile("minecraft:block/block"))
+                .renderType("minecraft:cutout").texture("stone",modLoc("block/"+stone)).texture("glass","minecraft:block/glass").texture("particle","#stone");
         ectoBox(arm,5,5,0,11,11,5,"#glass");ectoBox(arm,5,5,0,11,11,1.5F,"#stone");
-        var multipart=getMultipartBuilder(ModBlocks.ECTO_PIPE.get());multipart.part().modelFile(core).addModel().end();
+        var multipart=getMultipartBuilder(pipe);multipart.part().modelFile(core).addModel().end();
         for(var direction:Direction.values())multipart.part().modelFile(arm)
                 .rotationX(direction==Direction.UP?270:direction==Direction.DOWN?90:0)
                 .rotationY(direction.getAxis().isHorizontal()?((int)direction.toYRot()+180)%360:0)
                 .addModel().condition(net.minecraft.world.level.block.PipeBlock.PROPERTY_BY_DIRECTION.get(direction),true).end();
-        var item=models().getBuilder("ecto_pipe_inventory").parent(new ModelFile.UncheckedModelFile("minecraft:block/block"))
-                .renderType("minecraft:cutout").texture("stone",modLoc("block/gravestone")).texture("glass","minecraft:block/glass").texture("particle","#stone");
+        var item=models().getBuilder(prefix+"_inventory").parent(new ModelFile.UncheckedModelFile("minecraft:block/block"))
+                .renderType("minecraft:cutout").texture("stone",modLoc("block/"+stone)).texture("glass","minecraft:block/glass").texture("particle","#stone");
         ectoBox(item,5,5,0,11,11,16,"#glass");ectoBox(item,5,5,0,11,11,2,"#stone");ectoBox(item,5,5,14,11,11,16,"#stone");
     }
     @Override protected void registerStatesAndModels() {

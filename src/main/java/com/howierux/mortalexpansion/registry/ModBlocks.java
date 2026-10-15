@@ -32,12 +32,16 @@ public final class ModBlocks {
     public static final DeferredRegister.Blocks BLOCKS =
             DeferredRegister.createBlocks(MortalExpansion.MOD_ID);
 
-    public static final DeferredBlock<Block> ECTANK = BLOCKS.registerSimpleBlock("ectank",
+    public static final DeferredBlock<com.howierux.mortalexpansion.block.EctankBlock> ECTANK = BLOCKS.registerBlock("ectank",com.howierux.mortalexpansion.block.EctankBlock::new,
             BlockBehaviour.Properties.ofFullCopy(Blocks.STONE).strength(2.0F).noOcclusion());
-    public static final DeferredBlock<Block> PURIFIED_ECTANK = BLOCKS.registerSimpleBlock("purified_ectank",
+    public static final DeferredBlock<com.howierux.mortalexpansion.block.EctankBlock> PURIFIED_ECTANK = BLOCKS.registerBlock("purified_ectank",com.howierux.mortalexpansion.block.EctankBlock::new,
             BlockBehaviour.Properties.ofFullCopy(Blocks.STONE).strength(2.0F).noOcclusion());
     public static final DeferredBlock<com.howierux.mortalexpansion.block.EctoPipeBlock> ECTO_PIPE =
             BLOCKS.registerBlock("ecto_pipe",com.howierux.mortalexpansion.block.EctoPipeBlock::new,
+                    BlockBehaviour.Properties.ofFullCopy(Blocks.STONE).strength(1.5F).noOcclusion());
+
+    public static final DeferredBlock<com.howierux.mortalexpansion.block.EctoPipeBlock> PURIFIED_ECTO_PIPE =
+            BLOCKS.registerBlock("purified_ecto_pipe",com.howierux.mortalexpansion.block.EctoPipeBlock::new,
                     BlockBehaviour.Properties.ofFullCopy(Blocks.STONE).strength(1.5F).noOcclusion());
 
     public static final DeferredBlock<com.howierux.mortalexpansion.block.MortalGolemBaseBlock> MORTAL_GOLEM_BASE =
