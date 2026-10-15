@@ -23,7 +23,7 @@ Ectank: eight Gravestone around Glass. Purified Ectank: eight Purified Graveston
 
 Ecto Pipe: `SSS / G G / SSS`, S = Gravestone, G = Glass, center empty; yields 16. Use Purified Gravestone for 16 Purified Ecto Pipes. There is no recipe consuming filled pipes or tanks.
 
-Original native models use stone rims/collars and transparent glass, with Purified Gravestone for upgraded blocks. Tank fluid is rendered with the fluid's native texture and tint. Pipes connect to supported fluid handlers in all six directions. There is no animated fluid inside pipe models.
+Original native models use stone rims/collars and transparent glass, with Purified Gravestone for upgraded blocks. Tank fluid is rendered with the fluid's native texture and tint. Pipe glass uses full-face UVs so its border remains visible between stone pieces. Glass is inset from the stone and tube end caps are omitted to avoid coplanar surfaces. Pipes connect to supported fluid handlers in all six directions. There is no animated fluid inside pipe models.
 
 ## Persistence, compatibility and performance
 

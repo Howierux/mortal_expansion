@@ -21,6 +21,16 @@ public final class ModBlockModels extends BlockStateProvider {
             float x1,float y1,float z1,float x2,float y2,float z2,String texture){
         model.element().from(x1,y1,z1).to(x2,y2,z2).allFaces((direction,face)->face.texture(texture)).end();
     }
+    /** Full-face glass UVs keep the vanilla border visible on narrow pipes.
+     * Omit tube end caps where the stone collars/core already close the section. */
+    private void pipeGlass(net.neoforged.neoforge.client.model.generators.BlockModelBuilder model,
+            float x1,float y1,float z1,float x2,float y2,float z2,boolean caps){
+        var element=model.element().from(x1,y1,z1).to(x2,y2,z2);
+        for(var direction:Direction.values())
+            if(caps || direction.getAxis()!=Direction.Axis.Z)
+                element.face(direction).texture("#glass").uvs(0,0,16,16);
+        element.end();
+    }
     private void ectoInfrastructureModels(){
         for(var block:new net.minecraft.world.level.block.Block[]{ModBlocks.ECTANK.get(),ModBlocks.PURIFIED_ECTANK.get()}){
             String name=block==ModBlocks.ECTANK.get()?"ectank":"purified_ectank";
@@ -37,11 +47,12 @@ public final class ModBlockModels extends BlockStateProvider {
     private void pipeModels(net.minecraft.world.level.block.Block pipe,String prefix,String stone){
         var core=models().getBuilder(prefix+"_core").parent(new ModelFile.UncheckedModelFile("minecraft:block/block"))
                 .renderType("minecraft:cutout").texture("stone",modLoc("block/"+stone)).texture("glass","minecraft:block/glass").texture("particle","#stone");
-        ectoBox(core,5,5,5,11,11,11,"#glass");
+        pipeGlass(core,5.125F,5.125F,5.125F,10.875F,10.875F,10.875F,true);
         for(float x:new float[]{5,9.5F})for(float y:new float[]{5,9.5F})for(float z:new float[]{5,9.5F})ectoBox(core,x,y,z,x+1.5F,y+1.5F,z+1.5F,"#stone");
         var arm=models().getBuilder(prefix+"_arm").parent(new ModelFile.UncheckedModelFile("minecraft:block/block"))
                 .renderType("minecraft:cutout").texture("stone",modLoc("block/"+stone)).texture("glass","minecraft:block/glass").texture("particle","#stone");
-        ectoBox(arm,5,5,0,11,11,5,"#glass");ectoBox(arm,5,5,0,11,11,1.5F,"#stone");
+        pipeGlass(arm,5.125F,5.125F,1.5F,10.875F,10.875F,5.125F,false);
+        ectoBox(arm,5,5,0,11,11,1.5F,"#stone");
         var multipart=getMultipartBuilder(pipe);multipart.part().modelFile(core).addModel().end();
         for(var direction:Direction.values())multipart.part().modelFile(arm)
                 .rotationX(direction==Direction.UP?270:direction==Direction.DOWN?90:0)
@@ -49,7 +60,8 @@ public final class ModBlockModels extends BlockStateProvider {
                 .addModel().condition(net.minecraft.world.level.block.PipeBlock.PROPERTY_BY_DIRECTION.get(direction),true).end();
         var item=models().getBuilder(prefix+"_inventory").parent(new ModelFile.UncheckedModelFile("minecraft:block/block"))
                 .renderType("minecraft:cutout").texture("stone",modLoc("block/"+stone)).texture("glass","minecraft:block/glass").texture("particle","#stone");
-        ectoBox(item,5,5,0,11,11,16,"#glass");ectoBox(item,5,5,0,11,11,2,"#stone");ectoBox(item,5,5,14,11,11,16,"#stone");
+        pipeGlass(item,5.125F,5.125F,2,10.875F,10.875F,14,false);
+        ectoBox(item,5,5,0,11,11,2,"#stone");ectoBox(item,5,5,14,11,11,16,"#stone");
     }
     @Override protected void registerStatesAndModels() {
         ectoInfrastructureModels();
