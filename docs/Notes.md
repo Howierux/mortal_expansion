@@ -581,3 +581,8 @@ See [Grave Porting](GRAVE_PORTING.md) for mechanics and migration details. The b
 ### 2026-10-14 - Higher flower-tended Grave naturalization chance
 
 Raised the existing daily flower-tended naturalization chance from 5% to 20%. Supernatural-or-higher chunk Haunt, flower search radius, one-point local cost, loaded-day scheduling and no catch-up rolls remain unchanged. The Book and Grave Porting documentation state the new chance.
+
+
+### 2026-10-14 - Visible green square spectral footprints
+
+Changed Second Sight trails from lightning/weather-target bootprints to full-bright green square steps with a soft halo on the main world render target. Explicit buffer flush, downward surface collision rays and a short packet grace interval address hidden/flickering marks. Server site discovery and effect timing are unchanged. See [Spectral discovery](SPECTRAL_DISCOVERY.md).
