@@ -31,4 +31,33 @@ public final class EctoInfrastructureGameTests {
                 && level.getBlockEntity(pos.north()) instanceof com.howierux.mortalexpansion.blockentity.EctoFluidBlockEntity,"Pipes and tanks expose their fluid storage block entities");
         player.discard();h.succeed();
     }
+    @GameTest(template="deferred_items_test")
+    public static void clicking_connected_arm_changes_its_mode_not_its_surface_face(GameTestHelper h){
+        var pos=h.absolutePos(new BlockPos(5,3,5));var level=h.getLevel();var player=h.makeMockServerPlayerInLevel();
+        for(var block:new Block[]{ModBlocks.ECTO_PIPE.get(),ModBlocks.PURIFIED_ECTO_PIPE.get()}){
+            for(var arm:Direction.values()){
+                level.removeBlock(pos,false);
+                for(var direction:Direction.values())level.setBlock(pos.relative(direction),ModBlocks.ECTANK.get().defaultBlockState(),3);
+                var state=block.defaultBlockState();for(var direction:Direction.values())state=state.setValue(PipeBlock.PROPERTY_BY_DIRECTION.get(direction),true);
+                level.setBlock(pos,state,3);
+                var pipe=(com.howierux.mortalexpansion.blockentity.EctoFluidBlockEntity)level.getBlockEntity(pos);
+                var surface=arm.getAxis()==Direction.Axis.Y?Direction.EAST:Direction.UP;
+                var location=pos.getCenter().add(arm.getStepX()*0.4+surface.getStepX()*0.1875,
+                        arm.getStepY()*0.4+surface.getStepY()*0.1875,arm.getStepZ()*0.4+surface.getStepZ()*0.1875);
+                var hit=new BlockHitResult(location,surface,pos,false);
+                for(int mode=1;mode<=3;mode++){
+                    state.useWithoutItem(level,player,hit);
+                    h.assertTrue(pipe.mode(arm)==mode,"Clicking the arm selects its connected direction for each mode");
+                    h.assertTrue(pipe.mode(surface)==0,"The arm's visible surface face remains unchanged");
+                }
+                var detached=com.howierux.mortalexpansion.block.EctoPipeBlock.connections(level,pos,state);
+                level.setBlock(pos,detached,2);
+                h.assertFalse(detached.getValue(PipeBlock.PROPERTY_BY_DIRECTION.get(arm)),"Disabled arm retracts");
+                var centerHit=new BlockHitResult(pos.getCenter().add(arm.getStepX()*0.1875,arm.getStepY()*0.1875,arm.getStepZ()*0.1875),arm,pos,false);
+                detached.useWithoutItem(level,player,centerHit);
+                h.assertTrue(pipe.mode(arm)==0,"Core face can re-enable a retracted arm");
+            }
+        }
+        player.discard();h.succeed();
+    }
 }

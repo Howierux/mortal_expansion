@@ -43,10 +43,20 @@ public final class EctoPipeBlock extends PipeBlock implements net.minecraft.worl
     @Override protected net.minecraft.world.ItemInteractionResult useItemOn(net.minecraft.world.item.ItemStack stack,BlockState state,Level level,BlockPos pos,net.minecraft.world.entity.player.Player player,net.minecraft.world.InteractionHand hand,net.minecraft.world.phys.BlockHitResult hit){
         return EctankBlock.interact(stack,state,level,pos,player,hand,hit);
     }
+    private static Direction selectedSide(BlockState state,BlockPos pos,net.minecraft.world.phys.BlockHitResult hit){
+        // An arm's side surface faces the viewer, not the tank it connects to.
+        // Resolve the arm from its position outside the central 6/16 cube instead.
+        var offset=hit.getLocation().subtract(pos.getX()+0.5,pos.getY()+0.5,pos.getZ()+0.5);
+        for(var side:Direction.values())
+            if(state.getValue(PROPERTY_BY_DIRECTION.get(side))
+                    && offset.x*side.getStepX()+offset.y*side.getStepY()+offset.z*side.getStepZ()>0.1875+1.0E-6)
+                return side;
+        return hit.getDirection();
+    }
     @Override protected net.minecraft.world.InteractionResult useWithoutItem(BlockState state,Level level,BlockPos pos,net.minecraft.world.entity.player.Player player,net.minecraft.world.phys.BlockHitResult hit){
         if(!level.isClientSide && level.getBlockEntity(pos) instanceof com.howierux.mortalexpansion.blockentity.EctoFluidBlockEntity pipe){
-            pipe.cycle(hit.getDirection());player.displayClientMessage(net.minecraft.network.chat.Component.translatable(
-                    "message.mortal_expansion.ecto_pipe.mode",net.minecraft.network.chat.Component.translatable("message.mortal_expansion.ecto_pipe.mode."+pipe.mode(hit.getDirection()))),true);
+            var side=selectedSide(state,pos,hit);pipe.cycle(side);player.displayClientMessage(net.minecraft.network.chat.Component.translatable(
+                    "message.mortal_expansion.ecto_pipe.mode",net.minecraft.network.chat.Component.translatable("message.mortal_expansion.ecto_pipe.mode."+pipe.mode(side))),true);
         }
         return net.minecraft.world.InteractionResult.sidedSuccess(level.isClientSide);
     }
