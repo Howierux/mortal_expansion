@@ -567,3 +567,12 @@ Replaced ten block/borrowed foliage inventory icons with transparent pixel sprit
 The user confirmed that Grave Moss fire cleansing is covered by the existing Altar of Purity and Altar of Impurity systems. The separate one-point-per-item dropped-moss fire mechanic and its validation checklist are closed as superseded, not claimed as implemented.
 
 Spiritwells are required only in the Overworld. Nether and End worldgen is removed from future scope. This decision supersedes the 2026-10-04 note about eventual generation in those dimensions; existing dimension-aware indexes are retained. No gameplay code changes are needed for these two planning updates.
+
+
+### 2026-10-14 - Grave Porting across dimensions and void damage
+
+The user selected Grave Porting: a loaded naturalized Grave bearing its owner's player name is eligible when a fully fleshed (64) Bone Block is within three blocks. Right-clicking an Overworld Spiritwell lists eligible loaded Graves across every dimension. A successful port consumes the entire nearby frame and adds one personal Haunt point. The Grave remains. Loaded-only lookup, ownership, one-use confirmation tokens, safe arrival and dimension-travel cancellation are validated; no lookup generates terrain or adds chunk tickets.
+
+Void damage explicitly bypasses intangible defense for spectral mobs and garb wearers. Dedicated checks verify ordinary damage amounts. All 175 server gameplay tests, build, book-layout and generated-resource checks passed. Client menu appearance remains a playtest check. Local playtest files are updated only when requested.
+
+See [Grave Porting](GRAVE_PORTING.md) for mechanics and migration details. The broader portal/ritual travel network remains a separate proposal.

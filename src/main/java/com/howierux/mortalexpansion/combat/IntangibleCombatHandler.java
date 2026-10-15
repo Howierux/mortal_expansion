@@ -19,6 +19,8 @@ public final class IntangibleCombatHandler {
 
     @SubscribeEvent
     public static void onIncomingDamage(LivingIncomingDamageEvent event) {
+        // Void is a world boundary, never a spectral defense exception.
+        if(event.getSource().is(net.minecraft.world.damagesource.DamageTypes.FELL_OUT_OF_WORLD))return;
         applyIntangibleArmorProtection(event);
 
         ItemStack weapon = event.getSource().getWeaponItem();

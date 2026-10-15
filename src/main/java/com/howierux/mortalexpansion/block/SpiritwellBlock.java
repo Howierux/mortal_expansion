@@ -19,7 +19,14 @@ public final class SpiritwellBlock extends BaseEntityBlock {
     @Override protected MapCodec<? extends BaseEntityBlock> codec() { return CODEC; }
     @Override protected RenderShape getRenderShape(BlockState state) { return RenderShape.INVISIBLE; }
     @Override protected VoxelShape getShape(BlockState state, BlockGetter level, BlockPos pos, CollisionContext context) {
-        return Shapes.empty();
+        return Shapes.box(0.2,0.2,0.2,0.8,0.8,0.8);
+    }
+    @Override protected VoxelShape getCollisionShape(BlockState state,BlockGetter level,BlockPos pos,CollisionContext context){return Shapes.empty();}
+    @Override protected net.minecraft.world.InteractionResult useWithoutItem(BlockState state,net.minecraft.world.level.Level level,
+            BlockPos pos,net.minecraft.world.entity.player.Player player,net.minecraft.world.phys.BlockHitResult hit){
+        if(player instanceof net.minecraft.server.level.ServerPlayer server)
+            com.howierux.mortalexpansion.spiritwell.GravePorting.open(server,pos);
+        return net.minecraft.world.InteractionResult.sidedSuccess(level.isClientSide);
     }
     @Override public BlockEntity newBlockEntity(BlockPos pos, BlockState state) {
         return new SpiritwellBlockEntity(pos, state);

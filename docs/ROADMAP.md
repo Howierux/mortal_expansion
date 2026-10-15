@@ -639,3 +639,13 @@ The personal tier attachment now defaults to Natural instead of Void, giving new
 ### 2026-10-12 - Temporary ingredient-informed item art
 
 Replaced ten block/borrowed foliage inventory icons with transparent pixel sprites: both threads, three machines, Mortality Research Station, both altars, Grave Moss and Spiritwood sapling. Designs reflect crafting ingredients or natural sources, and use distinct temporary filenames. Java-generated item models point to the new sprites; world blocks and gameplay are unchanged. Build/data generation and guide/resource checks pass. Client readability remains a playtest check. See [Item art and prompts](TEMPORARY_ITEM_ART.md).
+
+
+### 2026-10-14 - Grave Porting and void damage
+
+- [x] Void damage bypasses spectral/garb intangibility.
+- [x] Loaded naturalized player-named Graves with a 64-flesh bone frame within three blocks can be selected from a Spiritwell across dimensions.
+- [x] Successful port consumes the full frame and adds one personal Haunt point; confirmation revalidates loading, ownership, resources and safe arrival.
+- [x] Book guidance and dedicated documentation: [Grave Porting](GRAVE_PORTING.md).
+
+This implements Grave Porting, not the broader linked portal/ritual network proposal. Nether/End Spiritwell generation remains out of scope.

@@ -1,4 +1,13 @@
 {
+  "guide.mortal_expansion.grave_porting.name": "Grave Porting",
+  "guide.mortal_expansion.grave_porting.page.1": "Naturalize a Grave bearing your player name. Apply 64 Rotten Flesh to a Bone Block within three blocks of it. Distance includes height.",
+  "guide.mortal_expansion.grave_porting.page.2": "Right-click a Spiritwell to choose one of your eligible loaded Graves, in any dimension. The Grave and its fully fleshed frame must remain loaded.",
+  "guide.mortal_expansion.grave_porting.page.3": "A successful port consumes the bone frame and all 64 flesh, adds one personal Haunt point, and keeps the Grave. Leave a safe landing nearby.",
+  "screen.mortal_expansion.grave_port.title": "Grave Porting",
+  "screen.mortal_expansion.grave_port.cost": "+1 personal Haunt; consumes the 64-flesh bone frame",
+  "screen.mortal_expansion.grave_port.empty": "No eligible loaded Graves.",
+  "message.mortal_expansion.grave_port.success": "Your grave calls you home. Personal Haunt rises by one.",
+  "message.mortal_expansion.grave_port.failed": "The path has closed. Check the Grave, frame and landing space.",
   "guide.mortal_expansion.wisp_o_lantern.name": "Wisp o' Lantern",
   "guide.mortal_expansion.wisp_o_lantern.page.1": "At night, Carved Pumpkins in Supernatural or higher Haunt may awaken: a 2% chance per loaded minute. Conversion lowers chunk Haunt by one point.",
   "guide.mortal_expansion.wisp_o_lantern.page.2": "Every 20 loaded nighttime minutes, a lantern tries to spawn one Ghost if a player is within 32 blocks. Four nearby Ghosts stop more spawning.",

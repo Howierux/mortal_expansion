@@ -50,6 +50,14 @@ public final class GraveBlockEntity extends BlockEntity {
         super(ModBlockEntities.GRAVE.get(), pos, state);
     }
 
+    @Override public void onLoad(){
+        super.onLoad();
+        if(level instanceof ServerLevel server)com.howierux.mortalexpansion.spiritwell.GravePorting.loaded(server,worldPosition);
+    }
+    @Override public void setRemoved(){
+        if(level instanceof ServerLevel server)com.howierux.mortalexpansion.spiritwell.GravePorting.unloaded(server,worldPosition);
+        super.setRemoved();
+    }
     public boolean isNaturallyGenerated() {
         return naturallyGenerated;
     }
