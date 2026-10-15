@@ -11,3 +11,7 @@ Only Grave block entities observed through native onLoad/setRemoved lifecycle ho
 The Book of Ectcetera has a three-page Grave Porting branch from Spiritwells in the Bones/Spirits tab. Preserve loaded-only lookup, resource consumption, safe landing and replay protection when migrating versions.
 
 Void damage explicitly bypasses intangibility protection for spectral mobs and garb wearers; native void damage timing and creative/spectator rules remain in place.
+
+## Flower-tended naturalization
+
+At Supernatural or higher chunk Haunt, a placed Grave with a flower within three blocks horizontally and two blocks vertically has a 20% chance to naturalize on each new Minecraft day while loaded (previously 5%). Success spends one local Haunt point. More flowers do not stack the chance. Loading a Grave records the day without a roll, and missed unloaded days are not replayed.

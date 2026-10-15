@@ -576,3 +576,8 @@ The user selected Grave Porting: a loaded naturalized Grave bearing its owner's 
 Void damage explicitly bypasses intangible defense for spectral mobs and garb wearers. Dedicated checks verify ordinary damage amounts. All 175 server gameplay tests, build, book-layout and generated-resource checks passed. Client menu appearance remains a playtest check. Local playtest files are updated only when requested.
 
 See [Grave Porting](GRAVE_PORTING.md) for mechanics and migration details. The broader portal/ritual travel network remains a separate proposal.
+
+
+### 2026-10-14 - Higher flower-tended Grave naturalization chance
+
+Raised the existing daily flower-tended naturalization chance from 5% to 20%. Supernatural-or-higher chunk Haunt, flower search radius, one-point local cost, loaded-day scheduling and no catch-up rolls remain unchanged. The Book and Grave Porting documentation state the new chance.

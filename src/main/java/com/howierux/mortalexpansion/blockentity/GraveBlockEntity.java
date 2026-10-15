@@ -26,8 +26,8 @@ public final class GraveBlockEntity extends BlockEntity {
     private static final String NAMING_OWNER_TAG = "NamingOwner";
     private static final String RESPAWN_OWNER_TAG = "RespawnOwner";
 
-    /** Low daily chance for a qualifying placed Grave to become natural. */
-    private static final float NATURALIZATION_CHANCE = 0.05F;
+    /** Daily chance for a flower-tended placed Grave to become natural. */
+    private static final float NATURALIZATION_CHANCE = 0.20F;
 
     private boolean naturallyGenerated;
     private String inscription = "";
