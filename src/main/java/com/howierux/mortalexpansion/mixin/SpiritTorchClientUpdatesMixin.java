@@ -16,6 +16,9 @@ public abstract class SpiritTorchClientUpdatesMixin {
     private void mortalExpansion$updateClientTorchIndex(BlockPos pos, BlockState oldState,
             BlockState newState, CallbackInfo callback) {
         Level level = (Level)(Object)this;
-        if (level.isClientSide) SpiritTorchBarrierTracker.onBlockChanged(level, pos, oldState, newState);
+        if (level.isClientSide) {
+            SpiritTorchBarrierTracker.onBlockChanged(level, pos, oldState, newState);
+            com.howierux.mortalexpansion.entity.mob.HolySaltBarrierTracker.onBlockChanged(level,pos,oldState,newState);
+        }
     }
 }

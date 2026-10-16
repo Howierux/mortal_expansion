@@ -69,6 +69,7 @@ public final class MortalExpansion {
 
         NeoForge.EVENT_BUS.register(com.howierux.mortalexpansion.sanctification.SanctifiedAreaHandler.class);
         NeoForge.EVENT_BUS.register(com.howierux.mortalexpansion.entity.mob.SpiritTorchBarrierTracker.class);
+        NeoForge.EVENT_BUS.register(com.howierux.mortalexpansion.entity.mob.HolySaltBarrierTracker.class);
         NeoForge.EVENT_BUS.register(com.howierux.mortalexpansion.spiritwell.SpiritwellProtection.class);
         NeoForge.EVENT_BUS.register(com.howierux.mortalexpansion.haunt.WispLanternConversion.class);
         NeoForge.EVENT_BUS.register(com.howierux.mortalexpansion.haunt.MortalGolemFormation.class);

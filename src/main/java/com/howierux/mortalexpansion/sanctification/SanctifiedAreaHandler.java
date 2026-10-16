@@ -18,17 +18,21 @@ import java.util.HashMap;
 import java.util.HashSet;
 import java.util.Map;
 import java.util.Set;
-import java.util.WeakHashMap;
 
 /** No level/chunk lookups during world generation: chunk indexing reads the supplied sections only. */
 public final class SanctifiedAreaHandler {
     private SanctifiedAreaHandler() {}
-    private static final Map<Level, Index> INDEXES = new WeakHashMap<>();
+    private static final Map<Level, Index> INDEXES = new java.util.concurrent.ConcurrentHashMap<>();
+    private static final int MAX_SEARCHES_PER_TICK=2;
+    // A barrier-free square of this radius already exceeds the bounded flood-fill area.
+    private static final int NEAR_RADIUS=(int)Math.ceil(Math.sqrt(SaltEnclosure.MAX_AREA)/2.0);
 
     private static final class Index {
         final Map<Long, Set<BlockPos>> chunks = new HashMap<>();
         final Map<Long, Integer> columns = new HashMap<>();
         final Map<Long, Boolean> areas = new HashMap<>();
+        long searchTick=Long.MIN_VALUE;
+        int searches;
     }
 
     private static long chunkKey(int x, int z) { return SaltEnclosure.key(x >> 4, z >> 4); }
@@ -102,14 +106,29 @@ public final class SanctifiedAreaHandler {
     }
 
     @SubscribeEvent
+    public static void onLevelUnload(net.neoforged.neoforge.event.level.LevelEvent.Unload event){
+        if(event.getLevel() instanceof Level level)INDEXES.remove(level);
+    }
+
+    @SubscribeEvent
     public static void onEntityTick(EntityTickEvent.Post event) {
         if (!(event.getEntity() instanceof Mob mob) || !mob.isAlive()
                 || !(mob.level() instanceof ServerLevel level) || mob.tickCount % 10 != 0) return;
         Index index = index(level);
         if (index.columns.isEmpty() && !SpiritTorchBarrierTracker.hasBarriers(level)) return;
         long start = SaltEnclosure.key(mob.blockPosition().getX(), mob.blockPosition().getZ());
+        if(index.areas.size()>65536)index.areas.clear();
         Boolean enclosed = index.areas.get(start);
         if (enclosed == null) {
+            if(!com.howierux.mortalexpansion.entity.mob.HolySaltBarrierTracker.hasSaltNear(level,mob.blockPosition(),NEAR_RADIUS)
+                    && !SpiritTorchBarrierTracker.hasBarriersNear(level,mob.blockPosition(),NEAR_RADIUS)){
+                index.areas.put(start,false);return;
+            }
+            if(index.searchTick!=level.getGameTime()){index.searchTick=level.getGameTime();index.searches=0;}
+            // Cold/invalidated regions cannot make every loaded mob flood-fill in the same tick.
+            // Cached regions still refresh immediately; deferred misses retry on the next poll.
+            if(index.searches>=MAX_SEARCHES_PER_TICK)return;
+            index.searches++;
             SaltEnclosure.Result result = SaltEnclosure.find(start, cell -> index.columns.containsKey(cell)
                             || SpiritTorchBarrierTracker.hasBarrierColumn(level,
                                     SaltEnclosure.x(cell), SaltEnclosure.z(cell)),
@@ -117,6 +136,9 @@ public final class SanctifiedAreaHandler {
             // Bound memory for wandering mobs and large servers.
             if (index.areas.size() > 65536) index.areas.clear();
             result.interior().forEach(cell -> index.areas.put(cell, result.enclosed()));
+            // A mob standing on a barrier yields an empty interior. Cache that origin too,
+            // otherwise the same boundary mobs can consume every cold-search slot repeatedly.
+            index.areas.put(start,result.enclosed());
             enclosed = result.enclosed();
         }
         if (enclosed) mob.addEffect(new MobEffectInstance(ModEffects.SANCTIFIED, 12, 0, true, true, true));

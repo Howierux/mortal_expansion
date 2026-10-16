@@ -13,13 +13,14 @@ import java.util.*;
 
 /** Loaded-chunk index; queries never scan world height or force a chunk load. */
 public final class SpiritTorchBarrierTracker {
-    private static final Map<Level, Index> LEVELS = new WeakHashMap<>();
+    private static final Map<Level, Index> LEVELS = new java.util.concurrent.ConcurrentHashMap<>();
     private SpiritTorchBarrierTracker() {}
 
     private static final class Index {
         final Map<Long, Set<BlockPos>> chunks = new HashMap<>();
         final Map<Long, Integer> columns = new HashMap<>();
         Set<Long> walls = Set.of();
+        final Set<Long> wallChunks = new HashSet<>();
 
         void count(BlockPos pos, int change) {
             long column = SpiritTorchLinks.key(pos.getX(), pos.getZ());
@@ -34,6 +35,8 @@ public final class SpiritTorchBarrierTracker {
         void rebuild(Level level) {
             walls = SpiritTorchLinks.build(columns.keySet(), column ->
                     chunks.containsKey(chunkKey(SpiritTorchLinks.x(column), SpiritTorchLinks.z(column))));
+            wallChunks.clear();
+            for(long column:walls)wallChunks.add(chunkKey(SpiritTorchLinks.x(column),SpiritTorchLinks.z(column)));
             SanctifiedAreaHandler.invalidateAreas(level);
         }
     }
@@ -81,6 +84,14 @@ public final class SpiritTorchBarrierTracker {
         return index != null && index.walls.contains(SpiritTorchLinks.key(x, z));
     }
 
+    public static boolean hasBarriersNear(Level level,BlockPos pos,int radius){
+        Index index=LEVELS.get(level);if(index==null || index.wallChunks.isEmpty())return false;
+        for(int x=(pos.getX()-radius)>>4;x<=(pos.getX()+radius)>>4;x++)
+            for(int z=(pos.getZ()-radius)>>4;z<=(pos.getZ()+radius)>>4;z++)
+                if(index.wallChunks.contains(SpiritTorchLinks.key(x,z)))return true;
+        return false;
+    }
+
     @SubscribeEvent
     public static void onChunkLoad(ChunkEvent.Load event) {
         if (!(event.getLevel() instanceof Level level)
@@ -119,5 +130,9 @@ public final class SpiritTorchBarrierTracker {
         var pos = event.getChunk().getPos();
         index.forget(SpiritTorchLinks.key(pos.x, pos.z));
         index.rebuild(level);
+    }
+    @SubscribeEvent
+    public static void onLevelUnload(net.neoforged.neoforge.event.level.LevelEvent.Unload event){
+        if(event.getLevel() instanceof Level level)LEVELS.remove(level);
     }
 }

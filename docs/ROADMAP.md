@@ -679,3 +679,10 @@ See [Armor trims and art](ARMOR_TRIMS.md).
 - [x] Material-based Ghost/Haint woven inventory and worn art, with a distinct plated Spectralite Haint combination retaining trim support.
 
 See [Garb art and prompts](WOVEN_GARB_ART.md).
+
+### 2026-10-15 - Holy Salt cleanup and workload bounds
+
+- [x] Loaded-only salt collision index, client update/correction handling, stacked-column counts and chunk/level eviction.
+- [x] Nearby-barrier filtering and bounded cold enclosure searches while salt is active.
+
+See [Holy Salt barriers](HOLY_SALT_BARRIERS.md) for findings, limits and validation.
