@@ -50,6 +50,10 @@ public abstract class ModTags<T> extends TagsProvider<T> {
             super(output, Registries.ITEM, lookup, helper);
         }
         @Override protected void addTags(HolderLookup.Provider lookup) {
+            for(String family:new String[]{"bloodstone","spectralite","spectralite_haint"})
+                for(String piece:new String[]{"helmet","chestplate","leggings","boots"})
+                    tag(net.minecraft.tags.ItemTags.TRIMMABLE_ARMOR).add(ResourceKey.create(registryKey,ResourceLocation.fromNamespaceAndPath(MortalExpansion.MOD_ID,family+"_"+piece)));
+
             tag(com.howierux.mortalexpansion.entity.mob.MortalGolemEntity.LURE_ITEMS)
                     .add(net.minecraft.core.registries.BuiltInRegistries.ITEM.getResourceKey(net.minecraft.world.item.Items.ROTTEN_FLESH).orElseThrow(),
                             net.minecraft.core.registries.BuiltInRegistries.ITEM.getResourceKey(net.minecraft.world.item.Items.BONE).orElseThrow(),

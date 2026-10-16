@@ -41,6 +41,24 @@ public final class ModItemModels extends ItemModelProvider {
                     .model(new ModelFile.UncheckedModelFile("mortal_expansion:item/emf_reader_" + lit)).end();
         }
     }
+    private void mineralArmorModels(){
+        for(String family:new String[]{"bloodstone","spectralite","spectralite_haint"})
+            for(String piece:new String[]{"helmet","chestplate","leggings","boots"}){
+                String id=family+"_"+piece;
+                String art=(family.equals("bloodstone")?"bloodstone":"spectralite")+"_"+piece+"_armor";
+                var base=getBuilder(id).parent(new ModelFile.UncheckedModelFile("minecraft:item/generated"))
+                        .texture("layer0",modLoc("item/"+art));
+                // Mojang's published list supplies indices and material names across version changes.
+                for(var trim:net.minecraft.data.models.ItemModelGenerators.GENERATED_TRIM_MODELS){
+                    var variant=getBuilder(id+"_"+trim.name()+"_trim")
+                            .parent(new ModelFile.UncheckedModelFile("minecraft:item/generated"))
+                            .texture("layer0",modLoc("item/"+art))
+                            .texture("layer1","minecraft:trims/items/"+piece+"_trim_"+trim.name());
+                    base.override().predicate(net.minecraft.data.models.ItemModelGenerators.TRIM_TYPE_PREDICATE_ID,trim.itemModelIndex())
+                            .model(variant).end();
+                }
+            }
+    }
     @Override protected void registerModels() {
         withExistingParent("ectank",modLoc("block/ectank"));
         withExistingParent("purified_ectank",modLoc("block/purified_ectank"));
@@ -333,5 +351,6 @@ public final class ModItemModels extends ItemModelProvider {
             getBuilder(item).parent(new ModelFile.UncheckedModelFile("minecraft:item/generated"))
                     .texture("layer0", "mortal_expansion:item/"+item+"_temporary");
         }
+        mineralArmorModels();
     }
 }

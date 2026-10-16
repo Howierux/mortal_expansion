@@ -666,3 +666,10 @@ See [Ecto infrastructure](ECTO_INFRASTRUCTURE.md). The historical Liquefactor re
 - [x] Native magic damage reaches intangible targets; normal projectile collision stops bolts at walls.
 
 See [Spectral retaliation](SPECTRAL_RETALIATION.md) for initial range, timing and damage.
+
+### 2026-10-15 - Mineral armor art and smithing trims
+
+- [x] Vanilla smithing armor trims for Bloodstone, Spectralite and Spectralite Haint, with generated inventory trim overlays and native worn overlays.
+- [x] Dedicated recipe-informed Bloodstone and Spectralite inventory/worn textures.
+
+See [Armor trims and art](ARMOR_TRIMS.md).

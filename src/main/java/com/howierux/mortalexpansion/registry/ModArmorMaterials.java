@@ -40,7 +40,7 @@ public final class ModArmorMaterials {
                     SoundEvents.ARMOR_EQUIP_DIAMOND,
                     () -> Ingredient.of(ModItems.BLOODSTONE.get()),
                     List.of(new ArmorMaterial.Layer(
-                            ResourceLocation.withDefaultNamespace("diamond")
+                            ResourceLocation.fromNamespaceAndPath(MortalExpansion.MOD_ID,"bloodstone_armor")
                     )),
                     2.0F,
                     0.0F
@@ -66,7 +66,7 @@ public final class ModArmorMaterials {
                     SoundEvents.ARMOR_EQUIP_NETHERITE,
                     () -> Ingredient.of(Items.NETHERITE_INGOT),
                     List.of(new ArmorMaterial.Layer(
-                            ResourceLocation.withDefaultNamespace("netherite")
+                            ResourceLocation.fromNamespaceAndPath(MortalExpansion.MOD_ID,"spectralite_armor")
                     )),
                     3.0F,
                     0.1F

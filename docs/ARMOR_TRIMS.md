@@ -1,0 +1,17 @@
+# Mineral armor and smithing trims
+
+Bloodstone, Spectralite and Spectralite Haint armor pieces accept vanilla armor trim smithing templates and trim materials. Use a template, the armor piece, and the usual trim material in a smithing table. Trimming remains cosmetic; armor defenses, durability, repair ingredients and special benefits are unchanged. Bloodstone-to-Spectralite smithing preserves existing trims along with name, enchantments and wear. Ghost and Haint Garb are outside this change.
+
+Item tags and trim model variants are generated from Java providers. The item variants use Mojang's published GENERATED_TRIM_MODELS list and native trim_type predicate instead of a second hardcoded material/index table. Worn trim rendering uses Minecraft's native armor trim layer. New custom trim materials from other mods may need their own inventory model integration, as with vanilla armor; the native smithing and worn-trim systems remain extensible.
+
+## Art
+
+The recipe lineage informs the art: Bloodstone armor is crafted from Bloodstone and has crimson mineral plates, burgundy shading and ruby highlights. Spectralite is a Netherite upgrade to Bloodstone, so it keeps red seams under dark Netherite plating with restrained spectral teal accents. Spectralite Haint shares Spectralite's physical armor art. The new filenames preserve the old borrowed placeholder assets.
+
+Eight inventory sprites are 16x16 RGBA PNGs in src/main/resources/assets/mortal_expansion/textures/item/, named bloodstone_{helmet,chestplate,leggings,boots}_armor.png and spectralite_{helmet,chestplate,leggings,boots}_armor.png. Four worn textures are 64x32 RGBA PNGs in textures/models/armor/, named bloodstone_armor_layer_{1,2}.png and spectralite_armor_layer_{1,2}.png. Both native armor layer UV masks are retained exactly. Generated art was extracted into tiles and baked into those native masks, preserving opaque UV coverage and transparent gutters.
+
+Art uses the built-in image generation tool with a vanilla-layout reference sheet. No API/CLI fallback was used. Inventory readability and worn presentation remain a playtest check.
+
+### Final generation prompt
+
+Use case: precise-object-edit. Asset: Minecraft armor texture atlas for an actual game mod, not concept art. EDIT the provided atlas without moving, scaling, adding or removing ANY pixel silhouette or UV island. Preserve exact aspect ratio, transparent background, empty gutters, pixel grid and positions. TOP HALF: replace cyan diamond armor (four tiny item icons at top and two unfolded armor skin/UV sheets below) with BLOODSTONE armor: deep crimson red mineral plates, burgundy shadows, ruby highlights, subtle dark rock grain. BOTTOM HALF: replace gray netherite armor with SPECTRALITE armor: dark charcoal/netherite plates over the same bloodstone foundation, narrow deep crimson seams and restrained pale spectral teal highlights. Recipe lineage: Bloodstone armor is made entirely of Bloodstone gems; Spectralite upgrades Bloodstone with a Netherite ingot. Keep designs modest so future vanilla armor trims remain readable. Apply matching material designs to both inventory icons and unfolded worn textures. This is a technical texture recolor with new pixel surface detail. Do NOT draw assembled armor, characters, lettering, labels, extra assets, shadows outside existing opaque pixels, or presentation borders. Maintain all original UV geometry precisely. Output the edited atlas on true transparency.
