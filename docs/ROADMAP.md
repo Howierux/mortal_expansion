@@ -673,3 +673,9 @@ See [Spectral retaliation](SPECTRAL_RETALIATION.md) for initial range, timing an
 - [x] Dedicated recipe-informed Bloodstone and Spectralite inventory/worn textures.
 
 See [Armor trims and art](ARMOR_TRIMS.md).
+
+### 2026-10-15 - Woven garb appearance
+
+- [x] Material-based Ghost/Haint woven inventory and worn art, with a distinct plated Spectralite Haint combination retaining trim support.
+
+See [Garb art and prompts](WOVEN_GARB_ART.md).

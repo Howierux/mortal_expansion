@@ -74,19 +74,18 @@ public final class ModArmorMaterials {
     );
 
     public static final Holder<ArmorMaterial> GHOST_GARB = ARMOR_MATERIALS.register("ghost_garb",
-            () -> garbMaterial(() -> Ingredient.of(ModItems.ECTOTHREAD.get())));
+            () -> garbMaterial(() -> Ingredient.of(ModItems.ECTOTHREAD.get()), "ghost_garb_woven"));
     public static final Holder<ArmorMaterial> HAINT_GARB = ARMOR_MATERIALS.register("haint_garb",
-            () -> garbMaterial(() -> Ingredient.of(ModItems.PURIFIED_ECTOTHREAD.get())));
+            () -> garbMaterial(() -> Ingredient.of(ModItems.PURIFIED_ECTOTHREAD.get()), "haint_garb_woven"));
 
-    /** Both garb sets share stats and leather layers; each retains its own repair ingredient. */
-    private static ArmorMaterial garbMaterial(java.util.function.Supplier<Ingredient> repair) {
+    /** Both garb sets share stats; each has its own woven art and repair ingredient. */
+    private static ArmorMaterial garbMaterial(java.util.function.Supplier<Ingredient> repair, String texture) {
         return new ArmorMaterial(
                 Util.make(new EnumMap<>(ArmorItem.Type.class), map -> {
                     map.put(ArmorItem.Type.HELMET, 1); map.put(ArmorItem.Type.CHESTPLATE, 3);
                     map.put(ArmorItem.Type.LEGGINGS, 2); map.put(ArmorItem.Type.BOOTS, 1); map.put(ArmorItem.Type.BODY, 3);
                 }), 15, SoundEvents.ARMOR_EQUIP_LEATHER, repair,
-                List.of(new ArmorMaterial.Layer(ResourceLocation.withDefaultNamespace("leather"), "", true),
-                        new ArmorMaterial.Layer(ResourceLocation.withDefaultNamespace("leather"), "_overlay", false)), 0.0F, 0.0F);
+                List.of(new ArmorMaterial.Layer(ResourceLocation.fromNamespaceAndPath(MortalExpansion.MOD_ID, texture))), 0.0F, 0.0F);
     }
 
     public static void register(IEventBus modBus) {

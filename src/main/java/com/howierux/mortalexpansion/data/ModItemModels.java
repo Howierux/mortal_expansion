@@ -45,7 +45,7 @@ public final class ModItemModels extends ItemModelProvider {
         for(String family:new String[]{"bloodstone","spectralite","spectralite_haint"})
             for(String piece:new String[]{"helmet","chestplate","leggings","boots"}){
                 String id=family+"_"+piece;
-                String art=(family.equals("bloodstone")?"bloodstone":"spectralite")+"_"+piece+"_armor";
+                String art=family.equals("spectralite_haint")?family+"_"+piece+"_woven":family+"_"+piece+"_armor";
                 var base=getBuilder(id).parent(new ModelFile.UncheckedModelFile("minecraft:item/generated"))
                         .texture("layer0",modLoc("item/"+art));
                 // Mojang's published list supplies indices and material names across version changes.
@@ -92,8 +92,7 @@ public final class ModItemModels extends ItemModelProvider {
         getBuilder("purified_ectothread").parent(new ModelFile.UncheckedModelFile("minecraft:block/light_blue_wool"));
         for (String set : new String[]{"ghost_garb", "haint_garb"}) for (String piece : new String[]{"helmet", "chestplate", "leggings", "boots"}) {
             getBuilder(set + "_" + piece).parent(new ModelFile.UncheckedModelFile("minecraft:item/generated"))
-                    .texture("layer0", "minecraft:item/leather_" + piece)
-                    .texture("layer1", "minecraft:item/leather_" + piece + "_overlay");
+                    .texture("layer0", modLoc("item/"+set+"_"+piece+"_woven"));
         }
         for (String piece : new String[]{"helmet", "chestplate", "leggings", "boots"}) {
             getBuilder("spectralite_haint_" + piece).parent(new ModelFile.UncheckedModelFile("mortal_expansion:item/spectralite_" + piece));

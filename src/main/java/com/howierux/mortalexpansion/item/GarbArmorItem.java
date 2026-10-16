@@ -18,6 +18,15 @@ public final class GarbArmorItem extends SpectralArmorItem {
         spectralite = material.equals(ModArmorMaterials.SPECTRALITE);
     }
 
+    /** Supported NeoForge per-item texture hook keeps the hybrid's material and stats intact. */
+    @Override public net.minecraft.resources.ResourceLocation getArmorTexture(ItemStack stack,
+            net.minecraft.world.entity.Entity entity,net.minecraft.world.entity.EquipmentSlot slot,
+            ArmorMaterial.Layer layer,boolean innerModel){
+        return spectralite?net.minecraft.resources.ResourceLocation.fromNamespaceAndPath(
+                com.howierux.mortalexpansion.MortalExpansion.MOD_ID,
+                "textures/models/armor/spectralite_haint_woven_layer_"+(innerModel?2:1)+".png"):null;
+    }
+
     @Override
     public void appendHoverText(ItemStack stack, TooltipContext context, List<Component> tooltip, TooltipFlag flag) {
         // Plain garb does not have Spectralite's protection against intangible attackers.

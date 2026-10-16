@@ -1,7 +1,7 @@
 {
   "parent": "minecraft:item/generated",
   "textures": {
-    "layer0": "mortal_expansion:item/spectralite_helmet_armor",
+    "layer0": "mortal_expansion:item/spectralite_haint_helmet_woven",
     "layer1": "minecraft:trims/items/helmet_trim_quartz"
   }
 }

@@ -6,7 +6,7 @@ Item tags and trim model variants are generated from Java providers. The item va
 
 ## Art
 
-The recipe lineage informs the art: Bloodstone armor is crafted from Bloodstone and has crimson mineral plates, burgundy shading and ruby highlights. Spectralite is a Netherite upgrade to Bloodstone, so it keeps red seams under dark Netherite plating with restrained spectral teal accents. Spectralite Haint shares Spectralite's physical armor art. The new filenames preserve the old borrowed placeholder assets.
+The recipe lineage informs the art: Bloodstone armor is crafted from Bloodstone and has crimson mineral plates, burgundy shading and ruby highlights. Spectralite is a Netherite upgrade to Bloodstone, so it keeps red seams under dark Netherite plating with restrained spectral teal accents. Spectralite Haint now combines its Spectralite plating with distinct purified woven panels; see WOVEN_GARB_ART.md. The new filenames preserve the old borrowed placeholder assets.
 
 Eight inventory sprites are 16x16 RGBA PNGs in src/main/resources/assets/mortal_expansion/textures/item/, named bloodstone_{helmet,chestplate,leggings,boots}_armor.png and spectralite_{helmet,chestplate,leggings,boots}_armor.png. Four worn textures are 64x32 RGBA PNGs in textures/models/armor/, named bloodstone_armor_layer_{1,2}.png and spectralite_armor_layer_{1,2}.png. Both native armor layer UV masks are retained exactly. Generated art was extracted into tiles and baked into those native masks, preserving opaque UV coverage and transparent gutters.
 
