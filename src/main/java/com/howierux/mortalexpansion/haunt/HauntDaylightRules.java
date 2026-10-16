@@ -14,7 +14,14 @@ import net.minecraft.world.phys.Vec3;
 public final class HauntDaylightRules {
     private HauntDaylightRules() {}
 
+    /** These peaceful spectral creatures are sustained in daylight at every Haunt tier. */
+    private static boolean daylightImmune(Mob mob) {
+        return mob instanceof com.howierux.mortalexpansion.entity.mob.SpiritEntity
+                || mob instanceof com.howierux.mortalexpansion.entity.mob.ElementalEntity;
+    }
+
     public static boolean applies(Mob mob) {
+        if (daylightImmune(mob)) return false;
         return mob instanceof Zombie || mob instanceof AbstractSkeleton
                 || BuiltInRegistries.ENTITY_TYPE.getKey(mob.getType()).getNamespace()
                         .equals(MortalExpansion.MOD_ID);
@@ -27,7 +34,7 @@ public final class HauntDaylightRules {
     }
 
     public static boolean sunlightProtected(Mob mob) {
-        return applies(mob) && mob.level() instanceof ServerLevel level
+        return daylightImmune(mob) || applies(mob) && mob.level() instanceof ServerLevel level
                 && protectionAt(level, mob.blockPosition());
     }
 
@@ -43,6 +50,7 @@ public final class HauntDaylightRules {
     }
 
     public static boolean sustains(ServerLevel level, BlockPos pos, Mob mob) {
+        if (daylightImmune(mob)) return true;
         LevelChunk chunk = level.getChunkSource().getChunkNow(pos.getX() >> 4, pos.getZ() >> 4);
         return chunk != null && HauntTier.fromId(chunk.getData(ModAttachments.HAUNT_TIER)).id()
                 >= minimumDaytimeTier(mob).id();

@@ -7,3 +7,5 @@ Once provoked they approach and fire visible raw-ectoplasm bolts within 16 block
 An attacked Spirit closes its active trade so combat can take priority. Merchant offers, expertise and grave conversion remain intact. Other spirit-family creatures do not acquire these new goals.
 
 The projectile is a registered native ThrowableItemProjectile rendered with the existing raw ectoplasm item; no extra textures, custom packets, damage schemas or mixins are needed. Persisted projectile ownership uses the native entity system. AI registration is confined to SpiritEntity and ElementalEntity; shared projectile behavior is in SpectralBoltEntity.
+
+Spirits and Elementals are intrinsically immune to sunlight at every chunk Haunt tier. They do not seek daytime shelter or restrict travel across chunk boundaries because of sunlight. This exemption does not grant general fire/lava immunity or change other creatures' daylight rules.
