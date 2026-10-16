@@ -9,6 +9,13 @@ public final class GhostEntity extends AbstractMortalMonster implements Horizont
         super(type, level);
     }
 
+    @Override protected void registerGoals(){
+        super.registerGoals();
+        targetSelector.addGoal(4,new net.minecraft.world.entity.ai.goal.target.NearestAttackableTargetGoal<>(
+                this,net.minecraft.world.entity.Mob.class,10,true,false,
+                target->!isAllied() && (target instanceof SpiritEntity || target instanceof ElementalEntity)));
+    }
+
     public static AttributeSupplier.Builder createAttributes() {
         return baseAttributes(24.0D, 0.28D, 5.0D);
     }
