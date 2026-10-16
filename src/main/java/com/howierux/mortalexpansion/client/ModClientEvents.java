@@ -149,6 +149,7 @@ public final class ModClientEvents {
 
     @SubscribeEvent
     public static void registerEntityRenderers(EntityRenderersEvent.RegisterRenderers event) {
+        event.registerEntityRenderer(ModEntities.SPECTRAL_BOLT.get(),net.minecraft.client.renderer.entity.ThrownItemRenderer::new);
         event.registerBlockEntityRenderer(com.howierux.mortalexpansion.registry.ModBlockEntities.SPIRITWELL.get(),
                 SpiritwellRenderer::new);
         event.registerEntityRenderer(EntityType.GHAST, IntangibleGhastRenderer::new);

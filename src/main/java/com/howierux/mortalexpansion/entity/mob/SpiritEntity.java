@@ -17,8 +17,8 @@ import net.minecraft.world.level.Level;
 import net.minecraft.world.level.pathfinder.PathType;
 import net.minecraft.world.phys.Vec3;
 
-/** A passive spirit merchant using vanilla merchant inventory, offers, and menu persistence. */
-public final class SpiritEntity extends AbstractVillager implements HorizontalPhasingMob {
+/** A normally peaceful spirit merchant using vanilla merchant inventory, offers, and menu persistence. */
+public final class SpiritEntity extends AbstractVillager implements HorizontalPhasingMob,net.minecraft.world.entity.monster.RangedAttackMob {
     private static final net.minecraft.network.syncher.EntityDataAccessor<Integer> EXPERTISE = net.minecraft.network.syncher.SynchedEntityData.defineId(SpiritEntity.class, net.minecraft.network.syncher.EntityDataSerializers.INT);
     private static final net.minecraft.network.syncher.EntityDataAccessor<Integer> TRADE_XP = net.minecraft.network.syncher.SynchedEntityData.defineId(SpiritEntity.class, net.minecraft.network.syncher.EntityDataSerializers.INT);
     private BlockPos workstation;
@@ -57,11 +57,23 @@ public final class SpiritEntity extends AbstractVillager implements HorizontalPh
 
     @Override protected void registerGoals() {
         goalSelector.addGoal(0, new FloatGoal(this));
-        goalSelector.addGoal(1, new TradeWithPlayerGoal(this));
+        goalSelector.addGoal(1, new RangedAttackGoal(this,1.0,40,16.0F));
+        targetSelector.addGoal(1,new net.minecraft.world.entity.ai.goal.target.HurtByTargetGoal(this));
+        goalSelector.addGoal(2, new TradeWithPlayerGoal(this));
         goalSelector.addGoal(1, new LookAtTradingPlayerGoal(this));
         goalSelector.addGoal(3, new WaterAvoidingRandomStrollGoal(this, 0.9));
         goalSelector.addGoal(4, new LookAtPlayerGoal(this, Player.class, 8));
         goalSelector.addGoal(5, new RandomLookAroundGoal(this));
+    }
+    @Override public void performRangedAttack(LivingEntity target,float distanceFactor){
+        com.howierux.mortalexpansion.entity.SpectralBoltEntity.fire(this,target);
+    }
+    @Override public boolean hurt(net.minecraft.world.damagesource.DamageSource source,float amount){
+        boolean damaged=super.hurt(source,amount);
+        if(damaged && !level().isClientSide && source.getEntity() instanceof LivingEntity && getTradingPlayer()!=null){
+            getTradingPlayer().closeContainer();setTradingPlayer(null);
+        }
+        return damaged;
     }
     @Override public void move(MoverType type, Vec3 motion) {
         Vec3 safe = SpiritMovement.prepare(this, type, motion);

@@ -659,3 +659,10 @@ This implements Grave Porting, not the broader linked portal/ritual network prop
 - [ ] Tank leakage and additional processing behavior remain separate future features.
 
 See [Ecto infrastructure](ECTO_INFRASTRUCTURE.md). The historical Liquefactor remains a separate unimplemented feature.
+
+### 2026-10-15 - Spirit and Elemental retaliation
+
+- [x] Remain peaceful until damaged by a mob or player, then use visible ranged demi-tangible ectoplasm bolts.
+- [x] Native magic damage reaches intangible targets; normal projectile collision stops bolts at walls.
+
+See [Spectral retaliation](SPECTRAL_RETALIATION.md) for initial range, timing and damage.

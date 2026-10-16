@@ -46,8 +46,8 @@ These are thematic comparisons, not declarations that every detail of a historic
 |---|---|
 | Ghost | Aggressive intangible spirit |
 | Phantom | Empowered, corporeal Ghost; faster when unobserved; leaves a Ghost when slain |
-| Spirit | Passive intangible creature |
-| Elemental | Empowered Spirit |
+| Spirit | Normally peaceful intangible merchant; ranged demi-tangible retaliation when damaged |
+| Elemental | Empowered Spirit; ranged demi-tangible retaliation when damaged |
 | Haunt | Intangible miniboss |
 | Haint | Empowered Haunt that splits into several Haunts when slain |
 | Mummy | Tangible lesser enemy that leaves a Ghost when slain |
@@ -137,3 +137,5 @@ The planned Spiritwell-spawn Haunt effect retains its trigger if no loaded Spiri
 Personal Haunt alone drives 30-second rolls and accepted tier probabilities; each delivered event has a sixty-second player cooldown. Held Spiritwell selections start that cooldown on delivery. Effects range from sounds and fleeting render-only shadows to brief potions, safe one-block shoves, main-inventory swaps, passive Spirits, and Spiritwell Ghosts. Beneficial effects finish one active cooking operation or convert one carried material, with a shared sixty-second chunk cooldown. Holy Water grants sixty seconds of negative-event protection, removes only unchanged haunting-owned negative potions, and cleanses one personal point per minute. Wards protect their covered chunks. Ghost’s Garb immunity/repair hooks exist through an empty item tag; the armor and major encounters are not yet added.
 
 The Altar of Purity stores offering burn time and cleanses loaded chunks in its 3x3 area. See [Altar of Purity](ALTAR_OF_PURITY.md) for fuel, crafting, GUI and persistence details.
+
+Spirit and Elemental ranged retaliation is implemented: see [Spectral retaliation](SPECTRAL_RETALIATION.md).

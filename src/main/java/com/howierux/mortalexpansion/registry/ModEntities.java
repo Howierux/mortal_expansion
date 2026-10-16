@@ -29,6 +29,11 @@ public final class ModEntities {
     public static final DeferredRegister<EntityType<?>> ENTITY_TYPES =
             DeferredRegister.create(Registries.ENTITY_TYPE, MortalExpansion.MOD_ID);
 
+    public static final DeferredHolder<EntityType<?>,EntityType<com.howierux.mortalexpansion.entity.SpectralBoltEntity>> SPECTRAL_BOLT =
+            ENTITY_TYPES.register("spectral_bolt",()->EntityType.Builder
+                    .of(com.howierux.mortalexpansion.entity.SpectralBoltEntity::new,MobCategory.MISC)
+                    .sized(0.25F,0.25F).clientTrackingRange(8).updateInterval(2).build("spectral_bolt"));
+
     public static final DeferredHolder<EntityType<?>, EntityType<com.howierux.mortalexpansion.entity.PlayerCorpseEntity>> PLAYER_CORPSE =
             ENTITY_TYPES.register("player_corpse", () -> EntityType.Builder
                     .of(com.howierux.mortalexpansion.entity.PlayerCorpseEntity::new, MobCategory.MISC)
