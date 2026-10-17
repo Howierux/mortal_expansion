@@ -1,44 +1,47 @@
-# Spectral Insight and aware Ectcetera books
+# Spectral Insight and Secrets of the Dead
 
-Implemented 2026-10-05. Knowledge arrives gradually through the independent beneficial Haunt pool. A Book of Ectcetera becomes aware at its Raw Ectoplasm upgrade (tier 2); the Pure Ectoplasm upgrade (tier 3) enables its final current secret. Merely upgrading or collecting recipe ingredients does not teach the locked recipes.
+Updated 2026-10-16. Book upgrades open subject tiers; **secret recipes are learned gradually through Insight**, rather than automatically when the book is upgraded. The first revelation is a whisper available with a starter book. Raw Ectoplasm (tier 2) makes the book aware; Pure Ectoplasm (tier 3) enables the final current subject tier.
 
-Carry an aware book in the ordinary inventory or either hand. Each successful Spectral Insight reveals one eligible secret family, writes it into the book, teaches the player permanently, awards the matching vanilla recipe-book entries, and whispers a next-step recommendation in chat. A missing book, insufficient personal Haunt, or no new eligible secret means no revelation and no spent cooldown. Benefits remain independent from risks and full garb does not suppress Insight.
+Carry the book in ordinary inventory or either hand. A successful Insight reveals one eligible secret family, writes it into the book, teaches the player permanently, awards recipe-book entries, and gives a next-step hint. If no carried book and unrevealed secret meet the requirements, there is no revelation or spent event cooldown.
 
-| Secret family | Minimum book tier | Minimum personal Haunt | Unlocks |
-| --- | --- | --- | --- |
-| Ectothread | Raw Ectoplasm (2) | Supernatural | Ectothread crafting, output eight |
-| Ghost Garb | Raw Ectoplasm (2) | Dead Rising | Four Ghost Garb armor patterns |
-| Haint Garb | Raw Ectoplasm (2) | Demonic | Purified Ectothread, four Haint patterns, Ghost-to-Haint smithing |
-| Spectralite Haint | Pure Ectoplasm (3) | Abominable | Four Haint-plus-Spectralite smithing combinations |
+## Secret families
 
-Secrets are learned in that order. Earlier families remain known after upgrading, lowering Haunt, losing the book, dying or logging out. Raw-tier awareness can learn both Ghost and Haint Garb; ingredients still impose their normal material progression. Learning Haint weaving reveals its chapter even in a Raw-tier book. The combined Spectralite recipe stays concealed until its own secret is learned.
+| Secret | Minimum book tier | Minimum personal Haunt | Prerequisite knowledge | Recipes |
+| --- | --- | --- | --- | --- |
+| Mortality Research Station | Starter (0) | Natural | None; first eligible revelation | Research station |
+| Ectothread | Raw Ectoplasm (2) | Supernatural | None | Eight Ectothread, regular/purified Dreamcatchers and Dreamcatcher upgrade |
+| Ghost Garb | Raw Ectoplasm (2) | Dead Rising | Ectothread | Four Ghost armor patterns |
+| Haint Garb | Raw Ectoplasm (2) | Demonic | Ectothread and Ghost Garb | Purified Ectothread, four Haint patterns, Ghost-to-Haint smithing |
+| Spectralite Haint | Pure Ectoplasm (3) | Abominable | All three weaving families | Matching Haint/Spectralite smithing combinations |
+| Altar of Impurity | Raw Ectoplasm (2) | Dead Rising | None | Beacon over Haunt Furnace |
+| Altar of Purity | Pure Ectoplasm (3) | Demonic | Altar of Impurity | Beacon over Haint Furnace |
 
-## Book behavior
+The controller checks these families in the order above and reveals the first eligible unknown family. An ineligible earlier family does not block a later eligible one. Ingredient availability remains separate from knowledge: knowing Purified Dreamcatchers does not supply Purified Ectothread or unlock its own recipe early.
 
-The book's tooltip shows awareness and remembered secret count. Its contents hide Ectothread/Ghost/Haint recipe chapters until the book knows them. The new awakening chapter recommends a next step according to current knowledge. An open guide refreshes from synchronized item components when a revelation arrives. Existing upgrade instructions remain at the end of each tier; full contents stay within 128 pages.
+Knowledge survives lowering Haunt, losing a book, death, and logout. A learned book can share secrets with another player, and replacement books absorb their owner's learned secrets when their tier permits them. Stored books do not independently receive revelations.
 
-A learned book can teach another player while carried or read. An aware replacement book remembers knowledge its owner has already learned. Storing the book in a chest prevents new personal revelations; stored books do not independently gain secrets.
+## Presentation and event protection
 
-## Actual crafting restrictions
+Secrets of the Dead has its own research-map chapter from the starting book, with the research whisper as its root. Later nodes retain their book-tier and individual revelation gates. Unrevealed entries conceal their recipes; upgrading alone does not reveal them. Dreamcatchers branch from Ectothread. Open guides refresh from synchronized book components.
 
-Player-operated crafting and smithing reject locked recipes before pickup or ingredient consumption, even if the pattern is entered manually and limited crafting is disabled. Learning refreshes an already-open menu. Unrelated recipes, garb stats, ingredients, smithing templates and component preservation remain unchanged. Existing gear can still be worn or traded without knowing its crafting recipe.
+Insight belongs to the independent beneficial Haunt pool. Full garb permits benefits, while owned loaded Dreamcatchers can intercept both good and bad effects, including research-funded Insight. See [Dreamcatchers](DREAMCATCHER.md). [Mortality Research](MORTALITY_RESEARCH_STATION.md) biases selection; reaching 100% attempts an immediate eligible revelation. Book, personal Haunt, prerequisites, and protection still matter.
 
-Vanilla Crafters cannot bypass the locks. Open a Crafter after learning secrets to teach it your current knowledge; it retains that knowledge and can then work automatically without its teacher being online. An untaught Crafter preserves its inputs and emits the normal failed-crafting sound. Other mods' automated-crafting integrations remain an explicit missing function.
+## Crafting and automation
 
-The ten ingredient-triggered recipe advancements for Ectothread, Purified Ectothread and garb are intentionally removed through Java data generation. Insight awards recipes instead. The recipes and their stable IDs remain present, so learning changes eligibility rather than adding/removing global recipes.
+Crafting and smithing reject locked recipes before result pickup or ingredient consumption, even with limited crafting disabled. Learning refreshes an already-open menu. Existing gear can be used without knowing its recipe.
+
+Vanilla Crafters cannot bypass knowledge locks. Opening a Crafter after learning teaches it current player knowledge for later automatic crafting. Other mods' automated-crafting integrations remain an explicit missing function.
+
+Recipes retain stable IDs and generated definitions. Insight awards their recipe-book entries in place of ordinary ingredient-triggered advancement unlocks. See [data generation](DATA_GENERATION.md).
 
 ## Persistence and migration
 
-The book stores a synchronized/persistent integer secret mask. Player learned knowledge is a codec-backed attachment copied on death. Stable bits are 1 (thread), 2 (Ghost), 4 (Haint), 8 (combined); do not renumber them when adding secrets. Native recipe-book unlocks from earlier builds migrate on login with prerequisites. Existing unmarked legacy full guides retain all current knowledge. Tagged books without the new component start with no personal book revelations; previously learned player recipes remain craftable. Existing equipment is preserved.
+Book secret masks and player knowledge use stable bits: Ectothread 1, Ghost 2, Haint 4, combined 8, Impurity 16, Purity 32, and Research 64 (full mask 127). Never renumber these bits.
 
-Crafting inputs and ordinary recipes have no player context. Post-craft events occur after consumption. Three narrow mixins therefore gate the shared crafting result path, smithing results and vanilla Crafter execution. They delegate all secret rules to focused common helpers. On version migration, verify the targeted menu methods, result-slot synchronization and pre-consumption ordering with the server tests. No new recipe serializer or packet is needed.
+Legacy unmarked full guides retain the original weaving mask 15; they do not automatically grant newly added altar or research secrets. Earlier weaving recipe knowledge migrates on login. Prior ordinary altar recipe unlocks cannot bypass revelation. Book tier, book memory, and permanent player knowledge are separate concepts.
+
+Narrow mixins gate crafting results, smithing results, and vanilla Crafter execution before consumption. On version migration, verify menu methods, synchronization, native recipe remainders, item/player codecs, and pre-consumption ordering. The recipe upgrade system has its own [compatibility notes](BOOK_OF_ECTCETERA.md).
 
 ## Validation
 
-Build and 67 server GameTests pass. New tests cover gradual thresholds/prerequisites, manual crafting, input conservation, live menu refresh, smithing locks, permanent/book/network roundtrips, upgrade preservation, legacy migration, sharing, inventory-order safety, filtered contents and actual automatic crafting. Data generation now has 413 resources after removing ten automatic-unlock advancements. Static and dynamic guide text checks pass. In-game page refresh, hints and recipe-book presentation still need visual playtesting.
-
-Two additional Secrets of the Dead now gate altar crafting: Impurity (bit 16, book tier 2, personal Dead Rising) and Purity (bit 32, book tier 3, personal Demonic, prerequisite bit 16). Knowledge masks support 0–63. Old weaving bits and books migrate without granting these new secrets; prior ordinary Purity recipe unlocks cannot bypass revelation. See [Paired altars](ALTARS_AND_SECRETS.md).
-
-The Mortality Research Station can bias the next eligible Haunt selection toward Spectral Insight using player-owned research points. It does not bypass the book/personal-tier/secret prerequisites. See [Mortality Research](MORTALITY_RESEARCH_STATION.md).
-
-The research station is now the first secret, whispered into even a starter book at Natural personal Haunt. Secrets of the Dead is available from the starting book; other secrets keep their upgrade gates. Its blueprint requires this first reveal, and knowledge masks now support 0–127. See [First research whisper](FIRST_RESEARCH_WHISPER.md).
+Server tests cover gradual revelation, thresholds, prerequisites, recipe locks, conservation, sharing, save/network roundtrips, legacy migration, and vanilla automatic crafting. Historical milestone counts are superseded by [current release status](RELEASE_STATUS.md). In-game readability, feedback, and balance remain playtest concerns.

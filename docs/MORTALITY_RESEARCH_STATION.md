@@ -9,7 +9,7 @@ Place a material in the station and press Research to contribute one item to you
 | Raw Ectoplasm | 10 |
 | Purified Ectoplasm | 20 |
 
-Flesh and bones stack with other contributions. Raw and purified ectoplasm are mutually exclusive within a pending bonus: repeated contributions of the chosen type are allowed, but mixing types is rejected without consumption. Total bonus is capped at 100; capped players and players who already know every secret cannot consume further research materials. A contribution that crosses the cap is limited to 100. The GUI shows the pending percentage and selected ectoplasm type.
+Flesh and bones stack with other contributions. Raw and purified ectoplasm are mutually exclusive within a pending bonus: repeated contributions of the chosen type are allowed, but mixing types is rejected without consumption. Total bonus is capped at 100; capped players and players who already know every secret cannot consume further research materials. A contribution that crosses the cap is limited to 100. The GUI shows the pending percentage and checkboxes indicating whether Raw or Purified Ectoplasm has been contributed.
 
 ## Selection and spending
 
@@ -35,7 +35,7 @@ The two salts and four Obsidian are consumed. The book is returned with its orig
 
 ## Persistence and migration
 
-Two new player attachments store `mortality_research_bonus` (0ÃƒÂ¢Ã¢â€šÂ¬Ã¢â‚¬Å“100) and `mortality_research_ecto` (0: none, 1: raw, 2: purified), copied on death and defaulting to zero in old saves. A new block/item/entity/menu ID stores only native item-handler inventory. The custom supported ShapedRecipe serializer uses a fixed typed pattern and overrides remaining items only for the book. The recipe, model/state, loot and mining tag are generated from Java. Native menu buttons/data slots handle contributions and display; no custom payloads, new mixins or automatic crafting integrations are introduced.
+Two player attachments store `mortality_research_bonus` (0-100) and `mortality_research_ecto` (0: none, 1: raw, 2: purified), copied on death and defaulting to zero in old saves. The station stores a native item-handler inventory. Its supported ShapedRecipe serializer returns the original book. Recipe, models, loot, and tags are generated in Java; native menu buttons/data slots handle research without custom payloads or new mixins.
 
 Migration checks: native recipe remainder behavior, player attachment codecs/copy-on-death, menu action validation, held book eligibility and Haunt selection weighting. Bonus selection is isolated in MortalityResearch and shared by natural rolls and random test commands.
 

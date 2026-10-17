@@ -46,7 +46,7 @@ authors="Howierux and ChatGPT"
 
 # The description text for the mod (multi line!) (#mandatory)
 description='''
-Expanding on the idea of Mortality.
+Explore haunted graveyards, uncover the Secrets of the Dead, and build ectoplasm-powered technology. Trade with spirits, recover from death through Spirit Journey, and master Haunt with spectral equipment, offerings, and defenses.
 '''
 
 # The [[mixins]] block allows you to declare your mixin config to FML so that it gets loaded.

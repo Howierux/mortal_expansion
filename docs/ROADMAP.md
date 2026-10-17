@@ -3,12 +3,14 @@
 **Repository:** https://github.com/Howierux/mortal_expansion  
 **Branches:** `main` (consolidated baseline), `dev` (active work)  
 **Docs:** [Overview](Overview.md), [Notes](Notes.md), [Roadmap](ROADMAP.md)  
-**Last Synced:** 2026-10-12 - Temporary item art synchronized to `dev`; data generation/build and guide/resource checks pass. Gameplay baseline remains 145 tests.
-**Current Phase:** Ambient/beneficial Haunt effects implemented; automated validation passed. Major encounters and Ghost’s Garb armor remain separate work.
+**Last Synced:** 2026-10-16 — Main consolidated through gameplay commit `f6e36d8`; build and all 194 required server GameTests passed.
+**Current Phase:** Publication preparation and continued playtesting. Garb, quests, altars, research, Mortal Golems, fluid handling, and armor trims are implemented. See [current status](RELEASE_STATUS.md) for remaining work and validation limits.
+
+Dated milestone counts below are historical. Original design sketches are preserved; later selected recipes and behavior supersede them.
 
 > **Checklist legend:** `[ ]` not started, `[x]` completed, `[~]` partially completed. Implementation status and gameplay verification are tracked separately. Discussion items are proposals, not approved implementation work.
 
-## Selected gameplay requirements [Planned]
+## Selected gameplay requirements and implementation status
 
 The user selected these requirements on 2026-10-02. This records the intended work; the documentation update does not mark any gameplay change as implemented.
 
@@ -18,7 +20,7 @@ The user selected these requirements on 2026-10-02. This records the intended wo
 - [x] Persist anchors and prevent block placement in a two-block spherical radius.
 - [x] Validate worldgen, placement rollback, multi-placement, piston movement, and persistence on a headless server; all eight server tests, build, guide, and mod-loading checks passed.
 - [ ] Visually verify floating appearance in a user-requested client session.
-- [~] Personal-Haunt Ghost events and durable deferral are implemented; further Spirit Journey interactions remain planned.
+- [x] Personal-Haunt Ghost events, durable deferral, Spirit Journey recovery, and Grave Porting are implemented; see the dedicated guides for their separate rules.
 - [x] Scope closed: Spiritwells are Overworld-only. Nether and End Spiritwell generation is not required, per the 2026-10-14 decision. Existing dimension-aware indexing is retained.
 
 **Selected deferred-event rule (2026-10-04):** When the Spiritwell-spawn Haunt effect is selected and no loaded Spiritwell is within 100 blocks of the triggering player, retain that effect until a player comes within 100 blocks of a loaded Spiritwell. The later player need not be the original triggering player. Resolve proximity in the player's current dimension, and inspect loaded chunks only; this rule must not generate or force-load a Spiritwell. Retain the pending event across saves/restarts. The 100-block lookup only finds an already loaded destination; personal Haunt alone controls new trigger eligibility. Delivery must still satisfy the effect's mob-cap, protection, and safe-spawn rules; keep it pending if delivery cannot succeed. The scheduler stores a per-dimension count of held selections, keeps every trigger, and delivers at most one per second while preserving player cooldowns and mob limits. Delivery does not reroll or require the later player to retain the original triggering tier.
@@ -53,8 +55,8 @@ See [Book progression](BOOK_OF_ECTCETERA.md) for chapter groups, compatibility a
 
 ### Elemental ranged attacks
 
-- [ ] Give Elementals a ranged attack. Define its projectile/effect, damage, range, cooldown, and target behavior alongside the mob balance review.
-- [ ] Verify attacks against tangible and intangible targets under the shared spectral combat rules.
+- [x] Spirit/Elemental retaliation uses visible ranged demi-tangible bolts: 4 damage, 16-block range, 40-tick cooldown. See [retaliation](SPECTRAL_RETALIATION.md).
+- [x] Server tests cover ranged retaliation against tangible/intangible targets. Broader mob balance review remains open.
 
 ### Intangible mob attacks
 
@@ -63,7 +65,7 @@ See [Book progression](BOOK_OF_ECTCETERA.md) for chapter groups, compatibility a
 
 ### Spirit Villager trading
 
-- [ ] **Spirit Villager progression: trades, quests and other actions [Requested 2026-10-05]:** As a Spirit levels up, unlock additional interaction options, including more trades, quests and other actions or services. Keep previously unlocked options available. Define the quest types, rewards, other interactions and their level requirements in a future update; progression should offer more than trading alone.
+- [~] **Spirit Villager progression:** Expertise-tiered trades and optional unfinished-business kill quests are implemented, with immediate rewards and a button menu. Expertise-gated quests and additional services remain future work. See [quests](SPIRIT_QUESTS.md).
 - [~] Passive **Spirit Villagers** now have the standard trading interface, initial resource trades, and a Villager-engraved Grave workstation. One nearby adult jobless villager converts per grave; breaking its grave reverts only grave-created workers. See [Spirit Villagers](SPIRIT_VILLAGERS.md). Broader natural discovery remains pending.
 - [~] Villager-engraved graves provide manual discovery/conversion. Recipe-balanced Novice-to-Master trades, vanilla XP thresholds, limited stock, and daily workstation-aware restocking are implemented. Broader natural spawn/discovery and continued balance tuning remain.
 - [~] Server tests verify actual trade payment/output, stock persistence, passive behavior, workstation ownership, and save/load reversion. Client visuals and manual playtesting remain pending. Earlier village-graveyard and Creeper-deterrence ideas remain optional.
@@ -132,21 +134,21 @@ Implement each effect with the minimum tier and behavior below. Thresholds are m
 | [x] | Finish cooking | Supernatural | Complete one valid recipe in an active furnace within eight blocks. Consume input normally, preserve output and experience, require output space, and complete one operation rather than a whole stack. |
 | [x] | Planks to Spiritwood | Supernatural | Convert one ordinary inventory plank into one Spiritwood plank. Show a green shimmer and require room for the result; leave placed buildings intact. |
 | [x] | Cobblestone to Gravestone | Supernatural | Convert one inventory cobblestone into one Gravestone using the same single-item, output-space, and visual rules. |
-| [~] | Ghost's Garb repair | Dead Rising | During a spectral visitation event, restore one durability to each equipped Ghost's Garb piece. Implemented via the `mortal_expansion:ghosts_garb` item tag; the tag now includes crafted Ghost�s Garb; equipped pieces use the existing repair hook. Unrelated equipment is unaffected. |
+| [x] | Ghost's Garb repair | Dead Rising | During a spectral visitation event, restore one durability to each equipped Ghost's Garb piece. Implemented via the `mortal_expansion:ghosts_garb` item tag; the tag now includes crafted Ghost's Garb; equipped pieces use the existing repair hook. Unrelated equipment is unaffected. |
 
 #### Protection and major encounters
 
-The user selected ambient/beneficial effects first and tag hooks for Ghost’s Garb. Major Haint/Eldritch encounters and the armor itself are deferred pending their separate design.
+Ambient/beneficial effects and crafted Ghost/Haint-family garb are implemented. Major Haint/Eldritch encounters remain deferred.
 
 | Status | Feature | Accepted behavior |
 |---|---|---|
-| [~] | Ghost's Garb immunity | A full set blocks negative ambient effects while allowing beneficial events. Full-four-piece protection now uses crafted Ghost�s Garb, with leather defense, iron durability, and Ectothread recipes. Direct mob attacks are unchanged. |
+| [x] | Ghost's Garb immunity | A full set blocks negative ambient effects while allowing beneficial events. Full-four-piece protection now uses crafted Ghost's Garb, with leather defense, iron durability, and Ectothread recipes. Direct mob attacks are unchanged. |
 | [x] | Holy Water blessing | Contact grants 60 seconds of negative-ambient-effect protection and removes active effects applied by haunting. Lower personal Haunt by one point at most once per 60 seconds; contact refreshes the blessing. Only unchanged haunting-owned negative potion effects are removed; external applications relinquish ownership. |
 | [x] | Purification Ward protection | Suppress negative ambient events inside covered chunks while the existing cleansing continues separately. |
 | [ ] | Haint encounter reward | Defeating the encounter Haint removes five Haunt points from its chunk and caps Haunt at the resulting value for ten minutes. Apply once per encounter, including its split into Haunts; define when the split encounter counts as defeated. |
 | [ ] | The End event | Rare Eldritch encounter with sky changes and the proposed Wither/terrain effects. After successful resolution, remove twenty points from affected chunks and cap each at its resulting value for twenty minutes. Define event footprint, trigger odds, resolution, and interaction with existing Haunt simulation in a separate event design. |
 
-- [~] Ambient validation passed: personal tier policy, cooldown/save-load, protection/provenance, inventory conservation, shared chunk cooldown, furnace output/XP, safe movement, passive repeat suppression, and deferred well boundaries/delivery. All eighteen server tests and build/loading/guide checks pass. Client visuals, manual restart/reconnect, full garb content, and major-encounter temporary caps remain unverified or deferred. These events do not depend on Spirit Journey.
+- [~] Ambient validation passed: personal tier policy, cooldown/save-load, protection/provenance, inventory conservation, shared chunk cooldown, furnace output/XP, safe movement, passive repeat suppression, and deferred well boundaries/delivery. All eighteen server tests and build/loading/guide checks pass. Client visuals, manual restart/reconnect, extended client behavior and major-encounter temporary caps remain unverified or deferred. These events do not depend on Spirit Journey.
 
 ### Portal system
 
@@ -350,10 +352,10 @@ The Spirit Villager is now a selected requirement above. Historical details to c
 
 ### Fluids, transport, storage, and containment
 
-**Already present:** Raw/purified ectoplasm and Holy Water fluids, buckets, cauldrons, and capabilities used by current machines. These do not include the proposed dedicated transport/storage blocks.
+**Already present:** Raw/purified ectoplasm and Holy Water fluids, buckets, cauldrons, machine capabilities, functional Ecto Pipes and Ectanks. The historical transport sketches below are superseded by [current infrastructure](ECTO_INFRASTRUCTURE.md).
 
-- [ ] **Ecto Pipe:** One-bucket capacity per pipe, fast transfer, empty-hand right-click input/output modes, and sixteen pipes per craft. Original recipe sketch: Ectank center, Glass across top/bottom, Gold Ingots at the middle sides.
-- [ ] **Ectank:** Cheap, large, deliberately inefficient fluid storage. Original recipe: Gravestone around Glass. One block holds sixteen buckets, accepts input/output from any side, and leaks any fluid at 1 mB/t.
+- [x] **Ecto Pipes:** Basic/purified capacity 2,000/8,000 mB and transfer 500/2,000 mB per tick, configurable sides, and sixteen per craft. Current Gravestone/glass recipes supersede the historical Gold/Ectank sketch.
+- [~] **Ectank:** Gravestone-around-Glass tanks hold 16,000 mB; Purified Gravestone tanks hold 64,000 mB. Storage, automation, buckets, and retained drops are implemented. Historical leakage is not implemented.
 - [ ] **Ecto Liquefactor:** Convert raw ectoplasm with water into ectoplasm fluid, or with Holy Water into purified fluid, using RF or ordinary fuel. Include a liquid-ecto bucket in its recipe so the player learns the in-world production route.
 - [ ] Reconcile the old four-raw-ectoplasm-plus-water fluid recipe with the current heated-cauldron process before adopting it. The source includes both in-world and bucket crafting approaches.
 - [ ] Evaluate the original cauldron transmutation: throw Stone into liquid ectoplasm to obtain Gravestone, consuming one-third of a bucket per conversion. Reconcile this sketch with current material-transmutation recipes before adding another route.
@@ -449,7 +451,7 @@ The duplication notes do not settle whether fluid, RF, and raw ectoplasm costs a
 
 ## Maintenance backlog [Discuss]
 
-- [ ] Replace or adapt the template root README into a player/contributor entry point when requested.
+- [x] Replace the template README with a player/contributor introduction and linked documentation index (2026-10-16).
 - [ ] Investigate startup fluid-model warnings if missing visuals are observed in play.
 - [ ] Establish a Second Brain mirror only if the user requests one; repository docs are the current source.
 
@@ -457,10 +459,10 @@ The duplication notes do not settle whether fluid, RF, and raw ectoplasm costs a
 
 Append dated entries to [Notes](Notes.md) when decisions or implementation changes land. Update checklists and verification limits here as evidence changes. Update [Overview](Overview.md) when architecture or scope changes, and update `Last Synced` after repository synchronization.
 
-### 2026-10-04 - Ghost�s Garb selected and implemented
+### 2026-10-04 - Ghost's Garb selected and implemented
 
 - [x] Ectothread: eight String around Raw Ectoplasm; lime wool placeholder.
-- [x] Four Ghost�s Garb pieces: standard armor crafting shapes, lime leather placeholders, leather defense, iron durability.
+- [x] Four Ghost's Garb pieces: standard armor crafting shapes, lime leather placeholders, leather defense, iron durability.
 - [x] Full-set horizontal phasing with existing spectral barriers and intangible damage immunity; intangible attackers still damage wearers.
 - [x] Full-set negative ambient haunt protection and haunting-owned effect cleanup; beneficial events remain enabled.
 - [ ] Client playtest: dyed placeholder appearance, phasing/prediction, barriers, and recovery combined with Spirit Journey grayscale.
@@ -651,7 +653,7 @@ Replaced ten block/borrowed foliage inventory icons with transparent pixel sprit
 This implements Grave Porting, not the broader linked portal/ritual network proposal. Nether/End Spiritwell generation remains out of scope.
 
 
-### 2026-10-14 - Ecto infrastructure decorative blocks
+### 2026-10-14 - Ecto infrastructure (decorative foundation followed by fluid handling)
 
 - [x] Ectank and higher-capacity-intended Purified Ectank block/item shells, framed-glass native models and stone-around-glass recipes.
 - [x] Ecto Pipes, 16 per specified Gravestone/glass craft, with six-way cosmetic pipe/tank connections.
@@ -686,3 +688,9 @@ See [Garb art and prompts](WOVEN_GARB_ART.md).
 - [x] Nearby-barrier filtering and bounded cold enclosure searches while salt is active.
 
 See [Holy Salt barriers](HOLY_SALT_BARRIERS.md) for findings, limits and validation.
+
+### 2026-10-16 - Main documentation refresh
+
+- [x] Player-facing README, current system overview, documentation index, and publication status.
+- [x] Corrected stale garb, ranged retaliation, fluids, research, and secret progression summaries; preserved dated history.
+- [ ] Broader portal networks, missing Haunt services, and historical machine/encounter proposals remain separate work.

@@ -591,3 +591,8 @@ Changed Second Sight trails from lightning/weather-target bootprints to full-bri
 ### 2026-10-14 - Decorative Ecto Pipes and Ectanks
 
 Added Ectank, Purified Ectank and Ecto Pipe block/item shells with original framed-glass native models using their recipe materials. Tanks craft from eight matching Gravestone around Glass; sixteen pipes craft from Gravestone top/bottom rows and Glass middle sides. Pipes connect visually in six directions. Fluid storage, transport and capacity values are explicitly deferred, with Purified Ectank intended as the capacity upgrade. No ticking block entities or fluid networks are introduced. Generated recipes/models/states/loot/tags accompany providers. The Book includes a raw-Ectoplasm-tab entry describing recipes and the decorative-only scope.
+
+
+### 2026-10-16 - Main description and documentation refresh
+
+Replaced the template README with the current mod description, setup/build guidance, progression introduction, and documentation links. Rewrote the overview, added a documentation index and publication status, and corrected stale roadmap/knowledge summaries. Updated the in-game mod description to match. Historical notes and per-milestone test counts remain dated history; the latest promoted gameplay baseline is f6e36d8 with 194 required tests passed. Functional pipes supersede the decorative-only milestone above. No gameplay rules or assets changed. Local playtest checkout was not updated or launched by this documentation request.

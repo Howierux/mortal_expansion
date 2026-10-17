@@ -9,9 +9,9 @@ the same book with one ingredient at a time in any crafting-grid arrangement:
 | 0: Beginnings | Initial Book + Rotten Flesh recipe | First steps, personal/local Haunt, biomes | Obtain a Bone from a Skeleton |
 | 1: Bones and Spirits | Bone | Graves, intangible creatures, creature identities, Spiritwells | Obtain Gravestone, craft a Gravestone Sword, hunt a Ghost for Raw Ectoplasm |
 | 2: Raw Ectoplasm | Raw Ectoplasm | Ectoplasm, cauldrons, salt, torches, equipment, Ghost Garb, furnaces | Make purified cauldron fluid, collect it, and smelt the bucket into Pure Ectoplasm |
-| 3: Purified Ectoplasm | Pure Ectoplasm (solid item) | Sanctification, wards, ectchantments, generators, Purification Station, Haint/Spectralite Haint garb, scepter | All chapters unlocked; guidance for combining the systems |
+| 3: Purified Ectoplasm | Pure Ectoplasm (solid item) | Sanctification, wards, ectchantments, generators, Purification Station, Haint/Spectralite Haint garb, scepter | Final subject tier available; secret entries still require revelation |
 
-Chapters unlock cumulatively. The client now presents a tabbed research map,
+Subject tiers unlock cumulatively. Secret recipes do not unlock merely by upgrading; the starter book can receive the first Mortality Research whisper, and later secrets have their own requirements. The client now presents a tabbed research map,
 with locked nodes showing upgrade or Insight requirements. Locked body text
 cannot be opened; unrevealed weaving nodes hide their names behind a secret
 label. Node access delegates to the existing tier-and-secret chapter rules.
@@ -28,10 +28,9 @@ fluid buckets/bone meal does not match. The entire sequence fits the inventory's
 
 The existing book item ID is retained. Per-stack `mortal_expansion:ectcetera_tier`
 is a persistent integer component (0-3) synchronized to clients. Existing unmarked
-books retain all chapters as tier 3; newly crafted books and the creative-tab
+books retain subject tier 3; secret recipes still follow the rules below; newly crafted books and the creative-tab
 starter explicitly carry tier 0. Unmarked command-created books likewise read as
-complete. Knowledge is stored on the item, not as a player unlock, so transferring
-books transfers their knowledge.
+the final subject tier. Book tier is stored on the item; secret knowledge is also permanently learned by the player and can be shared through books. Legacy unmarked books retain the original four weaving secret bits, not automatic knowledge of newer altar/research secrets. See [Spectral Insight](SPECTRAL_INSIGHT.md).
 
 EctceteraProgression centralizes tiers and upgrade ingredients. EctceteraGuide
 holds chapter tiers and navigation metadata separately from client rendering.
@@ -39,8 +38,7 @@ EctceteraUpgradeRecipe extends supported shapeless crafting and uses NeoForge's
 partial DataComponentIngredient to match the input tier while accepting custom
 names/components. Its small serializer stores `from_tier`; inputs and result are
 constructed from the same gameplay rules. ModRecipes generates the initial
-component-bearing result and all three upgrade resources. No mixins or new player
-saved data are introduced. During Minecraft migration verify stack component
+component-bearing result and all three upgrade resources. The upgrade recipe itself adds no mixins or player saved data; the separate Insight system uses persistent player knowledge and narrow recipe-lock mixins. During Minecraft migration verify stack component
 codecs, custom ingredient matching/previews, normal result-slot consumption,
 recipe serialization, and vanilla book link/page behavior.
 

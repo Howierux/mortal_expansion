@@ -1,28 +1,47 @@
+# Mortal Expansion
 
-Installation information
-=======
+Mortal Expansion is a supernatural magic and technology mod for Minecraft. Explore haunted graveyards, bargain with spirits, uncover forbidden crafting knowledge, and build machines powered by ectoplasm. Haunt follows both players and places, bringing opportunities, disturbances, and increasingly dangerous supernatural activity.
 
-Generated item/block resources and tags are authored in Java providers. See
-[Data generation](docs/DATA_GENERATION.md) for regeneration and validation commands.
+## Explore, discover, and build
 
-This template repository can be directly cloned to get you started with a new
-mod. Simply create a new repository cloned from this one, by following the
-instructions provided by [GitHub](https://docs.github.com/en/repositories/creating-and-managing-repositories/creating-a-repository-from-a-template).
+- **Haunted worlds:** Spiritwood Forests, Graveyards, named Cemetery and Spiritwell discoveries, and glowing spectral trails toward undiscovered sites.
+- **Secrets of the Dead:** An upgradeable Book of Ectcetera with a connected research map. Whispers gradually reveal recipes; a Mortality Research Station encourages discoveries.
+- **Life beyond death:** Named Graves, Spirit Journey, recoverable corpses, and Spiritwell recovery. Prepared naturalized Graves support cross-dimensional Grave Porting.
+- **Spirits and creatures:** Trading Spirit Villagers, unfinished-business quests with automatic rewards, hostile spectral mobs, and flesh-built Mortal Golems.
+- **Spectral equipment:** Bloodstone and Spectralite tools and armor, intangible Ghost and Haint Garb, combined Spectralite Haint armor, and mineral armor trims.
+- **Ectoplasm technology:** Generators, Haunt and Haint Furnaces, purification and ectchantment machines, configurable pipes, and fluid tanks.
+- **Control the haunting:** EMF Readers, Holy Salt, Spirit Torches, Purification Wards, opposing offering altars, and Dreamcatchers that intercept Haunt events.
 
-Once you have your clone, simply open the repository in the IDE of your choice. The usual recommendation for an IDE is either IntelliJ IDEA or Eclipse.
+Beneficial and negative Haunt events use separate pools. Raising Haunt can improve some systems while encouraging supernatural encounters; cleansing and protection offer different ways to manage it.
 
-If at any point you are missing libraries in your IDE, or you've run into problems you can
-run `gradlew --refresh-dependencies` to refresh the local cache. `gradlew clean` to reset everything 
-{this does not affect your code} and then start the process again.
+## Requirements and installation
 
-Mapping Names:
-============
-By default, the MDK is configured to use the official mapping names from Mojang for methods and fields 
-in the Minecraft codebase. These names are covered by a specific license. All modders should be aware of this
-license. For the latest license text, refer to the mapping file itself, or the reference copy here:
-https://github.com/NeoForged/NeoForm/blob/main/Mojang.md
+The source targets **Minecraft 1.21.1**, **NeoForge 21.1.219**, **Java 21**, and **TerraBlender 1.21.1-4.1.0.8**. Install matching builds of Mortal Expansion and TerraBlender in the instance's `mods` folder. Multiplayer clients and the server need matching mod builds and dependencies.
 
-Additional Resources: 
-==========
-Community Documentation: https://docs.neoforged.net/  
-NeoForged Discord: https://discord.neoforged.net/
+This is an actively developed playtest build. `main` is the consolidated baseline; `dev` receives ongoing changes. A source update is not a published release. See [current status and remaining work](docs/RELEASE_STATUS.md) before preparing a public build.
+
+## Getting started
+
+Craft a Book with Rotten Flesh to make the **Book of Ectcetera**. Add Bone, Raw Ectoplasm, then solid Purified Ectoplasm to upgrade it in order. Upgrades open subject areas; secret recipes must still be learned through Insight. The Mortality Research Station is the first secret and can be whispered to a player carrying even the starting book at Natural personal Haunt.
+
+Use an EMF Reader to distinguish local chunk Haunt from personal Haunt. Its ordinary reading shows the chunk; hold right-click to scan yourself. The basic reader uses bulbs on the item; the Precise upgrade adds a decimal display.
+
+See the [documentation index](docs/README.md) for recipes, construction requirements, protections, and testing commands.
+
+## Build and contribute
+
+With JDK 21 installed, use the included wrapper:
+
+```text
+gradlew.bat build
+gradlew.bat runClient
+gradlew.bat runGameTestServer
+```
+
+On Linux/macOS use `./gradlew` instead. Artifacts appear in `build/libs/`. Development normally targets `dev`; promotion to `main` is deliberate.
+
+Items and blocks are registered in Java. Recipes, models, loot, and tags use Mojang/NeoForge data generators; commit providers and generated resources together. See [data generation](docs/DATA_GENERATION.md) and [development guidelines](AGENTS.md).
+
+## Credits and licensing
+
+Created by Howierux with ChatGPT assistance. The repository declares **All Rights Reserved**. Some art is temporary; provenance and prompts are retained in the documentation. The tapping sound includes a user-supplied Warframe recording owned by Digital Extremes; see [third-party audio provenance](docs/THIRD_PARTY_AUDIO.md). Attribution does not grant redistribution rights; review asset permissions when preparing a public release.
