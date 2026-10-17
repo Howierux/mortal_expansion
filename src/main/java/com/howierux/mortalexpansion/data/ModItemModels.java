@@ -202,7 +202,6 @@ public final class ModItemModels extends ItemModelProvider {
         {
             var model = this.getBuilder("pure_ectoplasm").parent(new ModelFile.UncheckedModelFile("minecraft:item/generated"));
             model.texture("layer0", "mortal_expansion:item/pure_ectoplasm");
-            model.texture("layer1", "mortal_expansion:item/pure_ectoplasm_shimmer");
         }
         {
             var model = this.getBuilder("purification_station").parent(new ModelFile.UncheckedModelFile("mortal_expansion:block/purification_station"));
@@ -256,7 +255,6 @@ public final class ModItemModels extends ItemModelProvider {
         {
             var model = this.getBuilder("raw_ectoplasm").parent(new ModelFile.UncheckedModelFile("minecraft:item/generated"));
             model.texture("layer0", "mortal_expansion:item/raw_ectoplasm");
-            model.texture("layer1", "mortal_expansion:item/raw_ectoplasm_shimmer");
         }
         {
             var model = this.getBuilder("spectralite_axe").parent(new ModelFile.UncheckedModelFile("minecraft:item/handheld"));
