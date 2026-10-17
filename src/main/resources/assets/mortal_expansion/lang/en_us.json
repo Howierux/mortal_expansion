@@ -1,4 +1,5 @@
 {
+  "message.mortal_expansion.ectcetera.crafting_hint": "A whisper follows your victory: combine a Book with Rotten Flesh in any crafting grid to make the Book of Ectcetera.",
   "block.mortal_expansion.purified_ecto_pipe": "Purified Ecto Pipe",
   "message.mortal_expansion.ecto_fluid.status": "%s: %s / %s mB",
   "message.mortal_expansion.ecto_fluid.empty": "Empty",

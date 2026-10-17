@@ -1,5 +1,7 @@
 # Book of Ectcetera progression
 
+Earning vanilla **Monster Hunter** (`minecraft:adventure/kill_a_mob`) sends only that player a chat hint: combine a Book with Rotten Flesh in any crafting grid to make the Book of Ectcetera. The hint uses NeoForge's advancement-earned event, not a broadcast or periodic check. It does not grant a book or unlock secret recipes. Existing completed advancements are not retroactively replayed; revoking and earning the advancement again sends the hint again.
+
 The starting shapeless recipe remains one Book plus one Rotten Flesh. It now
 produces a tier-0 book rather than immediately revealing every chapter. Upgrade
 the same book with one ingredient at a time in any crafting-grid arrangement:
