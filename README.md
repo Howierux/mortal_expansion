@@ -44,4 +44,4 @@ Items and blocks are registered in Java. Recipes, models, loot, and tags use Moj
 
 ## Credits and licensing
 
-Created by Howierux with ChatGPT assistance. The repository declares **All Rights Reserved**. Some art is temporary; provenance and prompts are retained in the documentation. The tapping sound includes a user-supplied Warframe recording owned by Digital Extremes; see [third-party audio provenance](docs/THIRD_PARTY_AUDIO.md). Attribution does not grant redistribution rights; review asset permissions when preparing a public release.
+Created by Howierux with ChatGPT assistance. The repository declares **All Rights Reserved**. Some art is temporary; provenance and prompts are retained in the documentation. Tapping audio uses vanilla Minecraft wood impacts without bundling game audio; see [audio provenance](docs/THIRD_PARTY_AUDIO.md).

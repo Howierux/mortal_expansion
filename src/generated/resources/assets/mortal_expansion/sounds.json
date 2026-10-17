@@ -1,7 +1,10 @@
 {
   "haunt_tapping": {
     "sounds": [
-      "mortal_expansion:haunt/rap_tap_tap"
+      "dig/wood1",
+      "dig/wood2",
+      "dig/wood3",
+      "dig/wood4"
     ],
     "subtitle": "subtitle.mortal_expansion.haunt_tapping"
   }

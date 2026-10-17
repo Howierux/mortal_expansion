@@ -22,4 +22,4 @@ Grave Moss fire cleansing is closed in favor of altars. Nether/End Spiritwell ge
 
 ## Distribution checks
 
-Align version metadata, changelog, dependencies, and artifact before tagging a release; the declared version remains `1.0.0`. Temporary art provenance is documented. Review third-party redistribution permissions, especially the [Warframe tapping recording](THIRD_PARTY_AUDIO.md), before distributing a public build. This source update does not create a release or certify asset permissions.
+Align version metadata, changelog, dependencies, and artifact before tagging a release; the declared version remains `1.0.0`. Temporary art provenance is documented. The previously bundled Warframe tapping recording has been removed; current tapping uses vanilla wood impacts. See [audio provenance](THIRD_PARTY_AUDIO.md). Review other asset provenance before distribution. This source update does not create a release or certify asset permissions.

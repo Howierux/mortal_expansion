@@ -9,6 +9,9 @@ public final class ModSoundsProvider extends SoundDefinitionsProvider {
     public ModSoundsProvider(PackOutput output,ExistingFileHelper helper){super(output,MortalExpansion.MOD_ID,helper);}
     @Override public void registerSounds(){
         add(ModSounds.HAUNT_TAPPING.get(),definition().subtitle("subtitle.mortal_expansion.haunt_tapping")
-            .with(sound(ResourceLocation.fromNamespaceAndPath(MortalExpansion.MOD_ID,"haunt/rap_tap_tap"))));
+            .with(sound(ResourceLocation.withDefaultNamespace("dig/wood1")),
+                  sound(ResourceLocation.withDefaultNamespace("dig/wood2")),
+                  sound(ResourceLocation.withDefaultNamespace("dig/wood3")),
+                  sound(ResourceLocation.withDefaultNamespace("dig/wood4"))));
     }
 }
