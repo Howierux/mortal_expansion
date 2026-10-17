@@ -2,7 +2,7 @@
 
 Original ME project icon created with the built-in image-generation tool. Green ectoplasm and dark Gravestone form the M; purified blue-white stone and spirit essence form the E. Designed as a square project avatar with a dark background.
 
-Upload file: `branding/mortal-expansion-curseforge.png` (400x400 RGB PNG). Exported from the original using Lanczos resizing; no third-party logo is included. This is project-page branding, not a change to item textures or the packaged mod logo.
+Upload file: `branding/mortal-expansion-curseforge.jpeg` (400x400 RGB JPEG, quality 95). The PNG source is retained. Exported from the original using Lanczos resizing; no third-party logo is included. This is project-page branding, not a change to item textures or the packaged mod logo.
 
 Generated master: `C:/Users/scott/.codex/generated_images/01a10808-7c57-7922-a619-5f19e36de671/exec-e650b690-bafd-43b2-a9de-d07b4c57fdb8.png`.
 
