@@ -4,7 +4,7 @@ Eight formerly shared/base skins now have original simple 64x64 textures, genera
 
 | Mob | Appearance | Existing rendering |
 | --- | --- | --- |
-| Ghost | Ash-white burial shroud, hollow dark eyes, sparse mint hem | Intangible/translucent |
+| Ghost | Pale sage/mint burial shroud matching Ghost Garb, hollow dark eyes, richer mint hem | Intangible/translucent |
 | Phantom | Dark plum coat, gray mask, red eyes and sash | Tangible/opaque |
 | Spirit | Ash-gray villager skin, mint eyes, sage clothes and ivory trim | Villager model, intangible/translucent |
 | Elemental | Moss-gray stone with lime cracks and chest core | Intangible/translucent |
@@ -78,3 +78,9 @@ Use case: precise-object-edit. Asset type: Minecraft native mob UV texture atlas
 Master: `exec-3a838b27-bc63-4625-8026-ecd3f251f8af.png`.
 
 Use case: precise-object-edit. Asset type: Minecraft native mob UV texture atlas, NOT an illustration of the mob. Reference image is the vanilla 64x64 zombie atlas enlarged nearest-neighbor. Preserve EXACT location and size of every original UV island, and transparent unused region including lower half. Face is logicalpixels x8..15 y8..15; body x16..39 y16..31; legs x0..15 y16..31; arms x40..55 y16..31. No adding margins, moving islands, perspective, labels or human drawings. Replace all zombie skin/clothing with original simple pixel-art materials at original64x64 logical pixel resolution. Flat surfaces, limited palettes, 2-3 shades per material, no gradients or bloom. An original ancient Pharaohl: a gold-and-dark-teal striped royal nemes headcloth painted across all head faces, a pale sand-bone face with dark eye sockets and small cyan eyes, broad simple gold collar at torso neckline, ivory mummy wrappings across torso and limbs, a dark teal waist sash with one gold square buckle, gold wrist bands. Readable restrained gold teal ivory palette, no beard projecting outside UV, no elaborate armor, no extra model parts.
+
+## Ghost palette refinement
+
+The Ghost was subtly tinted sage/mint to match Ghost Garb; the native UV layout and alpha mask remain unchanged. Generated edit master: `exec-192f892f-1917-4bfd-8646-55a0ad2586f2.png` in the masters directory above. References: original Ghost master and `ghost_garb_woven_layer_1.png`.
+
+Prompt: Precise recolor only; preserve the atlas canvas, UV islands, pixel grid, shroud pattern, dark face and transparency. Tint the pale shroud subtly muted sage/mint using Ghost Garb as palette reference, retaining desaturated spectral highlights and gray-green shadows. No armor shapes, new features, bloom or blur.
