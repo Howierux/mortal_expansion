@@ -42,9 +42,10 @@ public final class ModBlockLoot extends BlockLootSubProvider {
         dropSelf(ModBlocks.PURIFICATION_WARD.get());
         dropOther(ModBlocks.MORTAL_GOLEM_BASE.get(),net.minecraft.world.item.Items.BONE_BLOCK);
         dropSelf(ModBlocks.DREAMCATCHER.get());
-        add(ModBlocks.WISP_O_LANTERN.get(), createSingleItemTable(net.minecraft.world.item.Items.CARVED_PUMPKIN)
+        add(ModBlocks.WISP_O_LANTERN.get(), createSingleItemTableWithSilkTouch(ModBlocks.WISP_O_LANTERN.get(), net.minecraft.world.item.Items.CARVED_PUMPKIN)
                 .withPool(LootPool.lootPool().setRolls(ConstantValue.exactly(1))
                         .when(ExplosionCondition.survivesExplosion())
+                        .when(doesNotHaveSilkTouch())
                         .add(LootItem.lootTableItem(ModItems.RAW_ECTOPLASM.get()))));
         dropSelf(ModBlocks.PURIFIED_DREAMCATCHER.get());
         dropSelf(ModBlocks.PURIFIED_GRAVESTONE.get());

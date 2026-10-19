@@ -28,7 +28,7 @@
   "guide.mortal_expansion.wisp_o_lantern.name": "Wisp o' Lantern",
   "guide.mortal_expansion.wisp_o_lantern.page.1": "At night, Carved Pumpkins in Supernatural or higher Haunt may awaken: a 2% chance per loaded minute. Conversion lowers chunk Haunt by one point.",
   "guide.mortal_expansion.wisp_o_lantern.page.2": "Every 20 loaded nighttime minutes, a lantern tries to spawn one Ghost if a player is within 32 blocks. Four nearby Ghosts stop more spawning.",
-  "guide.mortal_expansion.wisp_o_lantern.page.3": "Its green face glows faintly. Daylight and unloaded chunks pause the timer. Breaking drops one Carved Pumpkin and one raw Ectoplasm.",
+  "guide.mortal_expansion.wisp_o_lantern.page.3": "Its green face glows faintly. Daylight and unloaded chunks pause the timer. Breaking drops one Carved Pumpkin and one raw Ectoplasm. Silk Touch preserves the lantern instead.",
   "entity.mortal_expansion.mortal_golem": "Mortal Golem",
   "block.mortal_expansion.mortal_golem_base": "Fleshed Bone Frame",
   "message.mortal_expansion.mortal_golem.flesh": "Flesh applied: %s / 64",

@@ -52,6 +52,12 @@ public final class WispLanternGameTests {
                     && drops.stream().filter(stack->stack.is(Items.CARVED_PUMPKIN)).mapToInt(ItemStack::getCount).sum()==1
                     && drops.stream().filter(stack->stack.is(ModItems.RAW_ECTOPLASM.get())).mapToInt(ItemStack::getCount).sum()==1,
                     "Breaking drops exactly one regular Carved Pumpkin and one raw Ectoplasm");
+            var tool=new ItemStack(Items.DIAMOND_AXE);
+            tool.enchant(level.registryAccess().lookupOrThrow(net.minecraft.core.registries.Registries.ENCHANTMENT)
+                    .getOrThrow(net.minecraft.world.item.enchantment.Enchantments.SILK_TOUCH),1);
+            var silkDrops=Block.getDrops(state,level,lantern.getBlockPos(),lantern,null,tool);
+            h.assertTrue(silkDrops.size()==1 && silkDrops.getFirst().is(ModItems.WISP_O_LANTERN.get())
+                    && silkDrops.getFirst().getCount()==1,"Silk Touch preserves exactly one lantern without bonus Ectoplasm or pumpkin");
             level.setDayTime(6000);
             WispLanternBlockEntity.serverTick(level,lantern.getBlockPos(),state,lantern);
             h.assertTrue(lantern.spawnDelay()==24000,"Daylight pauses the twenty-minute nighttime timer");
