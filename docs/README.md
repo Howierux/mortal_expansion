@@ -15,6 +15,8 @@ Start with the [mod introduction](../README.md), [system overview](Overview.md),
 | Machines and fluids | [Recipes](MACHINE_RECIPES.md), [generator emissions](ECTOPLASMIC_GENERATOR_HAUNT.md), [Purification Station](PURIFICATION_STATION.md), [pipes and tanks](ECTO_INFRASTRUCTURE.md), [Haint Furnace appearance](HAINT_FURNACE_APPEARANCE.md) |
 | Protection | [Holy Salt](HOLY_SALT_BARRIERS.md), [Altar of Purity](ALTAR_OF_PURITY.md), [paired altars](ALTARS_AND_SECRETS.md), [Dreamcatchers](DREAMCATCHER.md) |
 
+Optional recipe-browser support: [JEI integration](JEI_INTEGRATION.md).
+
 ## Development and provenance
 
 - [Development guidelines](../AGENTS.md) and [data generation](DATA_GENERATION.md)

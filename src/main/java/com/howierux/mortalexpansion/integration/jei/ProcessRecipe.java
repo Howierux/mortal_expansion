@@ -1,4 +1,4 @@
-package com.howierux.mortalintegrations.jei;
+package com.howierux.mortalexpansion.integration.jei;
 
 import java.util.List;
 import net.minecraft.world.item.ItemStack;

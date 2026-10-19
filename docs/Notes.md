@@ -596,3 +596,8 @@ Added Ectank, Purified Ectank and Ecto Pipe block/item shells with original fram
 ### 2026-10-16 - Main description and documentation refresh
 
 Replaced the template README with the current mod description, setup/build guidance, progression introduction, and documentation links. Rewrote the overview, added a documentation index and publication status, and corrected stale roadmap/knowledge summaries. Updated the in-game mod description to match. Historical notes and per-milestone test counts remain dated history; the latest promoted gameplay baseline is f6e36d8 with 194 required tests passed. Functional pipes supersede the decorative-only milestone above. No gameplay rules or assets changed. Local playtest checkout was not updated or launched by this documentation request.
+
+
+### 2026-10-19 - Mortal Integrations folded into the base mod
+
+Superseded the standalone addon prototype with built-in optional JEI support. All recipe-viewer classes are isolated in integration/jei and discovered by JEI; no common initialization references them. API dependencies are compile-only, runtime JEI is opt-in for development, and metadata marks it optional on clients. Existing machine/cauldron categories, book tier subtypes, furnace catalysts and secret-origin notices remain. Recipes stay visible without granting knowledge. Remove the prototype addon JAR to avoid duplicate plugins. Added a shared secret-catalog regression and a JEI-enabled loading workflow; no gameplay recipes or saved formats change. Local playtest installation remains untouched.

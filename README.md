@@ -20,6 +20,8 @@ The source targets **Minecraft 1.21.1**, **NeoForge 21.1.219**, **Java 21**, and
 
 This is an actively developed playtest build. `main` is the consolidated baseline; `dev` receives ongoing changes. A source update is not a published release. See [current status and remaining work](docs/RELEASE_STATUS.md) before preparing a public build.
 
+Optional **JEI** support is built in: install JEI to browse machine processes and recipe guidance. Secret recipes remain visible with a Secrets of the Dead notice; their server unlock requirements still apply. No separate Mortal Integrations addon is needed. See [JEI integration](docs/JEI_INTEGRATION.md).
+
 ## Getting started
 
 Craft a Book with Rotten Flesh to make the **Book of Ectcetera**. Add Bone, Raw Ectoplasm, then solid Purified Ectoplasm to upgrade it in order. Upgrades open subject areas; secret recipes must still be learned through Insight. The Mortality Research Station is the first secret and can be whispered to a player carrying even the starting book at Natural personal Haunt.

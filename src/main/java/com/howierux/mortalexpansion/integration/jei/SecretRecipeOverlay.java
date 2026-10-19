@@ -1,4 +1,4 @@
-package com.howierux.mortalintegrations.jei;
+package com.howierux.mortalexpansion.integration.jei;
 
 import com.howierux.mortalexpansion.guide.InsightSecret;
 import mezz.jei.api.gui.builder.ITooltipBuilder;
@@ -26,13 +26,13 @@ public final class SecretRecipeOverlay<R extends Recipe<?>> implements IRecipeCa
         graphics.pose().translate(width / 2.0F, height - 9, 220);
         graphics.pose().scale(0.65F, 0.65F, 1);
         graphics.drawCenteredString(Minecraft.getInstance().font,
-                Component.translatable("jei.mortal_integrations.secret_banner"), 0, 0, 0xFFA7F4CD);
+                Component.translatable("jei.mortal_expansion.secret_banner"), 0, 0, 0xFFA7F4CD);
         graphics.pose().popPose();
     }
     @Override public void decorateTooltips(ITooltipBuilder tooltip, RecipeHolder<R> recipe,
             IRecipeCategory<RecipeHolder<R>> category, IRecipeSlotsView slots, double x, double y) {
         if (SECRET_RECIPES.contains(recipe.id()) && y >= category.getHeight() - 11 && y < category.getHeight()) {
-            tooltip.add(Component.translatable("jei.mortal_integrations.secret_hint"));
+            tooltip.add(Component.translatable("jei.mortal_expansion.secret_hint"));
         }
     }
 }

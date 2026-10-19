@@ -1,4 +1,4 @@
-package com.howierux.mortalintegrations.jei;
+package com.howierux.mortalexpansion.integration.jei;
 
 import mezz.jei.api.constants.VanillaTypes;
 import mezz.jei.api.gui.builder.IRecipeLayoutBuilder;

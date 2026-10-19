@@ -101,3 +101,11 @@ config="${mod_id}.mixins.json"
 # stop your mod loading on the server for example.
 #[features.${mod_id}]
 #openGLVersion="[3.2,)"
+
+# JEI integration is discovered by JEI on clients; absent JEI remains supported.
+[[dependencies.${mod_id}]]
+    modId="jei"
+    type="optional"
+    versionRange="[${jei_version},20)"
+    ordering="AFTER"
+    side="CLIENT"

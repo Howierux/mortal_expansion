@@ -694,3 +694,12 @@ See [Holy Salt barriers](HOLY_SALT_BARRIERS.md) for findings, limits and validat
 - [x] Player-facing README, current system overview, documentation index, and publication status.
 - [x] Corrected stale garb, ranged retaliation, fluids, research, and secret progression summaries; preserved dated history.
 - [ ] Broader portal networks, missing Haunt services, and historical machine/encounter proposals remain separate work.
+
+
+### 2026-10-19 - Built-in optional JEI integration
+
+- [x] Integrated machine/cauldron references, furnace catalysts, book tier subtypes and spectral secret-recipe notices into the base mod.
+- [x] JEI remains optional; standalone addon scaffolding is superseded.
+- [ ] Live category layout, tooltips and navigation playtest.
+
+See [JEI integration](JEI_INTEGRATION.md).

@@ -525,5 +525,19 @@
   "tooltip.mortal_expansion.axe.tree": "Fells connected tree logs; sneak to cut one log",
   "tooltip.mortal_expansion.axe.grow": "Right-click saplings: grow a tree for %s chunk Haunt once",
   "message.mortal_expansion.sapling_growth_blocked": "The sapling cannot finish growing. Check its space and growing conditions.",
-  "message.mortal_expansion.sapling_haunt_low": "The chunk has too little Haunt to nourish this sapling."
+  "message.mortal_expansion.sapling_haunt_low": "The chunk has too little Haunt to nourish this sapling.",
+  "jei.mortal_expansion.ectchantment": "Ectchantment Machine",
+  "jei.mortal_expansion.purification": "Purification Station",
+  "jei.mortal_expansion.cauldron": "Heated Cauldron",
+  "jei.mortal_expansion.secret_banner": "Secrets of the Dead",
+  "jei.mortal_expansion.secret_hint": "The dead guard this knowledge. Learn this recipe through Secrets of the Dead in the Book of Ectcetera. Viewing it here does not teach it.",
+  "jei.mortal_expansion.charge": "%s ectoplasmic charge OR %s FE",
+  "jei.mortal_expansion.charge_fuel": "Charge fuel: 4 Raw Ectoplasm or 1 Purified Ectoplasm per operation. FE is an alternative.",
+  "jei.mortal_expansion.purification_cost": "%s mB water, %s FE, %s ticks",
+  "jei.mortal_expansion.bucket_return": "Water is consumed; the bucket is returned.",
+  "jei.mortal_expansion.cauldron_heat": "Full cauldron with a heat source below. Add one reagent.",
+  "jei.mortal_expansion.cauldron_buckets": "Buckets depict fluids. Collect the result with an empty bucket; containers are reused.",
+  "jei.mortal_expansion.book_info": "Craft a Book with Rotten Flesh. Upgrade in order with Bone, Raw Ectoplasm, then solid Purified Ectoplasm. Secret recipes still need Spectral Insight revelations, even when visible in JEI.",
+  "jei.mortal_expansion.generator_info": "Burns raw or purified ectoplasm to produce FE. Completed burns add 1 or 3 chunk Haunt respectively. Output depends on chunk Haunt.",
+  "jei.mortal_expansion.furnace_info": "Smelts normal furnace recipes. Needs starting fuel; preserves remaining burn time at Demonic chunk Haunt or higher. Below Demonic, burn time falls only while cooking advances."
 }

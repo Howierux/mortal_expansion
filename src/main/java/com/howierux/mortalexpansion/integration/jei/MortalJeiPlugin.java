@@ -1,10 +1,10 @@
-package com.howierux.mortalintegrations.jei;
+package com.howierux.mortalexpansion.integration.jei;
 
 import com.howierux.mortalexpansion.blockentity.EctchantmentMachineBlockEntity;
 import com.howierux.mortalexpansion.blockentity.PurificationStationBlockEntity;
 import com.howierux.mortalexpansion.guide.EctceteraProgression;
 import com.howierux.mortalexpansion.registry.*;
-import com.howierux.mortalintegrations.MortalIntegrations;
+import com.howierux.mortalexpansion.MortalExpansion;
 import mezz.jei.api.IModPlugin;
 import mezz.jei.api.JeiPlugin;
 import mezz.jei.api.constants.RecipeTypes;
@@ -31,17 +31,17 @@ public final class MortalJeiPlugin implements IModPlugin {
     public static final RecipeType<ProcessRecipe> PURIFICATION = type("purification");
     public static final RecipeType<ProcessRecipe> CAULDRON = type("heated_cauldron");
     private static RecipeType<ProcessRecipe> type(String path) {
-        return RecipeType.create(MortalIntegrations.MOD_ID, path, ProcessRecipe.class);
+        return RecipeType.create(MortalExpansion.MOD_ID, path, ProcessRecipe.class);
     }
     @Override public ResourceLocation getPluginUid() {
-        return ResourceLocation.fromNamespaceAndPath(MortalIntegrations.MOD_ID, "jei");
+        return ResourceLocation.fromNamespaceAndPath(MortalExpansion.MOD_ID, "jei");
     }
     @Override public void registerCategories(IRecipeCategoryRegistration registration) {
         var gui = registration.getJeiHelpers().getGuiHelper();
         registration.addRecipeCategories(
-            new ProcessCategory(gui, ECTCHANTMENT, "jei.mortal_integrations.ectchantment", new ItemStack(ModItems.ECTCHANTMENT_MACHINE.get())),
-            new ProcessCategory(gui, PURIFICATION, "jei.mortal_integrations.purification", new ItemStack(ModItems.PURIFICATION_STATION.get())),
-            new ProcessCategory(gui, CAULDRON, "jei.mortal_integrations.cauldron", new ItemStack(Items.CAULDRON)));
+            new ProcessCategory(gui, ECTCHANTMENT, "jei.mortal_expansion.ectchantment", new ItemStack(ModItems.ECTCHANTMENT_MACHINE.get())),
+            new ProcessCategory(gui, PURIFICATION, "jei.mortal_expansion.purification", new ItemStack(ModItems.PURIFICATION_STATION.get())),
+            new ProcessCategory(gui, CAULDRON, "jei.mortal_expansion.cauldron", new ItemStack(Items.CAULDRON)));
     }
     @Override public void registerRecipes(IRecipeRegistration registration) {
         var level = Minecraft.getInstance().level;
@@ -60,29 +60,29 @@ public final class MortalJeiPlugin implements IModPlugin {
                 output.set(DataComponents.ENCHANTMENT_GLINT_OVERRIDE, true);
             }
             if (!output.isEmpty()) operations.add(new ProcessRecipe(List.of(Ingredient.of(input)), output,
-                List.of(Component.translatable("jei.mortal_integrations.charge", EctchantmentMachineBlockEntity.ENCHANTMENT_COST,
-                    EctchantmentMachineBlockEntity.FE_ENCHANTMENT_COST), Component.translatable("jei.mortal_integrations.charge_fuel"))));
+                List.of(Component.translatable("jei.mortal_expansion.charge", EctchantmentMachineBlockEntity.ENCHANTMENT_COST,
+                    EctchantmentMachineBlockEntity.FE_ENCHANTMENT_COST), Component.translatable("jei.mortal_expansion.charge_fuel"))));
         }
         registration.addRecipes(ECTCHANTMENT, operations);
         registration.addRecipes(PURIFICATION, List.of(new ProcessRecipe(
             List.of(Ingredient.of(ModItems.RAW_ECTOPLASM.get()), Ingredient.of(PurificationStationBlockEntity.PURIFICATION_REAGENTS), Ingredient.of(Items.WATER_BUCKET)),
             new ItemStack(ModItems.PURE_ECTOPLASM.get()), List.of(
-                Component.translatable("jei.mortal_integrations.purification_cost", PurificationStationBlockEntity.WATER_PER_CRAFT,
+                Component.translatable("jei.mortal_expansion.purification_cost", PurificationStationBlockEntity.WATER_PER_CRAFT,
                     PurificationStationBlockEntity.FE_PER_CRAFT, PurificationStationBlockEntity.PROCESS_TICKS),
-                Component.translatable("jei.mortal_integrations.bucket_return")))));
+                Component.translatable("jei.mortal_expansion.bucket_return")))));
         registration.addRecipes(CAULDRON, List.of(
             cauldron(Items.WATER_BUCKET, ModItems.RAW_ECTOPLASM.get(), ModItems.LIQUID_ECTOPLASM_BUCKET.get()),
             cauldron(Items.WATER_BUCKET, ModItems.GRAVE_MOSS.get(), ModItems.HOLY_WATER_BUCKET.get()),
             cauldron(ModItems.LIQUID_ECTOPLASM_BUCKET.get(), ModItems.GRAVE_MOSS.get(), ModItems.PURIFIED_ECTOPLASM_BUCKET.get()),
             cauldron(ModItems.HOLY_WATER_BUCKET.get(), ModItems.RAW_ECTOPLASM.get(), ModItems.PURIFIED_ECTOPLASM_BUCKET.get())));
-        registration.addIngredientInfo(ModItems.BOOK_OF_ECTCETERA.get(), Component.translatable("jei.mortal_integrations.book_info"));
-        registration.addIngredientInfo(ModItems.ECTCHANTMENT_MACHINE.get(), Component.translatable("jei.mortal_integrations.charge_fuel"));
-        registration.addIngredientInfo(ModItems.ECTOPLASMIC_GENERATOR.get(), Component.translatable("jei.mortal_integrations.generator_info"));
-        registration.addIngredientInfo(ModItems.HAINT_FURNACE.get(), Component.translatable("jei.mortal_integrations.furnace_info"));
+        registration.addIngredientInfo(ModItems.BOOK_OF_ECTCETERA.get(), Component.translatable("jei.mortal_expansion.book_info"));
+        registration.addIngredientInfo(ModItems.ECTCHANTMENT_MACHINE.get(), Component.translatable("jei.mortal_expansion.charge_fuel"));
+        registration.addIngredientInfo(ModItems.ECTOPLASMIC_GENERATOR.get(), Component.translatable("jei.mortal_expansion.generator_info"));
+        registration.addIngredientInfo(ModItems.HAINT_FURNACE.get(), Component.translatable("jei.mortal_expansion.furnace_info"));
     }
     private static ProcessRecipe cauldron(Item fluidBucket, Item reagent, Item result) {
         return new ProcessRecipe(List.of(Ingredient.of(fluidBucket), Ingredient.of(reagent)), new ItemStack(result),
-            List.of(Component.translatable("jei.mortal_integrations.cauldron_heat"), Component.translatable("jei.mortal_integrations.cauldron_buckets")));
+            List.of(Component.translatable("jei.mortal_expansion.cauldron_heat"), Component.translatable("jei.mortal_expansion.cauldron_buckets")));
     }
     @Override public void registerRecipeCatalysts(IRecipeCatalystRegistration registration) {
         registration.addRecipeCatalysts(ECTCHANTMENT, ModItems.ECTCHANTMENT_MACHINE.get());
