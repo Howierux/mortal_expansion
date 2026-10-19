@@ -142,6 +142,10 @@ public final class ModClientEvents {
         return 0xFF000000 | (r << 16) | (g << 8) | b;
     }
 
+    private static ResourceLocation mobTexture(String name) {
+        return ResourceLocation.fromNamespaceAndPath(MortalExpansion.MOD_ID, "textures/entity/" + name + ".png");
+    }
+
     @SubscribeEvent
     public static void registerEntityRenderers(EntityRenderersEvent.RegisterRenderers event) {
         event.registerEntityRenderer(ModEntities.SPECTRAL_BOLT.get(),net.minecraft.client.renderer.entity.ThrownItemRenderer::new);
@@ -150,27 +154,24 @@ public final class ModClientEvents {
         event.registerEntityRenderer(EntityType.GHAST, IntangibleGhastRenderer::new);
         event.registerEntityRenderer(ModEntities.PLAYER_CORPSE.get(), PlayerCorpseRenderer::new);
 
-        ResourceLocation zombie = ResourceLocation.withDefaultNamespace("textures/entity/zombie/zombie.png");
-        ResourceLocation husk = ResourceLocation.withDefaultNamespace("textures/entity/zombie/husk.png");
-
         event.registerEntityRenderer(ModEntities.GHOST.get(),
-                ctx -> new PlaceholderHumanoidRenderer<>(ctx, zombie, mob -> true, 0.45F));
+                ctx -> new SpectralMobRenderer<>(ctx, mobTexture("ghost"), mob -> true, 0.45F));
         event.registerEntityRenderer(ModEntities.PHANTOM.get(),
-                ctx -> new PlaceholderHumanoidRenderer<>(ctx, zombie, mob -> false, 0.45F));
+                ctx -> new SpectralMobRenderer<>(ctx, mobTexture("phantom"), mob -> false, 0.45F));
         event.registerEntityRenderer(ModEntities.MORTAL_GOLEM.get(), MortalGolemRenderer::new);
         event.registerEntityRenderer(ModEntities.SPIRIT.get(), SpiritVillagerRenderer::new);
         event.registerEntityRenderer(ModEntities.ELEMENTAL.get(),
-                ctx -> new PlaceholderHumanoidRenderer<>(ctx, zombie, mob -> true, 0.55F));
+                ctx -> new SpectralMobRenderer<>(ctx, mobTexture("elemental"), mob -> true, 0.55F));
         event.registerEntityRenderer(ModEntities.HAUNT.get(),
-                ctx -> new PlaceholderHumanoidRenderer<>(ctx, zombie, mob -> true, 0.6F));
+                ctx -> new SpectralMobRenderer<>(ctx, mobTexture("haunt"), mob -> true, 0.6F));
         event.registerEntityRenderer(ModEntities.HAINT.get(),
-                ctx -> new PlaceholderHumanoidRenderer<>(ctx, zombie, mob -> true, 0.75F));
+                ctx -> new SpectralMobRenderer<>(ctx, mobTexture("haint"), mob -> true, 0.75F));
         event.registerEntityRenderer(ModEntities.MUMMY.get(),
-                ctx -> new PlaceholderHumanoidRenderer<>(ctx, husk, mob -> false, 0.5F));
+                ctx -> new SpectralMobRenderer<>(ctx, mobTexture("mummy"), mob -> false, 0.5F));
         event.registerEntityRenderer(ModEntities.PHARAOHL.get(),
-                ctx -> new PlaceholderHumanoidRenderer<>(
+                ctx -> new SpectralMobRenderer<>(
                         ctx,
-                        husk,
+                        mobTexture("pharaohl"),
                         mob -> mob.isCurrentlyIntangible(),
                         0.7F
                 ));

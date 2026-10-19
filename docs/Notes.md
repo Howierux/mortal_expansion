@@ -601,3 +601,8 @@ Replaced the template README with the current mod description, setup/build guida
 ### 2026-10-19 - Mortal Integrations folded into the base mod
 
 Superseded the standalone addon prototype with built-in optional JEI support. All recipe-viewer classes are isolated in integration/jei and discovered by JEI; no common initialization references them. API dependencies are compile-only, runtime JEI is opt-in for development, and metadata marks it optional on clients. Existing machine/cauldron categories, book tier subtypes, furnace catalysts and secret-origin notices remain. Recipes stay visible without granting knowledge. Remove the prototype addon JAR to avoid duplicate plugins. Added a shared secret-catalog regression and a JEI-enabled loading workflow; no gameplay recipes or saved formats change. Local playtest installation remains untouched.
+
+
+### 2026-10-19 - Distinct simple mob textures
+
+Replaced shared zombie/husk textures with dedicated Ghost, Phantom, Elemental, Haunt, Haint, Mummy and Pharaohl skins, and gave the Spirit a pale sage-clad villager skin. Native geometry, animations, phase predicates, transparency values and gameplay are unchanged. Renamed the placeholder humanoid renderer to SpectralMobRenderer. Mortal Golem's existing four flesh-tier appearances remain. See MOB_APPEARANCE.md for preview, export method, prompts, asset provenance and visual-playtest limits.

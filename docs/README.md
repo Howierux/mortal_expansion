@@ -17,6 +17,8 @@ Start with the [mod introduction](../README.md), [system overview](Overview.md),
 
 Optional recipe-browser support: [JEI integration](JEI_INTEGRATION.md).
 
+Mob visuals: [distinct appearances and texture preview](MOB_APPEARANCE.md).
+
 ## Development and provenance
 
 - [Development guidelines](../AGENTS.md) and [data generation](DATA_GENERATION.md)

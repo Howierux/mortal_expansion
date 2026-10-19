@@ -703,3 +703,12 @@ See [Holy Salt barriers](HOLY_SALT_BARRIERS.md) for findings, limits and validat
 - [ ] Live category layout, tooltips and navigation playtest.
 
 See [JEI integration](JEI_INTEGRATION.md).
+
+
+### 2026-10-19 - Simple distinct mob appearances
+
+- [x] Dedicated Ghost, Phantom, Spirit, Elemental, Haunt, Haint, Mummy and Pharaohl textures using native humanoid/villager UV layouts.
+- [x] Retain tangible/intangible rendering and existing Pharaohl phase switching.
+- [ ] In-game translucency, lighting and animation visual checks.
+
+See [Mob appearances](MOB_APPEARANCE.md).
