@@ -1,0 +1,49 @@
+plugins {
+    id 'java-library'
+    id 'net.neoforged.moddev' version '2.0.140'
+}
+group = 'com.howierux.mortalintegrations'
+version = mod_version
+base { archivesName = 'mortal_integrations' }
+java.toolchain.languageVersion = JavaLanguageVersion.of(21)
+repositories {
+    maven { url = 'https://maven.blamejared.com' }
+    maven { url = 'https://maven.minecraftforge.net' }
+}
+def mortalJar = providers.gradleProperty('mortalExpansionJar')
+    .orElse("../../build/libs/mortal_expansion-${mortal_expansion_version}.jar")
+dependencies {
+    implementation files(mortalJar)
+    compileOnly "mezz.jei:jei-${minecraft_version}-common-api:${jei_version}"
+    compileOnly "mezz.jei:jei-${minecraft_version}-neoforge-api:${jei_version}"
+    if (!providers.gradleProperty('withoutJei').isPresent()) {
+        runtimeOnly "mezz.jei:jei-${minecraft_version}-neoforge:${jei_version}"
+    }
+    runtimeOnly 'com.github.glitchfiend:TerraBlender-neoforge:1.21.1-4.1.0.8'
+}
+neoForge {
+    version = neo_version
+    runs {
+        client { client() }
+        server { server(); programArgument '--nogui' }
+        gameTestServer {
+            type = 'gameTestServer'
+            systemProperty 'neoforge.enabledGameTestNamespaces', 'mortal_integrations'
+        }
+        data {
+            data()
+            programArguments.addAll '--mod', 'mortal_integrations', '--all', '--output', file('build/loading-check').absolutePath
+        }
+    }
+    mods { mortal_integrations { sourceSet sourceSets.main } }
+}
+tasks.named('compileJava') {
+    doFirst {
+        if (!file(mortalJar.get()).isFile()) throw new GradleException('Build Mortal Expansion first or set -PmortalExpansionJar to its compiled JAR.')
+    }
+}
+tasks.named('processResources') {
+    inputs.property('mod_version', mod_version)
+    filesMatching('META-INF/neoforge.mods.toml') { expand mod_version: mod_version }
+}
+tasks.withType(JavaCompile).configureEach { options.encoding = 'UTF-8' }
