@@ -163,6 +163,8 @@
   "entity.mortal_expansion.haint": "Haint",
   "entity.mortal_expansion.mummy": "Mummy",
   "entity.mortal_expansion.pharaohl": "Pharaohl",
+  "item.mortal_expansion.spirit_boon": "Spirit Boon",
+  "message.mortal_expansion.haunt.helpful_visitation": "A kindly presence leaves a boon. Offer it to an altar for a minute of flame.",
   "item.mortal_expansion.raw_ectoplasm": "Ectoplasm",
   "tooltip.mortal_expansion.scepter.charge": "Ectoplasm charge: %s / %s",
   "tooltip.mortal_expansion.scepter.reload": "Right-click ectoplasm onto this item to recharge.",

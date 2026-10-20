@@ -16,8 +16,8 @@ public final class ModTiers {
      * Bloodstone keeps diamond's mining speed, harvest capability, and
      * enchantability, but has 1.5x diamond durability.
      *
-     * Attack damage for individual Bloodstone tools is scaled separately so
-     * their actual final damage matches 1.5x the equivalent diamond tool.
+     * Individual tools use Diamond damage/speed baselines; personal Haunt
+     * scales their power and speed from 90% at Void through 150% at Eldritch.
      */
     public static final Tier BLOODSTONE = new Tier() {
         @Override

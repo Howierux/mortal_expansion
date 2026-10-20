@@ -22,6 +22,7 @@ Mob visuals: [distinct appearances and texture preview](MOB_APPEARANCE.md).
 ## Development and provenance
 
 - [Development guidelines](../AGENTS.md) and [data generation](DATA_GENERATION.md)
+- [Bloodstone scaling, varied Spirit trades and boons](SPIRIT_PROGRESSION_UPDATE.md)
 - [Bloodstone diamond compatibility](BLOODSTONE_DIAMOND_COMPATIBILITY.md)
 - [Enchantment Generator GUI](ENCHANTMENT_GENERATOR_GUI.md)
 - [Moon phase and world Haunt spread](MOON_HAUNT_SPREAD.md)

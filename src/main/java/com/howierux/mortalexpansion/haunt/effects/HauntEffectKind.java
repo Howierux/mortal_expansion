@@ -28,8 +28,7 @@ public enum HauntEffectKind {
         return switch (this) {
             // Spectral footprints now guide players; hidden inscription revealing remains a missing function.
 
-            // missing function: spirit worker jobs, ownership and offering/inventory permissions.
-            case HELPFUL_VISITATION -> false;
+            // Helpful Visitation now grants a consumable Spirit Boon; worker jobs remain a separate proposal.
             // missing function: expertise-aware Spirit service menu and service definitions.
             case SPIRIT_RECOGNITION -> false;
             // missing function: hidden-site registry and willing powerful Spirit encounters.

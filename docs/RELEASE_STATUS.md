@@ -10,7 +10,7 @@ Before publishing, playtest book navigation/knowledge locks, machine screens, fl
 
 ## Partially implemented or deferred
 
-- Some proposed Haunt effects lack supporting systems: hidden inscription revelations, spirit workers/services, recognition, and veil revelations. See [personal effects](PERSONAL_HAUNT_EFFECTS.md) and command feedback; an autocomplete entry alone does not establish that an effect can run.
+- Remaining Haunt gaps include hidden inscription revelations, Spirit Recognition services and Veil Revelation encounters. Helpful Visitation now grants a Spirit Boon; worker jobs remain a separate proposal. See [personal effects](PERSONAL_HAUNT_EFFECTS.md) and command feedback; an autocomplete entry alone does not establish that an effect can run.
 - Spirit Villagers have expertise-based trades and kill quests. Expertise-gated quests and additional services remain future work.
 - Named discovery and Grave Porting exist. A general linked Spiritwell/portal network, never-generated-site locating, and wider expedition systems remain proposals.
 - Pipes and tanks store/transfer fluids. The Liquefactor, tank leakage, specialized containment, and broader processing integrations remain unfinished.

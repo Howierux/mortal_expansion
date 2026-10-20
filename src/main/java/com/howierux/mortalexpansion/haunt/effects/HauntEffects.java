@@ -90,8 +90,17 @@ public final class HauntEffects {
             case SECOND_SIGHT -> com.howierux.mortalexpansion.discovery.SpectralDiscovery.startTracks(player);
             case SPECTRAL_INSIGHT -> com.howierux.mortalexpansion.guide.SpectralInsight.perform(player);
             case SPIRIT_COMMISSION -> com.howierux.mortalexpansion.quest.SpiritQuests.offer(player,"A restless spirit");
-            case HELPFUL_VISITATION,
-                    SPIRIT_RECOGNITION, VEIL_REVELATION -> false;
+            case HELPFUL_VISITATION -> {
+                var boon = new ItemStack(com.howierux.mortalexpansion.registry.ModItems.SPIRIT_BOON.get());
+                if (!player.getInventory().add(boon)) {
+                    var dropped = player.drop(boon, false);
+                    if (dropped == null) yield false;
+                    dropped.setTarget(player.getUUID());
+                }
+                particles(player);
+                yield true;
+            }
+            case SPIRIT_RECOGNITION, VEIL_REVELATION -> false;
         };
     }
     private static Vec3 horizontal(ServerPlayer player) {

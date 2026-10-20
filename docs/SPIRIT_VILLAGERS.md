@@ -50,7 +50,7 @@ and catalog version persist across saves; opening the screen does not award XP.
 Thread trades preserve the recipe's ectoplasm core and eight-thread yield.
 Emeralds replace the eight String plus the merchant's service; crafting with
 collected String remains cheaper. Purified thread still requires an actual Pure
-Ectoplasm input, so it cannot bypass purification using only Emeralds. Garb
+Ectoplasm input. The expanded Journeyman pool can also sell that core for Emeralds, providing a trading alternative to purification. Garb
 assembly retains every thread required by its normal recipe and charges a fee;
 it adds no free enchantments or stats. Pure Ectoplasm earns twice as much per
 item as raw ectoplasm. Buying raw ectoplasm then selling it back loses Emeralds.
@@ -83,3 +83,7 @@ Server GameTests cover real engraving and eligibility, one worker per grave,
 actual merchant-menu two-input payment/output/stock, five expertise tiers and XP persistence, recipe ingredient-cost comparisons, legacy catalog migration, provenance/claim
 persistence, and immediate reversion after breaking a reloaded workstation.
 Client appearance and player interaction still need playtesting.
+
+## Expanded trade pools
+
+Each tier now adds two varied offers alongside its two core offers. Saved version-2 stock and expertise are retained, and selections persist without rerolling. See [Spirit progression update](SPIRIT_PROGRESSION_UPDATE.md) for pools, migration and prices.

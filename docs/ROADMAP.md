@@ -80,9 +80,7 @@ See [Book progression](BOOK_OF_ECTCETERA.md) for chapter groups, compatibility a
 
 ### Bloodstone tool scaling
 
-- [ ] At **Natural Haunt**, make each Bloodstone tool equivalent to its Diamond counterpart in power and speed, including attack damage, attack speed, and mining speed where applicable.
-- [ ] Use **personal Haunt** for Bloodstone tool scaling. Start with +10% power and speed per named tier above Natural: Supernatural +10%, Dead Rising +20%, Demonic +30%, Abominable +40%, Eldritch +50%. Treat these as accepted initial balance values to validate in play.
-- [ ] Define behavior at Void separately, and verify Diamond parity at Natural plus the intended increase at each higher tier. This replaces the historical Diamond-like Void baseline for tools; armor balance remains a separate decision.
+- [x] Diamond power/speed baseline at Natural personal Haunt, with 10% steps through the named tiers: Void 90%, Natural 100%, Supernatural 110%, Dead Rising 120%, Demonic 130%, Abominable 140%, Eldritch 150%. Existing durability and special tool functions remain. See [Spirit progression update](SPIRIT_PROGRESSION_UPDATE.md).
 
 ### Grave Moss cleansing [Closed: covered by altars]
 
@@ -495,7 +493,7 @@ Implemented a shapeless EMF Reader + Raw Ectoplasm upgrade. Live digits on the h
 
 - [x] Separate benefit/risk rolls and cooldowns, cumulative tier eligibility, localized chat hints on successful effects.
 - [x] Whispers, spectral empowerment, following footsteps, false apparitions, restless visits, furnace interference, marked presence, pursuers and warned breaches.
-- [ ] Hidden inscription revealing, spirit workers, recognition services and veil revelations: explicit `missing function` comments; excluded until supporting systems exist.
+- [ ] Hidden inscription revealing, recognition services and veil revelations: explicit `missing function` comments; excluded until supporting systems exist.
 - [ ] Visible harmless follower and further machine interference integrations.
 - [ ] Client effects/hints and extended live-world encounter playtest.
 
@@ -712,3 +710,7 @@ See [JEI integration](JEI_INTEGRATION.md).
 - [ ] In-game translucency, lighting and animation visual checks.
 
 See [Mob appearances](MOB_APPEARANCE.md).
+
+### 2026-10-20 - Spirit progression and boon offerings
+
+Helpful Visitation now grants a Spirit Boon worth 60 seconds in either altar. Spirits retain core trades plus two varied offers per expertise tier; old stock and XP survive migration. Bloodstone tools use the selected personal-Haunt scaling including Void below Diamond. Worker jobs remain a separate proposal. See [details](SPIRIT_PROGRESSION_UPDATE.md).
