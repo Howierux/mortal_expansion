@@ -29,6 +29,7 @@ public final class ModClientEvents {
     private ModClientEvents() {}
     @SubscribeEvent public static void ectankRenderer(EntityRenderersEvent.RegisterRenderers event){
         event.registerBlockEntityRenderer(com.howierux.mortalexpansion.registry.ModBlockEntities.ECTO_FLUID.get(),EctankRenderer::new);
+        event.registerBlockEntityRenderer(com.howierux.mortalexpansion.registry.ModBlockEntities.DREAMCATCHER.get(),DreamcatcherRenderer::new);
     }
     @SubscribeEvent public static void mortalGolemLayer(EntityRenderersEvent.RegisterLayerDefinitions event) {
         event.registerLayerDefinition(MortalGolemModel.LAYER, MortalGolemModel::createBodyLayer);
