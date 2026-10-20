@@ -31,3 +31,7 @@ Both furnace variants use the vanilla Furnace side, top and off/on front texture
 ## Verification
 
 Build and 138 required server tests pass. New tests verify inverse nine-chunk pulses, upper cap, separate native crafting unlocks and ingredient consumption, old recipe-book migration, legacy books, expanded saved knowledge and exclusion from positive Purity benefits. Existing altar, offering, weaving, crafting and persistence tests remain passing. Data generation and guide checks pass. GUI names/colors, furnace tints in both states/orientations and longer-term Haunt balance remain client playtest checks.
+
+## Ritual Star sacrifices
+
+Both altars accept a Ritual Star in the Overworld: Purity lowers current Haunt in every chunk by ten points, while Impurity raises it by ten. Recovery baselines remain unchanged. Craft the star with a Nether Star surrounded by eight Bloodstone. See [Ritual Star](RITUAL_STAR.md) for delivery, repeatability and persistence.

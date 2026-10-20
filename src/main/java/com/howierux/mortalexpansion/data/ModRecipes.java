@@ -19,6 +19,10 @@ import net.minecraft.world.item.crafting.RecipeSerializer;
 public final class ModRecipes extends RecipeProvider {
     public ModRecipes(PackOutput output, CompletableFuture<HolderLookup.Provider> lookup) { super(output, lookup); }
     @Override protected void buildRecipes(RecipeOutput output) {
+        ShapedRecipeBuilder.shaped(RecipeCategory.MISC,ModItems.RITUAL_STAR.get())
+                .pattern("BBB").pattern("BSB").pattern("BBB")
+                .define('B',ModItems.BLOODSTONE.get()).define('S',Items.NETHER_STAR)
+                .unlockedBy("has_nether_star",has(Items.NETHER_STAR)).save(output);
         // Most existing recipes have no unlock advancement. Keep their behavior and
         // retain the separately authored Book advancement rather than introducing new unlocks.
         RecipeOutput recipesOnly = new RecipeOutput() {

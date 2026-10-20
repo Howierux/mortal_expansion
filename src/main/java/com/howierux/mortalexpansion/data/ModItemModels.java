@@ -60,6 +60,7 @@ public final class ModItemModels extends ItemModelProvider {
             }
     }
     @Override protected void registerModels() {
+        singleTexture("ritual_star", mcLoc("item/generated"), "layer0", modLoc("item/ritual_star"));
         singleTexture("spirit_boon", mcLoc("item/generated"), "layer0", modLoc("item/spirit_boon"));
         withExistingParent("ectank",modLoc("block/ectank"));
         withExistingParent("purified_ectank",modLoc("block/purified_ectank"));

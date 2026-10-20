@@ -714,3 +714,7 @@ See [Mob appearances](MOB_APPEARANCE.md).
 ### 2026-10-20 - Spirit progression and boon offerings
 
 Helpful Visitation now grants a Spirit Boon worth 60 seconds in either altar. Spirits retain core trades plus two varied offers per expertise tier; old stock and XP survive migration. Bloodstone tools use the selected personal-Haunt scaling including Void below Diamond. Worker jobs remain a separate proposal. See [details](SPIRIT_PROGRESSION_UPDATE.md).
+
+### 2026-10-20 - Ritual Star
+
+A Nether Star surrounded by eight Bloodstone crafts a Ritual Star. Sacrificing it in an Overworld Altar of Purity/Impurity repeatably lowers/raises all Overworld chunks by ten current Haunt points, including deferred delivery to unloaded/future chunks. Natural recovery baselines and personal Haunt remain unchanged. See [Ritual Star](RITUAL_STAR.md).

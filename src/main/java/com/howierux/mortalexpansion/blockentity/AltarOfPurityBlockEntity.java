@@ -18,7 +18,7 @@ public final class AltarOfPurityBlockEntity extends BlockEntity {
     private int burnTicks,offeringDelay,cleanseProgress;
     private boolean offeringBlessed;
     private final ItemStackHandler items=new ItemStackHandler(2){
-        @Override public boolean isItemValid(int slot,ItemStack stack){return slot==0 && PurityOfferings.burnTicks(stack,isImpure())>0;}
+        @Override public boolean isItemValid(int slot,ItemStack stack){return slot==0 && (stack.is(ModItems.RITUAL_STAR.get()) ? level!=null && level.dimension().equals(Level.OVERWORLD) : PurityOfferings.burnTicks(stack,isImpure())>0);}
         @Override protected void onContentsChanged(int slot){setChanged();}
     };
     private final IItemHandler automation=new IItemHandler(){
@@ -51,7 +51,12 @@ public final class AltarOfPurityBlockEntity extends BlockEntity {
         setChanged();return true;
     }
     private boolean consumeOffering(){
-        var input=items.getStackInSlot(0);int duration=PurityOfferings.burnTicks(input,isImpure());if(offeringBlessed)duration+=duration/2;
+        var input=items.getStackInSlot(0);
+        if(input.is(ModItems.RITUAL_STAR.get())){
+            if(!(level instanceof ServerLevel server) || !WorldHauntRitual.activate(server,worldPosition,isImpure()))return false;
+            input.shrink(1);offeringDelay=OFFERING_INTERVAL;setChanged();return true;
+        }
+        int duration=PurityOfferings.burnTicks(input,isImpure());if(offeringBlessed)duration+=duration/2;
         if(duration<=0 || duration>MAX_BURN_TICKS-burnTicks)return false;
         var remainder=input.copyWithCount(1).getCraftingRemainingItem();var output=items.getStackInSlot(1);
         if(!remainder.isEmpty() && !output.isEmpty() && (!ItemStack.isSameItemSameComponents(output,remainder)

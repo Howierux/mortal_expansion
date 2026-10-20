@@ -122,6 +122,8 @@ public final class ModAttachments {
             ATTACHMENTS.register("spirit_quests", () -> AttachmentType.builder(() -> com.howierux.mortalexpansion.quest.SpiritQuestState.EMPTY)
                     .serialize(com.howierux.mortalexpansion.quest.SpiritQuestState.CODEC).copyOnDeath().build());
 
+    public static final Supplier<AttachmentType<Integer>> HAUNT_RITUAL_REVISION=ATTACHMENTS.register("haunt_ritual_revision",()->AttachmentType.builder(()->0).serialize(Codec.intRange(0,Integer.MAX_VALUE)).build());
+
     public static final Supplier<AttachmentType<Integer>> MORTALITY_RESEARCH_BONUS=ATTACHMENTS.register("mortality_research_bonus",()->AttachmentType.builder(()->0).serialize(Codec.intRange(0,100)).copyOnDeath().build());
     public static final Supplier<AttachmentType<Integer>> MORTALITY_RESEARCH_ECTO=ATTACHMENTS.register("mortality_research_ecto",()->AttachmentType.builder(()->0).serialize(Codec.intRange(0,3)).copyOnDeath().build());
     public static void register(IEventBus modBus) {
