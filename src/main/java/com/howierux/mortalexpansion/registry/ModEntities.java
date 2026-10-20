@@ -3,6 +3,7 @@ package com.howierux.mortalexpansion.registry;
 import com.howierux.mortalexpansion.MortalExpansion;
 import com.howierux.mortalexpansion.entity.mob.ElementalEntity;
 import com.howierux.mortalexpansion.entity.mob.GhostEntity;
+import com.howierux.mortalexpansion.entity.mob.DemonEntity;
 import com.howierux.mortalexpansion.entity.mob.HaintEntity;
 import com.howierux.mortalexpansion.entity.mob.HauntEntity;
 import com.howierux.mortalexpansion.entity.mob.MummyEntity;
@@ -43,6 +44,9 @@ public final class ModEntities {
             ENTITY_TYPES.register("mortal_golem",()->EntityType.Builder
                     .of(com.howierux.mortalexpansion.entity.mob.MortalGolemEntity::new,MobCategory.CREATURE)
                     .sized(1.4F,2.7F).clientTrackingRange(10).build("mortal_golem"));
+    public static final DeferredHolder<EntityType<?>, EntityType<DemonEntity>> DEMON =
+            ENTITY_TYPES.register("demon",()->EntityType.Builder.of(DemonEntity::new,MobCategory.MONSTER)
+                    .sized(0.6F,1.95F).clientTrackingRange(8).build("demon"));
     public static final DeferredHolder<EntityType<?>, EntityType<GhostEntity>> GHOST =
             ENTITY_TYPES.register("ghost", () -> EntityType.Builder
                     .of(GhostEntity::new, MobCategory.MONSTER)
@@ -106,6 +110,8 @@ public final class ModEntities {
     }
 
     private static void registerSpawnPlacements(RegisterSpawnPlacementsEvent event) {
+        event.register(DEMON.get(),SpawnPlacementTypes.ON_GROUND,Heightmap.Types.MOTION_BLOCKING_NO_LEAVES,
+                Monster::checkMonsterSpawnRules,RegisterSpawnPlacementsEvent.Operation.REPLACE);
         event.register(
                 SPIRIT.get(),
                 SpawnPlacementTypes.ON_GROUND,
@@ -142,6 +148,7 @@ public final class ModEntities {
     private static void registerAttributes(EntityAttributeCreationEvent event) {
         event.put(PLAYER_CORPSE.get(), net.minecraft.world.entity.LivingEntity.createLivingAttributes().build());
         event.put(MORTAL_GOLEM.get(), com.howierux.mortalexpansion.entity.mob.MortalGolemEntity.createAttributes().build());
+        event.put(DEMON.get(),DemonEntity.createAttributes().build());
         event.put(GHOST.get(), GhostEntity.createAttributes().build());
         event.put(PHANTOM.get(), EmpoweredPhantomEntity.createAttributes().build());
         event.put(SPIRIT.get(), SpiritEntity.createAttributes().build());

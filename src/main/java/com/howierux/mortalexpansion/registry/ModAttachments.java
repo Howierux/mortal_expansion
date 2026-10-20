@@ -122,6 +122,9 @@ public final class ModAttachments {
             ATTACHMENTS.register("spirit_quests", () -> AttachmentType.builder(() -> com.howierux.mortalexpansion.quest.SpiritQuestState.EMPTY)
                     .serialize(com.howierux.mortalexpansion.quest.SpiritQuestState.CODEC).copyOnDeath().build());
 
+    public static final Supplier<AttachmentType<Integer>> PLAYER_HAUNT_EXCESS=ATTACHMENTS.register("player_haunt_excess",()->AttachmentType.builder(()->0).serialize(Codec.intRange(0,20_000_000)).copyOnDeath().build());
+    public static final Supplier<AttachmentType<Integer>> DAMNED_KNOWLEDGE=ATTACHMENTS.register("damned_knowledge",()->AttachmentType.builder(()->0).serialize(Codec.intRange(0,1)).copyOnDeath().build());
+    public static final Supplier<AttachmentType<Long>> DARKHOLD_EXPOSURE_TIME=ATTACHMENTS.register("darkhold_exposure_time",()->AttachmentType.builder(()->-1L).serialize(Codec.LONG).build());
     public static final Supplier<AttachmentType<Integer>> HAUNT_RITUAL_REVISION=ATTACHMENTS.register("haunt_ritual_revision",()->AttachmentType.builder(()->0).serialize(Codec.intRange(0,Integer.MAX_VALUE)).build());
 
     public static final Supplier<AttachmentType<Integer>> MORTALITY_RESEARCH_BONUS=ATTACHMENTS.register("mortality_research_bonus",()->AttachmentType.builder(()->0).serialize(Codec.intRange(0,100)).copyOnDeath().build());

@@ -141,7 +141,7 @@ public final class ModRecipes extends RecipeProvider {
         ShapedRecipeBuilder.shaped(RecipeCategory.COMBAT, ModItems.BLOODSTONE_SHOVEL.get(), 1).pattern("B").pattern("S").pattern("S").define('B', ModItems.BLOODSTONE.get()).define('S', Items.STICK).unlockedBy("has_ingredient", has(ModItems.BLOODSTONE.get())).save(recipesOnly, ResourceLocation.fromNamespaceAndPath(MortalExpansion.MOD_ID, "bloodstone_shovel"));
         ShapedRecipeBuilder.shaped(RecipeCategory.COMBAT, ModItems.BLOODSTONE_SWORD.get(), 1).pattern("B").pattern("B").pattern("S").define('B', ModItems.BLOODSTONE.get()).define('S', Items.STICK).unlockedBy("has_ingredient", has(ModItems.BLOODSTONE.get())).save(recipesOnly, ResourceLocation.fromNamespaceAndPath(MortalExpansion.MOD_ID, "bloodstone_sword"));
         ShapelessRecipeBuilder.shapeless(RecipeCategory.MISC, com.howierux.mortalexpansion.guide.EctceteraProgression.book(0)).requires(Items.BOOK).requires(Items.ROTTEN_FLESH).unlockedBy("has_ingredient", has(Items.BOOK)).save(recipesOnly, ResourceLocation.fromNamespaceAndPath(MortalExpansion.MOD_ID, "book_of_ectcetera"));
-        for (int tier = 0; tier < 3; tier++) {
+        for (int tier = 0; tier < 4; tier++) {
             recipesOnly.accept(ResourceLocation.fromNamespaceAndPath(MortalExpansion.MOD_ID, "book_of_ectcetera_upgrade_" + (tier + 1)),
                     new com.howierux.mortalexpansion.recipe.EctceteraUpgradeRecipe(tier), null);
         }

@@ -36,6 +36,42 @@
       "predicate": {
         "mortal_expansion:emf_level": 6.0
       }
+    },
+    {
+      "model": "mortal_expansion:item/emf_reader_7",
+      "predicate": {
+        "mortal_expansion:emf_level": 7.0
+      }
+    },
+    {
+      "model": "mortal_expansion:item/emf_reader_8",
+      "predicate": {
+        "mortal_expansion:emf_level": 8.0
+      }
+    },
+    {
+      "model": "mortal_expansion:item/emf_reader_9",
+      "predicate": {
+        "mortal_expansion:emf_level": 9.0
+      }
+    },
+    {
+      "model": "mortal_expansion:item/emf_reader_10",
+      "predicate": {
+        "mortal_expansion:emf_level": 10.0
+      }
+    },
+    {
+      "model": "mortal_expansion:item/emf_reader_11",
+      "predicate": {
+        "mortal_expansion:emf_level": 11.0
+      }
+    },
+    {
+      "model": "mortal_expansion:item/emf_reader_12",
+      "predicate": {
+        "mortal_expansion:emf_level": 12.0
+      }
     }
   ]
 }

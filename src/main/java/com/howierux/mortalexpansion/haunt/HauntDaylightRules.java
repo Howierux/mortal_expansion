@@ -42,7 +42,7 @@ public final class HauntDaylightRules {
         String id = BuiltInRegistries.ENTITY_TYPE.getKey(mob.getType()).toString();
         return switch (id) {
             case "mortal_expansion:ghost" -> HauntTier.DEAD_RISING;
-            case "mortal_expansion:phantom", "mortal_expansion:haunt", "minecraft:wither_skeleton"
+            case "mortal_expansion:demon", "mortal_expansion:phantom", "mortal_expansion:haunt", "minecraft:wither_skeleton"
                     -> HauntTier.DEMONIC;
             case "mortal_expansion:haint" -> HauntTier.ABOMINABLE;
             default -> HauntTier.SUPERNATURAL;

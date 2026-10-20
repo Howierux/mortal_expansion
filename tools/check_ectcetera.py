@@ -59,6 +59,10 @@ for part in range(1, 7):
     key = "guide.mortal_expansion.mortal_golem.page." + str(part)
     assert LANG[key].strip() and lines(LANG[key]) <= 9, (key, "map entry exceeds page budget")
 assert LANG["guide.mortal_expansion.mortal_golem.name"].strip()
+for chapter in ("darkhold", "demons"):
+    assert LANG[f"darkhold.mortal_expansion.{chapter}.name"].strip()
+    for part in (1, 2):
+        assert LANG[f"darkhold.mortal_expansion.{chapter}.page.{part}"].strip()
 assert lines(LANG[PREFIX + "cover"] + "\n\nContents") <= 14
 total = 1 + (len(CHAPTERS) + 4) // 5 + sum(int(count) for _, count, _ in CHAPTERS)
 assert total <= 128
@@ -73,7 +77,7 @@ recipe = json.loads((ROOT / "src/generated/resources/data/mortal_expansion/recip
 assert recipe["result"]["id"] == "mortal_expansion:book_of_ectcetera"
 assert {ingredient["item"] for ingredient in recipe["ingredients"]} == {"minecraft:book", "minecraft:rotten_flesh"}
 assert recipe["result"]["components"]["mortal_expansion:ectcetera_tier"] == 0
-for tier in range(3):
+for tier in range(4):
     upgrade = json.loads((ROOT / f"src/generated/resources/data/mortal_expansion/recipe/book_of_ectcetera_upgrade_{tier + 1}.json").read_text())
     assert upgrade["type"] == "mortal_expansion:ectcetera_upgrade" and upgrade["from_tier"] == tier
 print(f"Ectcetera guide checks passed: {len(CHAPTERS)} chapters, {total} pages")

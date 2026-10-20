@@ -25,6 +25,10 @@ import net.neoforged.neoforge.event.entity.living.FinalizeSpawnEvent;
 public final class HauntSpawnHandler {
     private HauntSpawnHandler() {}
 
+    public static boolean canSpawnDemon(ServerLevel level,net.minecraft.core.BlockPos pos) {
+        return com.howierux.mortalexpansion.guide.DarkholdWorldData.get(level).awakened()
+                && HauntManager.getTier(level,pos).id()>=HauntTier.DEMONIC.id();
+    }
     private static final float NATURAL_ZOMBIE_ACCEPTANCE = 0.20F;
     private static final float PRE_ELDRITCH_ENDERMAN_ACCEPTANCE = 0.25F;
 
@@ -35,10 +39,12 @@ public final class HauntSpawnHandler {
         }
 
         Mob mob = event.getEntity();
-        if (!(mob.level() instanceof ServerLevel level)
-                || !level.dimension().equals(ServerLevel.OVERWORLD)) {
+        if (!(mob.level() instanceof ServerLevel level))return;
+        if(mob.getType()==ModEntities.DEMON.get()){
+            if(!canSpawnDemon(level,mob.blockPosition()))event.setSpawnCancelled(true);
             return;
         }
+        if(!level.dimension().equals(ServerLevel.OVERWORLD))return;
 
         HauntTier tier = HauntManager.getTier(level, mob.blockPosition());
         EntityType<?> type = mob.getType();
@@ -129,10 +135,12 @@ public final class HauntSpawnHandler {
     public static void onEntityJoin(EntityJoinLevelEvent event) {
         if (!(event.getEntity() instanceof Mob mob)
                 || !isWorldSpawn(mob.getSpawnType())
-                || !(event.getLevel() instanceof ServerLevel level)
-                || !level.dimension().equals(ServerLevel.OVERWORLD)) {
+                || !(event.getLevel() instanceof ServerLevel level))return;
+        if(mob.getType()==ModEntities.DEMON.get()){
+            if(!canSpawnDemon(level,mob.blockPosition()))event.setCanceled(true);
             return;
         }
+        if(!level.dimension().equals(ServerLevel.OVERWORLD))return;
 
         HauntTier tier = HauntManager.getTier(level, mob.blockPosition());
         EntityType<?> type = mob.getType();

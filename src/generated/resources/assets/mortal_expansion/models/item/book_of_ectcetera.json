@@ -1,5 +1,13 @@
 {
   "parent": "minecraft:item/generated",
+  "overrides": [
+    {
+      "model": "mortal_expansion:item/darkhold",
+      "predicate": {
+        "mortal_expansion:book_tier": 4.0
+      }
+    }
+  ],
   "textures": {
     "layer0": "minecraft:item/book"
   }

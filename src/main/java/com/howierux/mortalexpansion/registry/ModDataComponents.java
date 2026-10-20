@@ -36,7 +36,9 @@ public final class ModDataComponents {
     /** Missing component identifies pre-progression books, which retain all chapters. */
     public static final DeferredHolder<DataComponentType<?>, DataComponentType<Integer>> ECTCETERA_TIER =
             DATA_COMPONENTS.registerComponentType("ectcetera_tier",
-                    builder -> builder.persistent(Codec.intRange(0, 3)).networkSynchronized(ByteBufCodecs.VAR_INT));
+                    builder -> builder.persistent(Codec.intRange(0, 4)).networkSynchronized(ByteBufCodecs.VAR_INT));
+
+    public static final DeferredHolder<DataComponentType<?>, DataComponentType<Integer>> DAMNED_SECRETS = DATA_COMPONENTS.registerComponentType("damned_secrets",builder->builder.persistent(Codec.intRange(0,1)).networkSynchronized(ByteBufCodecs.VAR_INT));
 
     public static final DeferredHolder<DataComponentType<?>, DataComponentType<Integer>> ECTCETERA_SECRETS =
             DATA_COMPONENTS.registerComponentType("ectcetera_secrets", builder -> builder.persistent(Codec.intRange(0,127)).networkSynchronized(ByteBufCodecs.VAR_INT));

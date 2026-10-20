@@ -35,7 +35,7 @@ public final class ModClientEvents {
         event.registerLayerDefinition(MortalGolemModel.LAYER, MortalGolemModel::createBodyLayer);
     }
     @SubscribeEvent public static void emfModels(net.neoforged.neoforge.client.event.ModelEvent.RegisterAdditional event) {
-        for (int lit = 0; lit <= 6; lit++) event.register(net.minecraft.client.resources.model.ModelResourceLocation.standalone(
+        for (int lit = 0; lit <= 12; lit++) event.register(net.minecraft.client.resources.model.ModelResourceLocation.standalone(
                 ResourceLocation.fromNamespaceAndPath(MortalExpansion.MOD_ID, "item/precise_emf_reader_" + lit)));
     }
     @SubscribeEvent public static void emfLayers(net.neoforged.neoforge.client.event.RegisterGuiLayersEvent event) {
@@ -43,6 +43,9 @@ public final class ModClientEvents {
                 ResourceLocation.fromNamespaceAndPath(MortalExpansion.MOD_ID, "emf_reader"), EmfReaderClient::render);
     }
     @SubscribeEvent public static void emfProperties(net.neoforged.fml.event.lifecycle.FMLClientSetupEvent event) {
+        event.enqueueWork(() -> net.minecraft.client.renderer.item.ItemProperties.register(ModItems.BOOK_OF_ECTCETERA.get(),
+                ResourceLocation.fromNamespaceAndPath(MortalExpansion.MOD_ID,"book_tier"),
+                (stack,level,holder,seed)->com.howierux.mortalexpansion.guide.EctceteraProgression.tier(stack)));
         event.enqueueWork(() -> net.minecraft.client.renderer.item.ItemProperties.register(ModItems.EMF_READER.get(),
                 ResourceLocation.fromNamespaceAndPath(MortalExpansion.MOD_ID, "emf_level"),
                 (stack, level, holder, seed) -> EmfReaderClient.modelLevel(stack, holder)));
@@ -155,6 +158,8 @@ public final class ModClientEvents {
         event.registerEntityRenderer(EntityType.GHAST, IntangibleGhastRenderer::new);
         event.registerEntityRenderer(ModEntities.PLAYER_CORPSE.get(), PlayerCorpseRenderer::new);
 
+        event.registerEntityRenderer(ModEntities.DEMON.get(),ctx->new SpectralMobRenderer<>(ctx,
+                mobTexture("ghost"),mob->true,0.5F,com.howierux.mortalexpansion.entity.mob.DemonEntity::tint));
         event.registerEntityRenderer(ModEntities.GHOST.get(),
                 ctx -> new SpectralMobRenderer<>(ctx, mobTexture("ghost"), mob -> true, 0.45F));
         event.registerEntityRenderer(ModEntities.PHANTOM.get(),

@@ -20,13 +20,16 @@ public final class SpectralMobRenderer<T extends Mob>
 
     private final ResourceLocation texture;
     private final Predicate<T> spectral;
+    private final java.util.function.ToIntFunction<T> tint;
 
     public SpectralMobRenderer(
             EntityRendererProvider.Context context,
             ResourceLocation texture,
             Predicate<T> spectral,
             float shadowRadius
-    ) {
+    ) { this(context,texture,spectral,shadowRadius,entity->0xFFFFFFFF); }
+    public SpectralMobRenderer(EntityRendererProvider.Context context,ResourceLocation texture,
+            Predicate<T> spectral,float shadowRadius,java.util.function.ToIntFunction<T> tint) {
         super(
                 context,
                 new SpectralHumanoidModel<>(context.bakeLayer(ModelLayers.ZOMBIE)),
@@ -34,6 +37,7 @@ public final class SpectralMobRenderer<T extends Mob>
         );
         this.texture = texture;
         this.spectral = spectral;
+        this.tint = tint;
     }
 
     @Override
@@ -47,6 +51,7 @@ public final class SpectralMobRenderer<T extends Mob>
     ) {
         boolean spectralNow = spectral.test(entity);
         this.model.setSpectral(spectralNow);
+        this.model.tint=tint.applyAsInt(entity);
 
         poseStack.pushPose();
         if (spectralNow) {
@@ -92,6 +97,7 @@ public final class SpectralMobRenderer<T extends Mob>
     public static final class SpectralHumanoidModel<T extends Mob>
             extends HumanoidModel<T> {
         private boolean spectral;
+        private int tint=0xFFFFFFFF;
 
         public SpectralHumanoidModel(ModelPart root) {
             super(root);
@@ -109,6 +115,9 @@ public final class SpectralMobRenderer<T extends Mob>
                 int packedOverlay,
                 int color
         ) {
+            color=(color&0xFF000000)
+                    | (((color>>16&255)*(tint>>16&255)/255)<<16)
+                    | (((color>>8&255)*(tint>>8&255)/255)<<8) | ((color&255)*(tint&255)/255);
             if (!spectral) {
                 super.renderToBuffer(
                         poseStack,

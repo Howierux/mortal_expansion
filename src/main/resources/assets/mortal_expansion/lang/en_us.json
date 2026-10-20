@@ -52,7 +52,6 @@
   "insight.mortal_expansion.mortality_research_station.guidance": "Carry even a starting book at Natural personal Haunt. A whisper may reveal your first research secret.",
   "insight.mortal_expansion.mortality_research_station.body": "Place a Book of Ectcetera above two Holy Salt with Obsidian between them and three Obsidian beneath. Crafting returns the book intact. Study flesh, bones or either ectoplasm type here to favor later revelations. Later secrets still need an aware or purified book.",
   "message.mortal_expansion.insight.first_whisper": "A whisper from the dead sketches a Mortality Research Station in your book.",
-
   "block.mortal_expansion.mortality_research_station": "Mortality Research Station",
   "gui.mortal_expansion.mortality_research_station.title": "Mortality Research",
   "gui.mortal_expansion.research.study": "Research",
@@ -63,7 +62,6 @@
   "message.mortal_expansion.research.added": "Your next eligible haunting favors a secret by +%s percentage points.",
   "message.mortal_expansion.research.waiting": "Research is complete. Carry an eligible Book of Ectcetera and meet the next secret's personal Haunt requirement to hear its whisper.",
   "message.mortal_expansion.research.blocked": "Research cannot be added: check the material, remaining secrets, bonus cap or player state.",
-
   "block.mortal_expansion.altar_of_impurity": "Altar of Impurity",
   "insight.mortal_expansion.altar_of_impurity.name": "Altar of Impurity",
   "insight.mortal_expansion.altar_of_purity.name": "Altar of Purity",
@@ -73,7 +71,6 @@
   "insight.mortal_expansion.altar_of_purity.guidance": "Learn Impurity, purify this book, and reach Demonic personal Haunt to reveal the Altar of Purity.",
   "insight.mortal_expansion.altar_of_impurity.body": "Craft a Beacon directly above a Haunt Furnace. Burn offerings in the Altar of Impurity to add 0.10 Haunt to each loaded chunk in its 3x3 area every 10 seconds. Items are consumed every 12.5 seconds and their burn time stacks. Hover over the bonfire for remaining time.",
   "insight.mortal_expansion.altar_of_purity.body": "Craft a Beacon directly above a Haint Furnace. Burn offerings in the Altar of Purity to remove 0.10 Haunt from each loaded chunk in its 3x3 area every 10 seconds. Items are consumed every 12.5 seconds and their burn time stacks. Spirits may gift or bless offerings.",
-
   "message.mortal_expansion.haunt.offering_gift": "A grateful spirit leaves Holy Salt upon a nearby altar.",
   "message.mortal_expansion.haunt.offering_blessing": "A spirit blesses the altar: its next offering will burn longer.",
   "block.mortal_expansion.altar_of_purity": "Altar of Purity",
@@ -81,7 +78,6 @@
   "gui.mortal_expansion.altar.offering": "Offering",
   "gui.mortal_expansion.altar.return": "Returned",
   "gui.mortal_expansion.altar.remaining": "Remaining burn time: %s",
-
   "gui.mortal_expansion.ectcetera.category.4": "Secrets of the Dead",
   "gui.mortal_expansion.ectcetera.category.0": "Foundations",
   "gui.mortal_expansion.ectcetera.category.1": "Spirits",
@@ -105,7 +101,6 @@
   "gui.mortal_expansion.ectcetera.material.2": "Raw Ectoplasm",
   "gui.mortal_expansion.ectcetera.material.3": "Purified Ectoplasm",
   "gui.mortal_expansion.ectcetera.page": "Entry page %s / %s",
-
   "subtitle.mortal_expansion.haunt_tapping": "Wood knocking",
   "screen.mortal_expansion.spirit.prompt": "What would you ask of this spirit?",
   "screen.mortal_expansion.spirit.trade": "Trade",
@@ -116,7 +111,6 @@
   "screen.mortal_expansion.spirit.back": "Back",
   "screen.mortal_expansion.spirit.progress": "Progress: %s/%s",
   "screen.mortal_expansion.spirit.rest": "The spirit has no new business for you yet. Return shortly.",
-
   "message.mortal_expansion.quest.offer": "%s has unfinished business: slay %s %s. Difficulty: %s. Reward: %s.",
   "message.mortal_expansion.quest.accepted": "Unfinished business accepted: slay %s %s. Your reward will find you.",
   "message.mortal_expansion.quest.progress": "Unfinished business: %s \u2014 %s/%s",
@@ -125,7 +119,6 @@
   "message.mortal_expansion.quest.updated": "Spirit quest updated.",
   "message.mortal_expansion.quest.unavailable": "That quest offer is unavailable, expired, or no longer current.",
   "message.mortal_expansion.haunt.spirit_commission": "A restless spirit entrusts its unfinished business to you.",
-
   "message.mortal_expansion.haunt.garb_prevented": "Your spectral garb prevented a haunting.",
   "block.mortal_expansion.spiritwood_log": "Spiritwood Log",
   "block.mortal_expansion.spiritwood_leaves": "Spiritwood Leaves",
@@ -438,7 +431,7 @@
   "book.mortal_expansion.ectcetera.page.haint_garb.2": "In smithing, add Pure Ectoplasm to a Ghost Garb part to upgrade it. Leave the template slot empty. Full Haint sets gain a powerful jump boost.",
   "book.mortal_expansion.ectcetera.page.haint_garb.3": "Combine a Haint part with its matching Spectralite part in smithing, without a template. It keeps spectral armor protection and garb abilities.",
   "book.mortal_expansion.ectcetera.chapter.mastery": "The Complete Book",
-  "book.mortal_expansion.ectcetera.page.mastery.1": "All chapters are unlocked. Use purification, wards, spectral equipment and machines together. Check item tooltips for benefits and limits.",
+  "book.mortal_expansion.ectcetera.page.mastery.1": "Purification is not the end. Combine this book with a Ritual Star to awaken the Darkhold. All dead secrets yield, but carrying it draws your own Haunt beyond Eldritch.",
   "tooltip.mortal_expansion.ectcetera.tier.0": "Knowledge: Beginnings",
   "tooltip.mortal_expansion.ectcetera.tier.1": "Knowledge: Bones and Spirits",
   "tooltip.mortal_expansion.ectcetera.tier.2": "Knowledge: Raw Ectoplasm",
@@ -547,5 +540,21 @@
   "jei.mortal_expansion.cauldron_buckets": "Buckets depict fluids. Collect the result with an empty bucket; containers are reused.",
   "jei.mortal_expansion.book_info": "Craft a Book with Rotten Flesh. Upgrade in order with Bone, Raw Ectoplasm, then solid Purified Ectoplasm. Secret recipes still need Spectral Insight revelations, even when visible in JEI.",
   "jei.mortal_expansion.generator_info": "Burns raw or purified ectoplasm to produce FE. Completed burns add 1 or 3 chunk Haunt respectively. Output depends on chunk Haunt.",
-  "jei.mortal_expansion.furnace_info": "Smelts normal furnace recipes. Needs starting fuel; preserves remaining burn time at Demonic chunk Haunt or higher. Below Demonic, burn time falls only while cooking advances."
+  "jei.mortal_expansion.furnace_info": "Smelts normal furnace recipes. Needs starting fuel; preserves remaining burn time at Demonic chunk Haunt or higher. Below Demonic, burn time falls only while cooking advances.",
+  "item.mortal_expansion.darkhold": "The Darkhold",
+  "item.mortal_expansion.demonic_ash": "Demonic Ash",
+  "entity.mortal_expansion.demon": "Demon",
+  "tooltip.mortal_expansion.ectcetera.tier.4": "The Darkhold: forbidden knowledge",
+  "gui.mortal_expansion.ectcetera.tier.4": "The Darkhold",
+  "gui.mortal_expansion.ectcetera.material.4": "a Ritual Star",
+  "gui.mortal_expansion.ectcetera.category.5": "The Damned",
+  "darkhold.mortal_expansion.darkhold.name": "Secrets of the Damned",
+  "darkhold.mortal_expansion.darkhold.page.1": "A Ritual Star offered to the purified Book of Ectcetera tears its final binding. The Darkhold reveals every Secret of the Dead at once. Its new chapter belongs to things that never rested.",
+  "darkhold.mortal_expansion.darkhold.page.2": "Carry this volume and your personal Haunt rises by 0.01 every ten seconds, even within a backpack. Extra copies do not hasten it. At 70 Haunt, the first damned secret speaks. Removing the book stops its influence; knowledge remains.",
+  "darkhold.mortal_expansion.demons.name": "Beyond the Veil: Demons",
+  "darkhold.mortal_expansion.demons.locked": "Carry the Darkhold with at least 70 personal Haunt to hear this secret.",
+  "darkhold.mortal_expansion.demons.page.1": "The first Darkhold awakens Demons throughout this world. Where chunk Haunt reaches Demonic or higher, they may emerge in the darkness. Their colored forms resemble Ghosts, but they are stronger, swifter hunters.",
+  "darkhold.mortal_expansion.demons.page.2": "Demons pass through ordinary blocks and resist mundane harm. Demi-tangible or magical attacks can strike them. They leave Demonic Ash behind. An EMF reader marks Haunt beyond Eldritch with red bulbs, then dark purple; the precise reader shows the full value.",
+  "darkhold.mortal_expansion.revealed": "The Darkhold shudders. Something beyond the veil has noticed you. A secret of the Damned is revealed.",
+  "darkhold.mortal_expansion.band": "Damned %s"
 }

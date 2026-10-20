@@ -107,6 +107,6 @@ public final class MortalJeiPlugin implements IModPlugin {
     }
     @Override public void registerExtraIngredients(IExtraIngredientRegistration registration) {
         registration.addExtraIngredients(VanillaTypes.ITEM_STACK,
-            List.of(EctceteraProgression.book(0), EctceteraProgression.book(1), EctceteraProgression.book(2), EctceteraProgression.book(3)));
+            List.of(EctceteraProgression.book(0), EctceteraProgression.book(1), EctceteraProgression.book(2), EctceteraProgression.book(3), EctceteraProgression.book(4)));
     }
 }

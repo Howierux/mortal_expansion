@@ -1,0 +1,10 @@
+{
+  "type": "neoforge:add_spawns",
+  "biomes": "#mortal_expansion:demon_spawn_biomes",
+  "spawners": {
+    "type": "mortal_expansion:demon",
+    "maxCount": 1,
+    "minCount": 1,
+    "weight": 4
+  }
+}

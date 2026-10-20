@@ -2,6 +2,10 @@
 
 Updated 2026-10-16. The gameplay baseline promoted to `main` is `f6e36d817a88972118fd59078811f2a034eb33bf`. Its Gradle build and all **194 required server GameTests** passed. This documentation revision adds no gameplay and does not change that count. Earlier per-feature counts are historical.
 
+## Current dev validation (2026-10-20)
+
+[The Darkhold](DARKHOLD.md) adds the Ritual Star book upgrade, hidden Damned chapter, personal Haunt overflow/exposure, extended EMF readings, and gated Demon spawning/Demonic Ash. The dev build and all **210 required server GameTests** passed; generated-resource and book checks also passed (659 generated resources). Four new tests exercise these connected rules. The first suite attempt encountered the existing intermittent Ghost-target/retaliation test; confirmation passed the full suite. Visuals, backpack-specific interoperability, and spawn balance remain playtest items. This dev update has not been promoted to main or copied to the local playtest installation.
+
 ## Implemented, with further validation remaining
 
 The [overview](Overview.md) lists current systems. Recent work includes fluid infrastructure, spectral retaliation, armor art/trims, Ghost targeting of Spirits/Elementals, and Holy Salt cleanup/workload bounds. The salt changes address stale client barriers and expensive enclosure searches; updated-build performance has not yet been measured against the earlier live sample.

@@ -26,6 +26,8 @@ public final class ModCreativeTabs {
                         output.accept(ModItems.RAW_ECTOPLASM.get());
                         output.accept(ModItems.SPIRIT_BOON.get());
                         output.accept(ModItems.RITUAL_STAR.get());
+                        output.accept(ModItems.DEMONIC_ASH.get());
+                        output.accept(com.howierux.mortalexpansion.guide.EctceteraProgression.book(4));
                         output.accept(ModItems.DREAMCATCHER.get());
                         output.accept(ModItems.WISP_O_LANTERN.get());
                         output.accept(ModItems.PURIFIED_DREAMCATCHER.get());

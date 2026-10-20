@@ -6,7 +6,7 @@ Start with the [mod introduction](../README.md), [system overview](Overview.md),
 
 | Subject | Guides |
 | --- | --- |
-| Knowledge | [Book upgrades](BOOK_OF_ECTCETERA.md), [research map](ECTCETERA_RESEARCH_MAP.md), [Spectral Insight](SPECTRAL_INSIGHT.md), [first whisper](FIRST_RESEARCH_WHISPER.md), [Mortality Research](MORTALITY_RESEARCH_STATION.md) |
+| Knowledge | [Book upgrades](BOOK_OF_ECTCETERA.md), [The Darkhold](DARKHOLD.md), [research map](ECTCETERA_RESEARCH_MAP.md), [Spectral Insight](SPECTRAL_INSIGHT.md), [first whisper](FIRST_RESEARCH_WHISPER.md), [Mortality Research](MORTALITY_RESEARCH_STATION.md) |
 | Haunt and exploration | [Personal effects](PERSONAL_HAUNT_EFFECTS.md), [EMF Readers](EMF_READER.md), [discoveries and footprints](SPECTRAL_DISCOVERY.md), [Graveyard weathering](GRAVEYARD_STONE.md) |
 | Graves and travel | [Spirit Journey](SPIRIT_JOURNEY.md), [Grave Porting](GRAVE_PORTING.md) |
 | Creatures | [Spirit Villagers](SPIRIT_VILLAGERS.md), [interaction menu](SPIRIT_INTERACTION_MENU.md), [quests](SPIRIT_QUESTS.md), [retaliation](SPECTRAL_RETALIATION.md), [Mortal Golem construction and clearance](MORTAL_GOLEM.md), [Wisp o' Lantern](WISP_O_LANTERN.md) |
