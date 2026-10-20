@@ -22,6 +22,7 @@ Mob visuals: [distinct appearances and texture preview](MOB_APPEARANCE.md).
 ## Development and provenance
 
 - [Development guidelines](../AGENTS.md) and [data generation](DATA_GENERATION.md)
+- [Moon phase and world Haunt spread](MOON_HAUNT_SPREAD.md)
 - [Haunt testing commands](HAUNT_EFFECT_COMMANDS.md)
 - [Feature research and proposals](FEATURE_IDEAS_RESEARCH.md)
 - [Temporary item art](TEMPORARY_ITEM_ART.md), [block art](TEMPORARY_BLOCK_ART.md), and [garb art](WOVEN_GARB_ART.md)

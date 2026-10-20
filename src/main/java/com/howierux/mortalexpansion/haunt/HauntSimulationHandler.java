@@ -39,11 +39,16 @@ public final class HauntSimulationHandler {
 
     /**
      * Zero Haunt cannot spread. Residual Void Haunt spreads at 7.5%, Natural at
-     * 15%, Supernatural at 22.5%, and so on through Eldritch at 52.5% per day.
+     * 15%, Supernatural at 22.5%, and so on through Eldritch at 52.5% per day
+     * before moon weighting.
      */
-    private static float spreadChance(int value) {
+    public static float spreadChance(int value, int moonPhase) {
+        // Vanilla phases: 0 = full, 4 = new. Equal illumination on either side
+        // of the cycle has equal weight: 0.5, 0.75, 1, 1.25, 1.5, 1.25, 1, 0.75.
+        int phase = Math.floorMod(moonPhase, 8);
+        float moonWeight = 0.5F + 0.25F * (4 - Math.abs(phase - 4));
         return value <= HauntTier.MIN_VALUE ? 0.0F
-                : SPREAD_CHANCE_PER_TIER * (HauntTier.fromValue(value).id() + 1);
+                : Math.min(1.0F, SPREAD_CHANCE_PER_TIER * (HauntTier.fromValue(value).id() + 1) * moonWeight);
     }
 
     /** 10% daily chance to lose one haunt point: 90% chance to remain unchanged. */
@@ -224,6 +229,7 @@ public final class HauntSimulationHandler {
         }
 
         RandomSource random = level.getRandom();
+        int moonPhase = level.getMoonPhase();
 
         for (LevelChunk chunk : loadedChunks) {
             GraveyardStoneWeathering.sample(level, chunk);
@@ -235,7 +241,7 @@ public final class HauntSimulationHandler {
 
             if (!sourceWardProtected
                     && sourceValue > 0
-                    && random.nextFloat() < spreadChance(sourceValue)) {
+                    && random.nextFloat() < spreadChance(sourceValue, moonPhase)) {
                 int[] offset = CARDINAL_OFFSETS[random.nextInt(CARDINAL_OFFSETS.length)];
                 ChunkPos sourcePos = chunk.getPos();
                 ChunkPos targetPos = new ChunkPos(sourcePos.x + offset[0], sourcePos.z + offset[1]);
