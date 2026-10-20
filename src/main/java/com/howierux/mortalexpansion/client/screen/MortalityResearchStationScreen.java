@@ -41,8 +41,8 @@ public final class MortalityResearchStationScreen extends AbstractContainerScree
                 8, 25, TEXT_COLOR, false);
         graphics.drawString(font, Component.translatable("gui.mortal_expansion.research.rates"),
                 8, 78, TEXT_COLOR, false);
-        drawContribution(graphics, "gui.mortal_expansion.research.raw", 8, 92, menu.ectoType() == 1);
-        drawContribution(graphics, "gui.mortal_expansion.research.purified", 88, 92, menu.ectoType() == 2);
+        drawContribution(graphics, "gui.mortal_expansion.research.raw", 8, 92, (menu.ectoType() & 1) != 0);
+        drawContribution(graphics, "gui.mortal_expansion.research.purified", 88, 92, (menu.ectoType() & 2) != 0);
         graphics.drawString(font, playerInventoryTitle, 8, inventoryLabelY, 0x404040, false);
     }
 

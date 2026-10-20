@@ -123,7 +123,7 @@ public final class ModAttachments {
                     .serialize(com.howierux.mortalexpansion.quest.SpiritQuestState.CODEC).copyOnDeath().build());
 
     public static final Supplier<AttachmentType<Integer>> MORTALITY_RESEARCH_BONUS=ATTACHMENTS.register("mortality_research_bonus",()->AttachmentType.builder(()->0).serialize(Codec.intRange(0,100)).copyOnDeath().build());
-    public static final Supplier<AttachmentType<Integer>> MORTALITY_RESEARCH_ECTO=ATTACHMENTS.register("mortality_research_ecto",()->AttachmentType.builder(()->0).serialize(Codec.intRange(0,2)).copyOnDeath().build());
+    public static final Supplier<AttachmentType<Integer>> MORTALITY_RESEARCH_ECTO=ATTACHMENTS.register("mortality_research_ecto",()->AttachmentType.builder(()->0).serialize(Codec.intRange(0,3)).copyOnDeath().build());
     public static void register(IEventBus modBus) {
         ATTACHMENTS.register(modBus);
     }

@@ -84,13 +84,22 @@ public final class MortalityResearchGameTests {
         h.succeed();
     }
     @GameTest(template="deferred_items_test")
-    public static void materials_stack_but_raw_and_purified_types_cannot_mix(GameTestHelper h){
+    public static void materials_stack_with_both_raw_and_purified_contributions(GameTestHelper h){
         var p=h.makeMockServerPlayerInLevel();var raw=new ItemStack(ModItems.RAW_ECTOPLASM.get(),2);
         h.assertTrue(MortalityResearch.contribute(p,new ItemStack(Items.ROTTEN_FLESH)) && MortalityResearch.bonus(p)==1,"Flesh adds one point");
         MortalityResearch.contribute(p,new ItemStack(Items.BONE));MortalityResearch.contribute(p,raw);MortalityResearch.contribute(p,raw);
         h.assertTrue(MortalityResearch.bonus(p)==26 && raw.isEmpty(),"Bones and repeated chosen-type ectoplasm stack their exact bonuses");
-        var pure=new ItemStack(ModItems.PURE_ECTOPLASM.get());h.assertFalse(MortalityResearch.contribute(p,pure),"Cannot mix purified ectoplasm into a raw bonus");h.assertTrue(pure.getCount()==1,"Rejected research preserves material");
-        MortalityResearch.spent(p);MortalityResearch.contribute(p,pure);h.assertTrue(MortalityResearch.bonus(p)==20,"A new bonus may choose purified instead");
+        var pure=new ItemStack(ModItems.PURE_ECTOPLASM.get());
+        h.assertTrue(MortalityResearch.contribute(p,pure) && pure.isEmpty() && MortalityResearch.bonus(p)==46,
+                "Purified adds twenty points alongside existing raw contributions");
+        h.assertTrue(p.getData(ModAttachments.MORTALITY_RESEARCH_ECTO)==3,"Both contribution checkboxes remain set");
+        var saved=p.saveWithoutId(new net.minecraft.nbt.CompoundTag());MortalityResearch.spent(p);p.load(saved);
+        h.assertTrue(MortalityResearch.bonus(p)==46 && p.getData(ModAttachments.MORTALITY_RESEARCH_ECTO)==3,
+                "Mixed contribution flags and exact bonus survive save/load");
+        MortalityResearch.spent(p);MortalityResearch.contribute(p,new ItemStack(ModItems.PURE_ECTOPLASM.get()));
+        MortalityResearch.contribute(p,new ItemStack(ModItems.RAW_ECTOPLASM.get()));
+        h.assertTrue(MortalityResearch.bonus(p)==30 && p.getData(ModAttachments.MORTALITY_RESEARCH_ECTO)==3,
+                "Raw also stacks after purified; contribution order does not matter");
         p.setData(ModAttachments.MORTALITY_RESEARCH_BONUS,100);var bone=new ItemStack(Items.BONE);h.assertFalse(MortalityResearch.contribute(p,bone) || bone.isEmpty(),"Full bonus cannot waste more materials");p.discard();h.succeed();
     }
     @GameTest(template="deferred_items_test")

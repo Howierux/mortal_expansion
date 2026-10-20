@@ -50,7 +50,7 @@
   "insight.mortal_expansion.mortality_research_station.name": "Mortality Research Station",
   "insight.mortal_expansion.mortality_research_station.next": "Use Obsidian and Holy Salt around this book. The book returns intact; study remains to favor later secrets.",
   "insight.mortal_expansion.mortality_research_station.guidance": "Carry even a starting book at Natural personal Haunt. A whisper may reveal your first research secret.",
-  "insight.mortal_expansion.mortality_research_station.body": "Place a Book of Ectcetera above two Holy Salt with Obsidian between them and three Obsidian beneath. Crafting returns the book intact. Study flesh, bones or one ectoplasm type here to favor later revelations. Later secrets still need an aware or purified book.",
+  "insight.mortal_expansion.mortality_research_station.body": "Place a Book of Ectcetera above two Holy Salt with Obsidian between them and three Obsidian beneath. Crafting returns the book intact. Study flesh, bones or either ectoplasm type here to favor later revelations. Later secrets still need an aware or purified book.",
   "message.mortal_expansion.insight.first_whisper": "A whisper from the dead sketches a Mortality Research Station in your book.",
 
   "block.mortal_expansion.mortality_research_station": "Mortality Research Station",
@@ -62,7 +62,7 @@
   "gui.mortal_expansion.research.purified": "Purified 20%",
   "message.mortal_expansion.research.added": "Your next eligible haunting favors a secret by +%s percentage points.",
   "message.mortal_expansion.research.waiting": "Research is complete. Carry an eligible Book of Ectcetera and meet the next secret's personal Haunt requirement to hear its whisper.",
-  "message.mortal_expansion.research.blocked": "Research cannot be added: check the material, remaining secrets, bonus cap or your chosen ectoplasm type.",
+  "message.mortal_expansion.research.blocked": "Research cannot be added: check the material, remaining secrets, bonus cap or player state.",
 
   "block.mortal_expansion.altar_of_impurity": "Altar of Impurity",
   "insight.mortal_expansion.altar_of_impurity.name": "Altar of Impurity",

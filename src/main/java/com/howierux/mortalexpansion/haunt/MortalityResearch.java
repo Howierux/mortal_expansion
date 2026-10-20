@@ -23,9 +23,9 @@ public final class MortalityResearch {
         return false;
     }
     public static boolean contribute(ServerPlayer p,ItemStack item){
-        int amount=amount(item),type=ecto(item),chosen=p.getData(ModAttachments.MORTALITY_RESEARCH_ECTO);
-        if(!p.isAlive() || p.gameMode.getGameModeForPlayer()==net.minecraft.world.level.GameType.SPECTATOR || amount==0 || bonus(p)>=100 || !remaining(p) || type!=0 && chosen!=0 && type!=chosen)return false;
-        p.setData(ModAttachments.MORTALITY_RESEARCH_BONUS,Math.min(100,bonus(p)+amount));if(type!=0)p.setData(ModAttachments.MORTALITY_RESEARCH_ECTO,type);
+        int amount=amount(item),type=ecto(item),contributed=p.getData(ModAttachments.MORTALITY_RESEARCH_ECTO);
+        if(!p.isAlive() || p.gameMode.getGameModeForPlayer()==net.minecraft.world.level.GameType.SPECTATOR || amount==0 || bonus(p)>=100 || !remaining(p))return false;
+        p.setData(ModAttachments.MORTALITY_RESEARCH_BONUS,Math.min(100,bonus(p)+amount));if(type!=0)p.setData(ModAttachments.MORTALITY_RESEARCH_ECTO,contributed|type);
         item.shrink(1);
         p.sendSystemMessage(Component.translatable("message.mortal_expansion.research.added",bonus(p)));
         if(bonus(p)==100 && !complete(p))
