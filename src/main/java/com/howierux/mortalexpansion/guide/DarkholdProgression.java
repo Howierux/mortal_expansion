@@ -12,6 +12,15 @@ import net.neoforged.neoforge.event.entity.player.PlayerEvent;
 public final class DarkholdProgression {
     public static final int REVEAL_AT=70,INTERVAL=200;
     private DarkholdProgression(){}
+    /** Revelation is permanent; carrying a book or merely reaching 70 alone is not vision. */
+    public static boolean canSeeDemon(net.minecraft.world.entity.player.Player viewer){
+        return viewer!=null && (viewer.getData(ModAttachments.DAMNED_KNOWLEDGE)&1)!=0;
+    }
+    private static void remember(ServerPlayer player,int known){
+        if(player.getData(ModAttachments.DAMNED_KNOWLEDGE)==known)return;
+        player.setData(ModAttachments.DAMNED_KNOWLEDGE,known);
+        com.howierux.mortalexpansion.network.DarkholdKnowledgePayload.send(player);
+    }
     public static boolean isDarkhold(ItemStack stack){return stack.is(ModItems.BOOK_OF_ECTCETERA.get()) && EctceteraProgression.tier(stack)==4;}
     public static boolean contains(ItemStack stack){return find(stack,0,new int[]{4096},java.util.Collections.newSetFromMap(new java.util.IdentityHashMap<>()));}
     private static boolean find(ItemStack stack,int depth,int[] budget,java.util.Set<ItemStack> visited){
@@ -34,7 +43,7 @@ public final class DarkholdProgression {
         if(PlayerHauntManager.getValue(player)>=REVEAL_AT)known|=1;
         if((known&1)!=0 && (player.getData(ModAttachments.DAMNED_KNOWLEDGE)&1)==0)
             player.sendSystemMessage(Component.translatable("darkhold.mortal_expansion.revealed"));
-        player.setData(ModAttachments.DAMNED_KNOWLEDGE,known);
+        remember(player,known);
         if(book.getOrDefault(ModDataComponents.DAMNED_SECRETS.get(),0)!=known)book.set(ModDataComponents.DAMNED_SECRETS.get(),known);
     }
     public static boolean pulse(ServerPlayer player,long now){
@@ -45,7 +54,7 @@ public final class DarkholdProgression {
         boolean gained=last>=0 && now>=last && now-last>=INTERVAL;
         if(last<0 || now<last || gained){player.setData(ModAttachments.DARKHOLD_EXPOSURE_TIME,now);if(gained)PlayerHauntManager.addHundredths(player,1);}
         if(PlayerHauntManager.getValue(player)>=REVEAL_AT && (player.getData(ModAttachments.DAMNED_KNOWLEDGE)&1)==0){
-            player.setData(ModAttachments.DAMNED_KNOWLEDGE,1);
+            remember(player,1);
             player.sendSystemMessage(Component.translatable("darkhold.mortal_expansion.revealed"));
         }
         for(int i=0;i<player.getInventory().getContainerSize();i++){var stack=player.getInventory().getItem(i);if(isDarkhold(stack))absorb(player,stack);}
@@ -53,5 +62,10 @@ public final class DarkholdProgression {
     }
     @SubscribeEvent public static void tick(PlayerTickEvent.Post event){if(event.getEntity() instanceof ServerPlayer player && player.level().getGameTime()%20==0)pulse(player,player.getServer().overworld().getGameTime());}
     @SubscribeEvent public static void crafted(PlayerEvent.ItemCraftedEvent event){if(event.getEntity() instanceof ServerPlayer player && isDarkhold(event.getCrafting())){absorb(player,event.getCrafting());}}
-    @SubscribeEvent public static void login(PlayerEvent.PlayerLoggedInEvent event){if(event.getEntity() instanceof ServerPlayer player)player.setData(ModAttachments.DARKHOLD_EXPOSURE_TIME,-1L);}
+    @SubscribeEvent public static void login(PlayerEvent.PlayerLoggedInEvent event){if(event.getEntity() instanceof ServerPlayer player){
+        player.setData(ModAttachments.DARKHOLD_EXPOSURE_TIME,-1L);
+        com.howierux.mortalexpansion.network.DarkholdKnowledgePayload.send(player);
+    }}
+    @SubscribeEvent public static void respawn(PlayerEvent.PlayerRespawnEvent event){if(event.getEntity() instanceof ServerPlayer player)com.howierux.mortalexpansion.network.DarkholdKnowledgePayload.send(player);}
+    @SubscribeEvent public static void dimension(PlayerEvent.PlayerChangedDimensionEvent event){if(event.getEntity() instanceof ServerPlayer player)com.howierux.mortalexpansion.network.DarkholdKnowledgePayload.send(player);}
 }

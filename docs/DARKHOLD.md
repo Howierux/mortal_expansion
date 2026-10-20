@@ -31,7 +31,9 @@ Crafting the first Darkhold permanently awakens Demons for the save, across dime
 
 Natural Demon spawning requires chunk Haunt **Demonic (40) or above**, plus ordinary Monster placement/darkness rules. Generated biome modifiers add single Demons at weight 4 to Overworld, Nether, and End biome tags. Normal monster caps and other spawn restrictions still apply. Explicit command/spawner sources remain available for development testing.
 
-Demons are stronger Ghost-like intangible hunters: 40 health, 8 base attack damage, movement speed 0.30. Four synchronized, saved color variants tint the Ghost appearance. They use shared spectral movement, defenses, barriers, sanctification, and Smite sensitivity. Their native loot table drops one **Demonic Ash**. Further uses for Demonic Ash and later Secrets of the Damned remain future content.
+Demons are stronger Ghost-like intangible hunters: 40 health, 8 base attack damage, movement speed 0.30. Four synchronized, saved color variants tint the Ghost appearance. They use shared spectral movement, defenses, barriers, sanctification, and Smite sensitivity. Their native loot table drops one **Demonic Ash**.
+
+Demons are invisible to each viewer until that player has revealed the Demon secret in a Darkhold. Merely crafting the book, reaching 70 without a revelation, or another player learning it does not grant sight. Revelation is permanent: removing the book or lowering Haunt does not hide them again. Only the visual presentation is gated; unseen Demons still exist, move, and fight normally. The renderer suppresses the model, outline, fire display, shadow and nameplate for uninitiated viewers. Private knowledge synchronization refreshes on revelation, login, respawn, and dimension changes; no global invisibility flag or new mixin is used. Further uses for Demonic Ash and later Secrets of the Damned remain future content.
 
 ## Persistence and migration
 

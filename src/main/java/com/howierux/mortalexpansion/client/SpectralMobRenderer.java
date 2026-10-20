@@ -20,6 +20,7 @@ public final class SpectralMobRenderer<T extends Mob>
 
     private final ResourceLocation texture;
     private final Predicate<T> spectral;
+    private final Predicate<T> visible;
     private final java.util.function.ToIntFunction<T> tint;
 
     public SpectralMobRenderer(
@@ -30,6 +31,10 @@ public final class SpectralMobRenderer<T extends Mob>
     ) { this(context,texture,spectral,shadowRadius,entity->0xFFFFFFFF); }
     public SpectralMobRenderer(EntityRendererProvider.Context context,ResourceLocation texture,
             Predicate<T> spectral,float shadowRadius,java.util.function.ToIntFunction<T> tint) {
+        this(context,texture,spectral,shadowRadius,tint,entity->true);
+    }
+    public SpectralMobRenderer(EntityRendererProvider.Context context,ResourceLocation texture,
+            Predicate<T> spectral,float shadowRadius,java.util.function.ToIntFunction<T> tint,Predicate<T> visible) {
         super(
                 context,
                 new SpectralHumanoidModel<>(context.bakeLayer(ModelLayers.ZOMBIE)),
@@ -38,6 +43,7 @@ public final class SpectralMobRenderer<T extends Mob>
         this.texture = texture;
         this.spectral = spectral;
         this.tint = tint;
+        this.visible = visible;
     }
 
     @Override
@@ -49,6 +55,7 @@ public final class SpectralMobRenderer<T extends Mob>
             MultiBufferSource buffer,
             int packedLight
     ) {
+        if(!visible.test(entity))return;
         boolean spectralNow = spectral.test(entity);
         this.model.setSpectral(spectralNow);
         this.model.tint=tint.applyAsInt(entity);
@@ -64,6 +71,10 @@ public final class SpectralMobRenderer<T extends Mob>
         super.render(entity, entityYaw, partialTicks, poseStack, buffer, packedLight);
         poseStack.popPose();
     }
+
+    // Cull before dispatcher rendering so fire, outlines and nameplates cannot reveal hidden creatures.
+    @Override public boolean shouldRender(T entity,net.minecraft.client.renderer.culling.Frustum camera,
+            double x,double y,double z){return visible.test(entity) && super.shouldRender(entity,camera,x,y,z);}
 
     @Override
     protected float getShadowRadius(T entity) {

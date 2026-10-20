@@ -159,7 +159,8 @@ public final class ModClientEvents {
         event.registerEntityRenderer(ModEntities.PLAYER_CORPSE.get(), PlayerCorpseRenderer::new);
 
         event.registerEntityRenderer(ModEntities.DEMON.get(),ctx->new SpectralMobRenderer<>(ctx,
-                mobTexture("ghost"),mob->true,0.5F,com.howierux.mortalexpansion.entity.mob.DemonEntity::tint));
+                mobTexture("ghost"),mob->true,0.5F,com.howierux.mortalexpansion.entity.mob.DemonEntity::tint,
+                mob->com.howierux.mortalexpansion.guide.DarkholdProgression.canSeeDemon(net.minecraft.client.Minecraft.getInstance().player)));
         event.registerEntityRenderer(ModEntities.GHOST.get(),
                 ctx -> new SpectralMobRenderer<>(ctx, mobTexture("ghost"), mob -> true, 0.45F));
         event.registerEntityRenderer(ModEntities.PHANTOM.get(),

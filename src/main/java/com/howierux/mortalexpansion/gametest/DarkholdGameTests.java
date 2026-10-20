@@ -100,4 +100,31 @@ public final class DarkholdGameTests {
         }finally{buffer.release();}
         h.succeed();
     }
+    @GameTest(template="deferred_items_test",batch="darkhold")
+    public static void demon_vision_is_private_revealed_knowledge_and_survives_book_removal(GameTestHelper h){
+        var level=h.getLevel();var previous=DarkholdWorldData.get(level).save(new CompoundTag(),level.registryAccess());
+        var reader=h.makeMockServerPlayerInLevel();var stranger=h.makeMockServerPlayerInLevel();
+        try{
+            h.assertFalse(DarkholdProgression.canSeeDemon(reader) || DarkholdProgression.canSeeDemon(stranger),"Uninitiated viewers cannot see Demons");
+            var book=EctceteraProgression.book(4);DarkholdProgression.absorb(reader,book);
+            h.assertFalse(DarkholdProgression.canSeeDemon(reader),"Owning a Darkhold and knowing all normal secrets does not reveal Demons");
+            PlayerHauntManager.setValue(stranger,70);
+            h.assertFalse(DarkholdProgression.canSeeDemon(stranger),"High Haunt without the Darkhold revelation grants no vision");
+            PlayerHauntManager.setValue(reader,70);DarkholdProgression.absorb(reader,book);
+            h.assertTrue(DarkholdProgression.canSeeDemon(reader) && !DarkholdProgression.canSeeDemon(stranger),"Revelation changes only its recipient's sight");
+            reader.getInventory().clearContent();PlayerHauntManager.setValue(reader,15);
+            var saved=reader.saveWithoutId(new CompoundTag());reader.setData(ModAttachments.DAMNED_KNOWLEDGE,0);reader.load(saved);
+            h.assertTrue(DarkholdProgression.canSeeDemon(reader),"Learned vision persists without the book and after lowering Haunt or reloading");
+            var buffer=Unpooled.buffer();
+            try{
+                var codec=com.howierux.mortalexpansion.network.DarkholdKnowledgePayload.CODEC;
+                codec.encode(buffer,new com.howierux.mortalexpansion.network.DarkholdKnowledgePayload(1));
+                h.assertTrue(codec.decode(buffer).secrets()==1,"Owner-only vision knowledge survives packet serialization");
+                codec.encode(buffer,new com.howierux.mortalexpansion.network.DarkholdKnowledgePayload(0));
+                h.assertTrue(codec.decode(buffer).secrets()==0,"Login/respawn can explicitly reset an uninitiated viewer's state");
+            }finally{buffer.release();}
+        }finally{reader.discard();stranger.discard();level.getDataStorage().set(DarkholdWorldData.KEY,DarkholdWorldData.load(previous,level.registryAccess()));}
+        h.succeed();
+    }
+
 }
