@@ -28,8 +28,8 @@ public final class UpwardPhasingGameTests {
         com.howierux.mortalexpansion.haunt.HauntManager.setTier(h.getLevel(),p,com.howierux.mortalexpansion.haunt.HauntTier.ELDRITCH);return mob;
     }
     @GameTest(template="deferred_items_test")
-    public static void ghost_spirit_and_tagged_ghast_pass_upward_but_keep_floors(GameTestHelper h){
-        room(h);for(var type:java.util.List.of(ModEntities.GHOST.get(),ModEntities.SPIRIT.get(),EntityType.GHAST)){
+    public static void ghost_spirit_phantom_and_tagged_ghast_pass_upward_but_keep_floors(GameTestHelper h){
+        room(h);for(var type:java.util.List.of(ModEntities.GHOST.get(),ModEntities.SPIRIT.get(),EntityType.PHANTOM,EntityType.GHAST)){
             var mob=at(h,type);ceiling(h,mob);double y=mob.getY();mob.move(MoverType.SELF,new Vec3(0,2,0));
             h.assertTrue(Math.abs(mob.getY()-y-2)<0.001,"All intangible mob kinds pass upward through ordinary ceilings");
             mob.setPos(mob.getX(),y,mob.getZ());mob.move(MoverType.SELF,new Vec3(0,-5,0));
