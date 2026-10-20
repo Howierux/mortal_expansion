@@ -37,3 +37,7 @@ Precise texture edit: keep this EXACT 1024x1024 square canvas and ALL existing U
 ## Validation
 
 The Gradle build and all 212 required server GameTests passed. The new affinity test checks all seven named save/load roundtrips, synchronized index/color identity, old four-color migration and safe unknown-ID handling. Existing Darkhold tests continue to cover private vision and progression. Guide and generated-resource checks pass. The exported atlas was inspected for native UV coverage; actual model animation, lighting and silhouette readability remain client playtest checks.
+
+## Daylight behavior
+
+Every affinity is intrinsically sunlight-immune. Natural daytime spawns become possible in Abominable/Eldritch chunks (50+ Haunt) after world awakening; Demonic chunks (40-49) retain normal darkness requirements. See [Darkhold spawning rules](DARKHOLD.md).

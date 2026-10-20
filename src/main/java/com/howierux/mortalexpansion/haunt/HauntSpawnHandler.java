@@ -29,6 +29,18 @@ public final class HauntSpawnHandler {
         return com.howierux.mortalexpansion.guide.DarkholdWorldData.get(level).awakened()
                 && HauntManager.getTier(level,pos).id()>=HauntTier.DEMONIC.id();
     }
+    /** Native placement hook: bypass light only for natural daytime spawns above Demonic. */
+    public static boolean demonPlacement(EntityType<com.howierux.mortalexpansion.entity.mob.DemonEntity> type,
+            net.minecraft.world.level.ServerLevelAccessor accessor,MobSpawnType reason,
+            net.minecraft.core.BlockPos pos,net.minecraft.util.RandomSource random){
+        if(reason==MobSpawnType.NATURAL && accessor instanceof ServerLevel level){
+            if(!canSpawnDemon(level,pos))return false;
+            if(level.isDay() && HauntManager.getTier(level,pos).id()>HauntTier.DEMONIC.id())
+                return net.minecraft.world.entity.monster.Monster.checkAnyLightMonsterSpawnRules(type,accessor,reason,pos,random);
+        }
+        // World generation and explicit spawn sources never query persistent Haunt here.
+        return net.minecraft.world.entity.monster.Monster.checkMonsterSpawnRules(type,accessor,reason,pos,random);
+    }
     private static final float NATURAL_ZOMBIE_ACCEPTANCE = 0.20F;
     private static final float PRE_ELDRITCH_ENDERMAN_ACCEPTANCE = 0.25F;
 

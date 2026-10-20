@@ -111,7 +111,7 @@ public final class ModEntities {
 
     private static void registerSpawnPlacements(RegisterSpawnPlacementsEvent event) {
         event.register(DEMON.get(),SpawnPlacementTypes.ON_GROUND,Heightmap.Types.MOTION_BLOCKING_NO_LEAVES,
-                Monster::checkMonsterSpawnRules,RegisterSpawnPlacementsEvent.Operation.REPLACE);
+                com.howierux.mortalexpansion.haunt.HauntSpawnHandler::demonPlacement,RegisterSpawnPlacementsEvent.Operation.REPLACE);
         event.register(
                 SPIRIT.get(),
                 SpawnPlacementTypes.ON_GROUND,

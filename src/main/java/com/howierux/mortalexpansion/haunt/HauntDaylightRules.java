@@ -14,10 +14,11 @@ import net.minecraft.world.phys.Vec3;
 public final class HauntDaylightRules {
     private HauntDaylightRules() {}
 
-    /** These peaceful spectral creatures are sustained in daylight at every Haunt tier. */
+    /** Intrinsically sunlight-immune creatures do not need daylight shelter or Haunt protection. */
     private static boolean daylightImmune(Mob mob) {
         return mob instanceof com.howierux.mortalexpansion.entity.mob.SpiritEntity
-                || mob instanceof com.howierux.mortalexpansion.entity.mob.ElementalEntity;
+                || mob instanceof com.howierux.mortalexpansion.entity.mob.ElementalEntity
+                || mob instanceof com.howierux.mortalexpansion.entity.mob.DemonEntity;
     }
 
     public static boolean applies(Mob mob) {
