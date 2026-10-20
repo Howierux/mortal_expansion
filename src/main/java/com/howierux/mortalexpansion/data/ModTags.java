@@ -50,6 +50,12 @@ public abstract class ModTags<T> extends TagsProvider<T> {
             super(output, Registries.ITEM, lookup, helper);
         }
         @Override protected void addTags(HolderLookup.Provider lookup) {
+            tag(net.neoforged.neoforge.common.Tags.Items.GEMS_DIAMOND)
+                    .add(com.howierux.mortalexpansion.registry.ModItems.BLOODSTONE.getKey());
+            tag(TagKey.create(registryKey, ResourceLocation.parse("c:gems/bloodstone")))
+                    .add(com.howierux.mortalexpansion.registry.ModItems.BLOODSTONE.getKey());
+            tag(net.neoforged.neoforge.common.Tags.Items.GEMS)
+                    .addTag(TagKey.create(registryKey, ResourceLocation.parse("c:gems/bloodstone")));
             for(String family:new String[]{"bloodstone","spectralite","spectralite_haint"})
                 for(String piece:new String[]{"helmet","chestplate","leggings","boots"})
                     tag(net.minecraft.tags.ItemTags.TRIMMABLE_ARMOR).add(ResourceKey.create(registryKey,ResourceLocation.fromNamespaceAndPath(MortalExpansion.MOD_ID,family+"_"+piece)));
