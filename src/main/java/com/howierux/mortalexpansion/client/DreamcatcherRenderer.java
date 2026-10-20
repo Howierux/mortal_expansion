@@ -14,7 +14,7 @@ import net.minecraft.client.renderer.blockentity.BlockEntityRendererProvider;
 /** Flat lunar glyphs rather than the textured moon in the sky. */
 public final class DreamcatcherRenderer implements BlockEntityRenderer<DreamcatcherBlockEntity> {
     private static final int BANDS = 24;
-    private static final float RADIUS = 0.115F;
+    private static final float RADIUS = 0.070F;
     private static final float[] SPANS = new float[BANDS];
     private static final float[] TERMINATORS = {1, 0.7071068F, 0, -0.7071068F, -1, -0.7071068F, 0, 0.7071068F};
     static {
@@ -34,7 +34,8 @@ public final class DreamcatcherRenderer implements BlockEntityRenderer<Dreamcatc
         boolean purified = catcher.getBlockState().is(ModBlocks.PURIFIED_DREAMCATCHER.get());
         int ink = purified ? 0xDFEFF5 : 0xD5EBC1;
         poses.pushPose();
-        poses.translate(0.5, 0.61, 0.5);
+        // The wooden hoop is centered at texture pixel (32, 27.5) on the 64px sprite.
+        poses.translate(0.5, 1.0 - 27.5 / 64.0, 0.5);
         poses.mulPose(Axis.YP.rotationDegrees(-catcher.getBlockState().getValue(DreamcatcherBlock.FACING).toYRot()));
         // Match the flat model on all four walls, just ahead of its surface.
         // Native untextured color quads keep the charm legible without lighting
