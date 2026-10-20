@@ -556,5 +556,13 @@
   "darkhold.mortal_expansion.demons.page.1": "The first Darkhold awakens Demons. They may emerge in dark places where chunk Haunt is Demonic or higher. Until this secret is revealed to you, they remain unseen. Their colored Ghost-like forms are stronger, swifter hunters.",
   "darkhold.mortal_expansion.demons.page.2": "Demons pass through ordinary blocks and resist mundane harm. Demi-tangible or magical attacks can strike them. They leave Demonic Ash behind. An EMF reader marks Haunt beyond Eldritch with red bulbs, then dark purple; the precise reader shows the full value.",
   "darkhold.mortal_expansion.revealed": "The Darkhold shudders. Something beyond the veil has noticed you. A secret of the Damned is revealed.",
-  "darkhold.mortal_expansion.band": "Damned %s"
+  "darkhold.mortal_expansion.band": "Damned %s",
+  "sin.mortal_expansion.pride": "Pride",
+  "sin.mortal_expansion.envy": "Envy",
+  "sin.mortal_expansion.gluttony": "Gluttony",
+  "sin.mortal_expansion.wrath": "Wrath",
+  "sin.mortal_expansion.sloth": "Sloth",
+  "sin.mortal_expansion.greed": "Greed",
+  "sin.mortal_expansion.lust": "Lust",
+  "darkhold.mortal_expansion.demons.page.3": "Seven sins mark their forms:\nIndigo: Pride, crowned horns.\nGreen: Envy, narrow eyes.\nOrange: Gluttony, broad jaw.\nRed: Wrath, heavy horns.\nBlue: Sloth, drooping gaze.\nYellow: Greed, coin ornaments.\nViolet: Lust, swept horns."
 }

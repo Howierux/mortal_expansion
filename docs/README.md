@@ -34,3 +34,5 @@ Mob visuals: [distinct appearances and texture preview](MOB_APPEARANCE.md).
 - [Tapping audio](TAPPING_AUDIO.md) and [third-party provenance](THIRD_PARTY_AUDIO.md)
 
 Older validation counts describe the build at the time of each entry. Use release status for the consolidated baseline. Pending manual checks are not evidence of confirmed defects.
+
+Demon appearance and save compatibility: [Sin Affinities](DEMON_AFFINITIES.md).

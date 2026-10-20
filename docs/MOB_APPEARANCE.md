@@ -84,3 +84,7 @@ Use case: precise-object-edit. Asset type: Minecraft native mob UV texture atlas
 The Ghost was subtly tinted sage/mint to match Ghost Garb; the native UV layout and alpha mask remain unchanged. Generated edit master: `exec-192f892f-1917-4bfd-8646-55a0ad2586f2.png` in the masters directory above. References: original Ghost master and `ghost_garb_woven_layer_1.png`.
 
 Prompt: Precise recolor only; preserve the atlas canvas, UV islands, pixel grid, shroud pattern, dark face and transparency. Tint the pale shroud subtly muted sage/mint using Ghost Garb as palette reference, retaining desaturated spectral highlights and gray-green shadows. No armor shapes, new features, bloom or blur.
+
+## Demon follow-up
+
+Demons have seven color-matched native model variants and their own shared texture. See [Sin Affinities](DEMON_AFFINITIES.md) for the mapping, art prompt, migration rules and validation. Their Darkhold secret still gates visibility per viewer.

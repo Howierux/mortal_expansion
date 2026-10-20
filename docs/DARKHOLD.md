@@ -31,7 +31,7 @@ Crafting the first Darkhold permanently awakens Demons for the save, across dime
 
 Natural Demon spawning requires chunk Haunt **Demonic (40) or above**, plus ordinary Monster placement/darkness rules. Generated biome modifiers add single Demons at weight 4 to Overworld, Nether, and End biome tags. Normal monster caps and other spawn restrictions still apply. Explicit command/spawner sources remain available for development testing.
 
-Demons are stronger Ghost-like intangible hunters: 40 health, 8 base attack damage, movement speed 0.30. Four synchronized, saved color variants tint the Ghost appearance. They use shared spectral movement, defenses, barriers, sanctification, and Smite sensitivity. Their native loot table drops one **Demonic Ash**.
+Demons are stronger Ghost-like intangible hunters: 40 health, 8 base attack damage, movement speed 0.30. Seven synchronized, saved [Sin Affinities](DEMON_AFFINITIES.md) have matching colors and distinct native Demon model details. They use shared spectral movement, defenses, barriers, sanctification, and Smite sensitivity. Their native loot table drops one **Demonic Ash**.
 
 Demons are invisible to each viewer until that player has revealed the Demon secret in a Darkhold. Merely crafting the book, reaching 70 without a revelation, or another player learning it does not grant sight. Revelation is permanent: removing the book or lowering Haunt does not hide them again. Only the visual presentation is gated; unseen Demons still exist, move, and fight normally. The renderer suppresses the model, outline, fire display, shadow and nameplate for uninitiated viewers. Private knowledge synchronization refreshes on revelation, login, respawn, and dimension changes; no global invisibility flag or new mixin is used. Further uses for Demonic Ash and later Secrets of the Damned remain future content.
 
@@ -43,7 +43,7 @@ World SavedData `mortal_expansion_darkhold` stores `Awakened`. Player `player_ha
 
 ## Temporary art provenance
 
-Original Darkhold and Demonic Ash inventory art was generated with OpenAI ImageGen, then sized and centered on transparent 32px canvases. No third-party book or game textures were copied. Demons reuse this mod's original Ghost art with native render tinting.
+Original Darkhold and Demonic Ash inventory art was generated with OpenAI ImageGen, then sized and centered on transparent 32px canvases. No third-party book or game textures were copied. Demons now use an original neutral Demon atlas with seven native model variations; see [Demon art provenance](DEMON_AFFINITIES.md).
 
 Darkhold prompt: "Original Minecraft inventory sprite of a forbidden sentient spellbook called The Darkhold. Closed charcoal-black leather book with deep crimson bindings, bloodstone-red corner studs, a small pale bone sigil resembling an open eye on the front, page edges old ivory, subtle dark purple clasp. Flat isometric Minecraft item pixel art on a 32x32 logical grid enlarged nearest-neighbor, centered clear silhouette and transparent margins. No readable lettering, no title text, no realistic lighting, no background, no glow or cast shadows. Genuine transparent background."
 

@@ -33,6 +33,8 @@ public final class ModClientEvents {
     }
     @SubscribeEvent public static void mortalGolemLayer(EntityRenderersEvent.RegisterLayerDefinitions event) {
         event.registerLayerDefinition(MortalGolemModel.LAYER, MortalGolemModel::createBodyLayer);
+        for(var sin:com.howierux.mortalexpansion.entity.mob.SinAffinity.values())
+            event.registerLayerDefinition(DemonModel.layer(sin),()->DemonModel.createBodyLayer(sin));
     }
     @SubscribeEvent public static void emfModels(net.neoforged.neoforge.client.event.ModelEvent.RegisterAdditional event) {
         for (int lit = 0; lit <= 12; lit++) event.register(net.minecraft.client.resources.model.ModelResourceLocation.standalone(
@@ -158,9 +160,7 @@ public final class ModClientEvents {
         event.registerEntityRenderer(EntityType.GHAST, IntangibleGhastRenderer::new);
         event.registerEntityRenderer(ModEntities.PLAYER_CORPSE.get(), PlayerCorpseRenderer::new);
 
-        event.registerEntityRenderer(ModEntities.DEMON.get(),ctx->new SpectralMobRenderer<>(ctx,
-                mobTexture("ghost"),mob->true,0.5F,com.howierux.mortalexpansion.entity.mob.DemonEntity::tint,
-                mob->com.howierux.mortalexpansion.guide.DarkholdProgression.canSeeDemon(net.minecraft.client.Minecraft.getInstance().player)));
+        event.registerEntityRenderer(ModEntities.DEMON.get(),DemonRenderer::new);
         event.registerEntityRenderer(ModEntities.GHOST.get(),
                 ctx -> new SpectralMobRenderer<>(ctx, mobTexture("ghost"), mob -> true, 0.45F));
         event.registerEntityRenderer(ModEntities.PHANTOM.get(),
