@@ -1,22 +1,22 @@
 # Moon phase and world Haunt spread
 
-The daily loaded-chunk Haunt spread roll is multiplied by the current moon phase. Full moon suppresses spread; new moon encourages it. Waxing and waning phases of equal illumination use the same weight.
+Loaded chunks receive three spread checks per full Minecraft day, at world-time interval boundaries 8,000 ticks apart (8,000, 16,000, 24,000, then repeating). Each nonzero chunk uses a base chance of 66 2/3%, weighted by the current moon phase. Zero Haunt never spreads. Every nonzero tier reaches a 100% spread roll at new moon.
 
-| Phase | Spread multiplier |
-| --- | --- |
-| Full moon | 0.50x |
-| Waning gibbous | 0.75x |
-| Last quarter | 1.00x |
-| Waning crescent | 1.25x |
-| New moon | 1.50x |
-| Waxing crescent | 1.25x |
-| First quarter | 1.00x |
-| Waxing gibbous | 0.75x |
+| Phase | Multiplier | Chance per check |
+| --- | --- | --- |
+| Full moon | 0.50x | 33.33% |
+| Waning gibbous | 0.75x | 50% |
+| Last quarter | 1.00x | 66.67% |
+| Waning crescent | 1.25x | 83.33% |
+| New moon | 1.50x | 100% |
+| Waxing crescent | 1.25x | 83.33% |
+| First quarter | 1.00x | 66.67% |
+| Waxing gibbous | 0.75x | 50% |
 
-Before weighting, daily spread odds are 7.5% for residual Void Haunt, 15% Natural, 22.5% Supernatural, then 7.5 percentage points more per tier through 52.5% Eldritch. Zero Haunt never spreads. For example, Supernatural spreads at 11.25% under a full moon and 33.75% under a new moon; Eldritch ranges from 26.25% to 78.75%.
+A successful roll chooses one cardinal neighbor and adds one point if it is loaded, unprotected and below the maximum. The 100% guarantee applies to the probability roll; unavailable or protected neighbors still prevent transfer and do not retry. Wards also suppress source spreading. Each pass reads a snapshot, so newly added Haunt cannot chain-spread within that pass, but can spread at a later check.
 
-A successful roll still chooses one cardinal neighbor and adds one point only if that chunk is loaded, unprotected and below the maximum. Failed target checks do not retry. The existing snapshot prevents same-day chain reactions. The moon changes only the spread roll, including spread into previously zero-Haunt chunks; decay/recovery, personal leakage, Ward protection, conversions and personal Haunt events retain their existing rules.
+Decay/recovery, Ward cleansing, Graveyard Stone weathering and Bloodstone conversion remain once per day. Player leakage and personal Haunt effects retain their own schedules. Only spread receives the two additional checks.
 
-The phase is sampled once per daily simulation pass using the native level moon-phase API. Existing day-transition timing applies, including sleep; there is no extra nighttime roll or unloaded catch-up. No saved fields, packets, chunk loading, custom calendar or mixins are added. Migration checks should preserve vanilla phase zero as full and phase four as new.
+The native level moon-phase API is sampled once per pass. Sleep or forward time commands crossing multiple intervals cause at most one spread pass, with one daily maintenance pass if a day boundary was crossed; no skipped/unloaded intervals are replayed. Backward clock changes reset the scheduling baseline without running a pass, and a frozen day cycle pauses scheduled spread. First observation after startup initializes the clock without an immediate extra pass. No saved fields, packets, chunk loading, custom calendar or mixins are added.
 
-Validation covers all eight native phases over two cycles and every Haunt value, including zero and maximum. Build and server gameplay tests validate integration.
+Tests cover all phases over two cycles and every Haunt value, three evenly spaced checks, frozen/backward clocks, sleep and large forward jumps. Migration should preserve vanilla phase zero as full and phase four as new. Long-term growth is a balance playtest concern: these odds deliberately increase world spread substantially.
