@@ -71,33 +71,7 @@ public final class EnchantmentGeneratorBlock extends BaseEntityBlock {
             InteractionHand hand,
             BlockHitResult hitResult
     ) {
-        if (!(level.getBlockEntity(pos) instanceof EnchantmentGeneratorBlockEntity generator)) {
-            return ItemInteractionResult.PASS_TO_DEFAULT_BLOCK_INTERACTION;
-        }
-
-        if (!generator.canAccept(stack)) {
-            return ItemInteractionResult.PASS_TO_DEFAULT_BLOCK_INTERACTION;
-        }
-
-        if (level.isClientSide) {
-            return ItemInteractionResult.SUCCESS;
-        }
-
-        if (generator.insertEnchantedItem(stack)) {
-            if (!player.getAbilities().instabuild) {
-                stack.shrink(1);
-            }
-            player.displayClientMessage(
-                    Component.translatable(
-                            "message.mortal_expansion.enchantment_generator.started",
-                            generator.getRemainingEnergyToGenerate(),
-                            generator.getGenerationPerTick()
-                    ),
-                    false
-            );
-        }
-
-        return ItemInteractionResult.SUCCESS;
+        return ItemInteractionResult.PASS_TO_DEFAULT_BLOCK_INTERACTION;
     }
 
     @Override
@@ -112,21 +86,13 @@ public final class EnchantmentGeneratorBlock extends BaseEntityBlock {
             return InteractionResult.PASS;
         }
 
-        if (!level.isClientSide && generator.hasFinishedItem()) {
-            ItemStack result = generator.takeFinishedItem();
-            if (!player.addItem(result)) {
-                player.drop(result, false);
-            }
-            return InteractionResult.SUCCESS;
-        }
-
         if (!level.isClientSide) {
             player.openMenu(new SimpleMenuProvider(
                     (containerId, inventory, menuPlayer) ->
                             new EnchantmentGeneratorMenu(
                                     containerId,
                                     inventory,
-                                    generator.createMenuData()
+                                    generator
                             ),
                     Component.translatable("gui.mortal_expansion.enchantment_generator.title")
             ));
@@ -134,4 +100,10 @@ public final class EnchantmentGeneratorBlock extends BaseEntityBlock {
 
         return InteractionResult.sidedSuccess(level.isClientSide);
     }
+    @Override protected void onRemove(BlockState state, Level level, BlockPos pos, BlockState next, boolean moving) {
+        if (!state.is(next.getBlock()) && level instanceof net.minecraft.server.level.ServerLevel server
+                && level.getBlockEntity(pos) instanceof EnchantmentGeneratorBlockEntity generator) generator.dropInventory(server);
+        super.onRemove(state, level, pos, next, moving);
+    }
+
 }

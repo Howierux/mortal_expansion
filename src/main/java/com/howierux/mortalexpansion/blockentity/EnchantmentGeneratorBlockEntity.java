@@ -37,6 +37,31 @@ public final class EnchantmentGeneratorBlockEntity extends BlockEntity {
     private int generationPerTick;
     private ItemStack finishedItem = ItemStack.EMPTY;
 
+    private ItemStack inputItem = ItemStack.EMPTY;
+    private final net.minecraft.world.SimpleContainer menuItems = new net.minecraft.world.SimpleContainer(2) {
+        @Override public ItemStack getItem(int slot) { return slot == 0 ? inputItem : hasFinishedItem() ? finishedItem : ItemStack.EMPTY; }
+        @Override public boolean isEmpty() { return getItem(0).isEmpty() && getItem(1).isEmpty(); }
+        @Override public void setItem(int slot, ItemStack stack) {
+            if (slot == 0) inputItem = stack; else finishedItem = stack;
+            setChanged();
+        }
+        @Override public ItemStack removeItem(int slot, int count) {
+            ItemStack result = getItem(slot).split(count);
+            setChanged();
+            return result;
+        }
+        @Override public ItemStack removeItemNoUpdate(int slot) {
+            ItemStack result = getItem(slot); setItem(slot, ItemStack.EMPTY); return result;
+        }
+        @Override public void setChanged() { EnchantmentGeneratorBlockEntity.this.setChanged(); }
+    };
+    public net.minecraft.world.Container getMenuItems() { return menuItems; }
+    public void dropInventory(net.minecraft.server.level.ServerLevel level) {
+        net.minecraft.world.Containers.dropItemStack(level, worldPosition.getX(), worldPosition.getY(), worldPosition.getZ(), inputItem);
+        net.minecraft.world.Containers.dropItemStack(level, worldPosition.getX(), worldPosition.getY(), worldPosition.getZ(), finishedItem);
+        inputItem = ItemStack.EMPTY; finishedItem = ItemStack.EMPTY;
+    }
+
     public EnchantmentGeneratorBlockEntity(BlockPos pos, BlockState state) {
         super(ModBlockEntities.ENCHANTMENT_GENERATOR.get(), pos, state);
     }
@@ -148,6 +173,10 @@ public final class EnchantmentGeneratorBlockEntity extends BlockEntity {
             BlockState state,
             EnchantmentGeneratorBlockEntity blockEntity
     ) {
+        if (!blockEntity.inputItem.isEmpty() && blockEntity.insertEnchantedItem(blockEntity.inputItem)) {
+            blockEntity.inputItem.shrink(1);
+            blockEntity.setChanged();
+        }
         if (blockEntity.remainingEnergyToGenerate > 0) {
             int requested = Math.min(
                     blockEntity.generationPerTick,
@@ -210,6 +239,7 @@ public final class EnchantmentGeneratorBlockEntity extends BlockEntity {
             energyStorage.deserializeNBT(registries, tag.get(ENERGY_TAG));
         }
 
+        inputItem = tag.contains("InputItem") ? ItemStack.parseOptional(registries, tag.getCompound("InputItem")) : ItemStack.EMPTY;
         remainingEnergyToGenerate = Math.max(0, tag.getInt(REMAINING_FE_TAG));
         generationPerTick = Math.max(0, tag.getInt(RATE_TAG));
 
@@ -222,6 +252,7 @@ public final class EnchantmentGeneratorBlockEntity extends BlockEntity {
     protected void saveAdditional(CompoundTag tag, HolderLookup.Provider registries) {
         super.saveAdditional(tag, registries);
 
+        if (!inputItem.isEmpty()) tag.put("InputItem", inputItem.save(registries));
         tag.put(ENERGY_TAG, energyStorage.serializeNBT(registries));
         tag.putInt(REMAINING_FE_TAG, remainingEnergyToGenerate);
         tag.putInt(RATE_TAG, generationPerTick);

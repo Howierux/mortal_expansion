@@ -22,6 +22,7 @@ Mob visuals: [distinct appearances and texture preview](MOB_APPEARANCE.md).
 ## Development and provenance
 
 - [Development guidelines](../AGENTS.md) and [data generation](DATA_GENERATION.md)
+- [Enchantment Generator GUI](ENCHANTMENT_GENERATOR_GUI.md)
 - [Moon phase and world Haunt spread](MOON_HAUNT_SPREAD.md)
 - [Haunt testing commands](HAUNT_EFFECT_COMMANDS.md)
 - [Feature research and proposals](FEATURE_IDEAS_RESEARCH.md)
