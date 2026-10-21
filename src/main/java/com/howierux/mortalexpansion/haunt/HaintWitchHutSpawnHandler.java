@@ -32,7 +32,7 @@ public final class HaintWitchHutSpawnHandler {
     private static final int SPAWN_MIN_RADIUS = 10;
     private static final int SPAWN_MAX_RADIUS = 24;
     private static final int ACTIVE_HAINT_RADIUS = 64;
-    private static final float SPAWN_CHANCE_PER_CHECK = 0.005F; // 0.5%
+    private static final float SPAWN_CHANCE_PER_CHECK = 0.01F; // 1%
 
     private HaintWitchHutSpawnHandler() {}
 

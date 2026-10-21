@@ -110,6 +110,8 @@ public final class ModEntities {
     }
 
     private static void registerSpawnPlacements(RegisterSpawnPlacementsEvent event) {
+        event.register(ELEMENTAL.get(),SpawnPlacementTypes.ON_GROUND,Heightmap.Types.MOTION_BLOCKING_NO_LEAVES,
+                Mob::checkMobSpawnRules,RegisterSpawnPlacementsEvent.Operation.REPLACE);
         event.register(DEMON.get(),SpawnPlacementTypes.ON_GROUND,Heightmap.Types.MOTION_BLOCKING_NO_LEAVES,
                 com.howierux.mortalexpansion.haunt.HauntSpawnHandler::demonPlacement,RegisterSpawnPlacementsEvent.Operation.REPLACE);
         event.register(

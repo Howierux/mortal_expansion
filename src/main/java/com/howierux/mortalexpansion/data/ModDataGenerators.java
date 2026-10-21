@@ -18,16 +18,8 @@ public final class ModDataGenerators {
         var helper = event.getExistingFileHelper();
         var damageTypes = new net.neoforged.neoforge.common.data.DatapackBuiltinEntriesProvider(output, lookup,
                 new net.minecraft.core.RegistrySetBuilder()
-                .add(net.neoforged.neoforge.registries.NeoForgeRegistries.Keys.BIOME_MODIFIERS,context->{
-                    var biomes=context.lookup(net.minecraft.core.registries.Registries.BIOME);
-                    context.register(net.minecraft.resources.ResourceKey.create(net.neoforged.neoforge.registries.NeoForgeRegistries.Keys.BIOME_MODIFIERS,
-                            net.minecraft.resources.ResourceLocation.fromNamespaceAndPath(MortalExpansion.MOD_ID,"add_demon_spawns")),
-                            new net.neoforged.neoforge.common.world.BiomeModifiers.AddSpawnsBiomeModifier(
-                                    biomes.getOrThrow(net.minecraft.tags.TagKey.create(net.minecraft.core.registries.Registries.BIOME,
-                                            net.minecraft.resources.ResourceLocation.fromNamespaceAndPath(MortalExpansion.MOD_ID,"demon_spawn_biomes"))),
-                                    java.util.List.of(new net.minecraft.world.level.biome.MobSpawnSettings.SpawnerData(
-                                            com.howierux.mortalexpansion.registry.ModEntities.DEMON.get(),4,1,1))));
-                }).add(net.minecraft.core.registries.Registries.DAMAGE_TYPE, context -> {
+                .add(net.neoforged.neoforge.registries.NeoForgeRegistries.Keys.BIOME_MODIFIERS,ModSpawnModifiers::bootstrap)
+                .add(net.minecraft.core.registries.Registries.DAMAGE_TYPE, context -> {
                     context.register(com.howierux.mortalexpansion.effect.ModDamageTypes.DEMI_TANGIBLE_PLAYER,
                             new net.minecraft.world.damagesource.DamageType("player", net.minecraft.world.damagesource.DamageScaling.WHEN_CAUSED_BY_LIVING_NON_PLAYER, 0.1F));
                     context.register(com.howierux.mortalexpansion.effect.ModDamageTypes.DEMI_TANGIBLE_MOB,
