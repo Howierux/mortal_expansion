@@ -8,6 +8,8 @@ Updated 2026-10-16. The gameplay baseline promoted to `main` is `f6e36d817a88972
 
 The [spawn balance follow-up](SPAWN_BALANCE.md) doubles existing mod spawn weights, triples Demon weight, adds Supernatural+ Spiritwood Elementals, and reduces natural Overworld Zombie/Skeleton-family and Creeper acceptance by 15%. Rare Haint and lantern Ghost sources are faster. Its generated resources, build, and all 216 tests passed. The local playtest copy has not received this follow-up.
 
+Raw Ectoplasm is now a shared offering for both altars, adding sixty seconds per item. Generated-tag checks, the build and all 216 tests passed; the existing offering test now checks Raw Ectoplasm consumption in both altar types.
+
 ## Implemented, with further validation remaining
 
 The [overview](Overview.md) lists current systems. Recent work includes fluid infrastructure, spectral retaliation, armor art/trims, Ghost targeting of Spirits/Elementals, and Holy Salt cleanup/workload bounds. The salt changes address stale client barriers and expensive enclosure searches; updated-build performance has not yet been measured against the earlier live sample.

@@ -2,7 +2,7 @@
 
 The Altar of Impurity is the inverse of Purity: while burning it adds 0.10 Haunt every ten active seconds to each loaded chunk in its centered 3x3 square. Purity removes the same amount. Both clamp at the normal Haunt boundaries, preserve fractional values, affect no personal Haunt and do not force-load terrain. Burn reserves, 12.5-second offering consumption, one-hour capacity, container returns, automation and save/load behavior share one implementation. The Impurity GUI uses warmer colors; the bonfire and remaining-time tooltip work the same way.
 
-By default, Impurity accepts the same five offerings through `mortal_expansion:impurity_offerings`, which includes the purity_offerings tag. Datapacks can configure membership separately. Positive offering gifts and blessings remain exclusive to Purity.
+By default, Impurity accepts the same offerings, including Raw Ectoplasm (60 seconds) through `mortal_expansion:impurity_offerings`, which includes the purity_offerings tag. Datapacks can configure membership separately. Positive offering gifts and blessings remain exclusive to Purity.
 
 ## Secret recipes
 
