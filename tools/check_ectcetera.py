@@ -61,7 +61,7 @@ for part in range(1, 7):
 assert LANG["guide.mortal_expansion.mortal_golem.name"].strip()
 for chapter in ("darkhold", "demons"):
     assert LANG[f"darkhold.mortal_expansion.{chapter}.name"].strip()
-    for part in range(1, 4 if chapter=="demons" else 3):
+    for part in range(1, 5 if chapter=="demons" else 3):
         assert LANG[f"darkhold.mortal_expansion.{chapter}.page.{part}"].strip()
 assert lines(LANG[PREFIX + "cover"] + "\n\nContents") <= 14
 total = 1 + (len(CHAPTERS) + 4) // 5 + sum(int(count) for _, count, _ in CHAPTERS)

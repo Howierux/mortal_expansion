@@ -11,7 +11,7 @@ public final class EctceteraResearchMap {
         Map.entry("mortal_golem","sanctified"),Map.entry("wards","sanctified"),Map.entry("ectchantment","sanctified"),Map.entry("generators","ectchantment"),Map.entry("station","ectchantment"),Map.entry("scepter","station"),Map.entry("mastery","wards"));
     private EctceteraResearchMap(){}
     public static List<Node> nodes(int category){
-        if(category==5)return List.of(new Node(new EctceteraGuide.Chapter("darkhold",2,4),"",60,45),new Node(new EctceteraGuide.Chapter("demons",3,4),"darkhold",210,45));
+        if(category==5)return List.of(new Node(new EctceteraGuide.Chapter("darkhold",2,4),"",60,45),new Node(new EctceteraGuide.Chapter("demons",4,4),"darkhold",210,45));
         var chapters=EctceteraGuide.CHAPTERS.stream().filter(ch->category==4
             ? ch.key().equals("insight") || secret(ch.key())!=0
             : ch.tier()==category && !ch.key().equals("insight") && secret(ch.key())==0)

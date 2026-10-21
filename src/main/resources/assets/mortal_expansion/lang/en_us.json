@@ -571,5 +571,6 @@
   "jei.mortal_expansion.altar_raises": "Adds %s Haunt every %s seconds.",
   "jei.mortal_expansion.altar_cleanses": "Removes %s Haunt every %s seconds.",
   "jei.mortal_expansion.altar_area": "Affects each loaded chunk in a 3x3 area.",
-  "jei.mortal_expansion.altar_consumption": "Consumes one offering every %s seconds."
+  "jei.mortal_expansion.altar_consumption": "Consumes one offering every %s seconds.",
+  "darkhold.mortal_expansion.demons.page.4": "Demons sense vulnerable players from afar: their base detection range is 96 blocks. Thick ordinary walls cannot hide you. Demi-tangible materials such as Gravestone and Spiritwood block their sight, as do Holy Salt and Spirit Torch barriers. Shielding breaks their direct pursuit."
 }

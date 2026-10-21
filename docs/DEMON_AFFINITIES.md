@@ -41,3 +41,17 @@ The Gradle build and all 212 required server GameTests passed. The new affinity 
 ## Daylight behavior
 
 Every affinity is intrinsically sunlight-immune. Natural daytime spawns become possible in Abominable/Eldritch chunks (50+ Haunt) after world awakening; Demonic chunks (40-49) retain normal darkness requirements. See [Darkhold spawning rules](DARKHOLD.md).
+
+## Long-range perception
+
+All affinities share a 96-block base follow/detection range. Survival players can be acquired through ordinary walls of any thickness. Normal combat target filters still exclude Creative and Spectator players (including Spirit Journey). Allied Demons retain their prohibition on attacking players. The Darkhold secret gates the player's ability to see Demons, not a Demon's ability to sense a vulnerable player.
+
+Blocks in `mortal_expansion:intangible_solid`, including Gravestone and Spiritwood, block the eye-to-eye sight ray; Holy Salt and Spirit Torch barrier columns still block it too. Inserting a screen drops the normal player target immediately and stops direct spectral pursuit. Removing it permits a later reacquisition. Other spectral mobs retain their existing four-layer ordinary-wall tracking limit. This changes sight and pursuit, not phasing through protected materials.
+
+The Demon-specific ray uses Mojang's voxel traversal once per visibility check instead of quarter-block sampling and a wall-cell set. It rejects unloaded terrain without requesting chunks and remains bounded by the current follow-range attribute. Native target search scheduling remains in use; there is no new world scan or chunk loader.
+
+`DemonPerceptionVersion` is saved as 1. On reading an unversioned Demon whose saved follow-range base is still the old default 32, the base upgrades to 96. Other customized saved ranges and subsequent versioned tuning are preserved. Target goal registration uses a focused protected hook in the shared monster class; no mixin or new packet is needed.
+
+The Darkhold's revealed Demon entry includes this behavior on its fourth page.
+
+Perception validation: the build and all 219 required server tests passed. Tests exercise the actual target selector with a real mode-switching ServerPlayer at 80 blocks behind eight stone layers, immediate Gravestone screening, reopening/reacquisition, Creative/Spectator rejection, range bounds, allied restrictions, old/custom saved ranges, and missing-terrain rejection. Other spectral mobs retain their prior wall-layer limit.

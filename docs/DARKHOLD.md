@@ -56,3 +56,5 @@ Gameplay checks cover real result pickup/input consumption, preview purity, perm
 Development checks can use `/give @s mortal_expansion:book_of_ectcetera[mortal_expansion:ectcetera_tier=4]`, then `/haunt player get` and repeated `/haunt player add <amount>` to reach 70. `/summon mortal_expansion:demon` bypasses natural spawning requirements for direct combat testing.
 
 Daylight validation covers actual registered spawn placement at values 39, 40, 49, 50, 59, 60 and 69, awakening gating, ground requirements, and ten seconds of sun exposure in a Void chunk. The native placement hook skips persistent-Haunt queries for world-generation and explicit spawn reasons.
+
+Demons now have long-range, thick-wall perception with demi-tangible screening. See [Demon perception and save migration](DEMON_AFFINITIES.md#long-range-perception).

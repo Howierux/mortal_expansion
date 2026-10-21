@@ -32,10 +32,11 @@ public final class SpectralPhasingRules {
 
     /**
      * Returns true if an intangible mob may track the target through the
-     * intervening blocks. Up to four occupied block cells are allowed.
-     * Spectral-solid materials always block tracking.
+     * intervening blocks. Demons use a bounded long-range ray; other spectral
+     * mobs allow up to four occupied cells. Spectral-solid materials block both.
      */
     public static boolean canTrackThroughBlocks(Entity mob, Entity target) {
+        if(mob instanceof DemonEntity demon)return canDemonTrack(demon,target);
         Level level = mob.level();
         Vec3 start = mob.getEyePosition();
         Vec3 end = target.getEyePosition();
@@ -76,6 +77,21 @@ public final class SpectralPhasingRules {
         }
 
         return true;
+    }
+
+    /** One native voxel traversal; ordinary wall thickness is irrelevant, unloaded terrain is opaque. */
+    private static boolean canDemonTrack(DemonEntity demon,Entity target){
+        Level level=demon.level();if(target.level()!=level)return false;
+        Vec3 start=demon.getEyePosition(),end=target.getEyePosition();
+        double range=demon.getAttributeValue(net.minecraft.world.entity.ai.attributes.Attributes.FOLLOW_RANGE);
+        if(start.distanceToSqr(end)>range*range)return false;
+        return net.minecraft.world.level.BlockGetter.traverseBlocks(start,end,level,(world,pos)->{
+            if(!world.hasChunkAt(pos))return Boolean.FALSE;
+            if(HolySaltBarrierTracker.hasSaltColumn(world,pos.getX(),pos.getZ())
+                    || SpiritTorchBarrierTracker.hasBarrierColumn(world,pos.getX(),pos.getZ())
+                    || world.getBlockState(pos).is(INTANGIBLE_SOLID))return Boolean.FALSE;
+            return null;
+        },world->Boolean.TRUE);
     }
 
     /**
