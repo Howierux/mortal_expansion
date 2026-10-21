@@ -64,7 +64,7 @@ public final class PlayerCorpseEntity extends ArmorStand {
             discard();
             return;
         }
-        if (!(ownerPlayer instanceof ServerPlayer player) || player.level() != level || !player.isSpectator()
+        if (!(ownerPlayer instanceof ServerPlayer player) || player.level() != level || !player.isAlive() || !player.isSpectator()
                 || !getUUID().toString().equals(player.getData(ModAttachments.SPIRIT_JOURNEY_CORPSE))
                 || distanceToSqr(player) > 4) return;
         // Avoid reviving inside solid terrain; leave the body recoverable if obstructed.

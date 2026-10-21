@@ -59,6 +59,59 @@ public final class DeferredDeathItemsGameTests {
         finally { rule.set(previous, helper.getLevel().getServer()); }
     }
     @GameTest(template = "deferred_items_test", timeoutTicks = 100)
+    public static void journey_death_returns_to_normal_spawn(GameTestHelper helper) {
+        withKeepInventory(helper, false, () -> {
+            ServerPlayer dead = player(helper, true);
+            BlockPos gravePos = helper.absolutePos(new BlockPos(10, 1, 10));
+            ((GraveBlockEntity) helper.getLevel().getBlockEntity(gravePos)).setNaturallyGenerated(true);
+            BlockPos spawn = helper.absolutePos(new BlockPos(6, 2, 6));
+            var bed = net.minecraft.world.level.block.Blocks.RED_BED.defaultBlockState()
+                    .setValue(net.minecraft.world.level.block.BedBlock.FACING, net.minecraft.core.Direction.SOUTH);
+            for (int x = 4; x <= 8; x++) for (int z = 4; z <= 9; z++)
+                helper.getLevel().setBlockAndUpdate(helper.absolutePos(new BlockPos(x, 1, z)),
+                        net.minecraft.world.level.block.Blocks.STONE.defaultBlockState());
+            helper.getLevel().setBlock(spawn, bed, 2);
+            helper.getLevel().setBlock(spawn.south(), bed.setValue(net.minecraft.world.level.block.BedBlock.PART,
+                    net.minecraft.world.level.block.state.properties.BedPart.HEAD), 2);
+            dead.setRespawnPosition(helper.getLevel().dimension(), spawn, 0, false, false);
+            String grave = dead.getData(ModAttachments.GRAVE_RESPAWN_POINT);
+            die(dead);
+            SpiritJourneyHandler.choose(dead);
+            ServerPlayer spirit = dead.connection.player;
+            helper.assertTrue(SpiritJourneyHandler.isActive(spirit), "Initial choice still starts journey");
+            var body = helper.getLevel().getEntity(java.util.UUID.fromString(spirit.getData(ModAttachments.SPIRIT_JOURNEY_CORPSE)));
+            helper.assertTrue(SpiritJourneyHandler.hasSelfGrave(spirit), "Natural grave remains a valid alternative");
+            spirit.moveTo(body.position());
+            die(spirit);
+            helper.assertFalse(SpiritJourneyHandler.canChoose(spirit), "Journey death cannot choose another journey");
+            body.tick();
+            helper.assertTrue(spirit.isDeadOrDying(), "Body cannot revive a dead spirit");
+            // Simulate a dead-player reload before pressing ordinary Respawn.
+            spirit.load(spirit.saveWithoutId(new CompoundTag()));
+            ServerPlayer alive = spirit.server.getPlayerList().respawn(spirit, false, Entity.RemovalReason.KILLED);
+            alive.connection.player = alive;
+            helper.assertTrue(alive.gameMode.getGameModeForPlayer() == GameType.SURVIVAL,
+                    "Journey death explicitly restores survival");
+            helper.assertTrue(alive.position().distanceToSqr(Vec3.atBottomCenterOf(spawn)) < 4,
+                    "Vanilla spawn selected instead of grave or body");
+            helper.assertTrue(alive.getData(ModAttachments.SPIRIT_JOURNEY_CORPSE).isEmpty(), "Body link cleared");
+            helper.assertFalse(SpiritJourneyHandler.isJourneyDeathRespawn(alive), "Restriction ends with this respawn");
+            helper.assertFalse(SpiritJourneyHandler.recoverAtWell(alive), "Failed journey cannot use recovery GUI");
+            helper.assertTrue(alive.getData(ModAttachments.DEFERRED_DEATH_ITEMS).getList("Held", 10).isEmpty(),
+                    "Failed journey does not strand held inventory");
+            helper.assertItemEntityCountIs(Items.DIAMOND, new BlockPos(3, 2, 3), 3, 64);
+            body.tick();
+            helper.assertTrue(body.isRemoved(), "Abandoned body removes itself");
+            helper.assertTrue(alive.getData(ModAttachments.GRAVE_RESPAWN_POINT).equals(grave)
+                    && helper.getLevel().getBlockEntity(gravePos) instanceof GraveBlockEntity,
+                    "Journey death preserves the registered grave");
+            die(alive);
+            helper.assertTrue(SpiritJourneyHandler.canChoose(alive), "A later normal death can start a journey again");
+            alive.discard();
+            helper.succeed();
+        });
+    }
+    @GameTest(template = "deferred_items_test", timeoutTicks = 100)
     public static void choice_holds_items_and_survives_player_reload(GameTestHelper helper) {
         withKeepInventory(helper, false, () -> {
             ServerPlayer dead = player(helper, true);

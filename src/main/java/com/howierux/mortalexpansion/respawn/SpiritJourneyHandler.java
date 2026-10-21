@@ -25,7 +25,7 @@ public final class SpiritJourneyHandler {
     }
 
     public static boolean canChoose(ServerPlayer player) {
-        return player.isDeadOrDying() && hasSelfGrave(player);
+        return player.isDeadOrDying() && !hasJourneyBody(player) && hasSelfGrave(player);
     }
 
     public static void sendEligibility(ServerPlayer player) {
@@ -50,8 +50,17 @@ public final class SpiritJourneyHandler {
         player.connection.player = player.server.getPlayerList().respawn(player, false, Entity.RemovalReason.KILLED);
     }
 
+    public static boolean hasJourneyBody(ServerPlayer player) {
+        return !player.getData(ModAttachments.SPIRIT_JOURNEY_CORPSE).isEmpty();
+    }
+
+    /** Initial journey selection still uses the grave; a subsequent death uses vanilla spawn. */
+    public static boolean isJourneyDeathRespawn(ServerPlayer player) {
+        return hasJourneyBody(player) && !player.getData(ModAttachments.SPIRIT_JOURNEY_RESPAWN);
+    }
+
     public static boolean isActive(ServerPlayer player) {
-        return player.isSpectator() && !player.getData(ModAttachments.SPIRIT_JOURNEY_CORPSE).isEmpty();
+        return player.isAlive() && player.isSpectator() && hasJourneyBody(player);
     }
 
     public static final int WELL_HAUNT_COST = 10;
@@ -115,6 +124,13 @@ public final class SpiritJourneyHandler {
     public static void onRespawn(PlayerEvent.PlayerRespawnEvent event) {
         if (!(event.getEntity() instanceof ServerPlayer player) || event.isEndConquered()) return;
         boolean journey = player.getData(ModAttachments.SPIRIT_JOURNEY_RESPAWN);
+        if (isJourneyDeathRespawn(player)) {
+            // The copied body link survives death/logout until this respawn finishes.
+            player.setData(ModAttachments.SPIRIT_JOURNEY_CORPSE, "");
+            player.setData(ModAttachments.SPIRIT_JOURNEY_RETURN_MODE, GameType.SURVIVAL.getId());
+            player.setGameMode(GameType.SURVIVAL);
+            DeferredDeathItems.abandonJourney(player);
+        }
         DeferredDeathItems.resolveChoice(player, journey);
         if (!journey) { syncState(player); return; }
         player.setData(ModAttachments.SPIRIT_JOURNEY_RESPAWN, false);

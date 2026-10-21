@@ -50,6 +50,18 @@ public final class DeferredDeathItems {
         releaseRequested(player);
     }
 
+    /** Failed journeys leave their original items at the original death site. */
+    public static void abandonJourney(ServerPlayer player) {
+        CompoundTag storage = player.getData(ModAttachments.DEFERRED_DEATH_ITEMS).copy();
+        ListTag held = storage.getList("Held", Tag.TAG_COMPOUND);
+        ListTag release = storage.getList("Release", Tag.TAG_COMPOUND);
+        for (Tag batch : held) release.add(batch.copy());
+        storage.remove("Held");
+        if (!release.isEmpty()) storage.put("Release", release);
+        player.setData(ModAttachments.DEFERRED_DEATH_ITEMS, storage);
+        releaseRequested(player);
+    }
+
     public static void recoverHeld(ServerPlayer player) {
         CompoundTag storage = player.getData(ModAttachments.DEFERRED_DEATH_ITEMS).copy();
         ListTag held = storage.getList("Held", Tag.TAG_COMPOUND);

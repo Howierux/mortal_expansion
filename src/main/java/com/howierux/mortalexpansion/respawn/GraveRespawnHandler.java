@@ -27,6 +27,8 @@ public final class GraveRespawnHandler {
         }
 
         ServerPlayer player = (ServerPlayer) event.getEntity();
+        // Leave the native bed/anchor/world-spawn transition intact after journey death.
+        if (SpiritJourneyHandler.isJourneyDeathRespawn(player)) return;
         String encoded = player.getData(ModAttachments.GRAVE_RESPAWN_POINT);
         GraveTarget target = GraveTarget.parse(encoded);
         if (target == null) {
