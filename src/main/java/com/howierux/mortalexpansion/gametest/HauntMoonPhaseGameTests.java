@@ -63,9 +63,9 @@ public final class HauntMoonPhaseGameTests {
         }
         h.assertTrue(checks == 6, "Exactly three Bloodstone checks per day");
         for (int value = 0; value <= 69; value++) {
-            float expected = value < 30 ? 0 : (value / 10 - 2) * 0.005F;
+            float expected = value < 30 ? 0 : (float) (0.005 * Math.pow(2, value / 10 - 3));
             h.assertTrue(Math.abs(HauntSimulationHandler.bloodstoneConversionChance(value) - expected) < 0.000001F,
-                    "Bloodstone odds rise from 0.5% at Dead Rising to 2% at Eldritch, with lower bands disabled");
+                    "Bloodstone odds double from 0.5% at Dead Rising to 4% at Eldritch, with lower bands disabled");
         }
         h.assertFalse(HauntSimulationHandler.bloodstoneCheckDue(18000, 18000), "Frozen time cannot repeat a roll");
         h.assertFalse(HauntSimulationHandler.bloodstoneCheckDue(24000, 0), "Backward changes cannot roll");

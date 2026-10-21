@@ -71,11 +71,11 @@ public final class HauntSimulationHandler {
     private static final long PLAYER_LEAK_CHECK_INTERVAL = 200L;
     private static final float PLAYER_LEAK_CHANCE_PER_TIER = 0.0025F;
 
-    /** Each eligible tier adds 0.5 percentage points per dawn/sunset/midnight check. */
+    /** Each eligible tier doubles the dawn/sunset/midnight chance, starting at 0.5%. */
     public static float bloodstoneConversionChance(int hauntValue) {
         int tier = HauntTier.fromValue(hauntValue).id();
         return tier < HauntTier.DEAD_RISING.id() ? 0.0F
-                : 0.005F * (tier - HauntTier.DEAD_RISING.id() + 1);
+                : 0.005F * (1 << (tier - HauntTier.DEAD_RISING.id()));
     }
 
     private static final int[][] CARDINAL_OFFSETS = {
