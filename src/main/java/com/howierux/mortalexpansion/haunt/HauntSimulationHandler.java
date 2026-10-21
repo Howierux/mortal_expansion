@@ -50,6 +50,14 @@ public final class HauntSimulationHandler {
                 && Math.floorDiv(currentTime, SPREAD_INTERVAL) > Math.floorDiv(previousTime, SPREAD_INTERVAL);
     }
 
+    /** Native day times: dawn 0, sunset 12000, midnight 18000. Never replay skipped checks. */
+    public static boolean bloodstoneCheckDue(long previousTime, long currentTime) {
+        if (currentTime <= previousTime) return false;
+        return Math.floorDiv(currentTime, TICKS_PER_DAY) > Math.floorDiv(previousTime, TICKS_PER_DAY)
+                || Math.floorDiv(currentTime - 12_000L, TICKS_PER_DAY) > Math.floorDiv(previousTime - 12_000L, TICKS_PER_DAY)
+                || Math.floorDiv(currentTime - 18_000L, TICKS_PER_DAY) > Math.floorDiv(previousTime - 18_000L, TICKS_PER_DAY);
+    }
+
     /** 10% daily chance to lose one haunt point: 90% chance to remain unchanged. */
     private static final float DECAY_CHANCE = 0.10F;
 
@@ -63,11 +71,12 @@ public final class HauntSimulationHandler {
     private static final long PLAYER_LEAK_CHECK_INTERVAL = 200L;
     private static final float PLAYER_LEAK_CHANCE_PER_TIER = 0.0025F;
 
-    /**
-     * 0.25% daily conversion roll for each loaded chunk at Dead Rising or above.
-     * A successful Bloodstone conversion consumes one haunt point.
-     */
-    private static final float BLOODSTONE_CONVERSION_CHANCE = 0.0025F;
+    /** Each eligible tier adds 0.5 percentage points per dawn/sunset/midnight check. */
+    public static float bloodstoneConversionChance(int hauntValue) {
+        int tier = HauntTier.fromValue(hauntValue).id();
+        return tier < HauntTier.DEAD_RISING.id() ? 0.0F
+                : 0.005F * (tier - HauntTier.DEAD_RISING.id() + 1);
+    }
 
     private static final int[][] CARDINAL_OFFSETS = {
             {1, 0},
@@ -116,9 +125,13 @@ public final class HauntSimulationHandler {
 
         long currentTime = level.getDayTime();
         Long previousTime = LAST_SIMULATION_TIME.put(level, currentTime);
-        if (previousTime == null || !spreadCheckDue(previousTime, currentTime)) return;
-        boolean daily = Math.floorDiv(currentTime, TICKS_PER_DAY) > Math.floorDiv(previousTime, TICKS_PER_DAY);
-        runSimulation(level, daily);
+        if (previousTime == null) return;
+        boolean spread = spreadCheckDue(previousTime, currentTime);
+        boolean bloodstone = bloodstoneCheckDue(previousTime, currentTime);
+        if (!spread && !bloodstone) return;
+        boolean daily = currentTime > previousTime
+                && Math.floorDiv(currentTime, TICKS_PER_DAY) > Math.floorDiv(previousTime, TICKS_PER_DAY);
+        runSimulation(level, daily, spread, bloodstone);
     }
 
     /**
@@ -174,7 +187,7 @@ public final class HauntSimulationHandler {
      * Planned changes are applied only after all rolls, preventing chain
      * reactions within a pass.
      */
-    private static void runSimulation(ServerLevel level, boolean daily) {
+    private static void runSimulation(ServerLevel level, boolean daily, boolean spread, boolean bloodstone) {
         Set<Long> tracked = LOADED_CHUNKS.get(level);
         if (tracked == null || tracked.isEmpty()) {
             return;
@@ -235,7 +248,7 @@ public final class HauntSimulationHandler {
 
             boolean sourceWardProtected = wardProtectedChunks.contains(sourceKey);
 
-            if (!sourceWardProtected
+            if (spread && !sourceWardProtected
                     && sourceValue > 0
                     && random.nextFloat() < spreadChance(sourceValue, moonPhase)) {
                 int[] offset = CARDINAL_OFFSETS[random.nextInt(CARDINAL_OFFSETS.length)];
@@ -267,8 +280,8 @@ public final class HauntSimulationHandler {
                 }
             }
 
-            if (daily && sourceTier.id() >= HauntTier.DEAD_RISING.id()
-                    && random.nextFloat() < BLOODSTONE_CONVERSION_CHANCE
+            if (bloodstone && sourceTier.id() >= HauntTier.DEAD_RISING.id()
+                    && random.nextFloat() < bloodstoneConversionChance(sourceValue)
                     && tryConvertDiamondOre(level, chunk, random)) {
                 int floorValue = determineSourceFloorValue(chunk);
                 int planned = resultingValues.getOrDefault(sourceKey, sourceValue);

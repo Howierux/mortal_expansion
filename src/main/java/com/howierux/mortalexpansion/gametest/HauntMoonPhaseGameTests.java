@@ -51,4 +51,28 @@ public final class HauntMoonPhaseGameTests {
         h.succeed();
     }
 
+    @GameTest(template="deferred_items_test")
+    public static void bloodstone_checks_at_dawn_sunset_midnight_only(GameTestHelper h) {
+        int checks = 0;
+        for (long tick = 1; tick <= 48000; tick++) {
+            if (!HauntSimulationHandler.bloodstoneCheckDue(tick - 1, tick)) continue;
+            long time = tick % 24000;
+            h.assertTrue(time == 0 || time == 12000 || time == 18000,
+                    "Bloodstone checks only at dawn, sunset or midnight");
+            checks++;
+        }
+        h.assertTrue(checks == 6, "Exactly three Bloodstone checks per day");
+        for (int value = 0; value <= 69; value++) {
+            float expected = value < 30 ? 0 : (value / 10 - 2) * 0.005F;
+            h.assertTrue(Math.abs(HauntSimulationHandler.bloodstoneConversionChance(value) - expected) < 0.000001F,
+                    "Bloodstone odds rise from 0.5% at Dead Rising to 2% at Eldritch, with lower bands disabled");
+        }
+        h.assertFalse(HauntSimulationHandler.bloodstoneCheckDue(18000, 18000), "Frozen time cannot repeat a roll");
+        h.assertFalse(HauntSimulationHandler.bloodstoneCheckDue(24000, 0), "Backward changes cannot roll");
+        h.assertTrue(HauntSimulationHandler.bloodstoneCheckDue(13000, 24000), "Sleep schedules one roll");
+        h.assertTrue(HauntSimulationHandler.bloodstoneCheckDue(0, 240000), "Forward jumps schedule one pass");
+        h.assertFalse(HauntSimulationHandler.bloodstoneCheckDue(240000, 240001), "Skipped checks never replay");
+        h.succeed();
+    }
+
 }
