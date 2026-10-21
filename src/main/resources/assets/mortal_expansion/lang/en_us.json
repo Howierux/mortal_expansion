@@ -564,5 +564,12 @@
   "sin.mortal_expansion.sloth": "Sloth",
   "sin.mortal_expansion.greed": "Greed",
   "sin.mortal_expansion.lust": "Lust",
-  "darkhold.mortal_expansion.demons.page.3": "Seven sins mark their forms:\nIndigo: Pride, crowned horns.\nGreen: Envy, narrow eyes.\nOrange: Gluttony, broad jaw.\nRed: Wrath, heavy horns.\nBlue: Sloth, drooping gaze.\nYellow: Greed, coin ornaments.\nViolet: Lust, swept horns."
+  "darkhold.mortal_expansion.demons.page.3": "Seven sins mark their forms:\nIndigo: Pride, crowned horns.\nGreen: Envy, narrow eyes.\nOrange: Gluttony, broad jaw.\nRed: Wrath, heavy horns.\nBlue: Sloth, drooping gaze.\nYellow: Greed, coin ornaments.\nViolet: Lust, swept horns.",
+  "jei.mortal_expansion.purity_offerings": "Altar of Purity Offerings",
+  "jei.mortal_expansion.impurity_offerings": "Altar of Impurity Offerings",
+  "jei.mortal_expansion.altar_burn": "Burn time: %s seconds",
+  "jei.mortal_expansion.altar_raises": "Adds %s Haunt every %s seconds.",
+  "jei.mortal_expansion.altar_cleanses": "Removes %s Haunt every %s seconds.",
+  "jei.mortal_expansion.altar_area": "Affects each loaded chunk in a 3x3 area.",
+  "jei.mortal_expansion.altar_consumption": "Consumes one offering every %s seconds."
 }

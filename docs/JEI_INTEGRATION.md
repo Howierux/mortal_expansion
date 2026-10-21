@@ -10,6 +10,7 @@ JEI support is built into Mortal Expansion. There is no separate addon JAR and J
 - Purification Station recipe, reagent-tag alternatives, water/energy amounts, process time and clickable progress bar.
 - Four heated-cauldron routes with fluid-bucket diagrams and heat/container guidance.
 - Haunt/Haint Furnaces as native smelting/fuel catalysts.
+- Separate Purity and Impurity altar-offering categories, using each altar's loaded offering tag and authoritative burn-time helper.
 - Distinct Book of Ectcetera tier subtypes and ingredient guidance.
 - A ghost-green border and spectral Secrets of the Dead ribbon/tooltips on secret crafting/smithing recipes.
 
@@ -42,3 +43,15 @@ Build, optional dependency packaging, client-side data loading with and without 
 - [Official JEI Maven](https://maven.blamejared.com/mezz/jei/)
 
 Verified 2026-10-19: the Gradle build, both client-side data-loading configurations, all 195 required server GameTests without JEI, 622-resource validation and 30-chapter/128-page guide checks passed. Packaged JAR checks confirm a single mod, optional JEI metadata, no bundled JEI classes and no JEI references in common initialization.
+
+## Altar offerings
+
+The Altar of Purity and Altar of Impurity each have their own JEI category and catalyst. View recipes for an altar to browse its offerings; view uses for an offering to find compatible altars. Each item gets its own indexed entry, including Raw Ectoplasm (60 seconds), Purified Ectoplasm (120 seconds), Spirit Boons and both accepted logs. Displays show burn duration, the altar's cleansing/corruption rate, its loaded 3x3 chunk footprint, and the normal consumption interval.
+
+Membership comes from `mortal_expansion:purity_offerings` and `mortal_expansion:impurity_offerings` separately. The Impurity tag inherits Purity offerings by default; datapacks can change either. Durations come from `PurityOfferings.burnTicks`, rather than a second JEI fuel table. As with existing tag-driven integrations, reconnect after datapack changes so JEI rebuilds its catalog.
+
+An altar is displayed as a catalyst, not a fabricated output item. If a datapack offering leaves a crafting container, its actual returned item appears as an output; current solid offerings have no remainder. Ritual Stars are separate world rituals and are not presented as ordinary fuel. Secret-based altar crafting notices remain on the existing crafting recipes; browsing offering information never unlocks the altar recipe.
+
+The display-data record has no JEI or client dependencies. The plugin/category classes remain optional and isolated; no packets, mixins, saved-data changes or gameplay recipes are introduced. Server regression checks can therefore verify the offering catalog without JEI installed. Live JEI navigation and layout remain client playtest checks.
+
+Verified 2026-10-21 for altar offerings: build and all 217 required server tests pass without JEI; build/data loading with `-PwithJei` passes; generated-resource and book checks pass. The new regression checks both tags, indexed fuel entries, actual burn durations, completeness, exclusions and native container remainders without requiring JEI on the server.

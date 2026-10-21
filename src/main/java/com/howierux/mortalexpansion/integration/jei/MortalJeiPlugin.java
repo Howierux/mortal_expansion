@@ -30,6 +30,8 @@ public final class MortalJeiPlugin implements IModPlugin {
     public static final RecipeType<ProcessRecipe> ECTCHANTMENT = type("ectchantment");
     public static final RecipeType<ProcessRecipe> PURIFICATION = type("purification");
     public static final RecipeType<ProcessRecipe> CAULDRON = type("heated_cauldron");
+    public static final RecipeType<AltarOfferingRecipe> PURITY_OFFERINGS = RecipeType.create(MortalExpansion.MOD_ID,"purity_offerings",AltarOfferingRecipe.class);
+    public static final RecipeType<AltarOfferingRecipe> IMPURITY_OFFERINGS = RecipeType.create(MortalExpansion.MOD_ID,"impurity_offerings",AltarOfferingRecipe.class);
     private static RecipeType<ProcessRecipe> type(String path) {
         return RecipeType.create(MortalExpansion.MOD_ID, path, ProcessRecipe.class);
     }
@@ -41,7 +43,8 @@ public final class MortalJeiPlugin implements IModPlugin {
         registration.addRecipeCategories(
             new ProcessCategory(gui, ECTCHANTMENT, "jei.mortal_expansion.ectchantment", new ItemStack(ModItems.ECTCHANTMENT_MACHINE.get())),
             new ProcessCategory(gui, PURIFICATION, "jei.mortal_expansion.purification", new ItemStack(ModItems.PURIFICATION_STATION.get())),
-            new ProcessCategory(gui, CAULDRON, "jei.mortal_expansion.cauldron", new ItemStack(Items.CAULDRON)));
+            new ProcessCategory(gui, CAULDRON, "jei.mortal_expansion.cauldron", new ItemStack(Items.CAULDRON)),
+            new AltarOfferingCategory(gui,PURITY_OFFERINGS,false),new AltarOfferingCategory(gui,IMPURITY_OFFERINGS,true));
     }
     @Override public void registerRecipes(IRecipeRegistration registration) {
         var level = Minecraft.getInstance().level;
@@ -63,6 +66,8 @@ public final class MortalJeiPlugin implements IModPlugin {
                 List.of(Component.translatable("jei.mortal_expansion.charge", EctchantmentMachineBlockEntity.ENCHANTMENT_COST,
                     EctchantmentMachineBlockEntity.FE_ENCHANTMENT_COST), Component.translatable("jei.mortal_expansion.charge_fuel"))));
         }
+        registration.addRecipes(PURITY_OFFERINGS,AltarOfferingRecipe.forAltar(false));
+        registration.addRecipes(IMPURITY_OFFERINGS,AltarOfferingRecipe.forAltar(true));
         registration.addRecipes(ECTCHANTMENT, operations);
         registration.addRecipes(PURIFICATION, List.of(new ProcessRecipe(
             List.of(Ingredient.of(ModItems.RAW_ECTOPLASM.get()), Ingredient.of(PurificationStationBlockEntity.PURIFICATION_REAGENTS), Ingredient.of(Items.WATER_BUCKET)),
@@ -85,6 +90,8 @@ public final class MortalJeiPlugin implements IModPlugin {
             List.of(Component.translatable("jei.mortal_expansion.cauldron_heat"), Component.translatable("jei.mortal_expansion.cauldron_buckets")));
     }
     @Override public void registerRecipeCatalysts(IRecipeCatalystRegistration registration) {
+        registration.addRecipeCatalysts(PURITY_OFFERINGS,ModItems.ALTAR_OF_PURITY.get());
+        registration.addRecipeCatalysts(IMPURITY_OFFERINGS,ModItems.ALTAR_OF_IMPURITY.get());
         registration.addRecipeCatalysts(ECTCHANTMENT, ModItems.ECTCHANTMENT_MACHINE.get());
         registration.addRecipeCatalysts(PURIFICATION, ModItems.PURIFICATION_STATION.get());
         registration.addRecipeCatalysts(CAULDRON, Items.CAULDRON);

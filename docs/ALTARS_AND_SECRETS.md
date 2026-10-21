@@ -35,3 +35,5 @@ Build and 138 required server tests pass. New tests verify inverse nine-chunk pu
 ## Ritual Star sacrifices
 
 Both altars accept a Ritual Star in the Overworld: Purity lowers current Haunt in every chunk by ten points, while Impurity raises it by ten. Recovery baselines remain unchanged. Craft the star with a Nether Star surrounded by eight Bloodstone. See [Ritual Star](RITUAL_STAR.md) for delivery, repeatability and persistence.
+
+Both altars expose their loaded offering tags and burn durations through separate optional JEI categories. The altar is a catalyst; container-bearing offerings show their real remainder. See [JEI offering integration](JEI_INTEGRATION.md#altar-offerings).
