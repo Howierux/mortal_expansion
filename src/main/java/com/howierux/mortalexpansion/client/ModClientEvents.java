@@ -28,6 +28,7 @@ import net.neoforged.neoforge.client.model.DynamicFluidContainerModel;
 public final class ModClientEvents {
     private ModClientEvents() {}
     @SubscribeEvent public static void ectankRenderer(EntityRenderersEvent.RegisterRenderers event){
+        event.registerBlockEntityRenderer(com.howierux.mortalexpansion.registry.ModBlockEntities.FANCIFIED_BLOCK.get(),FancifiedRenderer::new);
         event.registerBlockEntityRenderer(com.howierux.mortalexpansion.registry.ModBlockEntities.ECTO_FLUID.get(),EctankRenderer::new);
         event.registerBlockEntityRenderer(com.howierux.mortalexpansion.registry.ModBlockEntities.DREAMCATCHER.get(),DreamcatcherRenderer::new);
     }
@@ -191,6 +192,7 @@ public final class ModClientEvents {
 
     @SubscribeEvent
     public static void registerMenuScreens(RegisterMenuScreensEvent event) {
+        event.register(ModMenus.FANCIFIER.get(),com.howierux.mortalexpansion.client.screen.FancifierScreen::new);
         event.register(ModMenus.ALTAR_OF_IMPURITY.get(), com.howierux.mortalexpansion.client.screen.AltarOfPurityScreen::new);
         event.register(ModMenus.MORTALITY_RESEARCH_STATION.get(),com.howierux.mortalexpansion.client.screen.MortalityResearchStationScreen::new);
         event.register(ModMenus.ALTAR_OF_PURITY.get(), com.howierux.mortalexpansion.client.screen.AltarOfPurityScreen::new);

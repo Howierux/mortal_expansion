@@ -19,6 +19,11 @@ import net.minecraft.world.item.crafting.RecipeSerializer;
 public final class ModRecipes extends RecipeProvider {
     public ModRecipes(PackOutput output, CompletableFuture<HolderLookup.Provider> lookup) { super(output, lookup); }
     @Override protected void buildRecipes(RecipeOutput output) {
+        ShapedRecipeBuilder.shaped(RecipeCategory.DECORATIONS,ModItems.FANCIFIER.get())
+                .pattern("IEI").pattern("ESE").pattern("IRI")
+                .define('I',Items.IRON_INGOT).define('E',ModItems.RAW_ECTOPLASM.get())
+                .define('S',Items.STONECUTTER).define('R',Items.REDSTONE)
+                .unlockedBy("has_ectoplasm",has(ModItems.RAW_ECTOPLASM.get())).save(output);
         ShapedRecipeBuilder.shaped(RecipeCategory.MISC,ModItems.RITUAL_STAR.get())
                 .pattern("BBB").pattern("BSB").pattern("BBB")
                 .define('B',ModItems.BLOODSTONE.get()).define('S',Items.NETHER_STAR)

@@ -64,6 +64,16 @@ public final class ModBlockModels extends BlockStateProvider {
         ectoBox(item,5,5,0,11,11,2,"#stone");ectoBox(item,5,5,14,11,11,16,"#stone");
     }
     @Override protected void registerStatesAndModels() {
+        var fancifier=models().getBuilder("fancifier").parent(new ModelFile.UncheckedModelFile("minecraft:block/block"))
+                .renderType("translucent").texture("particle","mortal_expansion:block/fancifier_side")
+                .texture("top","mortal_expansion:block/fancifier_top").texture("side","mortal_expansion:block/fancifier_side")
+                .texture("bottom","mortal_expansion:block/fancifier_bottom").texture("saw","mortal_expansion:block/fancifier_saw");
+        fancifier.element().from(0,0,0).to(16,9,16).allFaces((dir,face)->face.texture(dir==net.minecraft.core.Direction.UP?"#top":dir==net.minecraft.core.Direction.DOWN?"#bottom":"#side")).end();
+        fancifier.element().from(1,2,8).to(15,16,8).face(net.minecraft.core.Direction.NORTH).texture("#saw").uvs(0,0,16,16).end()
+                .face(net.minecraft.core.Direction.SOUTH).texture("#saw").uvs(0,0,16,16).end().end();
+        horizontalBlock(ModBlocks.FANCIFIER.get(),fancifier);
+        simpleBlock(ModBlocks.FANCIFIED_BLOCK.get(),models().cubeAll("fancified_block",mcLoc("block/stone")));
+
         ectoInfrastructureModels();
         var baseModels=new ModelFile[5];
         for(int stage=0;stage<=4;stage++)

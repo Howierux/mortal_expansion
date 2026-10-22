@@ -60,6 +60,15 @@ public final class ModItemModels extends ItemModelProvider {
             }
     }
     @Override protected void registerModels() {
+        withExistingParent("fancifier",modLoc("block/fancifier"));
+        var fancified=getBuilder("fancified_block").parent(new ModelFile.UncheckedModelFile("minecraft:builtin/entity"));
+        fancified.transforms().transform(net.minecraft.world.item.ItemDisplayContext.GUI).rotation(30,225,0).scale(0.625F).end()
+                .transform(net.minecraft.world.item.ItemDisplayContext.GROUND).translation(0,3,0).scale(0.25F).end()
+                .transform(net.minecraft.world.item.ItemDisplayContext.FIRST_PERSON_RIGHT_HAND).rotation(0,45,0).scale(0.4F).end()
+                .transform(net.minecraft.world.item.ItemDisplayContext.FIRST_PERSON_LEFT_HAND).rotation(0,225,0).scale(0.4F).end()
+                .transform(net.minecraft.world.item.ItemDisplayContext.THIRD_PERSON_RIGHT_HAND).rotation(75,45,0).translation(0,2.5F,0).scale(0.375F).end()
+                .transform(net.minecraft.world.item.ItemDisplayContext.THIRD_PERSON_LEFT_HAND).rotation(75,225,0).translation(0,2.5F,0).scale(0.375F).end();
+
         singleTexture("demonic_ash", mcLoc("item/generated"), "layer0", modLoc("item/demonic_ash"));
         singleTexture("darkhold", mcLoc("item/generated"), "layer0", modLoc("item/darkhold"));
         singleTexture("ritual_star", mcLoc("item/generated"), "layer0", modLoc("item/ritual_star"));

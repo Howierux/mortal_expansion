@@ -1,0 +1,32 @@
+{
+  "parent": "minecraft:recipes/root",
+  "criteria": {
+    "has_ectoplasm": {
+      "conditions": {
+        "items": [
+          {
+            "items": "mortal_expansion:raw_ectoplasm"
+          }
+        ]
+      },
+      "trigger": "minecraft:inventory_changed"
+    },
+    "has_the_recipe": {
+      "conditions": {
+        "recipe": "mortal_expansion:fancifier"
+      },
+      "trigger": "minecraft:recipe_unlocked"
+    }
+  },
+  "requirements": [
+    [
+      "has_the_recipe",
+      "has_ectoplasm"
+    ]
+  ],
+  "rewards": {
+    "recipes": [
+      "mortal_expansion:fancifier"
+    ]
+  }
+}

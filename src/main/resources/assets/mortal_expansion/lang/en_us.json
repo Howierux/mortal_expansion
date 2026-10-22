@@ -113,7 +113,7 @@
   "screen.mortal_expansion.spirit.rest": "The spirit has no new business for you yet. Return shortly.",
   "message.mortal_expansion.quest.offer": "%s has unfinished business: slay %s %s. Difficulty: %s. Reward: %s.",
   "message.mortal_expansion.quest.accepted": "Unfinished business accepted: slay %s %s. Your reward will find you.",
-  "message.mortal_expansion.quest.progress": "Unfinished business: %s \u2014 %s/%s",
+  "message.mortal_expansion.quest.progress": "Unfinished business: %s — %s/%s",
   "message.mortal_expansion.quest.complete": "%s finds peace. Reward delivered: %s.",
   "message.mortal_expansion.quest.none": "No active Spirit quest. Right-click a Spirit and choose Unfinished Business.",
   "message.mortal_expansion.quest.updated": "Spirit quest updated.",
@@ -572,5 +572,15 @@
   "jei.mortal_expansion.altar_cleanses": "Removes %s Haunt every %s seconds.",
   "jei.mortal_expansion.altar_area": "Affects each loaded chunk in a 3x3 area.",
   "jei.mortal_expansion.altar_consumption": "Consumes one offering every %s seconds.",
-  "darkhold.mortal_expansion.demons.page.4": "Demons sense vulnerable players from afar: their base detection range is 96 blocks. Thick ordinary walls cannot hide you. Demi-tangible materials such as Gravestone and Spiritwood block their sight, as do Holy Salt and Spirit Torch barriers. Shielding breaks their direct pursuit."
+  "darkhold.mortal_expansion.demons.page.4": "Demons sense vulnerable players from afar: their base detection range is 96 blocks. Thick ordinary walls cannot hide you. Demi-tangible materials such as Gravestone and Spiritwood block their sight, as do Holy Salt and Spirit Torch barriers. Shielding breaks their direct pursuit.",
+  "block.mortal_expansion.fancifier": "Fancifier",
+  "block.mortal_expansion.fancified_block": "Fancified Block",
+  "item.mortal_expansion.fancified_block.named": "%s (%s%% opacity)",
+  "gui.mortal_expansion.fancifier.apply": "Apply",
+  "gui.mortal_expansion.fancifier.opacity": "Opacity: %s%%",
+  "gui.mortal_expansion.fancifier.restore": "100% restores the original block.",
+  "gui.mortal_expansion.fancifier.decorative": "Decorative blocks only",
+  "guide.mortal_expansion.fancifier.name": "Fancifier",
+  "guide.mortal_expansion.fancifier.page.1": "Iron cradles a stonecutter whose blade has slipped halfway out of the world. Craft with iron in all four corners, raw ectoplasm above and beside the stonecutter, and redstone below. The spectral blade changes appearance, not tangibility.",
+  "guide.mortal_expansion.fancifier.page.2": "Insert decorative blocks, select 20%, 40%, 60% or 80% opacity, and Apply. Take the full output stack or only what you need. Insert faded blocks and select 100% to restore their originals. Building cubes, glass, slabs and stairs are supported; machines, containers, crops and falling blocks are not. Closing returns unclaimed items."
 }

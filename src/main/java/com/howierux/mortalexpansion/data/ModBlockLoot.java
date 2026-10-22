@@ -23,6 +23,9 @@ import net.minecraft.core.registries.Registries;
 public final class ModBlockLoot extends BlockLootSubProvider {
     public ModBlockLoot(HolderLookup.Provider lookup) { super(Set.of(), FeatureFlags.REGISTRY.allFlags(), lookup); }
     @Override protected void generate() {
+        dropSelf(ModBlocks.FANCIFIER.get());
+        // FancifiedBlock supplies its original-item-and-opacity stack from its block entity.
+        add(ModBlocks.FANCIFIED_BLOCK.get(),LootTable.lootTable());
         dropOther(ModBlocks.HAUNTED_FARMLAND.get(),net.minecraft.world.item.Items.DIRT);
         // Preserve current drops, including one-item slab drops. Balance changes are separate.
         add(ModBlocks.BLOODSTONE_ORE.get(), createOreDrop(ModBlocks.BLOODSTONE_ORE.get(), ModItems.BLOODSTONE.get()));
@@ -85,6 +88,7 @@ public final class ModBlockLoot extends BlockLootSubProvider {
         // Only blocks with existing drop definitions: fluids, the well, and currently
         // non-dropping blocks must not acquire new loot as part of a schema migration.
         return List.of(ModBlocks.PURIFIED_ECTO_PIPE.get(),ModBlocks.ECTANK.get(),ModBlocks.PURIFIED_ECTANK.get(),ModBlocks.ECTO_PIPE.get(),ModBlocks.MORTAL_GOLEM_BASE.get(),ModBlocks.WISP_O_LANTERN.get(),ModBlocks.PURIFIED_DREAMCATCHER.get(),ModBlocks.DREAMCATCHER.get(),ModBlocks.MORTALITY_RESEARCH_STATION.get(),ModBlocks.ALTAR_OF_IMPURITY.get(),ModBlocks.ALTAR_OF_PURITY.get(),ModBlocks.HAUNTED_FARMLAND.get(),
+                ModBlocks.FANCIFIER.get(),ModBlocks.FANCIFIED_BLOCK.get(),
                 ModBlocks.BLOODSTONE_ORE.get(),
                 ModBlocks.BLOODSTONE_ORE_STONE.get(),
                 ModBlocks.ECTCHANTMENT_MACHINE.get(),

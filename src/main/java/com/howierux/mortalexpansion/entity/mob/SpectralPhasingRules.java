@@ -64,7 +64,7 @@ public final class SpectralPhasingRules {
 
             BlockState state = level.getBlockState(pos);
 
-            if (state.is(INTANGIBLE_SOLID)) {
+            if (isSpectralSolid(level,pos,state)) {
                 return false;
             }
 
@@ -89,7 +89,7 @@ public final class SpectralPhasingRules {
             if(!world.hasChunkAt(pos))return Boolean.FALSE;
             if(HolySaltBarrierTracker.hasSaltColumn(world,pos.getX(),pos.getZ())
                     || SpiritTorchBarrierTracker.hasBarrierColumn(world,pos.getX(),pos.getZ())
-                    || world.getBlockState(pos).is(INTANGIBLE_SOLID))return Boolean.FALSE;
+                    || isSpectralSolid(world,pos,world.getBlockState(pos)))return Boolean.FALSE;
             return null;
         },world->Boolean.TRUE);
     }
@@ -108,7 +108,14 @@ public final class SpectralPhasingRules {
                                 pos.getZ()
                         )
                                 || SpiritTorchBarrierTracker.hasBarrierColumn(level, pos.getX(), pos.getZ())
-                                || level.getBlockState(pos).is(INTANGIBLE_SOLID)
+                                || isSpectralSolid(level,pos,level.getBlockState(pos))
                 );
     }
+    private static boolean isSpectralSolid(net.minecraft.world.level.BlockGetter level,BlockPos pos,BlockState state) {
+        if (state.is(INTANGIBLE_SOLID)) return true;
+        return state.getBlock() instanceof com.howierux.mortalexpansion.block.FancifiedBlock
+                && level.getBlockEntity(pos) instanceof com.howierux.mortalexpansion.blockentity.FancifiedBlockEntity be
+                && be.original().is(INTANGIBLE_SOLID);
+    }
+
 }

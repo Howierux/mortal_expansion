@@ -1,0 +1,19 @@
+{
+  "variants": {
+    "facing=east": {
+      "model": "mortal_expansion:block/fancifier",
+      "y": 90
+    },
+    "facing=north": {
+      "model": "mortal_expansion:block/fancifier"
+    },
+    "facing=south": {
+      "model": "mortal_expansion:block/fancifier",
+      "y": 180
+    },
+    "facing=west": {
+      "model": "mortal_expansion:block/fancifier",
+      "y": 270
+    }
+  }
+}

@@ -32,6 +32,9 @@ public final class ModBlocks {
     public static final DeferredRegister.Blocks BLOCKS =
             DeferredRegister.createBlocks(MortalExpansion.MOD_ID);
 
+    public static final DeferredBlock<com.howierux.mortalexpansion.block.FancifierBlock> FANCIFIER = BLOCKS.registerBlock("fancifier",com.howierux.mortalexpansion.block.FancifierBlock::new,BlockBehaviour.Properties.ofFullCopy(Blocks.STONECUTTER).noOcclusion());
+    public static final DeferredBlock<com.howierux.mortalexpansion.block.FancifiedBlock> FANCIFIED_BLOCK = BLOCKS.registerBlock("fancified_block",com.howierux.mortalexpansion.block.FancifiedBlock::new,BlockBehaviour.Properties.of().strength(1.5F).noOcclusion().dynamicShape().pushReaction(net.minecraft.world.level.material.PushReaction.BLOCK));
+
     public static final DeferredBlock<com.howierux.mortalexpansion.block.EctankBlock> ECTANK = BLOCKS.registerBlock("ectank",com.howierux.mortalexpansion.block.EctankBlock::new,
             BlockBehaviour.Properties.ofFullCopy(Blocks.STONE).strength(2.0F).noOcclusion());
     public static final DeferredBlock<com.howierux.mortalexpansion.block.EctankBlock> PURIFIED_ECTANK = BLOCKS.registerBlock("purified_ectank",com.howierux.mortalexpansion.block.EctankBlock::new,

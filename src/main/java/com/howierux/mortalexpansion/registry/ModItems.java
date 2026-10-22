@@ -86,6 +86,8 @@ public final class ModItems {
             ITEMS.registerSimpleBlockItem(ModBlocks.SPIRITWOOD_BUTTON);
 
     public static final DeferredItem<BlockItem> PURIFIED_ECTO_PIPE = ITEMS.registerSimpleBlockItem(ModBlocks.PURIFIED_ECTO_PIPE);
+    public static final DeferredItem<BlockItem> FANCIFIER = ITEMS.registerSimpleBlockItem(ModBlocks.FANCIFIER);
+    public static final DeferredItem<com.howierux.mortalexpansion.item.FancifiedBlockItem> FANCIFIED_BLOCK = ITEMS.register("fancified_block",()->new com.howierux.mortalexpansion.item.FancifiedBlockItem(ModBlocks.FANCIFIED_BLOCK.get(),new Item.Properties()));
     public static final DeferredItem<BlockItem> ECTANK = ITEMS.registerSimpleBlockItem(ModBlocks.ECTANK);
     public static final DeferredItem<BlockItem> PURIFIED_ECTANK = ITEMS.registerSimpleBlockItem(ModBlocks.PURIFIED_ECTANK);
     public static final DeferredItem<BlockItem> ECTO_PIPE = ITEMS.registerSimpleBlockItem(ModBlocks.ECTO_PIPE);

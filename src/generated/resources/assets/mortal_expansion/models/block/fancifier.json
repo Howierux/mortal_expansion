@@ -1,0 +1,77 @@
+{
+  "parent": "minecraft:block/block",
+  "elements": [
+    {
+      "faces": {
+        "down": {
+          "texture": "#bottom"
+        },
+        "east": {
+          "texture": "#side"
+        },
+        "north": {
+          "texture": "#side"
+        },
+        "south": {
+          "texture": "#side"
+        },
+        "up": {
+          "texture": "#top"
+        },
+        "west": {
+          "texture": "#side"
+        }
+      },
+      "from": [
+        0,
+        0,
+        0
+      ],
+      "to": [
+        16,
+        9,
+        16
+      ]
+    },
+    {
+      "faces": {
+        "north": {
+          "texture": "#saw",
+          "uv": [
+            0.0,
+            0.0,
+            16.0,
+            16.0
+          ]
+        },
+        "south": {
+          "texture": "#saw",
+          "uv": [
+            0.0,
+            0.0,
+            16.0,
+            16.0
+          ]
+        }
+      },
+      "from": [
+        1,
+        2,
+        8
+      ],
+      "to": [
+        15,
+        16,
+        8
+      ]
+    }
+  ],
+  "render_type": "minecraft:translucent",
+  "textures": {
+    "bottom": "mortal_expansion:block/fancifier_bottom",
+    "particle": "mortal_expansion:block/fancifier_side",
+    "saw": "mortal_expansion:block/fancifier_saw",
+    "side": "mortal_expansion:block/fancifier_side",
+    "top": "mortal_expansion:block/fancifier_top"
+  }
+}
