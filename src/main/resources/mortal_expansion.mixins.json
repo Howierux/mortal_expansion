@@ -38,7 +38,8 @@
     "FadingCompositeTypeAccessor",
     "FadingCompositeStateAccessor",
     "FadingTextureStateAccessor",
-    "FadingOverlapSortMixin"
+    "FadingMeshBuilderMixin",
+    "FadingMeshSortMixin"
   ],
   "injectors": {
     "defaultRequire": 1

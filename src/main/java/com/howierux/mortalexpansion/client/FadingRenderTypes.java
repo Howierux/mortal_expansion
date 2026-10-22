@@ -9,15 +9,18 @@ public final class FadingRenderTypes extends RenderType {
     private record Key(RenderType source,int opacity){}
     private static final Map<Key,RenderType> CACHE=new HashMap<>();
     private static final Map<RenderType,RenderType> MATERIALS=new IdentityHashMap<>();
-    private static final Set<RenderType> FADED_MATERIALS=Collections.newSetFromMap(new IdentityHashMap<>());
     public static RenderType material(RenderType source){
         return MATERIALS.computeIfAbsent(source,type->{
             var state=((FadingCompositeTypeAccessor)type).mortalExpansion$state();
             var faded=create("mortal_expansion_faded_material",type.format(),type.mode(),type.bufferSize(),type.affectsCrumbling(),true,state);
-            FADED_MATERIALS.add(faded);return faded;
+            return faded;
         });
     }
-    public static boolean isFadedMaterial(RenderType type){return FADED_MATERIALS.contains(type);}
+    public static VertexConsumer buffer(MultiBufferSource source,RenderType material){
+        var consumer=source.getBuffer(material);
+        if(consumer instanceof FadingMesh mesh)mesh.mortalExpansion$markFaded();
+        return consumer;
+    }
     private FadingRenderTypes(RenderType source,int opacity){this(source,opacity,new float[4]);}
     private FadingRenderTypes(RenderType source,int opacity,float[] saved){
         super("mortal_expansion_fading",source.format(),source.mode(),source.bufferSize(),source.affectsCrumbling(),source.mode()==VertexFormat.Mode.QUADS,
@@ -28,7 +31,7 @@ public final class FadingRenderTypes extends RenderType {
         if(opacity>=100)return source;
         return type->{
             var translucent=translucentMaterial(type);
-            if(translucent!=null)return new AlphaConsumer(source.getBuffer(material(translucent)),opacity/100F);
+            if(translucent!=null)return new AlphaConsumer(buffer(source,material(translucent)),opacity/100F);
             return source.getBuffer(CACHE.computeIfAbsent(new Key(type,opacity),key->new FadingRenderTypes(key.source,key.opacity)));
         };
     }

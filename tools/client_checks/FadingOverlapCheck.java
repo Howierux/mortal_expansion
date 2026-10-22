@@ -21,13 +21,39 @@ public final class FadingOverlapCheck {
             verify(shift,true);verify(shift,false);
         }
         nativeModels();
+        irisBatch();
         // Exercise the real BufferSource -> sortQuads injection and GPU upload with a faded material.
         var buffers=Minecraft.getInstance().renderBuffers().bufferSource();
         var layer=FadingRenderTypes.material(RenderType.entityTranslucentCull(TextureAtlas.LOCATION_BLOCKS));
-        quad(buffers.getBuffer(layer),0,1,0,1,0);quad(buffers.getBuffer(layer),0,1,0.5F,1.5F,0);
+        quad(FadingRenderTypes.buffer(buffers,layer),0,1,0,1,0);quad(FadingRenderTypes.buffer(buffers,layer),0,1,0.5F,1.5F,0);
         buffers.endBatch(layer);
         org.slf4j.LoggerFactory.getLogger("FadingOverlapCheck").info("FADING_OVERLAP_CHECK_OK: moving-camera order, native single/double chest and dust models, bounded separation, untouched nonoverlap, real buffer upload");
         Minecraft.getInstance().stop();
+    }
+    private static void irisBatch(){
+        try{
+            Class<?> parentType=Class.forName("net.irisshaders.batchedentityrendering.impl.FullyBufferedMultiBufferSource");
+            Object parent=parentType.getConstructor().newInstance();
+            Class<?> batchType=Class.forName("net.irisshaders.batchedentityrendering.impl.SegmentedBufferBuilder");
+            Object batch=batchType.getConstructor(parentType).newInstance(parent);
+            var layer=FadingRenderTypes.material(RenderType.entityTranslucentCull(TextureAtlas.LOCATION_BLOCKS));
+            var consumer=(VertexConsumer)batchType.getMethod("getBuffer",RenderType.class).invoke(batch,layer);
+            check(consumer instanceof FadingMesh,"Iris builder marker missing");
+            ((FadingMesh)consumer).mortalExpansion$markFaded();
+            quad(consumer,0,1,0,1,0);quad(consumer,0,1,0.5F,1.5F,0);
+            var segments=(java.util.List<?>)batchType.getMethod("getSegments").invoke(batch);
+            check(segments.size()==1,"Expected Iris segment");
+            Object segment=segments.getFirst();
+            try(var mesh=(MeshData)segment.getClass().getMethod("meshData").invoke(segment)){
+                int stride=mesh.drawState().format().getVertexSize();
+                int offset=mesh.drawState().format().getOffset(VertexFormatElement.POSITION);
+                check(mesh.vertexBuffer().getFloat(4*stride+offset+8)>0,"Iris batch bypassed overlap correction");
+            }
+            batchType.getMethod("freeAndDeleteBuffer").invoke(batch);
+            org.slf4j.LoggerFactory.getLogger("FadingOverlapCheck").info("FADING_IRIS_BATCH_OK: real segmented batch applied overlap correction");
+        }catch(ClassNotFoundException absent){
+            org.slf4j.LoggerFactory.getLogger("FadingOverlapCheck").info("Iris absent: native path only");
+        }catch(ReflectiveOperationException failure){throw new AssertionError("Iris batch check failed",failure);}
     }
     private static void nativeModels(){
         for(var layer:java.util.List.of(

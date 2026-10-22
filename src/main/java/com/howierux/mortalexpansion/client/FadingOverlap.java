@@ -13,13 +13,14 @@ public final class FadingOverlap {
     private FadingOverlap(){}
     public static VertexSorting prepare(MeshData mesh,VertexSorting sorting){
         var draw=mesh.drawState();
-        if(draw.mode()!=VertexFormat.Mode.QUADS || draw.format()!=DefaultVertexFormat.NEW_ENTITY)return sorting;
+        if(draw.mode()!=VertexFormat.Mode.QUADS || draw.format().getOffset(VertexFormatElement.POSITION)<0)return sorting;
         int count=draw.vertexCount()/4, stride=draw.format().getVertexSize();
+        int positionOffset=draw.format().getOffset(VertexFormatElement.POSITION);
         var vertices=mesh.vertexBuffer();
         Face[] faces=new Face[count];int[] parent=new int[count];
         Map<Cell,List<Integer>> cells=new HashMap<>();boolean overlap=false;
         for(int i=0;i<count;i++){
-            parent[i]=i;Face face=face(vertices,i,stride);faces[i]=face;if(face==null)continue;
+            parent[i]=i;Face face=face(vertices,i,stride,positionOffset);faces[i]=face;if(face==null)continue;
             // Native chest/dust quads fit in these cells. Bound work for arbitrary modded meshes.
             if(face.maxU-face.minU>2 || face.maxV-face.minV>2)continue;
             int plane=Math.round(face.plane/(EPSILON*2));
@@ -50,7 +51,7 @@ public final class FadingOverlap {
             int index=group.get(rank);Face face=faces[index];
             float bias=MAX_BIAS*rank/(group.size()-1)*face.sign;
             for(int vertex=0;vertex<4;vertex++){
-                int offset=(index*4+vertex)*stride+face.axis*4;
+                int offset=(index*4+vertex)*stride+positionOffset+face.axis*4;
                 vertices.putFloat(offset,vertices.getFloat(offset)+bias);
             }
         }
@@ -68,10 +69,10 @@ public final class FadingOverlap {
     private static int root(int[] parent,int index){
         while(parent[index]!=index){parent[index]=parent[parent[index]];index=parent[index];}return index;
     }
-    private static Face face(ByteBuffer data,int index,int stride){
+    private static Face face(ByteBuffer data,int index,int stride,int positionOffset){
         float[][] p=new float[4][3];
         for(int v=0;v<4;v++)for(int a=0;a<3;a++){
-            p[v][a]=data.getFloat((index*4+v)*stride+a*4);if(!Float.isFinite(p[v][a]))return null;
+            p[v][a]=data.getFloat((index*4+v)*stride+positionOffset+a*4);if(!Float.isFinite(p[v][a]))return null;
         }
         for(int axis=0;axis<3;axis++){
             if(Math.abs(p[1][axis]-p[0][axis])>EPSILON || Math.abs(p[2][axis]-p[0][axis])>EPSILON || Math.abs(p[3][axis]-p[0][axis])>EPSILON)continue;
