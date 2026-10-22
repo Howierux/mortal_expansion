@@ -32,3 +32,9 @@ Third-party GPU code that ignores the supplied native buffers or alpha cannot be
 ## Validation
 
 Headless lifecycle tests exercise real native blocks, inventories/tickers/capabilities, doors/fences/crops, falling/piston movement, cancellation, transitions and data codecs. A temporary, uncommitted client harness rendered native/faded comparison items for stone, Magenta Glass, chests, furnaces, doors, fences, signs, beds, banners and Mortal Expansion machines; all client mixin targets loaded and the client exited normally. The generated comparison image is `run/fading-native-smoke.png` in the development checkout. Actual multiplayer client chunk synchronization and arbitrary third-party renderers still need playtesting.
+
+## Sodium and Iris compatibility
+
+Sodium 0.6.13 bypasses the vanilla BlockRenderDispatcher chunk hook. An optional client-only `@Pseudo` mixin skips faded positions in Sodium's `BlockRenderer.renderModel`, so the separate faded pass is their only baked model. Sodium is not a required dependency. Check this signature when upgrading Sodium.
+
+Standard solid/cutout/translucent entity materials (including chest materials) use the native culled translucent RenderType with per-vertex alpha. This lets Iris classify them as translucent and avoids treating a faded chest as opaque/cutout geometry or drawing its back faces through its front. Three narrow read-only accessors obtain the native material texture without parsing RenderType names or assuming a texture atlas. Other shaders/formats keep the original adapter. Recheck accessor names and shader classifications during Minecraft/Iris upgrades. Redstone remains the native model and tint, rendered once by the faded baked pass.

@@ -33,7 +33,11 @@
     "FadingVisibilityMixin",
     "FadingNeighborFaceMixin",
     "FadingFallingRenderMixin",
-    "FadingPickMixin"
+    "FadingPickMixin",
+    "FadingSodiumChunkMixin",
+    "FadingCompositeTypeAccessor",
+    "FadingCompositeStateAccessor",
+    "FadingTextureStateAccessor"
   ],
   "injectors": {
     "defaultRequire": 1
