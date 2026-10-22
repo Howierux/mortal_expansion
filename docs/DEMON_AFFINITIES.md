@@ -55,3 +55,9 @@ The Demon-specific ray uses Mojang's voxel traversal once per visibility check i
 The Darkhold's revealed Demon entry includes this behavior on its fourth page.
 
 Perception validation: the build and all 219 required server tests passed. Tests exercise the actual target selector with a real mode-switching ServerPlayer at 80 blocks behind eight stone layers, immediate Gravestone screening, reopening/reacquisition, Creative/Spectator rejection, range bounds, allied restrictions, old/custom saved ranges, and missing-terrain rejection. Other spectral mobs retain their prior wall-layer limit.
+
+## Demi-tangible weapon resistance
+
+All seven Demon variants take 50% damage from demi-tangible melee weapon hits, including tagged mod weapons, Ectchantment-applied Demi-Tangible components and legacy Demi-Tangible enchantments. This applies equally to player and mob wielders. The Purified Gravestone Sword retains its normal intangible-target bonus before the reduction (1.5 x 0.5 = 0.75 times the incoming hit).
+
+Demons remain intangible: ordinary physical weapons cannot hit them. This resistance identifies weapon attack types rather than all magic, so spells, explosions and other allowed non-weapon sources retain their previous damage; void damage bypasses spectral defenses. No new saved state, resource formats or mixins are needed.

@@ -57,6 +57,16 @@ public final class DemiTangibleDamage {
         return isDemiTangibleWeapon(source.getWeaponItem());
     }
 
+    /** Distinguish weapon magic from spells even when the caster holds a spectral weapon. */
+    public static boolean isDemiTangibleWeaponDamage(DamageSource source) {
+        if (source.is(com.howierux.mortalexpansion.effect.ModDamageTypes.DEMI_TANGIBLE_PLAYER)
+                || source.is(com.howierux.mortalexpansion.effect.ModDamageTypes.DEMI_TANGIBLE_MOB)) return true;
+        return (source.is(net.minecraft.world.damagesource.DamageTypes.PLAYER_ATTACK)
+                || source.is(net.minecraft.world.damagesource.DamageTypes.MOB_ATTACK)
+                || source.is(net.minecraft.world.damagesource.DamageTypes.MOB_ATTACK_NO_AGGRO))
+                && isDemiTangibleWeapon(source.getWeaponItem());
+    }
+
     public static boolean isDemiTangibleWeapon(ItemStack weapon) {
         if (weapon == null || weapon.isEmpty()) {
             return false;

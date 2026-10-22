@@ -14,6 +14,8 @@ import net.neoforged.neoforge.event.entity.living.LivingIncomingDamageEvent;
 public final class IntangibleCombatHandler {
     private IntangibleCombatHandler() {}
 
+    public static final float DEMON_WEAPON_MULTIPLIER = 0.5F;
+
     public static final float ARMOR_REDUCTION_PER_PIECE = 0.05F;
     public static final int MAX_PROTECTIVE_ARMOR_PIECES = 4;
 
@@ -51,6 +53,10 @@ public final class IntangibleCombatHandler {
 
         if (purifiedGravestoneSword) {
             event.setAmount(event.getAmount() * 1.5F);
+        }
+        if (event.getEntity() instanceof com.howierux.mortalexpansion.entity.mob.DemonEntity
+                && DemiTangibleDamage.isDemiTangibleWeaponDamage(event.getSource())) {
+            event.setAmount(event.getAmount() * DEMON_WEAPON_MULTIPLIER);
         }
     }
 
