@@ -11,7 +11,7 @@ import org.spongepowered.asm.mixin.injection.callback.CallbackInfoReturnable;
 public abstract class FadingNeighborFaceMixin {
     @Inject(method="shouldRenderFace",at=@At("HEAD"),cancellable=true)
     private static void mortalExpansion$exposeNeighbor(BlockState state,BlockGetter level,BlockPos pos,Direction face,BlockPos neighbor,CallbackInfoReturnable<Boolean> callback){
-        if(level instanceof com.howierux.mortalexpansion.fancifier.FancifierFaces)return;
+        if(level instanceof com.howierux.mortalexpansion.fancifier.FancifierFaces || level instanceof com.howierux.mortalexpansion.fancifier.FancifierConnections)return;
         int alpha=FadingNativeClient.opacity(neighbor);if(alpha<100 && alpha!=FadingNativeClient.opacity(pos))callback.setReturnValue(true);
     }
 }

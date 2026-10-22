@@ -164,10 +164,19 @@ public final class FancifierGameTests {
         var neighbor=(FancifiedBlockEntity)level.getBlockEntity(second);
         neighbor.configure(new ItemStack(Items.MAGENTA_STAINED_GLASS),state,60);
         h.assertTrue(Block.shouldRenderFace(state,view,first,Direction.EAST,second),"Different opacity retains its visual boundary");
+        var connections=new com.howierux.mortalexpansion.fancifier.FancifierConnections(level);
+        h.assertTrue(connections.getBlockState(first)==state && connections.getBlockState(second)==state,"Texture connection view unwraps matching legacy glass across different opacity");
+        h.assertFalse(Block.shouldRenderFace(state,connections,first,Direction.EAST,second),"Texture connection visibility sees the matching material, not an opacity boundary");
         neighbor.configure(new ItemStack(Items.BLUE_STAINED_GLASS),Blocks.BLUE_STAINED_GLASS.defaultBlockState(),80);
         h.assertTrue(Block.shouldRenderFace(state,view,first,Direction.EAST,second),"Different colored glass retains its boundary");
         for(var pos:java.util.List.of(first,second))((FancifiedBlockEntity)level.getBlockEntity(pos)).configure(new ItemStack(Items.STONE),Blocks.STONE.defaultBlockState(),80);
         h.assertFalse(Block.shouldRenderFace(Blocks.STONE.defaultBlockState(),view,first,Direction.EAST,second),"Solid decorations also remove overlapping internal faces");
+        level.setBlockAndUpdate(first,state);level.setBlockAndUpdate(second,state);
+        com.howierux.mortalexpansion.fancifier.FadingWorld.set(level,first,1);
+        com.howierux.mortalexpansion.fancifier.FadingWorld.set(level,second,99);
+        level.setBlockAndUpdate(second.east(),state);
+        h.assertTrue(connections.getBlockState(first)==state && connections.getBlockState(second)==state && connections.getBlockState(second.east())==state,"Native 1%, 99%, and ordinary 100% glass keep the same connection identity");
+        h.assertTrue(new com.howierux.mortalexpansion.fancifier.FancifierFaces(level,1).getBlockState(second).isAir(),"Drawing face visibility stays opacity-sensitive independently of connections");
         h.succeed();
     }
 

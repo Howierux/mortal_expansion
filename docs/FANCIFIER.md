@@ -38,3 +38,5 @@ Prompt: Create a production Minecraft block texture atlas, square image split in
 The workstation uses a framework composite model with a solid body and a separate translucent blade in both world and item rendering. The opaque body occludes the buried lower blade; only the blade uses its texture alpha (approximately 40%). Keep these material layers separate when migrating model providers.
 
 The draggable bar and numeric field stay synchronized. The field rejects letters, decimals, signs, zero and values above 100. It can be temporarily empty while editing; Apply is disabled until a valid value is present, and leaving an empty field restores the last selection. Changing the preview does not process items; Apply commits the chosen opacity.
+
+Connected-texture providers see the original glass material across different opacity values, including unmodified 100% neighbors. Their usual material/color connection rules remain in force. Texture connection checks are separate from opacity-sensitive face drawing. Connected Glass with Fusion is an optional tested example, not a required dependency of Mortal Expansion.

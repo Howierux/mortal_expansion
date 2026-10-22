@@ -9,5 +9,5 @@ import com.llamalad7.mixinextras.injector.ModifyReturnValue;
 @Mixin(BlockBehaviour.BlockStateBase.class)
 public abstract class FadingVisibilityMixin {
     @ModifyReturnValue(method="isSolidRender",at=@At("RETURN"))
-    private boolean mortalExpansion$visibleBehind(boolean original,BlockGetter level,BlockPos pos){return original && FadingNativeClient.opacity(pos)==100;}
+    private boolean mortalExpansion$visibleBehind(boolean original,BlockGetter level,BlockPos pos){return original && (level instanceof com.howierux.mortalexpansion.fancifier.FancifierConnections || FadingNativeClient.opacity(pos)==100);}
 }

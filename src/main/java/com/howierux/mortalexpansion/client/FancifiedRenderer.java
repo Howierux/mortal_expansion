@@ -26,7 +26,7 @@ public final class FancifiedRenderer implements BlockEntityRenderer<FancifiedBlo
         var minecraft=Minecraft.getInstance();
         var model=minecraft.getBlockRenderer().getBlockModel(state);
         var data=level.getModelDataManager().getAt(pos);
-        data=model.getModelData(level,pos,state,data);
+        data=model.getModelData(new com.howierux.mortalexpansion.fancifier.FancifierConnections(level),pos,state,data);
         var random=net.minecraft.util.RandomSource.create();long seed=state.getSeed(pos);
         var consumer=new AlphaConsumer(FadingRenderTypes.buffer(buffers,FadingRenderTypes.material(RenderType.entityTranslucentCull(TextureAtlas.LOCATION_BLOCKS),opacity)),opacity/100F);
         var view=new com.howierux.mortalexpansion.fancifier.FancifierFaces(level,opacity);
