@@ -88,4 +88,26 @@ public final class FancifierGameTests {
                 && !com.howierux.mortalexpansion.guide.EctceteraResearchMap.unlocked("fancifier",1,0),"Book guidance follows ectoplasm upgrade");
         p.discard();h.succeed();
     }
+    @GameTest(template="deferred_items_test")
+    public static void magenta_glass_shared_faces_are_culled_at_eighty_percent(GameTestHelper h) {
+        var level=h.getLevel();var first=h.absolutePos(new BlockPos(5,3,5));var second=first.east();
+        for(var pos:java.util.List.of(first,second)) {
+            level.setBlockAndUpdate(pos,ModBlocks.FANCIFIED_BLOCK.get().defaultBlockState());
+            ((FancifiedBlockEntity)level.getBlockEntity(pos)).configure(new ItemStack(Items.MAGENTA_STAINED_GLASS),Blocks.MAGENTA_STAINED_GLASS.defaultBlockState(),80);
+        }
+        var view=new com.howierux.mortalexpansion.fancifier.FancifierFaces(level,80);
+        var state=Blocks.MAGENTA_STAINED_GLASS.defaultBlockState();
+        h.assertFalse(Block.shouldRenderFace(state,view,first,Direction.EAST,second),"Shared Magenta Glass face is hidden from first block");
+        h.assertFalse(Block.shouldRenderFace(state,view,second,Direction.WEST,first),"Shared face is hidden from second block too");
+        h.assertTrue(Block.shouldRenderFace(state,view,first,Direction.UP,first.above()),"Exterior surface remains visible");
+        var neighbor=(FancifiedBlockEntity)level.getBlockEntity(second);
+        neighbor.configure(new ItemStack(Items.MAGENTA_STAINED_GLASS),state,60);
+        h.assertTrue(Block.shouldRenderFace(state,view,first,Direction.EAST,second),"Different opacity retains its visual boundary");
+        neighbor.configure(new ItemStack(Items.BLUE_STAINED_GLASS),Blocks.BLUE_STAINED_GLASS.defaultBlockState(),80);
+        h.assertTrue(Block.shouldRenderFace(state,view,first,Direction.EAST,second),"Different colored glass retains its boundary");
+        for(var pos:java.util.List.of(first,second))((FancifiedBlockEntity)level.getBlockEntity(pos)).configure(new ItemStack(Items.STONE),Blocks.STONE.defaultBlockState(),80);
+        h.assertFalse(Block.shouldRenderFace(Blocks.STONE.defaultBlockState(),view,first,Direction.EAST,second),"Solid decorations also remove overlapping internal faces");
+        h.succeed();
+    }
+
 }

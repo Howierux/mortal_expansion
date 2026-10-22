@@ -18,10 +18,35 @@ import net.neoforged.api.distmarker.Dist;
 public final class FancifiedRenderer implements BlockEntityRenderer<FancifiedBlockEntity> {
     public FancifiedRenderer(BlockEntityRendererProvider.Context context) {}
     @Override public void render(FancifiedBlockEntity be,float delta,PoseStack poses,MultiBufferSource buffers,int light,int overlay) {
-        renderBlock(be.original(),be.opacity(),poses,buffers,light,overlay);
+        if (be.getLevel()==null) return;
+        var minecraft=Minecraft.getInstance();
+        var state=be.original();
+        var model=minecraft.getBlockRenderer().getBlockModel(state);
+        var data=net.neoforged.neoforge.client.model.data.ModelData.EMPTY;
+        var random=net.minecraft.util.RandomSource.create();
+        long seed=state.getSeed(be.getBlockPos());
+        var consumer=new AlphaConsumer(buffers.getBuffer(RenderType.entityTranslucentCull(TextureAtlas.LOCATION_BLOCKS)),be.opacity()/100F);
+        var view=new com.howierux.mortalexpansion.fancifier.FancifierFaces(be.getLevel(),be.opacity());
+        random.setSeed(seed);
+        for (var layer:model.getRenderTypes(state,random,data)) {
+            for (var face:net.minecraft.core.Direction.values()) {
+                if (!net.minecraft.world.level.block.Block.shouldRenderFace(state,view,be.getBlockPos(),face,be.getBlockPos().relative(face))) continue;
+                random.setSeed(seed);
+                renderQuads(model.getQuads(state,face,random,data,layer),state,be,poses,consumer,light,overlay);
+            }
+            random.setSeed(seed);
+            renderQuads(model.getQuads(state,null,random,data,layer),state,be,poses,consumer,light,overlay);
+        }
+    }
+    private static void renderQuads(java.util.List<net.minecraft.client.renderer.block.model.BakedQuad> quads,
+            BlockState state,FancifiedBlockEntity be,PoseStack poses,VertexConsumer consumer,int light,int overlay) {
+        for (var quad:quads) {
+            int color=quad.isTinted()?Minecraft.getInstance().getBlockColors().getColor(state,be.getLevel(),be.getBlockPos(),quad.getTintIndex()):0xFFFFFF;
+            consumer.putBulkData(poses.last(),quad,((color>>16)&255)/255F,((color>>8)&255)/255F,(color&255)/255F,1F,light,overlay);
+        }
     }
     private static void renderBlock(BlockState state,int opacity,PoseStack poses,MultiBufferSource buffers,int light,int overlay) {
-        var translucent = RenderType.entityTranslucent(TextureAtlas.LOCATION_BLOCKS);
+        var translucent = RenderType.entityTranslucentCull(TextureAtlas.LOCATION_BLOCKS);
         var alpha = new AlphaConsumer(buffers.getBuffer(translucent),opacity/100F);
         Minecraft.getInstance().getBlockRenderer().renderSingleBlock(state,poses,type->alpha,light,overlay,
                 net.neoforged.neoforge.client.model.data.ModelData.EMPTY,translucent);
