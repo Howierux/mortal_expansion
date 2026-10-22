@@ -343,7 +343,7 @@
   "book.mortal_expansion.ectcetera.page.ectchantment.2": "One operation costs 4,000 ectoplasmic charge or 40,000 FE. Ectoplasm gives 1,000 charge; Pure Ectoplasm gives 4,000.",
   "book.mortal_expansion.ectcetera.page.ectchantment.3": "Transmutations:\nDiamond -> Bloodstone\nStone -> Gravestone\nOther logs -> Spiritwood\nOther saplings -> Spiritwood Sapling",
   "book.mortal_expansion.ectcetera.page.ectchantment.4": "Vines, Moss Blocks or Glow Lichen -> Grave Moss",
-  "book.mortal_expansion.ectcetera.page.ectchantment.5": "Suitable weapons and tools can gain Demi-Tangible, letting them hurt intangible mobs.",
+  "book.mortal_expansion.ectcetera.page.ectchantment.5": "Demi-Tangible books bind to any item at an anvil. Enchant a launcher or its ammo to strike intangible foes, even with modded weapons.",
   "book.mortal_expansion.ectcetera.page.ectchantment.6": "Matching stackable outputs merge up to their stack limit. Clear blocked output space before processing can continue.",
   "book.mortal_expansion.ectcetera.page.generators.1": "The Ectoplasmic Generator burns Ectoplasm for FE. Pure Ectoplasm gives more energy over a longer burn.",
   "book.mortal_expansion.ectcetera.page.generators.2": "Output improves with local Haunt. Completed raw burns add 1 chunk Haunt; pure burns add 3. Adjacent machines and cables receive power.",

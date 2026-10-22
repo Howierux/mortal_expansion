@@ -54,11 +54,12 @@ public final class DemiTangibleDamage {
             return true;
         }
 
-        return isDemiTangibleWeapon(source.getWeaponItem());
+        return DemiTangibleProjectiles.damage(source) || !(direct instanceof net.minecraft.world.entity.projectile.Projectile) && isDemiTangibleWeapon(source.getWeaponItem());
     }
 
     /** Distinguish weapon magic from spells even when the caster holds a spectral weapon. */
     public static boolean isDemiTangibleWeaponDamage(DamageSource source) {
+        if (source.getDirectEntity() instanceof net.minecraft.world.entity.projectile.Projectile)return DemiTangibleProjectiles.damage(source);
         if (source.is(com.howierux.mortalexpansion.effect.ModDamageTypes.DEMI_TANGIBLE_PLAYER)
                 || source.is(com.howierux.mortalexpansion.effect.ModDamageTypes.DEMI_TANGIBLE_MOB)) return true;
         return (source.is(net.minecraft.world.damagesource.DamageTypes.PLAYER_ATTACK)
@@ -80,8 +81,7 @@ public final class DemiTangibleDamage {
             return true;
         }
 
-        // Backward compatibility for test items created before Demi-Tangible
-        // was moved off the vanilla enchantment system.
+        // Native book enchantments and older enchanted items remain valid alongside machine components.
         return weapon.getTagEnchantments()
                 .keySet()
                 .stream()

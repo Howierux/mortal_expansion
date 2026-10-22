@@ -58,6 +58,8 @@ Perception validation: the build and all 219 required server tests passed. Tests
 
 ## Demi-tangible weapon resistance
 
-All seven Demon variants take 50% damage from demi-tangible melee weapon hits, including tagged mod weapons, Ectchantment-applied Demi-Tangible components and legacy Demi-Tangible enchantments. This applies equally to player and mob wielders. The Purified Gravestone Sword retains its normal intangible-target bonus before the reduction (1.5 x 0.5 = 0.75 times the incoming hit).
+All seven Demon variants take 50% damage from demi-tangible melee weapon hits and projectile hits, including tagged mod weapons, Ectchantment-applied Demi-Tangible components and legacy Demi-Tangible enchantments. This applies equally to player and mob wielders. The Purified Gravestone Sword retains its normal intangible-target bonus before the reduction (1.5 x 0.5 = 0.75 times the incoming hit).
 
 Demons remain intangible: ordinary physical weapons cannot hit them. This resistance identifies weapon attack types rather than all magic, so spells, explosions and other allowed non-weapon sources retain their previous damage; void damage bypasses spectral defenses. No new saved state, resource formats or mixins are needed.
+
+[Demi-Tangible books and projectiles](DEMI_TANGIBLE.md) documents unrestricted book application and launch snapshots for native and modded projectile paths.

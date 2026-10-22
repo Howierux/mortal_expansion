@@ -30,6 +30,8 @@ public final class ModAttachments {
             }).build());
     public static final Supplier<AttachmentType<Integer>> FADING_ENTITY = ATTACHMENTS.register("fading_entity",()->AttachmentType.builder(()->100).serialize(Codec.intRange(1,100)).sync(net.minecraft.network.codec.ByteBufCodecs.VAR_INT).build());
 
+    public static final Supplier<AttachmentType<Boolean>> DEMI_TANGIBLE_PROJECTILE=ATTACHMENTS.register("demi_tangible_projectile",()->AttachmentType.builder(()->false).serialize(Codec.BOOL).build());
+
     /**
      * Named chunk haunt tier. Retained as a separate attachment so worlds made
      * before fine-grained haunt points keep their existing tier.
