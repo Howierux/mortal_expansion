@@ -11,3 +11,5 @@ All updates should make future Minecraft and NeoForge version migrations easier.
 - Validate relevant gameplay behavior, generated resource consistency, and client/server builds when changing version-sensitive code. Record known migration constraints alongside the affected implementation.
 
 Apply these principles to new and modified code without expanding each feature into an unrelated repository-wide refactor.
+
+When launching a Minecraft client for automated checks or local playtesting, set its master volume to 30% (`soundCategory_master:0.3` in that run profile�s options.txt) before launch. Preserve all other options.
