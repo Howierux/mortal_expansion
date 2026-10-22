@@ -28,7 +28,7 @@ public final class FancifiedRenderer implements BlockEntityRenderer<FancifiedBlo
         var data=level.getModelDataManager().getAt(pos);
         data=model.getModelData(level,pos,state,data);
         var random=net.minecraft.util.RandomSource.create();long seed=state.getSeed(pos);
-        var consumer=new AlphaConsumer(buffers.getBuffer(RenderType.entityTranslucentCull(TextureAtlas.LOCATION_BLOCKS)),opacity/100F);
+        var consumer=new AlphaConsumer(buffers.getBuffer(FadingRenderTypes.material(RenderType.entityTranslucentCull(TextureAtlas.LOCATION_BLOCKS))),opacity/100F);
         var view=new com.howierux.mortalexpansion.fancifier.FancifierFaces(level,opacity);
         random.setSeed(seed);
         for(var layer:model.getRenderTypes(state,random,data)){
@@ -48,7 +48,7 @@ public final class FancifiedRenderer implements BlockEntityRenderer<FancifiedBlo
         }
     }
     private static void renderBlock(BlockState state,int opacity,PoseStack poses,MultiBufferSource buffers,int light,int overlay) {
-        var translucent = RenderType.entityTranslucentCull(TextureAtlas.LOCATION_BLOCKS);
+        var translucent = FadingRenderTypes.material(RenderType.entityTranslucentCull(TextureAtlas.LOCATION_BLOCKS));
         var alpha = new AlphaConsumer(buffers.getBuffer(translucent),opacity/100F);
         Minecraft.getInstance().getBlockRenderer().renderSingleBlock(state,poses,type->alpha,light,overlay,
                 net.neoforged.neoforge.client.model.data.ModelData.EMPTY,translucent);

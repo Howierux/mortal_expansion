@@ -37,7 +37,8 @@
     "FadingSodiumChunkMixin",
     "FadingCompositeTypeAccessor",
     "FadingCompositeStateAccessor",
-    "FadingTextureStateAccessor"
+    "FadingTextureStateAccessor",
+    "FadingOverlapSortMixin"
   ],
   "injectors": {
     "defaultRequire": 1
