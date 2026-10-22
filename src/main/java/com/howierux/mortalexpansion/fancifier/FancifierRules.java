@@ -13,7 +13,7 @@ import net.minecraft.world.level.block.*;
 public final class FancifierRules {
     private FancifierRules() {}
     public static final TagKey<Block> ALLOWED = TagKey.create(Registries.BLOCK, ResourceLocation.parse("mortal_expansion:fancifiable"));
-    public static boolean validOpacity(int value) { return value >= 20 && value <= 100 && value % 20 == 0; }
+    public static boolean validOpacity(int value) { return value >= 1 && value <= 100; }
     public static boolean decorative(Block block) {
         Class<?> type = block.getClass();
         return type == Block.class || type == RotatedPillarBlock.class || type == SlabBlock.class

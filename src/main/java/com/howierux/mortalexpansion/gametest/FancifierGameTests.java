@@ -25,27 +25,32 @@ public final class FancifierGameTests {
         var menu=new FancifierMenu(1,p.getInventory(),ContainerLevelAccess.create(level,pos));
         var original=new ItemStack(Items.OAK_PLANKS,64);original.set(DataComponents.CUSTOM_NAME,Component.literal("Keepsake boards"));
         menu.getSlot(0).set(original.copy());
-        for(int choice=0;choice<4;choice++) {
+        for(int choice=1;choice<100;choice++) {
             h.assertTrue(menu.clickMenuButton(p,choice),"Opacity selection accepted");
-            h.assertTrue(menu.clickMenuButton(p,5),"Apply processes stack");
+            h.assertTrue(menu.clickMenuButton(p,FancifierMenu.APPLY),"Apply processes stack");
             var out=menu.getSlot(1).remove(13);
-            h.assertTrue(out.getCount()==13 && FancifierRules.opacity(out)==(choice+1)*20,"Partial output retains selected opacity");
+            h.assertTrue(out.getCount()==13 && FancifierRules.opacity(out)==choice,"Partial output retains selected opacity");
+            if(choice==1 || choice==99){
+                var ops=level.registryAccess().createSerializationContext(net.minecraft.nbt.NbtOps.INSTANCE);
+                var saved=ItemStack.CODEC.encodeStart(ops,out).getOrThrow();
+                h.assertTrue(FancifierRules.opacity(ItemStack.CODEC.parse(ops,saved).getOrThrow())==choice,"New boundary percentages persist on items");
+            }
             var rest=menu.getSlot(1).remove(64);h.assertTrue(rest.getCount()==51,"Output conserves all 64 inputs");
-            menu.getSlot(0).set(out);menu.clickMenuButton(p,4);h.assertTrue(menu.clickMenuButton(p,5),"100% restores source");
+            menu.getSlot(0).set(out);menu.clickMenuButton(p,100);h.assertTrue(menu.clickMenuButton(p,FancifierMenu.APPLY),"100% restores source");
             var restored=menu.getSlot(1).remove(64);
             h.assertTrue(restored.getCount()==13 && ItemStack.isSameItemSameComponents(restored,original),"Original components survive conversion and restoration");
             menu.getSlot(0).set(original.copy());
         }
-        h.assertFalse(menu.clickMenuButton(p,-1) || menu.clickMenuButton(p,99),"Malformed buttons rejected");
-        menu.getSlot(0).set(new ItemStack(Items.CHEST));menu.clickMenuButton(p,0);
-        h.assertTrue(menu.clickMenuButton(p,5),"Containers can now be faded without replacing their item type");
+        h.assertFalse(menu.clickMenuButton(p,-1) || menu.clickMenuButton(p,101),"Malformed buttons rejected");
+        menu.getSlot(0).set(new ItemStack(Items.CHEST));menu.clickMenuButton(p,20);
+        h.assertTrue(menu.clickMenuButton(p,FancifierMenu.APPLY),"Containers can now be faded without replacing their item type");
         h.assertTrue(menu.getSlot(1).remove(64).is(Items.CHEST),"Chest remains a native chest item");
         h.assertTrue(FancifierRules.accepts(new ItemStack(Items.WHEAT_SEEDS)),"Planting items are supported");
         h.assertTrue(FancifierRules.accepts(new ItemStack(Items.SAND)),"Falling blocks are supported");
         h.assertFalse(FancifierRules.accepts(new ItemStack(Items.DIAMOND_SWORD)),"Non-block items are excluded");
-        menu.getSlot(0).set(original.copy());menu.clickMenuButton(p,0);menu.clickMenuButton(p,5);
+        menu.getSlot(0).set(original.copy());menu.clickMenuButton(p,20);menu.clickMenuButton(p,FancifierMenu.APPLY);
         menu.getSlot(0).set(new ItemStack(Items.STONE,8));
-        h.assertFalse(menu.clickMenuButton(p,5),"Different source cannot overwrite a pending output");
+        h.assertFalse(menu.clickMenuButton(p,FancifierMenu.APPLY),"Different source cannot overwrite a pending output");
         menu.removed(p);
         int stone=0,wrapped=0;for(var stack:p.getInventory().items){if(stack.is(Items.STONE))stone+=stack.getCount();if(stack.is(Items.OAK_PLANKS) && FancifierRules.opacity(stack)==20)wrapped+=stack.getCount();}
         h.assertTrue(stone==8 && wrapped==64 && menu.getSlot(0).getItem().isEmpty() && menu.getSlot(1).getItem().isEmpty(),"Closing returns both slots without loss or duplication");
@@ -60,10 +65,10 @@ public final class FancifierGameTests {
     @GameTest(template="deferred_items_test")
     public static void native_slab_retains_shape_opacity_drops_and_chunk_persistence(GameTestHelper h) {
         var p=h.makeMockServerPlayerInLevel();var level=h.getLevel();var source=new ItemStack(Items.OAK_SLAB);
-        source.set(DataComponents.CUSTOM_NAME,Component.literal("Ghostly slab"));var expected=FancifierRules.convert(source,40,level.registryAccess());
-        var pos=place(h,p,new BlockPos(7,3,7),source,40);
+        source.set(DataComponents.CUSTOM_NAME,Component.literal("Ghostly slab"));var expected=FancifierRules.convert(source,37,level.registryAccess());
+        var pos=place(h,p,new BlockPos(7,3,7),source,37);
         h.assertTrue(level.getBlockState(pos).is(Blocks.OAK_SLAB) && level.getBlockEntity(pos)==null,"Slab uses its native state without a proxy block entity");
-        h.assertTrue(com.howierux.mortalexpansion.fancifier.FadingWorld.opacity(level,pos)==40,"Opacity is separate chunk metadata");
+        h.assertTrue(com.howierux.mortalexpansion.fancifier.FadingWorld.opacity(level,pos)==37,"Opacity is separate chunk metadata");
         h.assertTrue(Math.abs(level.getBlockState(pos).getCollisionShape(level,pos).max(Direction.Axis.Y)-0.5)<0.001,"Slab collision remains native");
         var chunk=level.getChunkAt(pos);var data=chunk.getData(ModAttachments.FADING_BLOCKS);
         var saved=com.howierux.mortalexpansion.fancifier.FadingData.CODEC.encodeStart(net.minecraft.nbt.NbtOps.INSTANCE,data).getOrThrow();
@@ -74,7 +79,7 @@ public final class FancifierGameTests {
         var state=level.getBlockState(pos);level.removeBlock(pos,false);
         h.assertTrue(com.howierux.mortalexpansion.fancifier.FadingWorld.opacity(level,pos)==100,"Removing a block clears its opacity");
         var drops=Block.getDrops(state,level,pos,null);
-        h.assertTrue(drops.size()==1 && drops.getFirst().is(Items.OAK_SLAB) && FancifierRules.opacity(drops.getFirst())==40,"Native drops retain fading after removal");
+        h.assertTrue(drops.size()==1 && drops.getFirst().is(Items.OAK_SLAB) && FancifierRules.opacity(drops.getFirst())==37,"Native drops retain fading after removal");
         level.setBlockAndUpdate(pos,Blocks.STONE.defaultBlockState());h.assertTrue(com.howierux.mortalexpansion.fancifier.FadingWorld.opacity(level,pos)==100,"Replacement cannot inherit stale fading");
         com.howierux.mortalexpansion.fancifier.FadingWorld.set(level,pos,20);
         var stoneDrops=Block.getDrops(level.getBlockState(pos),level,pos,null);

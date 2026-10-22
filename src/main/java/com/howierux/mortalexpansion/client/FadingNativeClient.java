@@ -53,6 +53,8 @@ public final class FadingNativeClient {
             FancifiedRenderer.renderWorldModel(state,entry.getValue(),mc.level,pos,poses,buffers,LevelRenderer.getLightColor(mc.level,pos),OverlayTexture.NO_OVERLAY);
             poses.popPose();
         }
-        buffers.endBatch(FadingRenderTypes.material(net.minecraft.client.renderer.RenderType.entityTranslucentCull(net.minecraft.client.renderer.texture.TextureAtlas.LOCATION_BLOCKS)));
+        var material=net.minecraft.client.renderer.RenderType.entityTranslucentCull(net.minecraft.client.renderer.texture.TextureAtlas.LOCATION_BLOCKS);
+        buffers.endBatch(FadingRenderTypes.material(material));
+        buffers.endBatch(FadingRenderTypes.material(material,1));
     }
 }

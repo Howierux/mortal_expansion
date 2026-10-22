@@ -1,6 +1,6 @@
 # Fancifier
 
-Put any placeable block item into the Fancifier, choose 20%, 40%, 60% or 80% opacity, and Apply. Process a full stack or take part of the output. Put faded items back in and select 100% to restore their original appearance. No fuel or additional ectoplasm is consumed. Closing or losing access to the workstation returns unclaimed items, with normal overflow drops.
+Put any placeable block item into the Fancifier, drag the bar or type any whole opacity percentage from 1% to 100%, inspect the live preview, and Apply. Process a full stack or take part of the output. Put faded items back in and select 100% to restore their original appearance. No fuel or additional ectoplasm is consumed. Closing or losing access to the workstation returns unclaimed items, with normal overflow drops.
 
 ## Crafting
 
@@ -36,3 +36,5 @@ Prompt: Create a production Minecraft block texture atlas, square image split in
 
 
 The workstation uses a framework composite model with a solid body and a separate translucent blade in both world and item rendering. The opaque body occludes the buried lower blade; only the blade uses its texture alpha (approximately 40%). Keep these material layers separate when migrating model providers.
+
+The draggable bar and numeric field stay synchronized. The field rejects letters, decimals, signs, zero and values above 100. It can be temporarily empty while editing; Apply is disabled until a valid value is present, and leaving an empty field restores the last selection. Changing the preview does not process items; Apply commits the chosen opacity.

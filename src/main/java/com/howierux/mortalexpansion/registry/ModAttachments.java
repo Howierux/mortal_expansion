@@ -28,7 +28,7 @@ public final class ModAttachments {
                     var next=com.howierux.mortalexpansion.fancifier.FadingData.STREAM_CODEC.decode(buf);if(holder instanceof net.minecraft.world.level.chunk.LevelChunk chunk)com.howierux.mortalexpansion.fancifier.FadingWorld.clientChanged.accept(chunk,next);return next;
                 }
             }).build());
-    public static final Supplier<AttachmentType<Integer>> FADING_ENTITY = ATTACHMENTS.register("fading_entity",()->AttachmentType.builder(()->100).serialize(Codec.intRange(20,100)).sync(net.minecraft.network.codec.ByteBufCodecs.VAR_INT).build());
+    public static final Supplier<AttachmentType<Integer>> FADING_ENTITY = ATTACHMENTS.register("fading_entity",()->AttachmentType.builder(()->100).serialize(Codec.intRange(1,100)).sync(net.minecraft.network.codec.ByteBufCodecs.VAR_INT).build());
 
     /**
      * Named chunk haunt tier. Retained as a separate attachment so worlds made

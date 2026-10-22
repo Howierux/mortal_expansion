@@ -8,10 +8,19 @@ import java.util.*;
 public final class FadingRenderTypes extends RenderType {
     private record Key(RenderType source,int opacity){}
     private static final Map<Key,RenderType> CACHE=new HashMap<>();
-    private static final Map<RenderType,RenderType> MATERIALS=new IdentityHashMap<>();
+    private record MaterialKey(RenderType source,boolean lowOpacity){}
+    private static final Map<MaterialKey,RenderType> MATERIALS=new HashMap<>();
     public static RenderType material(RenderType source){
-        return MATERIALS.computeIfAbsent(source,type->{
+        return material(source,100);
+    }
+    public static RenderType material(RenderType source,int opacity){
+        return MATERIALS.computeIfAbsent(new MaterialKey(source,opacity<10),key->{
+            var type=key.source();
             var state=((FadingCompositeTypeAccessor)type).mortalExpansion$state();
+            if(key.lowOpacity())state=CompositeState.builder()
+                    .setShaderState(new ShaderStateShard(FadingShaders::lowOpacity))
+                    .setTextureState(((FadingCompositeStateAccessor)(Object)state).mortalExpansion$texture())
+                    .setTransparencyState(TRANSLUCENT_TRANSPARENCY).setLightmapState(LIGHTMAP).setOverlayState(OVERLAY).createCompositeState(true);
             var faded=create("mortal_expansion_faded_material",type.format(),type.mode(),type.bufferSize(),type.affectsCrumbling(),true,state);
             return faded;
         });
@@ -31,7 +40,7 @@ public final class FadingRenderTypes extends RenderType {
         if(opacity>=100)return source;
         return type->{
             var translucent=translucentMaterial(type);
-            if(translucent!=null)return new AlphaConsumer(buffer(source,material(translucent)),opacity/100F);
+            if(translucent!=null)return new AlphaConsumer(buffer(source,material(translucent,opacity)),opacity/100F);
             return source.getBuffer(CACHE.computeIfAbsent(new Key(type,opacity),key->new FadingRenderTypes(key.source,key.opacity)));
         };
     }
@@ -57,4 +66,3 @@ public final class FadingRenderTypes extends RenderType {
         @Override public VertexConsumer setNormal(float x,float y,float z){delegate.setNormal(x,y,z);return this;}
     }
 }
-
