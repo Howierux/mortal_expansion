@@ -17,6 +17,7 @@ public final class FancifierFaces implements BlockGetter {
         if (state.getBlock() instanceof com.howierux.mortalexpansion.block.FancifiedBlock
                 && level.getBlockEntity(pos) instanceof FancifiedBlockEntity be && be.opacity()==opacity)
             return be.original();
+        if(level instanceof net.minecraft.world.level.Level world){int neighbor=FadingWorld.opacity(world,pos);if(neighbor<100 && neighbor!=opacity)return net.minecraft.world.level.block.Blocks.AIR.defaultBlockState();}
         return state;
     }
     @Override public BlockEntity getBlockEntity(BlockPos pos) { return level.getBlockEntity(pos); }

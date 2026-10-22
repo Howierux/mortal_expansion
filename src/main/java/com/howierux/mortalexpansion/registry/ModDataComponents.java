@@ -19,6 +19,8 @@ public final class ModDataComponents {
                     MortalExpansion.MOD_ID
             );
 
+    public static final DeferredHolder<DataComponentType<?>, DataComponentType<Integer>> FADING = DATA_COMPONENTS.registerComponentType("fading",builder->builder.persistent(Codec.intRange(20,80)).networkSynchronized(ByteBufCodecs.VAR_INT));
+
     public static final DeferredHolder<DataComponentType<?>, DataComponentType<Boolean>> DEMI_TANGIBLE =
             DATA_COMPONENTS.registerComponentType(
                     "demi_tangible",

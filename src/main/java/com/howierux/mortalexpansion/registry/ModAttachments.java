@@ -19,6 +19,17 @@ public final class ModAttachments {
     public static final DeferredRegister<AttachmentType<?>> ATTACHMENTS =
             DeferredRegister.create(NeoForgeRegistries.ATTACHMENT_TYPES, MortalExpansion.MOD_ID);
 
+    public static final Supplier<AttachmentType<com.howierux.mortalexpansion.fancifier.FadingData>> FADING_BLOCKS = ATTACHMENTS.register("fading_blocks",()->AttachmentType.builder(()->com.howierux.mortalexpansion.fancifier.FadingData.EMPTY)
+            .serialize(com.howierux.mortalexpansion.fancifier.FadingData.CODEC)
+            .sync(new net.neoforged.neoforge.attachment.AttachmentSyncHandler<com.howierux.mortalexpansion.fancifier.FadingData>() {
+                public boolean sendToPlayer(net.neoforged.neoforge.attachment.IAttachmentHolder holder,net.minecraft.server.level.ServerPlayer player){return true;}
+                public void write(net.minecraft.network.RegistryFriendlyByteBuf buf,com.howierux.mortalexpansion.fancifier.FadingData data,boolean initial){com.howierux.mortalexpansion.fancifier.FadingData.STREAM_CODEC.encode(buf,data);}
+                public com.howierux.mortalexpansion.fancifier.FadingData read(net.neoforged.neoforge.attachment.IAttachmentHolder holder,net.minecraft.network.RegistryFriendlyByteBuf buf,com.howierux.mortalexpansion.fancifier.FadingData previous){
+                    var next=com.howierux.mortalexpansion.fancifier.FadingData.STREAM_CODEC.decode(buf);if(holder instanceof net.minecraft.world.level.chunk.LevelChunk chunk)com.howierux.mortalexpansion.fancifier.FadingWorld.clientChanged.accept(chunk,next);return next;
+                }
+            }).build());
+    public static final Supplier<AttachmentType<Integer>> FADING_ENTITY = ATTACHMENTS.register("fading_entity",()->AttachmentType.builder(()->100).serialize(Codec.intRange(20,100)).sync(net.minecraft.network.codec.ByteBufCodecs.VAR_INT).build());
+
     /**
      * Named chunk haunt tier. Retained as a separate attachment so worlds made
      * before fine-grained haunt points keep their existing tier.

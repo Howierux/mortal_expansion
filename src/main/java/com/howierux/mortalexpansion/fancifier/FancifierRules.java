@@ -20,17 +20,17 @@ public final class FancifierRules {
                 || type == StairBlock.class || type == HalfTransparentBlock.class || type == StainedGlassBlock.class;
     }
     public static boolean accepts(ItemStack stack) {
-        if (stack.is(ModItems.FANCIFIED_BLOCK.get())) return true;
-        return stack.getItem() instanceof BlockItem item && item.getBlock().defaultBlockState().is(ALLOWED)
-                && !item.getBlock().defaultBlockState().hasBlockEntity();
+        return !stack.isEmpty() && stack.getItem() instanceof BlockItem;
     }
     public static int opacity(ItemStack stack) {
-        var data = stack.get(DataComponents.BLOCK_ENTITY_DATA);
+        Integer nativeOpacity=stack.get(com.howierux.mortalexpansion.registry.ModDataComponents.FADING.get());
+        if(nativeOpacity!=null && validOpacity(nativeOpacity))return nativeOpacity;
+        var data = stack.is(ModItems.FANCIFIED_BLOCK.get())?stack.get(DataComponents.BLOCK_ENTITY_DATA):null;
         int value = data == null ? 100 : data.copyTag().getInt("Opacity");
         return validOpacity(value) ? value : 100;
     }
     public static ItemStack original(ItemStack stack, HolderLookup.Provider registries) {
-        if (!stack.is(ModItems.FANCIFIED_BLOCK.get())) return stack.copyWithCount(1);
+        if (!stack.is(ModItems.FANCIFIED_BLOCK.get())) {var original=stack.copyWithCount(1);original.remove(com.howierux.mortalexpansion.registry.ModDataComponents.FADING.get());return original;}
         var data = stack.get(DataComponents.BLOCK_ENTITY_DATA);
         if (data == null) return ItemStack.EMPTY;
         var source = ItemStack.parseOptional(registries, data.copyTag().getCompound("Source"));
@@ -42,15 +42,11 @@ public final class FancifierRules {
         if (!(source.getItem() instanceof BlockItem block)) return ItemStack.EMPTY;
         // Existing faded items remain restorable after a datapack changes eligibility.
         if (opacity == 100) return source.copyWithCount(input.getCount());
-        if (!block.getBlock().defaultBlockState().is(ALLOWED) || block.getBlock().defaultBlockState().hasBlockEntity()) return ItemStack.EMPTY;
         return faded(source,opacity,input.getCount(),registries);
     }
     /** Also used by placed-block drops, which must survive later eligibility changes. */
     public static ItemStack faded(ItemStack source,int opacity,int count,HolderLookup.Provider registries) {
         if (source.isEmpty() || !validOpacity(opacity) || source.is(ModItems.FANCIFIED_BLOCK.get())) return ItemStack.EMPTY;
-        CompoundTag tag = new CompoundTag();
-        tag.putString("id", "mortal_expansion:fancified_block"); tag.put("Source", source.copyWithCount(1).save(registries)); tag.putInt("Opacity", opacity);
-        ItemStack result = new ItemStack(ModItems.FANCIFIED_BLOCK.get(), count);
-        result.set(DataComponents.BLOCK_ENTITY_DATA, CustomData.of(tag)); return result;
+        var result=source.copyWithCount(count);if(opacity<100)result.set(com.howierux.mortalexpansion.registry.ModDataComponents.FADING.get(),opacity);else result.remove(com.howierux.mortalexpansion.registry.ModDataComponents.FADING.get());return result;
     }
 }

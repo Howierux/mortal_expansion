@@ -1,0 +1,34 @@
+# Native fading: persistence, rendering and migration
+
+## Data
+
+`mortal_expansion:fading` is a persistent/network-synchronized integer item component. Produced values are 20, 40, 60 or 80; absence means 100%. Processing copies the native ItemStack, removes/sets only this component and keeps other components and stack counts. Legacy wrapper decoding remains supported, with recursive wrapped sources rejected.
+
+`mortal_expansion:fading_blocks` is a serialized and framework-synchronized immutable chunk attachment. Keys are local positions `((y & 0xFFF) << 8) | (localZ << 4) | localX` (native BlockPos signed 12-bit Y, independent of dimension minimum height); values are opacity percentages. Native chunk watch/re-watch sync handles loading and multiplayer. The compact network codec sends position varints plus one opacity byte; decoded entry counts/values are validated. Already-loaded chunks only are queried. Metadata changes mark chunks unsaved. No native block entity NBT or capability is replaced.
+
+`mortal_expansion:fading_entity` carries opacity on native FallingBlockEntity instances through saving, tracking, rendering, landing or item drops. Ordinary falling entities do not allocate this attachment.
+
+The old `fancified_block` item/block/block-entity registry IDs and `Source`/`OriginalState`/`Opacity` save fields stay registered. Their renderer/collision logic remains valid; their drops and reprocessed items use the new component format. Existing stacks and placed decorations do not require eager conversion or scanning.
+
+## Native lifecycle boundaries
+
+Supported NeoForge APIs supply attachments/sync, item components, menus, piston Pre/Post events, tooltip events, chunk unload events and rendering-stage events. Narrow mixins are necessary where no supported per-position opacity callback exists:
+
+- ItemStack use/use-first wraps the complete framework transaction; successful placements commit metadata after cancellation and rollback are resolved. BlockItem placement exposes the actual adjusted target/state and also supports direct native placement calls. Multi-part native placement is captured without modifying its block states.
+- LevelChunk state changes clear metadata on replacement while keeping same-block properties. Cauldron forms and copper ageing/waxing are recognized native identity-preserving transitions. A bounded same-tick removal cache lets native loot retain opacity even when removal precedes loot creation.
+- BlockState drop results add the component to block-item loot, including native transformations such as stone to cobblestone and wall-sign/cauldron item forms, preserving normal loot/counts and separately spawned container-content drops. The actual native piston resolution is observed after head removal (a Pre-event re-resolution gives incorrect sticky-pull results), transferring each pushed position's opacity; the moving-state finalization keeps it. Falling entity spawn/tick/drop hooks carry opacity through actual physics.
+- Client chunk tessellation skips only faded positions. Client solid-render/face queries expose geometry behind them. Native block entity, item and falling-entity render dispatchers receive an opacity-adjusted buffer source; pick-block adds the component to the native result.
+
+During version migration, verify these exact signatures and ordering against the target native/framework sources. In particular, retain placement protection rollback, multi-block scope cleanup in `finally`, pre-removal loot behavior, moving-piston final state, and client-only class isolation. Do not replace the original blocks or block entities to simplify rendering.
+
+## Rendering and performance
+
+Only the faded-position client index is traversed, with frustum rejection, rather than scanning blocks in loaded chunks. Model data, seeded baked quads, native offsets and tint providers use the real level. The material-aware face adapter keeps the existing shared-glass flicker fix. Neighbor faces and visibility-graph solidity account for fading. Native block-entity renderers retain their full behavior, textures, shader and vertex format; cached RenderType adapters enable blending and scale ColorModulator alpha while restoring render state afterward. This also preserves fonts, signs, beds and machine-specific vertex layouts without guessing an atlas.
+
+Chunk metadata reads do not initialize attachments on unrelated chunks. The state-change fast path does not scan stored positions, and same-tick removal bookkeeping is bounded with O(1) per-position operations. Piston resolution is bounded by native push limits. Chunk synchronization invalidates one bounded chunk neighborhood; native chunk/dimension/logout events clean client caches. There is no new server tick loop, chunk loader or per-block proxy ticker. Large translucent installations still have client overdraw and render costs, and repeated updates to a heavily faded chunk sync its attachment snapshot.
+
+Third-party GPU code that ignores the supplied native buffers or alpha cannot be made transparent universally by the generic adapter. Such renderers require explicit compatibility work. Normal chunk-renderer replacements also need testing. These rendering limits do not replace or disable machine gameplay.
+
+## Validation
+
+Headless lifecycle tests exercise real native blocks, inventories/tickers/capabilities, doors/fences/crops, falling/piston movement, cancellation, transitions and data codecs. A temporary, uncommitted client harness rendered native/faded comparison items for stone, Magenta Glass, chests, furnaces, doors, fences, signs, beds, banners and Mortal Expansion machines; all client mixin targets loaded and the client exited normally. The generated comparison image is `run/fading-native-smoke.png` in the development checkout. Actual multiplayer client chunk synchronization and arbitrary third-party renderers still need playtesting.

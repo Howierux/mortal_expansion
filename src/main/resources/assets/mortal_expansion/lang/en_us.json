@@ -579,8 +579,8 @@
   "gui.mortal_expansion.fancifier.apply": "Apply",
   "gui.mortal_expansion.fancifier.opacity": "Opacity: %s%%",
   "gui.mortal_expansion.fancifier.restore": "100% restores the original block.",
-  "gui.mortal_expansion.fancifier.decorative": "Decorative blocks only",
+  "gui.mortal_expansion.fancifier.decorative": "Any placeable block",
   "guide.mortal_expansion.fancifier.name": "Fancifier",
   "guide.mortal_expansion.fancifier.page.1": "Iron cradles a stonecutter whose blade has slipped halfway out of the world. Craft with iron in all four corners, raw ectoplasm above and beside the stonecutter, and redstone below. The spectral blade changes appearance, not tangibility.",
-  "guide.mortal_expansion.fancifier.page.2": "Insert decorative blocks, select 20%, 40%, 60% or 80% opacity, and Apply. Take the full output stack or only what you need. Insert faded blocks and select 100% to restore their originals. Building cubes, glass, slabs and stairs are supported; machines, containers, crops and falling blocks are not. Closing returns unclaimed items."
+  "guide.mortal_expansion.fancifier.page.2": "Insert any placeable block item, choose 20%, 40%, 60% or 80% opacity, and Apply. Take the full stack or only what you need. Select 100% to restore the original appearance. Chests keep their inventories, furnaces cook, doors and fences connect, and crops and falling blocks keep their normal behavior. Closing returns unclaimed items."
 }

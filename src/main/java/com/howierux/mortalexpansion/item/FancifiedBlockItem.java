@@ -11,15 +11,16 @@ import net.minecraft.core.component.DataComponents;
 import net.minecraft.resources.ResourceLocation;
 public final class FancifiedBlockItem extends BlockItem {
     public FancifiedBlockItem(Block block,Properties properties) { super(block,properties); }
+    /** Legacy wrapped items place the actual native block and adopt the new fade metadata. */
     @Override public InteractionResult place(BlockPlaceContext context) {
-        var source = FancifierRules.original(context.getItemInHand(),context.getLevel().registryAccess());
-        if (!(source.getItem() instanceof BlockItem block) || !FancifierRules.accepts(source)) return InteractionResult.FAIL;
-        var state = block.getBlock().getStateForPlacement(context);
-        if (state == null || state.hasBlockEntity()) return InteractionResult.FAIL;
-        var pos = context.getClickedPos().immutable(); int alpha = FancifierRules.opacity(context.getItemInHand());
-        var result = super.place(context);
-        if (result.consumesAction() && context.getLevel().getBlockEntity(pos) instanceof FancifiedBlockEntity be) be.configure(source,state,alpha);
-        return result;
+        var wrapped=context.getItemInHand();
+        var source=FancifierRules.original(wrapped,context.getLevel().registryAccess());
+        if(!(source.getItem() instanceof BlockItem item))return InteractionResult.FAIL;
+        source.setCount(wrapped.getCount());int count=source.getCount();
+        source.set(com.howierux.mortalexpansion.registry.ModDataComponents.FADING.get(),FancifierRules.opacity(wrapped));
+        var hit=new net.minecraft.world.phys.BlockHitResult(context.getClickLocation(),context.getClickedFace(),context.getClickedPos(),context.isInside());
+        var nativeContext=new BlockPlaceContext(context.getLevel(),context.getPlayer(),context.getHand(),source,hit);
+        var result=item.place(nativeContext);if(result.consumesAction())wrapped.shrink(count-source.getCount());return result;
     }
     @Override public Component getName(ItemStack stack) {
         var data = stack.get(DataComponents.BLOCK_ENTITY_DATA);

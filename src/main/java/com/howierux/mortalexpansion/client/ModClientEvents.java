@@ -46,6 +46,7 @@ public final class ModClientEvents {
                 ResourceLocation.fromNamespaceAndPath(MortalExpansion.MOD_ID, "emf_reader"), EmfReaderClient::render);
     }
     @SubscribeEvent public static void emfProperties(net.neoforged.fml.event.lifecycle.FMLClientSetupEvent event) {
+        event.enqueueWork(FadingNativeClient::initialize);
         event.enqueueWork(() -> net.minecraft.client.renderer.item.ItemProperties.register(ModItems.BOOK_OF_ECTCETERA.get(),
                 ResourceLocation.fromNamespaceAndPath(MortalExpansion.MOD_ID,"book_tier"),
                 (stack,level,holder,seed)->com.howierux.mortalexpansion.guide.EctceteraProgression.tier(stack)));
