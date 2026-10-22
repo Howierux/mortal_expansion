@@ -25,12 +25,23 @@ public final class FancifierPercentCheck {
    for(int value=1;value<=100;value++){box.setValue(Integer.toString(value));if(!box.getValue().equals(Integer.toString(value)))throw new AssertionError("Rejected "+value);}
    var sliderField=FancifierScreen.class.getDeclaredField("slider");sliderField.setAccessible(true);
    var slider=(net.minecraft.client.gui.components.AbstractSliderButton)sliderField.get(screen);
+   double y=slider.getY()+5,start=slider.getX()+4;
+   screen.mouseClicked(start,y,0);
    for(int value=1;value<=100;value++){
-    slider.onClick(slider.getX()+4+(slider.getWidth()-8)*(value-1)/99D,slider.getY()+5);
-    if(!box.getValue().equals(Integer.toString(value)))throw new AssertionError("Slider/text mismatch at "+value);
+    double x=start+(slider.getWidth()-8)*(value-1)/99D;
+    screen.mouseDragged(x,y,0,1,0);
+    if(!box.getValue().equals(Integer.toString(value)))throw new AssertionError("Real screen drag/text mismatch at "+value);
    }
+   screen.mouseDragged(start-50,y,0,-50,0);
+   if(!box.getValue().equals("1"))throw new AssertionError("Drag left did not clamp");
+   screen.mouseDragged(start+slider.getWidth()+50,y,0,50,0);
+   if(!box.getValue().equals("100"))throw new AssertionError("Drag right did not clamp");
+   screen.mouseReleased(start+slider.getWidth()+50,y,0);
+   screen.mouseDragged(start,y,0,-100,0);
+   if(!box.getValue().equals("100"))throw new AssertionError("Slider kept dragging after release");
+   if(menu.getSlot(0).getItem().getCount()!=64 || menu.getSlot(1).hasItem())throw new AssertionError("Dragging processed inventory");
    box.setValue("37");
-   org.slf4j.LoggerFactory.getLogger("FancifierPercentCheck").info("FANCIFIER_PERCENT_CHECK_OK: all 100 text and slider values, invalid input rejection, preview screen");
+   org.slf4j.LoggerFactory.getLogger("FancifierPercentCheck").info("FANCIFIER_PERCENT_CHECK_OK: all 100 values through screen click/drag/release, clamping, release capture, untouched inventory, numeric validation");
   }
   if(ticks==125){
    try(var image=net.minecraft.client.Screenshot.takeScreenshot(mc.getMainRenderTarget())){image.writeToFile(java.nio.file.Path.of("fancifier-percent-screen.png"));}

@@ -59,6 +59,17 @@ public final class FancifierScreen extends AbstractContainerScreen<FancifierMenu
         @Override protected void updateMessage(){setMessage(Component.translatable("gui.mortal_expansion.fancifier.opacity",1+(int)Math.round(value*99)));}
         @Override protected void applyValue(){FancifierScreen.this.select(1+(int)Math.round(value*99));}
     }
+    @Override public boolean mouseDragged(double x,double y,int button,double dragX,double dragY){
+        // Container screens handle inventory drags without forwarding them to child widgets.
+        if(button==0 && isDragging() && getFocused()==slider)return slider.mouseDragged(x,y,button,dragX,dragY);
+        return super.mouseDragged(x,y,button,dragX,dragY);
+    }
+    @Override public boolean mouseReleased(double x,double y,int button){
+        if(button==0 && isDragging() && getFocused()==slider){
+            slider.mouseReleased(x,y,button);setDragging(false);return true;
+        }
+        return super.mouseReleased(x,y,button);
+    }
     @Override public boolean keyPressed(int key,int scan,int modifiers){
         // Typing the inventory key into the field must not close the screen.
         if(percentage.isFocused()){
