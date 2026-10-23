@@ -110,8 +110,15 @@ public final class EctceteraBookScreen {
                     if(mapContains(mouseX,mouseY) && Math.abs(mouseX-x)<=size+3 && Math.abs(mouseY-y)<=size+3)hovered=node;
                 }
                 g.disableScissor();renderWidgets(g,mouseX,mouseY,delta);
-                if(hovered!=null)g.renderTooltip(font,EctceteraResearchMap.unlocked(hovered.chapter().key(),tier,secrets)?label(hovered):label(hovered).copy().append("\n").append(requirement(hovered)),mouseX,mouseY);
                 g.drawString(font,notice.getString().isEmpty()?Component.translatable(UI+"controls"):notice,left(),height-34,0xB5CBB9,false);
+                if(hovered!=null){
+                    // Component-only tooltips flatten newlines into a visible glyph; submit wrapped lines explicitly.
+                    int tooltipWidth=Math.max(20,Math.min(240,width-24));
+                    var tooltip=new ArrayList<FormattedCharSequence>(font.split(label(hovered),tooltipWidth));
+                    if(!EctceteraResearchMap.unlocked(hovered.chapter().key(),tier,secrets))
+                        tooltip.addAll(font.split(requirement(hovered),tooltipWidth));
+                    g.renderTooltip(font,tooltip,mouseX,mouseY);
+                }
             }else{
                 g.fill(left(),top(),right(),bottom(),0xFFE0D3AF);g.drawCenteredString(font,chapterTitle(entry.key()),(left()+right())/2,top()+10,0x463D2A);
                 int textWidth=Math.max(30,right()-left()-32),textY=top()+32,rows=Math.max(1,(bottom()-textY-12)/font.lineHeight);
