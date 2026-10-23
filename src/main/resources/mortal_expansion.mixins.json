@@ -22,7 +22,11 @@
     "FadingEntityDropMixin",
     "FadingItemUseMixin",
     "FadingPistonResolutionMixin",
-    "DemiTangibleItemUseMixin"
+    "DemiTangibleItemUseMixin",
+    "DamnedPlayerFoodMixin",
+    "DamnedDiamondUseMixin",
+    "DamnedDaySleepMixin",
+    "DamnedFoodDataMixin"
   ],
   "client": [
     "SpiritJourneyDeathScreenMixin",

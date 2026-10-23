@@ -21,6 +21,11 @@ public final class DarkholdProgression {
         player.setData(ModAttachments.DAMNED_KNOWLEDGE,known);
         com.howierux.mortalexpansion.network.DarkholdKnowledgePayload.send(player);
     }
+    private static void announce(ServerPlayer player,int known){
+        int old=player.getData(ModAttachments.DAMNED_KNOWLEDGE);
+        for(var secret:DamnedSecret.values())if((known&secret.bit())!=0 && (old&secret.bit())==0)
+            player.sendSystemMessage(Component.translatable("damned.mortal_expansion.reveal",Component.translatable("darkhold.mortal_expansion."+secret.key()+".name")));
+    }
     public static boolean isDarkhold(ItemStack stack){return stack.is(ModItems.BOOK_OF_ECTCETERA.get()) && EctceteraProgression.tier(stack)==4;}
     public static boolean contains(ItemStack stack){return find(stack,0,new int[]{4096},java.util.Collections.newSetFromMap(new java.util.IdentityHashMap<>()));}
     private static boolean find(ItemStack stack,int depth,int[] budget,java.util.Set<ItemStack> visited){
@@ -40,7 +45,8 @@ public final class DarkholdProgression {
         DarkholdWorldData.get(player.serverLevel()).awaken();
         if(player.getData(ModAttachments.ECTCETERA_KNOWLEDGE)!=SpectralInsight.ALL)SpectralInsight.learnPlayer(player,SpectralInsight.ALL);
         int known=player.getData(ModAttachments.DAMNED_KNOWLEDGE)|book.getOrDefault(ModDataComponents.DAMNED_SECRETS.get(),0);
-        if(PlayerHauntManager.getValue(player)>=REVEAL_AT)known|=1;
+        known |= DamnedSecret.revealedAt(PlayerHauntManager.getValue(player));
+        announce(player,known);
         if((known&1)!=0 && (player.getData(ModAttachments.DAMNED_KNOWLEDGE)&1)==0)
             player.sendSystemMessage(Component.translatable("darkhold.mortal_expansion.revealed"));
         remember(player,known);
@@ -53,10 +59,10 @@ public final class DarkholdProgression {
         long last=player.getData(ModAttachments.DARKHOLD_EXPOSURE_TIME);
         boolean gained=last>=0 && now>=last && now-last>=INTERVAL;
         if(last<0 || now<last || gained){player.setData(ModAttachments.DARKHOLD_EXPOSURE_TIME,now);if(gained)PlayerHauntManager.addHundredths(player,1);}
-        if(PlayerHauntManager.getValue(player)>=REVEAL_AT && (player.getData(ModAttachments.DAMNED_KNOWLEDGE)&1)==0){
-            remember(player,1);
-            player.sendSystemMessage(Component.translatable("darkhold.mortal_expansion.revealed"));
-        }
+        int known=player.getData(ModAttachments.DAMNED_KNOWLEDGE) | DamnedSecret.revealedAt(PlayerHauntManager.getValue(player));
+        announce(player,known);
+        if((known&1)!=0 && !canSeeDemon(player))player.sendSystemMessage(Component.translatable("darkhold.mortal_expansion.revealed"));
+        remember(player,known);
         for(int i=0;i<player.getInventory().getContainerSize();i++){var stack=player.getInventory().getItem(i);if(isDarkhold(stack))absorb(player,stack);}
         player.containerMenu.broadcastChanges();return gained;
     }

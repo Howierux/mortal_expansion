@@ -11,7 +11,13 @@ public final class EctceteraResearchMap {
         Map.entry("mortal_golem","sanctified"),Map.entry("wards","sanctified"),Map.entry("ectchantment","sanctified"),Map.entry("generators","ectchantment"),Map.entry("station","ectchantment"),Map.entry("scepter","station"),Map.entry("mastery","wards"));
     private EctceteraResearchMap(){}
     public static List<Node> nodes(int category){
-        if(category==5)return List.of(new Node(new EctceteraGuide.Chapter("darkhold",2,4),"",60,45),new Node(new EctceteraGuide.Chapter("demons",4,4),"darkhold",210,45));
+        if(category==5){
+            var damned=new ArrayList<Node>();
+            damned.add(new Node(new EctceteraGuide.Chapter("darkhold",2,4),"",45,40));
+            damned.add(new Node(new EctceteraGuide.Chapter("demons",4,4),"darkhold",170,40));
+            for(var sin:DamnedSecret.values()){int n=sin.ordinal()+2;damned.add(new Node(new EctceteraGuide.Chapter(sin.key(),1,4),sin.ordinal()==0?"darkhold":DamnedSecret.values()[sin.ordinal()-1].key(),45+n%3*125,40+n/3*90));}
+            return List.copyOf(damned);
+        }
         var chapters=EctceteraGuide.CHAPTERS.stream().filter(ch->category==4
             ? ch.key().equals("insight") || secret(ch.key())!=0
             : ch.tier()==category && !ch.key().equals("insight") && secret(ch.key())==0)
@@ -24,6 +30,6 @@ public final class EctceteraResearchMap {
         for(int i=0;i<chapters.size();i++)nodes.add(new Node(chapters.get(i),chapters.get(i).key().equals("haint_garb")?"ghost_garb":chapters.get(i).key().equals("spectralite_haint")?"haint_garb":LINKS.getOrDefault(chapters.get(i).key(),""),45+(i%3)*125,40+(i/3)*90));
         return List.copyOf(nodes);
     }
-    public static boolean unlocked(String key,int tier,int secrets){if(key.equals("darkhold"))return tier>=4;if(key.equals("demons"))return tier>=4 && (secrets&128)!=0;if(key.equals("ecto_infrastructure") || key.equals("fancifier"))return tier>=2;if(key.equals("grave_porting"))return tier>=1;if(key.equals("mortal_golem"))return tier>=3;if(key.equals("wisp_o_lantern"))return tier>=2;if(key.equals("dreamcatcher") || key.equals("purified_dreamcatcher"))return tier>=2 && (secrets&1)!=0;if(key.equals("mortality_research_station"))return (secrets&64)!=0;if(key.equals("altar_of_impurity"))return tier>=2 && (secrets&16)!=0;if(key.equals("altar_of_purity"))return tier>=3 && (secrets&32)!=0;if(key.equals("spectralite_haint"))return tier>=3 && (secrets&8)!=0;return EctceteraGuide.chapters(Math.clamp(tier,0,3),secrets).stream().anyMatch(ch->ch.key().equals(key));}
-    public static int secret(String key){return switch(key){case "demons"->128;case "mortality_research_station"->64;case "ectothread","dreamcatcher","purified_dreamcatcher"->1;case "ghost_garb"->2;case "haint_garb"->4;case "spectralite_haint"->8;case "altar_of_impurity"->16;case "altar_of_purity"->32;default->0;};}
+    public static boolean unlocked(String key,int tier,int secrets){if(DamnedSecret.forKey(key)!=null)return tier>=4 && (secrets & (DamnedSecret.forKey(key).bit()<<7))!=0;if(key.equals("darkhold"))return tier>=4;if(key.equals("demons"))return tier>=4 && (secrets&128)!=0;if(key.equals("ecto_infrastructure") || key.equals("fancifier"))return tier>=2;if(key.equals("grave_porting"))return tier>=1;if(key.equals("mortal_golem"))return tier>=3;if(key.equals("wisp_o_lantern"))return tier>=2;if(key.equals("dreamcatcher") || key.equals("purified_dreamcatcher"))return tier>=2 && (secrets&1)!=0;if(key.equals("mortality_research_station"))return (secrets&64)!=0;if(key.equals("altar_of_impurity"))return tier>=2 && (secrets&16)!=0;if(key.equals("altar_of_purity"))return tier>=3 && (secrets&32)!=0;if(key.equals("spectralite_haint"))return tier>=3 && (secrets&8)!=0;return EctceteraGuide.chapters(Math.clamp(tier,0,3),secrets).stream().anyMatch(ch->ch.key().equals(key));}
+    public static int secret(String key){if(DamnedSecret.forKey(key)!=null)return DamnedSecret.forKey(key).bit()<<7;return switch(key){case "demons"->128;case "mortality_research_station"->64;case "ectothread","dreamcatcher","purified_dreamcatcher"->1;case "ghost_garb"->2;case "haint_garb"->4;case "spectralite_haint"->8;case "altar_of_impurity"->16;case "altar_of_purity"->32;default->0;};}
 }

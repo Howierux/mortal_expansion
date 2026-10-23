@@ -13,7 +13,7 @@ public record DarkholdKnowledgePayload(int secrets) implements CustomPacketPaylo
     public static final Type<DarkholdKnowledgePayload> TYPE=new Type<>(ResourceLocation.fromNamespaceAndPath(MortalExpansion.MOD_ID,"darkhold_knowledge"));
     public static final StreamCodec<io.netty.buffer.ByteBuf,DarkholdKnowledgePayload> CODEC=StreamCodec.composite(
             ByteBufCodecs.VAR_INT,DarkholdKnowledgePayload::secrets,DarkholdKnowledgePayload::new);
-    public DarkholdKnowledgePayload { secrets &= 1; }
+    public DarkholdKnowledgePayload { secrets &= 255; }
     @Override public Type<? extends CustomPacketPayload> type(){return TYPE;}
     public static void register(IEventBus bus){bus.addListener(DarkholdKnowledgePayload::handlers);}
     private static void handlers(RegisterPayloadHandlersEvent event){

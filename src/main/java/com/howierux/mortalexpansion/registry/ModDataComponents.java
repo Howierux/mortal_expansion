@@ -40,7 +40,7 @@ public final class ModDataComponents {
             DATA_COMPONENTS.registerComponentType("ectcetera_tier",
                     builder -> builder.persistent(Codec.intRange(0, 4)).networkSynchronized(ByteBufCodecs.VAR_INT));
 
-    public static final DeferredHolder<DataComponentType<?>, DataComponentType<Integer>> DAMNED_SECRETS = DATA_COMPONENTS.registerComponentType("damned_secrets",builder->builder.persistent(Codec.intRange(0,1)).networkSynchronized(ByteBufCodecs.VAR_INT));
+    public static final DeferredHolder<DataComponentType<?>, DataComponentType<Integer>> DAMNED_SECRETS = DATA_COMPONENTS.registerComponentType("damned_secrets",builder->builder.persistent(Codec.intRange(0,255)).networkSynchronized(ByteBufCodecs.VAR_INT));
 
     public static final DeferredHolder<DataComponentType<?>, DataComponentType<Integer>> ECTCETERA_SECRETS =
             DATA_COMPONENTS.registerComponentType("ectcetera_secrets", builder -> builder.persistent(Codec.intRange(0,127)).networkSynchronized(ByteBufCodecs.VAR_INT));

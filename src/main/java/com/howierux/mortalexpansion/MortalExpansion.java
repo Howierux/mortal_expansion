@@ -51,6 +51,8 @@ public final class MortalExpansion {
         com.howierux.mortalexpansion.network.SpectralTracksPayload.register(modBus);
         com.howierux.mortalexpansion.network.DarkholdKnowledgePayload.register(modBus);
         com.howierux.mortalexpansion.network.SpiritJourneyPayloads.register(modBus);
+        com.howierux.mortalexpansion.network.EnvyPayloads.register(modBus);
+        NeoForge.EVENT_BUS.register(com.howierux.mortalexpansion.guide.DamnedAbilities.class);
         ModArmorMaterials.register(modBus);
         ModFluids.register(modBus);
         ModBlocks.register(modBus);

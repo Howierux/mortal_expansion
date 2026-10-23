@@ -136,12 +136,15 @@ public final class ModAttachments {
                     .serialize(com.howierux.mortalexpansion.quest.SpiritQuestState.CODEC).copyOnDeath().build());
 
     public static final Supplier<AttachmentType<Integer>> PLAYER_HAUNT_EXCESS=ATTACHMENTS.register("player_haunt_excess",()->AttachmentType.builder(()->0).serialize(Codec.intRange(0,20_000_000)).copyOnDeath().build());
-    public static final Supplier<AttachmentType<Integer>> DAMNED_KNOWLEDGE=ATTACHMENTS.register("damned_knowledge",()->AttachmentType.builder(()->0).serialize(Codec.intRange(0,1)).copyOnDeath().build());
+    public static final Supplier<AttachmentType<Integer>> DAMNED_KNOWLEDGE=ATTACHMENTS.register("damned_knowledge",()->AttachmentType.builder(()->0).serialize(Codec.intRange(0,255)).copyOnDeath().build());
     public static final Supplier<AttachmentType<Long>> DARKHOLD_EXPOSURE_TIME=ATTACHMENTS.register("darkhold_exposure_time",()->AttachmentType.builder(()->-1L).serialize(Codec.LONG).build());
     public static final Supplier<AttachmentType<Integer>> HAUNT_RITUAL_REVISION=ATTACHMENTS.register("haunt_ritual_revision",()->AttachmentType.builder(()->0).serialize(Codec.intRange(0,Integer.MAX_VALUE)).build());
 
     public static final Supplier<AttachmentType<Integer>> MORTALITY_RESEARCH_BONUS=ATTACHMENTS.register("mortality_research_bonus",()->AttachmentType.builder(()->0).serialize(Codec.intRange(0,100)).copyOnDeath().build());
     public static final Supplier<AttachmentType<Integer>> MORTALITY_RESEARCH_ECTO=ATTACHMENTS.register("mortality_research_ecto",()->AttachmentType.builder(()->0).serialize(Codec.intRange(0,3)).copyOnDeath().build());
+    /** Transient ability counters: no cooldown bypass via client packets, no global player map. */
+    public static final Supplier<AttachmentType<net.minecraft.nbt.CompoundTag>> DAMNED_ABILITY_STATE = ATTACHMENTS.register(
+            "damned_ability_state", () -> AttachmentType.builder(() -> new net.minecraft.nbt.CompoundTag()).build());
     public static void register(IEventBus modBus) {
         ATTACHMENTS.register(modBus);
     }

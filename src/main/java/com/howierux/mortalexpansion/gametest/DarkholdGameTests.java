@@ -33,7 +33,7 @@ public final class DarkholdGameTests {
             h.assertTrue(SpectralInsight.secrets(book)==127 && !EctceteraResearchMap.unlocked("demons",4,127),"Normal mastery cannot prematurely reveal the first damned secret");
             h.assertTrue(!EctceteraResearchMap.unlocked("darkhold",3,255) && EctceteraResearchMap.unlocked("darkhold",4,127),"Damned chapter requires the final upgrade even with copied knowledge");
             PlayerHauntManager.setValue(p,70);DarkholdProgression.absorb(p,book);
-            h.assertTrue(book.getOrDefault(ModDataComponents.DAMNED_SECRETS.get(),0)==1 && EctceteraResearchMap.unlocked("demons",4,255),"Entering 70 reveals the first damned secret");
+            h.assertTrue(book.getOrDefault(ModDataComponents.DAMNED_SECRETS.get(),0)==3 && EctceteraResearchMap.unlocked("demons",4,255),"Entering 70 reveals the first damned secret");
             h.assertTrue(EctceteraProgression.tier(new ItemStack(ModItems.BOOK_OF_ECTCETERA.get()))==3,"Legacy books never become Darkholds by migration");
         }finally{p.discard();level.getDataStorage().set(DarkholdWorldData.KEY,DarkholdWorldData.load(previous,level.registryAccess()));}
         h.succeed();
@@ -57,7 +57,7 @@ public final class DarkholdGameTests {
             PlayerHauntManager.setValue(p,79);PlayerHauntManager.addHundredths(p,99);DarkholdProgression.pulse(p,1600);
             h.assertTrue(PlayerHauntManager.getHundredths(p)==8000,"Exposure continues beyond 79");
             var saved=p.saveWithoutId(new CompoundTag());PlayerHauntManager.setValue(p,0);p.load(saved);
-            h.assertTrue(PlayerHauntManager.getHundredths(p)==8000 && p.getData(ModAttachments.DAMNED_KNOWLEDGE)==1,"Overflow and revelation survive player saving");
+            h.assertTrue(PlayerHauntManager.getHundredths(p)==8000 && p.getData(ModAttachments.DAMNED_KNOWLEDGE)==7,"Overflow and revelation survive player saving");
             p.getInventory().clearContent();h.assertFalse(DarkholdProgression.pulse(p,1800),"Removing all copies stops exposure");
             h.assertTrue(PlayerHauntManager.getHundredths(p)==8000,"Removing the book does not erase accrued Haunt");
         }finally{p.discard();level.getDataStorage().set(DarkholdWorldData.KEY,DarkholdWorldData.load(previous,level.registryAccess()));}
