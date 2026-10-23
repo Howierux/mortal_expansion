@@ -63,6 +63,10 @@ for chapter in ("darkhold", "demons"):
     assert LANG[f"darkhold.mortal_expansion.{chapter}.name"].strip()
     for part in range(1, 5 if chapter=="demons" else 3):
         assert LANG[f"darkhold.mortal_expansion.{chapter}.page.{part}"].strip()
+for part in range(1, 4):
+    key = f"guide.mortal_expansion.holy_water.page.{part}"
+    assert LANG[key].strip() and lines(LANG[key]) <= 9, (key, "brewing entry exceeds page budget")
+assert LANG["guide.mortal_expansion.holy_water.name"].strip()
 for sin in ("lust", "gluttony", "greed", "sloth", "wrath", "envy", "pride"):
     key = f"darkhold.mortal_expansion.sin_{sin}.page.1"
     assert LANG[f"darkhold.mortal_expansion.sin_{sin}.name"].strip()

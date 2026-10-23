@@ -41,6 +41,8 @@ public final class MortalExpansion {
 
     public MortalExpansion(IEventBus modBus) {
         com.howierux.mortalexpansion.registry.ModEffects.register(modBus);
+        com.howierux.mortalexpansion.registry.ModPotions.register(modBus);
+        NeoForge.EVENT_BUS.register(com.howierux.mortalexpansion.haunt.HolyWaterBrewing.class);
         ModDataComponents.register(modBus);
         com.howierux.mortalexpansion.registry.ModSounds.register(modBus);
         GraveNamePayloads.register(modBus);

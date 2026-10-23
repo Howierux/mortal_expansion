@@ -616,5 +616,16 @@
   "damned.mortal_expansion.envy_equipment": "Armor and offhand",
   "damned.mortal_expansion.envy_readonly": "A vision only: items cannot be moved.",
   "damned.mortal_expansion.sloth_count": "A dream calls for night: %s/%s sleepers. Rest in a safe bed to join.",
-  "damned.mortal_expansion.gluttony": "Your hunger fades; your appetite does not."
+  "damned.mortal_expansion.gluttony": "Your hunger fades; your appetite does not.",
+  "effect.mortal_expansion.consecration": "Consecration",
+  "item.minecraft.potion.effect.mortal_expansion.holy_water": "Holy Water Bottle",
+  "item.minecraft.splash_potion.effect.mortal_expansion.holy_water": "Splash Potion of Consecration",
+  "item.minecraft.lingering_potion.effect.mortal_expansion.holy_water": "Lingering Potion of Consecration",
+  "item.minecraft.tipped_arrow.effect.mortal_expansion.holy_water": "Arrow of Consecration",
+  "guide.mortal_expansion.holy_water.name": "Bottled Consecration",
+  "guide.mortal_expansion.holy_water.page.1": "Place a Holy Water bucket above three empty bottles in a fuelled brewing stand. Brewing returns the empty bucket.",
+  "guide.mortal_expansion.holy_water.page.2": "Brew Holy Water bottles with gunpowder for Splash Potions of Consecration. Drink or splash to receive a Holy Water blessing.",
+  "guide.mortal_expansion.holy_water.page.3": "Consecration removes 1 personal Haunt and protects against haunt risks for a minute. Cleansing shares Holy Water's one-minute cooldown.",
+  "tooltip.mortal_expansion.consecration": "Cleanses 1 personal Haunt; Holy Water blessing for 1 minute.",
+  "tooltip.mortal_expansion.consecration_cooldown": "Cleansing shares Holy Water's 1-minute cooldown."
 }

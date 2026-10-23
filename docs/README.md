@@ -13,7 +13,7 @@ Start with the [mod introduction](../README.md), [system overview](Overview.md),
 | Equipment | [Ghost/Haint Garb](GHOST_GARB.md), [upward phasing](UPWARD_PHASING.md), [armor trims](ARMOR_TRIMS.md), [Pharaohl Scepter](PHARAOHL_SCEPTER.md) |
 | Tool abilities | [Shovels](AREA_SHOVELS.md), [axes](TREE_AXES.md), [pickaxes](HAUNT_PICKAXES.md), [farmland](HAUNTED_FARMLAND.md), [Spectralite hoe](SPECTRALITE_HOE_GROWTH.md) |
 | Machines and fluids | [Recipes](MACHINE_RECIPES.md), [generator emissions](ECTOPLASMIC_GENERATOR_HAUNT.md), [Purification Station](PURIFICATION_STATION.md), [pipes and tanks](ECTO_INFRASTRUCTURE.md), [Haint Furnace appearance](HAINT_FURNACE_APPEARANCE.md) |
-| Protection | [Holy Salt](HOLY_SALT_BARRIERS.md), [Altar of Purity](ALTAR_OF_PURITY.md), [paired altars](ALTARS_AND_SECRETS.md), [Dreamcatchers](DREAMCATCHER.md) |
+| Protection | [Holy Water brewing](HOLY_WATER_BREWING.md), [Holy Salt](HOLY_SALT_BARRIERS.md), [Altar of Purity](ALTAR_OF_PURITY.md), [paired altars](ALTARS_AND_SECRETS.md), [Dreamcatchers](DREAMCATCHER.md) |
 
 Optional recipe-browser support: [JEI integration](JEI_INTEGRATION.md).
 

@@ -84,6 +84,8 @@ public final class ModCreativeTabs {
 
                         output.accept(ModItems.LIQUID_ECTOPLASM_BUCKET.get());
                         output.accept(ModItems.HOLY_WATER_BUCKET.get());
+                        output.accept(com.howierux.mortalexpansion.haunt.HolyWaterBrewing.bottle());
+                        output.accept(com.howierux.mortalexpansion.haunt.HolyWaterBrewing.splash());
                         output.accept(ModItems.PURIFIED_ECTOPLASM_BUCKET.get());
                         output.accept(ModItems.HOLY_SALT.get());
                         output.accept(ModItems.EMF_READER.get());
