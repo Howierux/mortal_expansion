@@ -1,6 +1,6 @@
 # Development guidelines
 
-All updates should make future Minecraft and NeoForge version migrations easier.
+All updates should make future Minecraft, NeoForge, and Fabric version migrations easier.
 
 - Prefer supported framework APIs and Mojang/NeoForge data generators over handwritten resource schemas. Follow `docs/DATA_GENERATION.md`; commit providers and generated output together.
 - Keep gameplay rules separate from registration, networking, persistence, and rendering APIs. Contain version-sensitive calls in focused classes or helpers when this reduces duplication; avoid speculative compatibility frameworks.
@@ -13,3 +13,5 @@ All updates should make future Minecraft and NeoForge version migrations easier.
 Apply these principles to new and modified code without expanding each feature into an unrelated repository-wide refactor.
 
 When launching a Minecraft client for automated checks or local playtesting, set its master volume to 30% (`soundCategory_master:0.3` in that run profile�s options.txt) before launch. Preserve all other options.
+
+On fabric-dev, Fabric changes belong under fabric/; root sources remain the NeoForge reference. Read fabric/AGENTS.md. Do not promote the scaffold as a complete port. See docs/LOADER_BRANCHES.md.

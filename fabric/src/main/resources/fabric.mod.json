@@ -1,0 +1,45 @@
+{
+  "schemaVersion": 1,
+  "id": "mortal_expansion",
+  "version": "${version}",
+  "name": "Mortal Expansion (Fabric development)",
+  "description": "Fabric development scaffold for Mortal Expansion. Gameplay features are not ported yet.",
+  "authors": [
+    "Howierux"
+  ],
+  "contact": {
+    "homepage": "https://github.com/Howierux/mortal_expansion",
+    "sources": "https://github.com/Howierux/mortal_expansion/tree/fabric-dev",
+    "issues": "https://github.com/Howierux/mortal_expansion/issues"
+  },
+  "license": "All Rights Reserved",
+  "icon": "assets/mortal_expansion/icon.png",
+  "environment": "*",
+  "entrypoints": {
+    "main": [
+      {
+        "value": "com.howierux.mortalexpansion.MortalExpansionFabric",
+        "adapter": "kotlin"
+      }
+    ],
+    "client": [
+      {
+        "value": "com.howierux.mortalexpansion.client.MortalExpansionFabricClient",
+        "adapter": "kotlin"
+      }
+    ],
+    "fabric-datagen": [
+      {
+        "value": "com.howierux.mortalexpansion.client.MortalExpansionFabricDataGenerator",
+        "adapter": "kotlin"
+      }
+    ]
+  },
+  "depends": {
+    "fabricloader": ">=0.20.1",
+    "minecraft": "~1.21.1",
+    "java": ">=21",
+    "fabric-api": "*",
+    "fabric-language-kotlin": "*"
+  }
+}

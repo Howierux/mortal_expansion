@@ -1,0 +1,13 @@
+# Fabric development
+- Work on fabric-dev. main/dev remain NeoForge; do not push Fabric implementation to them.
+- This folder is a separate Gradle project. Build from fabric/ using its wrapper.
+- Keep Minecraft 1.21.1, Java 21, pinned Loom 1.17.21 and official Mojang mappings.
+- Preserve mod ID mortal_expansion and package com.howierux.mortalexpansion.
+- Keep the Kotlin entry points; original Java gameplay can be ported as Java without rewriting the language.
+- Prefer Fabric APIs, native registries/codecs and datagen. Isolate loader-specific persistence, events, networking, transfer and rendering.
+- Do not import NeoForge-specific APIs into this build or invent shared placeholder abstractions.
+- New generated resources belong in fabric/src/main/generated when providers are added, never root NeoForge generated output.
+- Never track caches, builds, run worlds, IDE state, logs or credentials.
+- Use fresh worlds until gameplay and save migration are implemented; matching registry IDs alone do not ensure migration.
+- Before any client launch, set master volume to 30% while preserving other options.
+- Update docs/FABRIC_PORT.md with verified progress; a scaffold is not gameplay parity.

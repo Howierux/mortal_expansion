@@ -1,5 +1,9 @@
 name: Optional JEI integration
-on: [push, pull_request]
+on:
+  push:
+    branches-ignore: [fabric, fabric-dev, 'fabric/**']
+  pull_request:
+    branches-ignore: [fabric, fabric-dev, 'fabric/**']
 jobs:
   jei-enabled:
     runs-on: ubuntu-latest

@@ -1,6 +1,10 @@
 name: Build
 
-on: [push, pull_request]
+on:
+  push:
+    branches-ignore: [fabric, fabric-dev, 'fabric/**']
+  pull_request:
+    branches-ignore: [fabric, fabric-dev, 'fabric/**']
 
 jobs:
   build:
@@ -83,4 +87,3 @@ jobs:
           match = re.search(r"All (\d+) required tests passed", log)
           assert match and int(match.group(1)) >= 195, "Expected the full required gameplay and optional-JEI catalog regression suite to finish successfully"
           PY
-
