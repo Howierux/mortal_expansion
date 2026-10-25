@@ -7,6 +7,7 @@ plugins {
 }
 
 repositories {
+    maven("https://maven.fabricmc.net")
 	// Add repositories to retrieve artifacts from in here.
 	// You should only use this when depending on other mods because
 	// Loom adds the essential maven repositories to download Minecraft and libraries from automatically.
@@ -45,6 +46,7 @@ fabricApi {
 }
 
 dependencies {
+    include(modImplementation("teamreborn:energy:${providers.gradleProperty("energy_api_version").get()}")!!)
 	// To change the versions see the gradle.properties file
 	minecraft("com.mojang:minecraft:${providers.gradleProperty("minecraft_version").get()}")
     mappings(loom.officialMojangMappings())
@@ -104,6 +106,7 @@ publishing {
 
 	// See https://docs.gradle.org/current/userguide/publishing_maven.html for information on how to set up publishing.
 	repositories {
+    maven("https://maven.fabricmc.net")
 		// Add repositories to publish to here.
 		// Notice: This block does NOT have the same function as the block in the top level.
 		// The repositories here will be used for publishing your artifact, not for

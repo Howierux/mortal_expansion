@@ -20,6 +20,10 @@ public final class CatalogClient {
   return 0xFF000000|(r<<16)|(g<<8)|b;
  }
  public static void initialize() {
+  net.minecraft.client.gui.screens.MenuScreens.register(com.howierux.mortalexpansion.machine.Machines.ECTO_MENU,com.howierux.mortalexpansion.client.screen.EctoplasmicGeneratorScreen::new);
+  net.minecraft.client.gui.screens.MenuScreens.register(com.howierux.mortalexpansion.machine.Machines.ENCHANT_MENU,com.howierux.mortalexpansion.client.screen.EnchantmentGeneratorScreen::new);
+  net.minecraft.client.renderer.blockentity.BlockEntityRenderers.register(com.howierux.mortalexpansion.machine.Machines.FLUID,EctankRenderer::new);
+
   net.minecraft.client.renderer.item.ItemProperties.register(CatalogItems.BOOK_OF_ECTCETERA,Catalog.id("book_tier"),(stack,level,entity,seed) -> stack.getOrDefault(Catalog.BOOK_TIER,0));
   net.fabricmc.fabric.api.client.rendering.v1.ColorProviderRegistry.BLOCK.register((state,world,pos,tint) -> coolFoliage(world!=null&&pos!=null?net.minecraft.client.renderer.BiomeColors.getAverageFoliageColor(world,pos):net.minecraft.world.level.FoliageColor.getDefaultColor()),CatalogBlocks.SPIRITWOOD_LEAVES);
   net.fabricmc.fabric.api.client.rendering.v1.ColorProviderRegistry.ITEM.register((stack,tint) -> coolFoliage(net.minecraft.world.level.FoliageColor.getDefaultColor()),CatalogItems.SPIRITWOOD_LEAVES);
@@ -49,6 +53,6 @@ public final class CatalogClient {
   BlockRenderLayerMap.INSTANCE.putFluids(RenderType.translucent(),pair.source,pair.flowing);
  }
  private static boolean pending(String id) {
-  return !(id.equals("bloodstone")||id.equals("demonic_ash")||id.endsWith("ectoplasm")||id.endsWith("ectothread")||id.equals("gravestone")||id.equals("purified_gravestone")||id.startsWith("spiritwood_")&&!id.endsWith("sapling")||id.startsWith("purified_spiritwood_")||id.equals("stone_fence")||id.startsWith("bloodstone_ore"));
+  return !(java.util.Set.of("ecto_pipe","purified_ecto_pipe","ectank","purified_ectank","ectoplasmic_generator","enchantment_generator").contains(id)||id.equals("bloodstone")||id.equals("demonic_ash")||id.endsWith("ectoplasm")||id.endsWith("ectothread")||id.equals("gravestone")||id.equals("purified_gravestone")||id.startsWith("spiritwood_")&&!id.endsWith("sapling")||id.startsWith("purified_spiritwood_")||id.equals("stone_fence")||id.startsWith("bloodstone_ore"));
  }
 }

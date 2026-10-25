@@ -17,6 +17,8 @@ def main():
  # Art is copied byte-for-byte; no recoloring or replacement placeholders.
  for folder in ['textures','lang']:
   shutil.copytree(ROOT/'src/main/resources/assets/mortal_expansion'/folder,out/folder,dirs_exist_ok=True)
+ for meta in (out/'textures').rglob('*.mcmeta'):
+  meta.write_text(meta.read_text(encoding='utf-8'),encoding='utf-8',newline='\n')
  for folder in ['models','blockstates']:
   for src in (ROOT/'src/generated/resources/assets/mortal_expansion'/folder).rglob('*.json'):
    data=json.loads(src.read_text(encoding='utf-8'))
@@ -40,11 +42,11 @@ def main():
    data.pop('render_type',None)
    dest=out/folder/src.relative_to(ROOT/'src/generated/resources/assets/mortal_expansion'/folder)
    dest.parent.mkdir(parents=True,exist_ok=True)
-   dest.write_text(json.dumps(data,indent=2)+'\n',encoding='utf-8')
+   dest.write_text(json.dumps(data,indent=2)+'\n',encoding='utf-8',newline='\n')
  for fluid in ['liquid_ectoplasm','holy_water','purified_ectoplasm_fluid']:
-  (out/'blockstates'/f'{fluid}.json').write_text(json.dumps({'variants':{'':{'model':'minecraft:block/water'}}},indent=2)+'\n')
+  (out/'blockstates'/f'{fluid}.json').write_text(json.dumps({'variants':{'':{'model':'minecraft:block/water'}}},indent=2)+'\n',encoding='utf-8',newline='\n')
  lang=out/'lang/en_us.json'
- data=json.loads(lang.read_text(encoding='utf-8')); data['tooltip.mortal_expansion.fabric.pending']='Fabric preview: special behavior not yet ported.'
- lang.write_text(json.dumps(data,indent=2,ensure_ascii=False)+'\n',encoding='utf-8')
+ data=json.loads(lang.read_text(encoding='utf-8')); data['tooltip.mortal_expansion.fabric.pending']='Fabric preview: special behavior not yet ported.'; data['gui.mortal_expansion.enchantment_generator.processing']='Extracting enchantments...'
+ lang.write_text(json.dumps(data,indent=2,ensure_ascii=False)+'\n',encoding='utf-8',newline='\n')
  print('Imported existing catalog models, blockstates, textures and translations.')
 if __name__=='__main__': main()

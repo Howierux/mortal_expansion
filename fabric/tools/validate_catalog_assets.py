@@ -29,6 +29,8 @@ def main():
   for file in (ASSETS/folder).rglob('*.json'): inspect(json.loads(file.read_text()))
  originals=ROOT/'src/main/resources/assets/mortal_expansion/textures'
  for file in originals.rglob('*'):
-  if file.is_file(): assert file.read_bytes()==(ASSETS/'textures'/file.relative_to(originals)).read_bytes(),file
+  if file.is_file():
+   copied=ASSETS/'textures'/file.relative_to(originals)
+   assert (file.read_bytes()==copied.read_bytes() if file.suffix=='.png' else file.read_text(encoding='utf-8')==copied.read_text(encoding='utf-8')),file
  print(f"Catalog validated: {len(manifest['items'])} items, {len(manifest['blocks'])} blocks; original texture bytes and native model references preserved.")
 if __name__=='__main__': main()

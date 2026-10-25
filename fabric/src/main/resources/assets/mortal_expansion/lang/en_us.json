@@ -628,5 +628,6 @@
   "guide.mortal_expansion.holy_water.page.3": "Consecration removes 1 personal Haunt and protects against haunt risks for a minute. Cleansing shares Holy Water's one-minute cooldown.",
   "tooltip.mortal_expansion.consecration": "Cleanses 1 personal Haunt; Holy Water blessing for 1 minute.",
   "tooltip.mortal_expansion.consecration_cooldown": "Cleansing shares Holy Water's 1-minute cooldown.",
-  "tooltip.mortal_expansion.fabric.pending": "Fabric preview: special behavior not yet ported."
+  "tooltip.mortal_expansion.fabric.pending": "Fabric preview: special behavior not yet ported.",
+  "gui.mortal_expansion.enchantment_generator.processing": "Extracting enchantments..."
 }

@@ -1,5 +1,6 @@
 package com.howierux.mortalexpansion.catalog;
 import java.util.*;
+import com.howierux.mortalexpansion.machine.*;
 import net.minecraft.core.*;
 import net.minecraft.core.registries.*;
 import net.minecraft.resources.ResourceLocation;
@@ -14,10 +15,10 @@ public final class CatalogBlocks {
  static Block register(String id,Block block) { ALL.put(id,block); return Registry.register(BuiltInRegistries.BLOCK,Catalog.id(id),block); }
 public static final Block FANCIFIER=register("fancifier",new FancifierVisual(BlockBehaviour.Properties.ofFullCopy(Blocks.STONE).noOcclusion()));
 public static final Block FANCIFIED_BLOCK=register("fancified_block",new FancifiedBlockVisual(BlockBehaviour.Properties.ofFullCopy(Blocks.STONE).noOcclusion()));
-public static final Block ECTANK=register("ectank",new EctankVisual(BlockBehaviour.Properties.ofFullCopy(Blocks.STONE).noOcclusion()));
-public static final Block PURIFIED_ECTANK=register("purified_ectank",new PurifiedEctankVisual(BlockBehaviour.Properties.ofFullCopy(Blocks.STONE).noOcclusion()));
-public static final Block ECTO_PIPE=register("ecto_pipe",new EctoPipeVisual(BlockBehaviour.Properties.ofFullCopy(Blocks.STONE).noOcclusion()));
-public static final Block PURIFIED_ECTO_PIPE=register("purified_ecto_pipe",new PurifiedEctoPipeVisual(BlockBehaviour.Properties.ofFullCopy(Blocks.STONE).noOcclusion()));
+public static final Block ECTANK=register("ectank",new FluidMachineBlock(BlockBehaviour.Properties.ofFullCopy(Blocks.STONE).noOcclusion()));
+public static final Block PURIFIED_ECTANK=register("purified_ectank",new FluidMachineBlock(BlockBehaviour.Properties.ofFullCopy(Blocks.STONE).noOcclusion()));
+public static final Block ECTO_PIPE=register("ecto_pipe",new FluidMachineBlock.Pipe(BlockBehaviour.Properties.ofFullCopy(Blocks.STONE).noOcclusion()));
+public static final Block PURIFIED_ECTO_PIPE=register("purified_ecto_pipe",new FluidMachineBlock.Pipe(BlockBehaviour.Properties.ofFullCopy(Blocks.STONE).noOcclusion()));
 public static final Block MORTAL_GOLEM_BASE=register("mortal_golem_base",new MortalGolemBaseVisual(BlockBehaviour.Properties.ofFullCopy(Blocks.STONE).noOcclusion()));
 public static final Block WISP_O_LANTERN=register("wisp_o_lantern",new CarvedPumpkinBlock(copy(Blocks.JACK_O_LANTERN).lightLevel(state -> 4)));
 public static final Block PURIFIED_DREAMCATCHER=register("purified_dreamcatcher",new PurifiedDreamcatcherVisual(BlockBehaviour.Properties.of().strength(0.5F).noOcclusion().noCollission().sound(SoundType.WOOD)));
@@ -52,8 +53,8 @@ public static final Block ALTAR_OF_IMPURITY=register("altar_of_impurity",new Alt
 public static final Block ALTAR_OF_PURITY=register("altar_of_purity",new AltarOfPurityVisual(BlockBehaviour.Properties.ofFullCopy(Blocks.STONE).noOcclusion()));
 public static final Block MORTALITY_RESEARCH_STATION=register("mortality_research_station",new MortalityResearchStationVisual(BlockBehaviour.Properties.ofFullCopy(Blocks.STONE).noOcclusion()));
 public static final Block ECTCHANTMENT_MACHINE=register("ectchantment_machine",new EctchantmentMachineVisual(BlockBehaviour.Properties.ofFullCopy(Blocks.STONE).noOcclusion()));
-public static final Block ECTOPLASMIC_GENERATOR=register("ectoplasmic_generator",new EctoplasmicGeneratorVisual(BlockBehaviour.Properties.ofFullCopy(Blocks.STONE).noOcclusion()));
-public static final Block ENCHANTMENT_GENERATOR=register("enchantment_generator",new EnchantmentGeneratorVisual(BlockBehaviour.Properties.ofFullCopy(Blocks.STONE).noOcclusion()));
+public static final Block ECTOPLASMIC_GENERATOR=register("ectoplasmic_generator",new GeneratorBlock(BlockBehaviour.Properties.ofFullCopy(Blocks.STONE).noOcclusion()));
+public static final Block ENCHANTMENT_GENERATOR=register("enchantment_generator",new GeneratorBlock(BlockBehaviour.Properties.ofFullCopy(Blocks.STONE).noOcclusion()));
 public static final Block PURIFICATION_WARD=register("purification_ward",new PurificationWardVisual(BlockBehaviour.Properties.ofFullCopy(Blocks.STONE).noOcclusion()));
 public static final Block PURIFICATION_STATION=register("purification_station",new PurificationStationVisual(BlockBehaviour.Properties.ofFullCopy(Blocks.STONE).noOcclusion()));
 public static final Block LIQUID_ECTOPLASM_BLOCK=register("liquid_ectoplasm",new LiquidBlock(CatalogFluids.LIQUID_ECTOPLASM.source,copy(Blocks.WATER)));
@@ -91,60 +92,10 @@ public static final Block SPIRITWELL=register("spiritwell",new SpiritwellVisual(
  
  
  }
-/** Missing function: port ectank interactions and simulation; this is its catalog appearance. */
- static final class EctankVisual extends Block {
- 
- EctankVisual(Properties p) { super(p); registerDefaultState(stateDefinition.any()); }
- @Override protected void createBlockStateDefinition(StateDefinition.Builder<Block,BlockState> b) {  }
- 
- 
- }
-/** Missing function: port purified_ectank interactions and simulation; this is its catalog appearance. */
- static final class PurifiedEctankVisual extends Block {
- 
- PurifiedEctankVisual(Properties p) { super(p); registerDefaultState(stateDefinition.any()); }
- @Override protected void createBlockStateDefinition(StateDefinition.Builder<Block,BlockState> b) {  }
- 
- 
- }
-/** Missing function: port ecto_pipe interactions and simulation; this is its catalog appearance. */
- static final class EctoPipeVisual extends Block {
- static final BooleanProperty P_DOWN = BlockStateProperties.DOWN;
-static final BooleanProperty P_EAST = BlockStateProperties.EAST;
-static final BooleanProperty P_NORTH = BlockStateProperties.NORTH;
-static final BooleanProperty P_SOUTH = BlockStateProperties.SOUTH;
-static final BooleanProperty P_UP = BlockStateProperties.UP;
-static final BooleanProperty P_WEST = BlockStateProperties.WEST;
- EctoPipeVisual(Properties p) { super(p); registerDefaultState(stateDefinition.any()); }
- @Override public BlockState getStateForPlacement(net.minecraft.world.item.context.BlockPlaceContext c) {
-  var s=defaultBlockState(); for(var d:net.minecraft.core.Direction.values()) s=s.setValue((BooleanProperty)getStateDefinition().getProperty(d.getName()),connects(c.getLevel().getBlockState(c.getClickedPos().relative(d)))); return s;
- }
- @Override protected BlockState updateShape(BlockState s,net.minecraft.core.Direction d,BlockState n,net.minecraft.world.level.LevelAccessor l,BlockPos p,BlockPos np) { return s.setValue((BooleanProperty)getStateDefinition().getProperty(d.getName()),connects(n)); }
- private static boolean connects(BlockState s) { return s.is(ECTANK)||s.is(PURIFIED_ECTANK)||s.is(ECTO_PIPE)||s.is(PURIFIED_ECTO_PIPE); }
 
- @Override protected void createBlockStateDefinition(StateDefinition.Builder<Block,BlockState> b) { b.add(P_DOWN,P_EAST,P_NORTH,P_SOUTH,P_UP,P_WEST); }
- 
- @Override protected net.minecraft.world.phys.shapes.VoxelShape getShape(BlockState s,net.minecraft.world.level.BlockGetter l,BlockPos p,net.minecraft.world.phys.shapes.CollisionContext c) { var shape=box(5,5,5,11,11,11); for(var dir:net.minecraft.core.Direction.values()) if(s.getValue((BooleanProperty)s.getBlock().getStateDefinition().getProperty(dir.getName()))) shape=net.minecraft.world.phys.shapes.Shapes.or(shape,box(dir==net.minecraft.core.Direction.WEST?0:5,dir==net.minecraft.core.Direction.DOWN?0:5,dir==net.minecraft.core.Direction.NORTH?0:5,dir==net.minecraft.core.Direction.EAST?16:11,dir==net.minecraft.core.Direction.UP?16:11,dir==net.minecraft.core.Direction.SOUTH?16:11)); return shape; }
- }
-/** Missing function: port purified_ecto_pipe interactions and simulation; this is its catalog appearance. */
- static final class PurifiedEctoPipeVisual extends Block {
- static final BooleanProperty P_DOWN = BlockStateProperties.DOWN;
-static final BooleanProperty P_EAST = BlockStateProperties.EAST;
-static final BooleanProperty P_NORTH = BlockStateProperties.NORTH;
-static final BooleanProperty P_SOUTH = BlockStateProperties.SOUTH;
-static final BooleanProperty P_UP = BlockStateProperties.UP;
-static final BooleanProperty P_WEST = BlockStateProperties.WEST;
- PurifiedEctoPipeVisual(Properties p) { super(p); registerDefaultState(stateDefinition.any()); }
- @Override public BlockState getStateForPlacement(net.minecraft.world.item.context.BlockPlaceContext c) {
-  var s=defaultBlockState(); for(var d:net.minecraft.core.Direction.values()) s=s.setValue((BooleanProperty)getStateDefinition().getProperty(d.getName()),connects(c.getLevel().getBlockState(c.getClickedPos().relative(d)))); return s;
- }
- @Override protected BlockState updateShape(BlockState s,net.minecraft.core.Direction d,BlockState n,net.minecraft.world.level.LevelAccessor l,BlockPos p,BlockPos np) { return s.setValue((BooleanProperty)getStateDefinition().getProperty(d.getName()),connects(n)); }
- private static boolean connects(BlockState s) { return s.is(ECTANK)||s.is(PURIFIED_ECTANK)||s.is(ECTO_PIPE)||s.is(PURIFIED_ECTO_PIPE); }
 
- @Override protected void createBlockStateDefinition(StateDefinition.Builder<Block,BlockState> b) { b.add(P_DOWN,P_EAST,P_NORTH,P_SOUTH,P_UP,P_WEST); }
- 
- @Override protected net.minecraft.world.phys.shapes.VoxelShape getShape(BlockState s,net.minecraft.world.level.BlockGetter l,BlockPos p,net.minecraft.world.phys.shapes.CollisionContext c) { var shape=box(5,5,5,11,11,11); for(var dir:net.minecraft.core.Direction.values()) if(s.getValue((BooleanProperty)s.getBlock().getStateDefinition().getProperty(dir.getName()))) shape=net.minecraft.world.phys.shapes.Shapes.or(shape,box(dir==net.minecraft.core.Direction.WEST?0:5,dir==net.minecraft.core.Direction.DOWN?0:5,dir==net.minecraft.core.Direction.NORTH?0:5,dir==net.minecraft.core.Direction.EAST?16:11,dir==net.minecraft.core.Direction.UP?16:11,dir==net.minecraft.core.Direction.SOUTH?16:11)); return shape; }
- }
+
+
 /** Missing function: port mortal_golem_base interactions and simulation; this is its catalog appearance. */
  static final class MortalGolemBaseVisual extends Block {
  static final EnumProperty<net.minecraft.core.Direction.Axis> P_AXIS = BlockStateProperties.AXIS;
@@ -221,22 +172,8 @@ static final BooleanProperty P_LIT = BlockStateProperties.LIT;
  
  
  }
-/** Missing function: port ectoplasmic_generator interactions and simulation; this is its catalog appearance. */
- static final class EctoplasmicGeneratorVisual extends Block {
- 
- EctoplasmicGeneratorVisual(Properties p) { super(p); registerDefaultState(stateDefinition.any()); }
- @Override protected void createBlockStateDefinition(StateDefinition.Builder<Block,BlockState> b) {  }
- 
- 
- }
-/** Missing function: port enchantment_generator interactions and simulation; this is its catalog appearance. */
- static final class EnchantmentGeneratorVisual extends Block {
- 
- EnchantmentGeneratorVisual(Properties p) { super(p); registerDefaultState(stateDefinition.any()); }
- @Override protected void createBlockStateDefinition(StateDefinition.Builder<Block,BlockState> b) {  }
- 
- 
- }
+
+
 /** Missing function: port purification_ward interactions and simulation; this is its catalog appearance. */
  static final class PurificationWardVisual extends Block {
  
