@@ -11,6 +11,9 @@ public final class FabricHauntData {
     public static final AttachmentType<Integer> CHUNK = AttachmentRegistry.create(
             ResourceLocation.fromNamespaceAndPath("mortal_expansion","chunk_haunt_units"),
             builder->builder.persistent(Codec.intRange(0,FractionalHaunt.MAX_UNITS)));
+    public static final AttachmentType<Integer> RITUAL_REVISION=AttachmentRegistry.create(
+            ResourceLocation.fromNamespaceAndPath("mortal_expansion","haunt_ritual_revision"),
+            builder->builder.initializer(()->0).persistent(Codec.intRange(0,Integer.MAX_VALUE)));
     public static final AttachmentType<Integer> PLAYER = AttachmentRegistry.create(
             ResourceLocation.fromNamespaceAndPath("mortal_expansion","player_haunt_units"),
             builder->builder.initializer(()->HauntTier.NATURAL.midpointValue()*100)

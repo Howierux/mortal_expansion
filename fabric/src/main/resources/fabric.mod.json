@@ -3,7 +3,7 @@
   "id": "mortal_expansion",
   "version": "${version}",
   "name": "Mortal Expansion (Fabric development)",
-  "description": "Fabric gameplay port in progress: persistent personal and chunk Haunt, commands and loaded-chunk simulation. The original item/block catalog and artwork are available, with basic native equipment and building behavior. Generators, tanks/pipes, Haunt furnaces and purification blocks are functional; other specialized gameplay is still pending.",
+  "description": "Fabric gameplay port in progress: persistent personal and chunk Haunt, commands and loaded-chunk simulation. The original item/block catalog and artwork are available, with basic native equipment and building behavior. Generators, tanks/pipes, Haunt furnaces, purification blocks, altars and world-Haunt rituals are functional; other specialized gameplay is still pending.",
   "authors": [
     "Howierux"
   ],

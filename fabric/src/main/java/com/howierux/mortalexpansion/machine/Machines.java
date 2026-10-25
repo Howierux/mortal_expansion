@@ -13,6 +13,10 @@ public final class Machines {
  public static final BlockEntityType<FluidMachineEntity> FLUID=Registry.register(BuiltInRegistries.BLOCK_ENTITY_TYPE,Catalog.id("ecto_fluid"),BlockEntityType.Builder.of(FluidMachineEntity::new,CatalogBlocks.ECTANK,CatalogBlocks.PURIFIED_ECTANK,CatalogBlocks.ECTO_PIPE,CatalogBlocks.PURIFIED_ECTO_PIPE).build(null));
  public static final BlockEntityType<GeneratorEntity> ECTO=Registry.register(BuiltInRegistries.BLOCK_ENTITY_TYPE,Catalog.id("ectoplasmic_generator"),BlockEntityType.Builder.of(GeneratorEntity::new,CatalogBlocks.ECTOPLASMIC_GENERATOR).build(null));
  public static final BlockEntityType<GeneratorEntity> ENCHANT=Registry.register(BuiltInRegistries.BLOCK_ENTITY_TYPE,Catalog.id("enchantment_generator"),BlockEntityType.Builder.of(GeneratorEntity::new,CatalogBlocks.ENCHANTMENT_GENERATOR).build(null));
+ public static final BlockEntityType<AltarEntity> PURITY=Registry.register(BuiltInRegistries.BLOCK_ENTITY_TYPE,Catalog.id("altar_of_purity"),BlockEntityType.Builder.of(AltarEntity::new,CatalogBlocks.ALTAR_OF_PURITY).build(null));
+ public static final BlockEntityType<AltarEntity> IMPURITY=Registry.register(BuiltInRegistries.BLOCK_ENTITY_TYPE,Catalog.id("altar_of_impurity"),BlockEntityType.Builder.of(AltarEntity::new,CatalogBlocks.ALTAR_OF_IMPURITY).build(null));
+ public static final ExtendedScreenHandlerType<AltarMenu,BlockPos> PURITY_MENU=Registry.register(BuiltInRegistries.MENU,Catalog.id("altar_of_purity"),new ExtendedScreenHandlerType<>(AltarMenu::new,BlockPos.STREAM_CODEC));
+ public static final ExtendedScreenHandlerType<AltarMenu,BlockPos> IMPURITY_MENU=Registry.register(BuiltInRegistries.MENU,Catalog.id("altar_of_impurity"),new ExtendedScreenHandlerType<>(AltarMenu::new,BlockPos.STREAM_CODEC));
  public static final BlockEntityType<HauntFurnaceEntity> FURNACE=Registry.register(BuiltInRegistries.BLOCK_ENTITY_TYPE,Catalog.id("haunt_furnace"),BlockEntityType.Builder.of(HauntFurnaceEntity::new,CatalogBlocks.HAUNT_FURNACE,CatalogBlocks.HAINT_FURNACE).build(null));
  public static final BlockEntityType<PurificationStationEntity> STATION=Registry.register(BuiltInRegistries.BLOCK_ENTITY_TYPE,Catalog.id("purification_station"),BlockEntityType.Builder.of(PurificationStationEntity::new,CatalogBlocks.PURIFICATION_STATION).build(null));
  public static final BlockEntityType<PurificationWardBlock.WardEntity> WARD=Registry.register(BuiltInRegistries.BLOCK_ENTITY_TYPE,Catalog.id("purification_ward"),BlockEntityType.Builder.of(PurificationWardBlock.WardEntity::new,CatalogBlocks.PURIFICATION_WARD).build(null));
@@ -21,6 +25,8 @@ public final class Machines {
  public static final ExtendedScreenHandlerType<GeneratorMenu,BlockPos> ECTO_MENU=Registry.register(BuiltInRegistries.MENU,Catalog.id("ectoplasmic_generator"),new ExtendedScreenHandlerType<>(GeneratorMenu::new,BlockPos.STREAM_CODEC));
  public static final ExtendedScreenHandlerType<GeneratorMenu,BlockPos> ENCHANT_MENU=Registry.register(BuiltInRegistries.MENU,Catalog.id("enchantment_generator"),new ExtendedScreenHandlerType<>(GeneratorMenu::new,BlockPos.STREAM_CODEC));
  public static void initialize(){
+  ItemStorage.SIDED.registerForBlockEntity(InventoryStorage::of,PURITY);
+  ItemStorage.SIDED.registerForBlockEntity(InventoryStorage::of,IMPURITY);
   FluidStorage.SIDED.registerForBlockEntity((be,side)->be.water,STATION);
   EnergyStorage.SIDED.registerForBlockEntity((be,side)->be.energy,STATION);
   ItemStorage.SIDED.registerForBlockEntity(InventoryStorage::of,STATION);

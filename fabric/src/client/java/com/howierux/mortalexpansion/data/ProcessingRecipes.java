@@ -11,6 +11,7 @@ import java.util.concurrent.CompletableFuture;
 public final class ProcessingRecipes extends FabricRecipeProvider {
  public ProcessingRecipes(FabricDataOutput output,CompletableFuture<HolderLookup.Provider> lookup){super(output,lookup);}
  @Override public void buildRecipes(RecipeOutput output){
+  ShapedRecipeBuilder.shaped(RecipeCategory.MISC,CatalogItems.RITUAL_STAR).pattern("BBB").pattern("BSB").pattern("BBB").define('B',CatalogItems.BLOODSTONE).define('S',net.minecraft.world.item.Items.NETHER_STAR).unlockedBy("has_nether_star",has(net.minecraft.world.item.Items.NETHER_STAR)).save(output,Catalog.id("ritual_star"));
   cooking(output,CatalogItems.HOLY_WATER_BUCKET,CatalogItems.HOLY_SALT,"holy_water_bucket_smelting");
   cooking(output,CatalogItems.LIQUID_ECTOPLASM_BUCKET,CatalogItems.RAW_ECTOPLASM,"liquid_ectoplasm_bucket_smelting");
   cooking(output,CatalogItems.PURIFIED_ECTOPLASM_BUCKET,CatalogItems.PURE_ECTOPLASM,"purified_ectoplasm_bucket_smelting");

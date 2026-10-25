@@ -9,7 +9,8 @@
       "com.howierux.mortalexpansion.gametest.HauntFoundationGameTests",
       "com.howierux.mortalexpansion.gametest.CatalogGameTests",
       "com.howierux.mortalexpansion.gametest.MachineGameTests",
-      "com.howierux.mortalexpansion.gametest.PurificationGameTests"
+      "com.howierux.mortalexpansion.gametest.PurificationGameTests",
+      "com.howierux.mortalexpansion.gametest.AltarGameTests"
     ]
   },
   "depends": {

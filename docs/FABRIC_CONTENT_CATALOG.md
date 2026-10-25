@@ -18,7 +18,7 @@ This is a catalog/appearance implementation, not a port of every item's behavior
 
 - Book screens, upgrading, secret knowledge, recipe restrictions, research and crafting progression. Creative book tier previews do not unlock knowledge.
 - EMF live readings and the precise numeric display; previews display the unlit reader model.
-- Altars, research and Ectchantment Machine functions. Generators/tanks/pipes and Haunt furnaces, the Purification Station and Ward are implemented; see [Fabric machinery](FABRIC_MACHINES.md) and [purification](FABRIC_PURIFICATION.md).
+- Research and Ectchantment Machine functions. Generators/tanks/pipes and Haunt furnaces, the Purification Station and Ward are implemented; see [Fabric machinery](FABRIC_MACHINES.md) and [purification](FABRIC_PURIFICATION.md).
 - Fancifier opacity application and functional fading blocks. Its legacy item/block currently displays Gravestone as a visible catalog preview.
 - Equipment powers, Haunt scaling, tree felling, area mining, repair ticks, garb intangibility, jump and protections; scepter use and ritual/boon consumption.
 - Grave text/naturalization/porting, dreamcatcher moon symbols/protection, Spiritwell travel, Wisp transformations/spawning and golem creation.
@@ -40,8 +40,10 @@ gradlew.bat build
 
 The importer copies original textures byte-for-byte and converts loader-specific model schemas; it is explicit and reproducible. Framework-independent artwork remains at the repository root as the NeoForge reference. Native tag and loot providers remain Java Fabric data generators. CI checks imported assets and generated data for drift.
 
-Validation: thirteen native headless Fabric GameTests pass, including ordinary equipment stats, pipe neighbor updates and native bucket placement/pickup. A local client smoke check loaded all 97 item models and 1,138 non-fluid block states, five armor texture pairs and the Darkhold, without missing-model/texture warnings, at 30% master volume. The temporary probe was removed from production sources. Gameplay behavior listed as pending has not been claimed as tested.
+Validation: seventeen native headless Fabric GameTests pass, including ordinary equipment stats, pipe neighbor updates and native bucket placement/pickup. A local client smoke check loaded all 97 item models and 1,138 non-fluid block states, five armor texture pairs and the Darkhold, without missing-model/texture warnings, at 30% master volume. The temporary probe was removed from production sources. Gameplay behavior listed as pending has not been claimed as tested.
 
 The machinery update additionally verifies rollback, pipe budgets/directions, portable fluid contents, fuel/Haunt accounting, enchantment conversion, automation and exact menu values. Both generator screens and tank synchronization were checked in a real integrated client/server session at 30% volume.
 
 The purification update supplies working Haunt/Haint furnaces, the Purification Station (including Holy Salt), Ward cleansing/protection and persistent chunk tickets, and three public bucket-cooking recipes generated through Fabric datagen.
+
+Purity/Impurity altars and Ritual Star world shifts are functional; see [Fabric altars](FABRIC_ALTARS.md). Positive Haunt-event dispatch and knowledge-gated altar recipes remain pending.

@@ -35,6 +35,9 @@ public final class CatalogBlockTags extends FabricTagProvider<Block> {
  public static final class Items extends FabricTagProvider<Item> {
   public Items(FabricDataOutput o,CompletableFuture<HolderLookup.Provider> l) { super(o,Registries.ITEM,l); }
   @Override protected void addTags(HolderLookup.Provider lookup) {
+   var offerings=tag(com.howierux.mortalexpansion.haunt.PurityOfferings.TAG);
+   for(String id:new String[]{"raw_ectoplasm","spirit_boon","spiritwood_log","purified_spiritwood_log","grave_moss","holy_salt","pure_ectoplasm"})offerings.add(net.minecraft.resources.ResourceKey.create(Registries.ITEM,Catalog.id(id)));
+   tag(com.howierux.mortalexpansion.haunt.PurityOfferings.IMPURITY).addTag(com.howierux.mortalexpansion.haunt.PurityOfferings.TAG);
    tag(com.howierux.mortalexpansion.machine.PurificationStationEntity.REAGENTS).add(net.minecraft.resources.ResourceKey.create(Registries.ITEM,Catalog.id("grave_moss")),net.minecraft.resources.ResourceKey.create(Registries.ITEM,Catalog.id("holy_salt")));
    CatalogItems.ALL.forEach((id,item) -> {
     if(item instanceof ArmorItem a) {

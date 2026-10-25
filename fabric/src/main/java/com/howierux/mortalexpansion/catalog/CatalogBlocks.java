@@ -49,8 +49,8 @@ public static final Block PURIFIED_SPIRITWOOD_DOOR=register("purified_spiritwood
 public static final Block PURIFIED_SPIRITWOOD_TRAPDOOR=register("purified_spiritwood_trapdoor",new TrapDoorBlock(BlockSetType.OAK,copy(Blocks.OAK_TRAPDOOR)));
 public static final Block PURIFIED_SPIRITWOOD_PRESSURE_PLATE=register("purified_spiritwood_pressure_plate",new PressurePlateBlock(BlockSetType.OAK,copy(Blocks.OAK_PRESSURE_PLATE)));
 public static final Block PURIFIED_SPIRITWOOD_BUTTON=register("purified_spiritwood_button",new ButtonBlock(BlockSetType.OAK,30,copy(Blocks.OAK_BUTTON)));
-public static final Block ALTAR_OF_IMPURITY=register("altar_of_impurity",new AltarOfImpurityVisual(BlockBehaviour.Properties.ofFullCopy(Blocks.STONE).noOcclusion()));
-public static final Block ALTAR_OF_PURITY=register("altar_of_purity",new AltarOfPurityVisual(BlockBehaviour.Properties.ofFullCopy(Blocks.STONE).noOcclusion()));
+public static final Block ALTAR_OF_IMPURITY=register("altar_of_impurity",new AltarBlock(BlockBehaviour.Properties.ofFullCopy(Blocks.STONE).noOcclusion().lightLevel(state->state.getValue(BlockStateProperties.LIT)?10:0)));
+public static final Block ALTAR_OF_PURITY=register("altar_of_purity",new AltarBlock(BlockBehaviour.Properties.ofFullCopy(Blocks.STONE).noOcclusion().lightLevel(state->state.getValue(BlockStateProperties.LIT)?10:0)));
 public static final Block MORTALITY_RESEARCH_STATION=register("mortality_research_station",new MortalityResearchStationVisual(BlockBehaviour.Properties.ofFullCopy(Blocks.STONE).noOcclusion()));
 public static final Block ECTCHANTMENT_MACHINE=register("ectchantment_machine",new EctchantmentMachineVisual(BlockBehaviour.Properties.ofFullCopy(Blocks.STONE).noOcclusion()));
 public static final Block ECTOPLASMIC_GENERATOR=register("ectoplasmic_generator",new GeneratorBlock(BlockBehaviour.Properties.ofFullCopy(Blocks.STONE).noOcclusion()));
@@ -123,22 +123,8 @@ static final IntegerProperty P_FLESH_STAGE = IntegerProperty.create("flesh_stage
  }
 
 
-/** Missing function: port altar_of_impurity interactions and simulation; this is its catalog appearance. */
- static final class AltarOfImpurityVisual extends Block {
- static final BooleanProperty P_LIT = BlockStateProperties.LIT;
- AltarOfImpurityVisual(Properties p) { super(p); registerDefaultState(stateDefinition.any().setValue(P_LIT,false)); }
- @Override protected void createBlockStateDefinition(StateDefinition.Builder<Block,BlockState> b) { b.add(P_LIT); }
- 
- 
- }
-/** Missing function: port altar_of_purity interactions and simulation; this is its catalog appearance. */
- static final class AltarOfPurityVisual extends Block {
- static final BooleanProperty P_LIT = BlockStateProperties.LIT;
- AltarOfPurityVisual(Properties p) { super(p); registerDefaultState(stateDefinition.any().setValue(P_LIT,false)); }
- @Override protected void createBlockStateDefinition(StateDefinition.Builder<Block,BlockState> b) { b.add(P_LIT); }
- 
- 
- }
+
+
 /** Missing function: port mortality_research_station interactions and simulation; this is its catalog appearance. */
  static final class MortalityResearchStationVisual extends Block {
  

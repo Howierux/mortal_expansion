@@ -13,6 +13,7 @@ public final class HauntManager {
         var target=(AttachmentTarget)chunk;
         if(!target.hasAttached(FabricHauntData.CHUNK))target.setAttached(FabricHauntData.CHUNK,
                 (NaturalHauntGenerator.supportsDimension(level)?NaturalHauntGenerator.determineInitialTier(level,chunk):HauntTier.VOID).midpointValue()*100);
+        WorldHauntRituals.reconcile(level,chunk);
     }
     private static LevelChunk loaded(ServerLevel level,ChunkPos pos){
         var chunk=level.getChunkSource().getChunkNow(pos.x,pos.z);
@@ -37,7 +38,7 @@ public final class HauntManager {
         int next=FractionalHaunt.add(current,amount);((AttachmentTarget)chunk).setAttached(FabricHauntData.CHUNK,next);notifyTier(chunk,current,next);
     }
     public static void addHundredths(ServerLevel level,BlockPos pos,long amount){addHundredths(level,new ChunkPos(pos),amount);}
-    private static void notifyTier(LevelChunk chunk,int before,int after){
+    static void notifyTier(LevelChunk chunk,int before,int after){
         if(HauntTier.fromValue(before/100)!=HauntTier.fromValue(after/100))com.howierux.mortalexpansion.machine.HauntFurnaceEntity.onChunkTierChanged(chunk,HauntTier.fromValue(after/100));
     }
     public static int addPoints(ServerLevel level,ChunkPos pos,int amount){addHundredths(level,pos,(long)amount*100);return getValue(level,pos);}

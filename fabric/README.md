@@ -1,6 +1,6 @@
 # Mortal Expansion: Fabric development
 
-**Gameplay port in progress. Persistent Haunt, commands, kill gains and loaded-chunk simulation are implemented; the full original item/block catalog and artwork are now available. Both generators, fluid tanks/pipes, Haunt furnaces and purification blocks are functional; other specialized gameplay remains pending.** Original NeoForge source remains at the repository root as the reference.
+**Gameplay port in progress. Persistent Haunt, commands, kill gains and loaded-chunk simulation are implemented; the full original item/block catalog and artwork are now available. Both generators, fluid tanks/pipes, Haunt furnaces, purification blocks, altars and world-Haunt rituals are functional; other specialized gameplay remains pending.** Original NeoForge source remains at the repository root as the reference.
 
 Develop on **fabric-dev**. The stable **fabric** branch is reserved until a validated release exists.
 
@@ -23,7 +23,7 @@ Minecraft 1.21.1; Fabric Loader 0.20.1; Fabric API 0.116.17+1.21.1; Java 21; Gra
 
 Namespace: mortal_expansion. The artifact filename includes -fabric. Datagen supplies Haunt biome tags, native block/item tags, loot tables and public fluid-cooking recipes. Mod metadata retains All Rights Reserved and original branding; template provenance is in TEMPLATE_LICENSE.txt.
 
-The build runs thirteen isolated Fabric GameTests automatically. These tests are not packaged in the gameplay jar. See the [Haunt foundation](../docs/FABRIC_HAUNT_FOUNDATION.md) for commands and exact scope.
+The build runs seventeen isolated Fabric GameTests automatically. These tests are not packaged in the gameplay jar. See the [Haunt foundation](../docs/FABRIC_HAUNT_FOUNDATION.md) for commands and exact scope.
 
 See [branch policy](../docs/LOADER_BRANCHES.md) and [port status](../docs/FABRIC_PORT.md). Add/test dependencies such as TerraBlender and recipe-viewer integrations alongside their associated ports.
 
@@ -32,3 +32,5 @@ See [content catalog scope](../docs/FABRIC_CONTENT_CATALOG.md) for reused art, b
 [Fabric machinery](../docs/FABRIC_MACHINES.md): generator operation, tank capacities, pipe side controls and transfer rates. Team Reborn Energy 4.1.0 is bundled for standard Fabric energy interoperability; fluid and item automation use Fabric Transfer API.
 
 [Fabric purification](../docs/FABRIC_PURIFICATION.md): furnace timing and fuel rules, station resources/automation, Ward chunk tickets and save behavior.
+
+[Altars and rituals](../docs/FABRIC_ALTARS.md) provide local cleansing/corruption and repeatable Overworld-wide shifts. See the [remaining-feature audit](../docs/FABRIC_REMAINING_FEATURES.md) for subsequent gameplay slices.

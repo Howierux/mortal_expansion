@@ -20,6 +20,8 @@ public final class CatalogClient {
   return 0xFF000000|(r<<16)|(g<<8)|b;
  }
  public static void initialize() {
+  net.minecraft.client.gui.screens.MenuScreens.register(com.howierux.mortalexpansion.machine.Machines.PURITY_MENU,com.howierux.mortalexpansion.client.screen.AltarScreen::new);
+  net.minecraft.client.gui.screens.MenuScreens.register(com.howierux.mortalexpansion.machine.Machines.IMPURITY_MENU,com.howierux.mortalexpansion.client.screen.AltarScreen::new);
   net.minecraft.client.gui.screens.MenuScreens.register(com.howierux.mortalexpansion.machine.Machines.STATION_MENU,com.howierux.mortalexpansion.client.screen.PurificationStationScreen::new);
   net.minecraft.client.gui.screens.MenuScreens.register(com.howierux.mortalexpansion.machine.Machines.ECTO_MENU,com.howierux.mortalexpansion.client.screen.EctoplasmicGeneratorScreen::new);
   net.minecraft.client.gui.screens.MenuScreens.register(com.howierux.mortalexpansion.machine.Machines.ENCHANT_MENU,com.howierux.mortalexpansion.client.screen.EnchantmentGeneratorScreen::new);
@@ -54,6 +56,6 @@ public final class CatalogClient {
   BlockRenderLayerMap.INSTANCE.putFluids(RenderType.translucent(),pair.source,pair.flowing);
  }
  private static boolean pending(String id) {
-  return !(java.util.Set.of("haunt_furnace","haint_furnace","purification_station","purification_ward","ecto_pipe","purified_ecto_pipe","ectank","purified_ectank","ectoplasmic_generator","enchantment_generator").contains(id)||id.equals("bloodstone")||id.equals("demonic_ash")||id.endsWith("ectoplasm")||id.endsWith("ectothread")||id.equals("gravestone")||id.equals("purified_gravestone")||id.startsWith("spiritwood_")&&!id.endsWith("sapling")||id.startsWith("purified_spiritwood_")||id.equals("stone_fence")||id.startsWith("bloodstone_ore"));
+  return !(java.util.Set.of("ritual_star","altar_of_purity","altar_of_impurity","haunt_furnace","haint_furnace","purification_station","purification_ward","ecto_pipe","purified_ecto_pipe","ectank","purified_ectank","ectoplasmic_generator","enchantment_generator").contains(id)||id.equals("bloodstone")||id.equals("demonic_ash")||id.endsWith("ectoplasm")||id.endsWith("ectothread")||id.equals("gravestone")||id.equals("purified_gravestone")||id.startsWith("spiritwood_")&&!id.endsWith("sapling")||id.startsWith("purified_spiritwood_")||id.equals("stone_fence")||id.startsWith("bloodstone_ore"));
  }
 }

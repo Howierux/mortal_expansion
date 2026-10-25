@@ -6,23 +6,23 @@ Haunt Furnace, Haint Furnace, Purification Station and Purification Ward now hav
 
 Both inherit native furnace smelting, inventory, hopper access, recipe experience, recipe lookup, persistence and the vanilla furnace screen. Smelting speed follows the existing rule:
 
-`speed = 1 + 9 × chunk tier ID / 6`
+`speed = 1 + 9 Ã— chunk tier ID / 6`
 
 | Haunt tier | Speed | Standard 200-tick recipe |
 | --- | ---: | ---: |
-| Void | 1× | 200 ticks |
-| Natural | 2.5× | 80 ticks |
-| Supernatural | 4× | 50 ticks |
-| Dead Rising | 5.5× | 37 ticks |
-| Demonic | 7× | 29 ticks |
-| Abominable | 8.5× | 24 ticks |
-| Eldritch | 10× | 20 ticks |
+| Void | 1Ã— | 200 ticks |
+| Natural | 2.5Ã— | 80 ticks |
+| Supernatural | 4Ã— | 50 ticks |
+| Dead Rising | 5.5Ã— | 37 ticks |
+| Demonic | 7Ã— | 29 ticks |
+| Abominable | 8.5Ã— | 24 ticks |
+| Eldritch | 10Ã— | 20 ticks |
 
 Recipe duration rounds up, with a minimum of one tick. Tier crossings notify furnaces in the affected loaded chunk and rescale active progress proportionally. No recurring world scan is needed.
 
 The Haunt Furnace burns fuel normally. The Haint Furnace spends existing burn time only when cooking advances. At Demonic or higher it preserves burn time even while cooking, after an initial fuel charge. Its open ghast eyes indicate actual Haunt-powered cooking; idle and lower-tier states use closed eyes. Native light/facing states and the existing furnace tints remain.
 
-Three public smelting recipes are generated: Holy Water Bucket → Holy Salt, Liquid Ectoplasm Bucket → Raw Ectoplasm, Purified Ectoplasm Bucket → Purified Ectoplasm. Each takes 200 base ticks and returns its bucket only after a successful smelt. Blocked output does not consume fluid or return a premature bucket. This also works in vanilla furnaces.
+Three public smelting recipes are generated: Holy Water Bucket â†’ Holy Salt, Liquid Ectoplasm Bucket â†’ Raw Ectoplasm, Purified Ectoplasm Bucket â†’ Purified Ectoplasm. Each takes 200 base ticks and returns its bucket only after a successful smelt. Blocked output does not consume fluid or return a premature bucket. This also works in vanilla furnaces.
 
 Native cooking lacks an input-remainder callback, so one focused `FluidBucketCookingMixin` observes actual consumption during `AbstractFurnaceBlockEntity.serverTick`. It covers native and custom furnaces using that path, including unusual stacked inputs by dropping the extra vessel. Future Minecraft updates should verify the method signature and successful-consumption condition. Spectral Interference pauses remain a marked missing function until Haunt events are ported.
 
@@ -44,7 +44,7 @@ World saves retain inventory, water, energy, partial progress and energy spent. 
 
 The Ward has no Beacon block entity and produces no beam. It protects its own chunk and eight neighbors. At the daily simulation boundary it removes one Haunt point per protected loaded chunk, with overlapping Wards not stacking that daily reduction. Protected chunks neither send nor receive simulated spread, skip natural recovery, and block personal-Haunt leakage. Haunt-event/mob protections will connect when those dependent systems are ported.
 
-Each Ward owns native region tickets for that 3×3 area. Owner positions persist per dimension in native SavedData under `mortal_expansion_purification_wards`, as packed BlockPos longs. On restart, tickets are restored and owner blocks validated after their chunks load. Invalid owners are discarded. Physical removal releases only that Ward's tickets and saved owner; chunk unload alone does not discard its persistent ownership. Overlaps retain independent tickets, and vanilla `/forceload` tickets are untouched.
+Each Ward owns native region tickets for that 3Ã—3 area. Owner positions persist per dimension in native SavedData under `mortal_expansion_purification_wards`, as packed BlockPos longs. On restart, tickets are restored and owner blocks validated after their chunks load. Invalid owners are discarded. Physical removal releases only that Ward's tickets and saved owner; chunk unload alone does not discard its persistent ownership. Overlaps retain independent tickets, and vanilla `/forceload` tickets are untouched.
 
 Version-sensitive ticket and SavedData calls are contained in `PurificationWards`; the protection tracker and daily Haunt planner stay separate. No unrelated pipe or generator begins force-loading chunks.
 
@@ -54,4 +54,4 @@ Thirteen native Fabric GameTests pass. Four new checks cover tier rescaling, Hai
 
 Real client checks opened the station and native furnace screens, verified live values and Haint-eye synchronization, and visually checked the layouts. A second client launch verified exact station resources after restart and restored an active Ward 640 blocks away from spawn, outside player view distance, before removing it and confirming owner cleanup. Both launches used 30% master volume. Temporary probes, worlds and screenshots are excluded from the published jar.
 
-Altars, research, Ectchantment Machine, Fancifier behavior, book progression, other Haunt effects and NeoForge save migration remain pending ports. These checks do not establish full mod parity or third-party modpack compatibility.
+Altars and world rituals are now implemented in the [altar slice](FABRIC_ALTARS.md). Research, Ectchantment Machine, Fancifier behavior, book progression, other Haunt effects and NeoForge save migration remain pending ports. These checks do not establish full mod parity or third-party modpack compatibility.

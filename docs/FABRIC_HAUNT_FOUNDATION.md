@@ -57,3 +57,5 @@ Four isolated Fabric GameTests verify native player save/load and real respawn; 
 A separate client startup check at 30% volume passed and closed automatically. Its temporary probe is removed from production. Release jars exclude the test mod, test classes and generated caches. Joined multiplayer synchronization and long-duration balance still need playtesting; the tests do not establish full mod parity.
 
 Fabric CI runs the build/GameTests, regenerates biome tags and checks for generated-file drift. Client smoke results are local validation, not an automated hosted client test.
+
+Subsequent altar work adds an ordered Overworld ritual journal and per-chunk applied revision, reconciled at Haunt load/read boundaries. Natural biome recovery baselines are unchanged; see [Fabric altars](FABRIC_ALTARS.md).
