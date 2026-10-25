@@ -1,0 +1,64 @@
+{
+  "variants": {
+    "facing=east,haunt_powered=false,lit=false": {
+      "model": "mortal_expansion:block/haint_furnace",
+      "y": 90
+    },
+    "facing=east,haunt_powered=false,lit=true": {
+      "model": "mortal_expansion:block/haint_furnace_on",
+      "y": 90
+    },
+    "facing=east,haunt_powered=true,lit=false": {
+      "model": "mortal_expansion:block/haint_furnace",
+      "y": 90
+    },
+    "facing=east,haunt_powered=true,lit=true": {
+      "model": "mortal_expansion:block/haint_furnace_haunt",
+      "y": 90
+    },
+    "facing=north,haunt_powered=false,lit=false": {
+      "model": "mortal_expansion:block/haint_furnace"
+    },
+    "facing=north,haunt_powered=false,lit=true": {
+      "model": "mortal_expansion:block/haint_furnace_on"
+    },
+    "facing=north,haunt_powered=true,lit=false": {
+      "model": "mortal_expansion:block/haint_furnace"
+    },
+    "facing=north,haunt_powered=true,lit=true": {
+      "model": "mortal_expansion:block/haint_furnace_haunt"
+    },
+    "facing=south,haunt_powered=false,lit=false": {
+      "model": "mortal_expansion:block/haint_furnace",
+      "y": 180
+    },
+    "facing=south,haunt_powered=false,lit=true": {
+      "model": "mortal_expansion:block/haint_furnace_on",
+      "y": 180
+    },
+    "facing=south,haunt_powered=true,lit=false": {
+      "model": "mortal_expansion:block/haint_furnace",
+      "y": 180
+    },
+    "facing=south,haunt_powered=true,lit=true": {
+      "model": "mortal_expansion:block/haint_furnace_haunt",
+      "y": 180
+    },
+    "facing=west,haunt_powered=false,lit=false": {
+      "model": "mortal_expansion:block/haint_furnace",
+      "y": 270
+    },
+    "facing=west,haunt_powered=false,lit=true": {
+      "model": "mortal_expansion:block/haint_furnace_on",
+      "y": 270
+    },
+    "facing=west,haunt_powered=true,lit=false": {
+      "model": "mortal_expansion:block/haint_furnace",
+      "y": 270
+    },
+    "facing=west,haunt_powered=true,lit=true": {
+      "model": "mortal_expansion:block/haint_furnace_haunt",
+      "y": 270
+    }
+  }
+}

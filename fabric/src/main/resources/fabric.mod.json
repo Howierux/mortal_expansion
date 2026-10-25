@@ -3,7 +3,7 @@
   "id": "mortal_expansion",
   "version": "${version}",
   "name": "Mortal Expansion (Fabric development)",
-  "description": "Fabric gameplay port in progress: persistent personal and chunk Haunt, commands and loaded-chunk simulation. Other Mortal Expansion systems are pending.",
+  "description": "Fabric gameplay port in progress: persistent personal and chunk Haunt, commands and loaded-chunk simulation. The original item/block catalog and artwork are available, with basic native equipment and building behavior. Specialized gameplay is still pending.",
   "authors": [
     "Howierux"
   ],

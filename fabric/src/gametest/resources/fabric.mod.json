@@ -6,7 +6,8 @@
   "environment": "*",
   "entrypoints": {
     "fabric-gametest": [
-      "com.howierux.mortalexpansion.gametest.HauntFoundationGameTests"
+      "com.howierux.mortalexpansion.gametest.HauntFoundationGameTests",
+      "com.howierux.mortalexpansion.gametest.CatalogGameTests"
     ]
   },
   "depends": {

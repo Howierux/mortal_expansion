@@ -1,0 +1,6 @@
+{
+  "parent": "minecraft:block/template_trapdoor_top",
+  "textures": {
+    "texture": "mortal_expansion:block/purified_spiritwood_trapdoor"
+  }
+}

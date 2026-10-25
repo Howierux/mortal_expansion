@@ -1,0 +1,37 @@
+{
+  "ambientocclusion": false,
+  "elements": [
+    {
+      "faces": {
+        "north": {
+          "texture": "#grave_moss",
+          "tintindex": 0,
+          "uv": [
+            16.0,
+            0.0,
+            0.0,
+            16.0
+          ]
+        },
+        "south": {
+          "texture": "#grave_moss",
+          "tintindex": 0
+        }
+      },
+      "from": [
+        0,
+        0,
+        0.1
+      ],
+      "to": [
+        16,
+        16,
+        0.1
+      ]
+    }
+  ],
+  "textures": {
+    "grave_moss": "mortal_expansion:block/grave_moss_temporary",
+    "particle": "mortal_expansion:block/grave_moss_temporary"
+  }
+}

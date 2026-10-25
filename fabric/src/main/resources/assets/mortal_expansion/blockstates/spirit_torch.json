@@ -1,0 +1,10 @@
+{
+  "variants": {
+    "lit=false": {
+      "model": "mortal_expansion:block/spirit_torch_off"
+    },
+    "lit=true": {
+      "model": "mortal_expansion:block/spirit_torch"
+    }
+  }
+}

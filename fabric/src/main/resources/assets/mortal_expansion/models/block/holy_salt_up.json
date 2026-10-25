@@ -1,0 +1,27 @@
+{
+  "ambientocclusion": false,
+  "elements": [
+    {
+      "faces": {
+        "south": {
+          "texture": "#salt"
+        }
+      },
+      "from": [
+        6.5,
+        0,
+        0.2
+      ],
+      "shade": false,
+      "to": [
+        9.5,
+        16,
+        0.4
+      ]
+    }
+  ],
+  "textures": {
+    "particle": "minecraft:block/white_concrete_powder",
+    "salt": "minecraft:block/white_concrete_powder"
+  }
+}

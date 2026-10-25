@@ -1,0 +1,6 @@
+{
+  "parent": "minecraft:block/leaves",
+  "textures": {
+    "all": "mortal_expansion:block/spiritwood_leaves_phase0"
+  }
+}

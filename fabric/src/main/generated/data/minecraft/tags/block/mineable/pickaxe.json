@@ -1,0 +1,29 @@
+{
+  "values": [
+    "mortal_expansion:fancifier",
+    "mortal_expansion:fancified_block",
+    "mortal_expansion:ectank",
+    "mortal_expansion:purified_ectank",
+    "mortal_expansion:ecto_pipe",
+    "mortal_expansion:purified_ecto_pipe",
+    "mortal_expansion:mortal_golem_base",
+    "mortal_expansion:wisp_o_lantern",
+    "mortal_expansion:haunted_farmland",
+    "mortal_expansion:gravestone",
+    "mortal_expansion:haunt_furnace",
+    "mortal_expansion:haint_furnace",
+    "mortal_expansion:purified_gravestone",
+    "mortal_expansion:altar_of_impurity",
+    "mortal_expansion:altar_of_purity",
+    "mortal_expansion:mortality_research_station",
+    "mortal_expansion:ectchantment_machine",
+    "mortal_expansion:enchantment_generator",
+    "mortal_expansion:purification_ward",
+    "mortal_expansion:purification_station",
+    "mortal_expansion:grave",
+    "mortal_expansion:stone_fence",
+    "mortal_expansion:bloodstone_ore",
+    "mortal_expansion:bloodstone_ore_stone",
+    "mortal_expansion:spiritwell"
+  ]
+}

@@ -1,0 +1,6 @@
+{
+  "parent": "minecraft:block/torch",
+  "textures": {
+    "torch": "mortal_expansion:block/spirit_torch_off"
+  }
+}

@@ -1,0 +1,19 @@
+{
+  "variants": {
+    "facing=east": {
+      "model": "mortal_expansion:block/purified_dreamcatcher",
+      "y": 90
+    },
+    "facing=north": {
+      "model": "mortal_expansion:block/purified_dreamcatcher"
+    },
+    "facing=south": {
+      "model": "mortal_expansion:block/purified_dreamcatcher",
+      "y": 180
+    },
+    "facing=west": {
+      "model": "mortal_expansion:block/purified_dreamcatcher",
+      "y": 270
+    }
+  }
+}

@@ -1,0 +1,37 @@
+{
+  "parent": "minecraft:block/block",
+  "ambientocclusion": false,
+  "elements": [
+    {
+      "faces": {
+        "north": {
+          "texture": "#web"
+        },
+        "south": {
+          "texture": "#web",
+          "uv": [
+            16.0,
+            0.0,
+            0.0,
+            16.0
+          ]
+        }
+      },
+      "from": [
+        0,
+        0,
+        15.5
+      ],
+      "shade": false,
+      "to": [
+        16,
+        16,
+        15.5
+      ]
+    }
+  ],
+  "textures": {
+    "particle": "#web",
+    "web": "mortal_expansion:item/dreamcatcher_temporary"
+  }
+}

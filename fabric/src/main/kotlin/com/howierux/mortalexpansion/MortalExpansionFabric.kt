@@ -10,6 +10,7 @@ object MortalExpansionFabric : ModInitializer {
 	private val LOGGER = LoggerFactory.getLogger(MOD_ID)
 
 	override fun onInitialize() {
+		com.howierux.mortalexpansion.catalog.Catalog.initialize()
 		com.howierux.mortalexpansion.haunt.HauntRuntime.initialize()
 		LOGGER.info("Mortal Expansion Fabric: Haunt foundation initialized.")
 	}

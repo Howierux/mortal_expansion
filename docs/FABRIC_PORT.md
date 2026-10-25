@@ -1,6 +1,6 @@
 # Fabric port status
 
-**First gameplay slice implemented: personal/chunk Haunt persistence, commands, kill gains, leakage and loaded-chunk simulation. Full gameplay parity is still pending.**
+**Haunt foundation and the full item/block appearance catalog are implemented. Full gameplay parity is still pending.**
 
 Reference baseline: NeoForge dev f080fdc36b994f3abcd2a0b2e0a0687c5130e545. Fabric development belongs in fabric/ on fabric-dev.
 
@@ -14,7 +14,7 @@ Reference baseline: NeoForge dev f080fdc36b994f3abcd2a0b2e0a0687c5130e545. Fabri
 - [x] First gameplay feature port: [Haunt foundation](FABRIC_HAUNT_FOUNDATION.md).
 
 ## Porting sequence
-1. Native item/block registration, resource/data providers and tags.
+1. Native item/block registration and artwork are implemented: 97 items, 60 blocks, native tags and loot. Specialized interactions remain pending.
 2. Haunt persistence is implemented for fresh Fabric worlds. Knowledge, discoveries, ownership, Spirit Journey and NeoForge save migration remain pending.
 3. Event wiring, payloads, permissions and dedicated-server class separation.
 4. World generation/structures and Fabric dependencies such as TerraBlender.
@@ -34,4 +34,4 @@ The isolated Fabric build passes on Java 21. Native jar metadata, all three Kotl
 
 ## Current scope
 
-See [Fabric Haunt foundation](FABRIC_HAUNT_FOUNDATION.md) for storage keys, retained rules, commands, validation and explicit dependent systems not yet ported. There are no Fabric item/block registrations or original mod biomes yet.
+See [Fabric Haunt foundation](FABRIC_HAUNT_FOUNDATION.md) for storage keys, retained rules, commands, validation and explicit dependent systems not yet ported. See [Fabric content catalog](FABRIC_CONTENT_CATALOG.md) for item/block registration, reused artwork and explicit limitations. Original mod biomes are not yet ported.

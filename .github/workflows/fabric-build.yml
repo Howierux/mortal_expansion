@@ -21,9 +21,14 @@ jobs:
           distribution: temurin
           java-version: '21'
       - uses: gradle/actions/setup-gradle@v4
+      - name: Verify reused catalog artwork and models
+        run: |
+          python3 tools/import_catalog_assets.py
+          python3 tools/validate_catalog_assets.py
+          git diff --exit-code -- src/main/resources/assets
       - name: Build Fabric and run headless gameplay tests
         run: ./gradlew build --no-daemon
-      - name: Regenerate and verify Fabric biome tags
+      - name: Regenerate and verify Fabric tags and loot
         run: |
           ./gradlew runDatagen --no-daemon
           git diff --exit-code -- src/main/generated

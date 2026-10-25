@@ -1,0 +1,8 @@
+{
+  "parent": "minecraft:block/outer_stairs",
+  "textures": {
+    "bottom": "mortal_expansion:block/purified_spiritwood_planks",
+    "side": "mortal_expansion:block/purified_spiritwood_planks",
+    "top": "mortal_expansion:block/purified_spiritwood_planks"
+  }
+}

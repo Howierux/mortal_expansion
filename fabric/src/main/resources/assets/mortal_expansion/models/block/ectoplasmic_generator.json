@@ -1,0 +1,12 @@
+{
+  "parent": "minecraft:block/cube",
+  "textures": {
+    "down": "mortal_expansion:block/ectoplasmic_generator_side_temporary",
+    "east": "mortal_expansion:block/ectoplasmic_generator_side_temporary",
+    "north": "mortal_expansion:block/ectoplasmic_generator_front_temporary",
+    "particle": "mortal_expansion:block/ectoplasmic_generator_side_temporary",
+    "south": "mortal_expansion:block/ectoplasmic_generator_side_temporary",
+    "up": "mortal_expansion:block/ectoplasmic_generator_top_temporary",
+    "west": "mortal_expansion:block/ectoplasmic_generator_side_temporary"
+  }
+}

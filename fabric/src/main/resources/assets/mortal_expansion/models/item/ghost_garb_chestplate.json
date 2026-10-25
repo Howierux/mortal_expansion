@@ -1,0 +1,6 @@
+{
+  "parent": "minecraft:item/generated",
+  "textures": {
+    "layer0": "mortal_expansion:item/ghost_garb_chestplate_woven"
+  }
+}

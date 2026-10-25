@@ -44,3 +44,6 @@ replay_*.log
 
 # Datagen incremental cache
 src/main/generated/.cache/
+
+# Kotlin compiler state
+.kotlin/
