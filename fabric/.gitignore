@@ -41,3 +41,6 @@ replay_*.log
 
 # Local logs
 *.log
+
+# Datagen incremental cache
+src/main/generated/.cache/

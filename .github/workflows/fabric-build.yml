@@ -1,4 +1,4 @@
-name: Fabric development build
+name: Fabric development build and gameplay checks
 on:
   push:
     branches: [fabric-dev, fabric, 'fabric/**']
@@ -21,8 +21,12 @@ jobs:
           distribution: temurin
           java-version: '21'
       - uses: gradle/actions/setup-gradle@v4
-      - name: Build Fabric scaffold
+      - name: Build Fabric and run headless gameplay tests
         run: ./gradlew build --no-daemon
+      - name: Regenerate and verify Fabric biome tags
+        run: |
+          ./gradlew runDatagen --no-daemon
+          git diff --exit-code -- src/main/generated
       - name: Upload Fabric development artifact
         uses: actions/upload-artifact@v4
         with:

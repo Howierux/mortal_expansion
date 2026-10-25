@@ -30,6 +30,14 @@ loom {
 }
 
 fabricApi {
+    configureTests {
+        createSourceSet.set(true)
+        modId.set("mortal_expansion_test")
+        enableGameTests.set(true)
+        enableClientGameTests.set(false)
+        eula.set(true)
+        clearRunDirectory.set(false)
+    }
 	configureDataGeneration {
 		client = true
 		modId = "mortal_expansion"
@@ -102,3 +110,6 @@ publishing {
 		// retrieving dependencies.
 	}
 }
+
+// Fabric configureDataGeneration adds its output to resources; do not add it a second time.
+sourceSets.configureEach { resources.exclude(".cache/**") }

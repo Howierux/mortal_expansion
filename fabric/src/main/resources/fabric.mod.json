@@ -3,7 +3,7 @@
   "id": "mortal_expansion",
   "version": "${version}",
   "name": "Mortal Expansion (Fabric development)",
-  "description": "Fabric development scaffold for Mortal Expansion. Gameplay features are not ported yet.",
+  "description": "Fabric gameplay port in progress: persistent personal and chunk Haunt, commands and loaded-chunk simulation. Other Mortal Expansion systems are pending.",
   "authors": [
     "Howierux"
   ],
@@ -39,7 +39,7 @@
     "fabricloader": ">=0.20.1",
     "minecraft": "~1.21.1",
     "java": ">=21",
-    "fabric-api": "*",
+    "fabric-api": ">=0.116.17",
     "fabric-language-kotlin": "*"
   }
 }

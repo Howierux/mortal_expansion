@@ -1,6 +1,6 @@
 # Mortal Expansion
 
-> **Fabric development:** build the scaffold in [fabric/](fabric/README.md). Root sources remain the NeoForge reference; gameplay is not yet ported. See [branch policy](docs/LOADER_BRANCHES.md) and [port status](docs/FABRIC_PORT.md).
+> **Fabric development:** the first [Haunt gameplay foundation](docs/FABRIC_HAUNT_FOUNDATION.md) is implemented in [fabric/](fabric/README.md). Root sources remain the NeoForge reference. The rest of the gameplay port is in progress; see [branch policy](docs/LOADER_BRANCHES.md) and [port status](docs/FABRIC_PORT.md).
 
 Mortal Expansion is a supernatural magic and technology mod for Minecraft. Explore haunted graveyards, bargain with spirits, uncover forbidden crafting knowledge, and build machines powered by ectoplasm. Haunt follows both players and places, bringing opportunities, disturbances, and increasingly dangerous supernatural activity.
 

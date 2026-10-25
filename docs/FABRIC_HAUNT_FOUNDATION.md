@@ -1,0 +1,59 @@
+# Fabric Haunt foundation
+
+This first gameplay slice runs on Fabric 1.21.1. It is a foundation for incremental porting, not a complete Mortal Expansion release. Root NeoForge sources remain unchanged reference code.
+
+## Implemented
+
+- Named Haunt bands and exact hundredths, using the original loader-independent HauntTier/FractionalHaunt rules.
+- New players start at Natural **15.00**. Personal Haunt saves, reloads and survives actual player respawn through Fabric data attachments.
+- Personal attachment updates synchronize to their owner only through Fabric's native attachment synchronization; they are not broadcast to other players.
+- Chunk Haunt initializes once when loaded, is persisted by native chunk serialization, and marks changed chunks for ordinary disk saves.
+- Overworld chunks default to Natural **15**, Nether to Demonic **45**, End to Eldritch **65**. Nine biome samples at Y=64 retain the original tag-driven highest-tier classification without querying neighboring terrain.
+- Confirmed player kills of non-Smite-sensitive mobs add **0.01 personal Haunt**. Smite-sensitive mobs do not add it; projectile ownership remains native damage-source behavior.
+- Every 200 ticks, personal Haunt can transfer one point into a less-haunted current chunk: 0.25% per named tier (Natural 0.25% through Eldritch 1.5%). Fractions survive transfers. The ordinary ranges currently cap personal/chunk Haunt at **69.00**, as before Darkhold awakening.
+- Loaded-chunk spread checks occur every 8,000 day ticks, three times per day. New moon reaches 100% for nonzero values; full moon is weakest. A snapshot prevents same-pass chain spread. Selected unloaded neighbors are skipped without loading or creating chunks.
+- At dawn, each participating loaded chunk has a 10% recovery chance to move one point toward its natural midpoint baseline. Forward time jumps produce at most one pass; startup and reverse time do not replay missed passes.
+- Operator commands retain the existing prefix, named tiers, whole-point adjustments and decimal readout.
+
+## Commands
+
+~~~text
+/mortalexpansion haunt get
+/mortalexpansion haunt natural
+/mortalexpansion haunt set supernatural
+/mortalexpansion haunt add 1
+/mortalexpansion haunt player get
+/mortalexpansion haunt player set natural
+/mortalexpansion haunt player add 10
+/mortalexpansion haunt player add -10
+/mortalexpansion haunt tiers
+~~~
+
+These require permission level 2. Chunk commands use the source's current loaded chunk; unloaded positions are rejected. Player commands affect the executing player (operators can use vanilla execute-as for another player). The API deliberately rejects unloaded chunk access instead of silently generating terrain.
+
+## Fabric boundary and storage
+
+Fabric-specific code is concentrated in FabricHauntData and HauntRuntime. The former registers immutable integer attachments through the supported Fabric API; the latter connects chunk load/unload, login, actual death and server/world tick events. No custom mixin, custom C2S packet or replacement world-save engine is needed.
+
+Persistent attachment IDs:
+
+| Target | ID | Stored value |
+| --- | --- | --- |
+| Chunk | mortal_expansion:chunk_haunt_units | Integer hundredths, 0-6900 |
+| Player | mortal_expansion:player_haunt_units | Integer hundredths, 0-6900; copy on death; owner-only sync |
+
+This is a fresh-world Fabric format. The same mod namespace does **not** migrate NeoForge attachment NBT automatically. Do not use the incomplete port on original mod worlds: most original blocks/items/entities and other persistent systems are not registered yet. A loader migration design remains required before compatibility can be claimed. The Fabric attachment API is experimental in this Minecraft version, so keep changes behind this boundary when updating versions.
+
+The datagen provider writes natural_haunt, supernatural_haunt and dead_rising_haunt biome tags to fabric/src/main/generated. Spiritwood Forest and Graveyard references are optional until those biomes are ported; datapacks can classify other biomes using the same tag IDs. Generated files are committed with their provider; incremental caches are excluded from Git and jars.
+
+## Explicitly deferred
+
+Source comments marked **missing function** identify dependent boundaries: Purification Ward cleansing/exclusions, Graveyard weathering/Bloodstone formation and Darkhold overflow. Haunt effects, recipes, EMF Readers, book progression, original items/blocks/biomes/mobs, machines, rituals and Spirit Journey are not implemented by this slice. Machine tier-change notifications must be connected with the furnace/machine port. No placeholder command pretends these features work.
+
+## Validation
+
+Four isolated Fabric GameTests verify native player save/load and real respawn; chunk NBT round-trip and dirty marking; dimension baselines and unloaded-chunk rejection; actual mob deaths; leakage with fraction preservation; registered command behavior/permissions; moon weights, forward clock boundaries, snapshot/no-chain spread and daily recovery direction. The production build passes these tests on the server side.
+
+A separate client startup check at 30% volume passed and closed automatically. Its temporary probe is removed from production. Release jars exclude the test mod, test classes and generated caches. Joined multiplayer synchronization and long-duration balance still need playtesting; the tests do not establish full mod parity.
+
+Fabric CI runs the build/GameTests, regenerates biome tags and checks for generated-file drift. Client smoke results are local validation, not an automated hosted client test.
