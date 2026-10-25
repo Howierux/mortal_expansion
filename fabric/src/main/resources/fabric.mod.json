@@ -3,7 +3,7 @@
   "id": "mortal_expansion",
   "version": "${version}",
   "name": "Mortal Expansion (Fabric development)",
-  "description": "Fabric gameplay port in progress: persistent personal and chunk Haunt, commands and loaded-chunk simulation. The original item/block catalog and artwork are available, with basic native equipment and building behavior. Generators, fluid tanks and pipes are functional; other specialized gameplay is still pending.",
+  "description": "Fabric gameplay port in progress: persistent personal and chunk Haunt, commands and loaded-chunk simulation. The original item/block catalog and artwork are available, with basic native equipment and building behavior. Generators, tanks/pipes, Haunt furnaces and purification blocks are functional; other specialized gameplay is still pending.",
   "authors": [
     "Howierux"
   ],
@@ -42,5 +42,8 @@
     "fabric-api": ">=0.116.17",
     "fabric-language-kotlin": "*",
     "team_reborn_energy": ">=4.1.0"
-  }
+  },
+  "mixins": [
+    "mortal_expansion.mixins.json"
+  ]
 }

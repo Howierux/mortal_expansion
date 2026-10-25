@@ -35,6 +35,7 @@ public final class CatalogBlockTags extends FabricTagProvider<Block> {
  public static final class Items extends FabricTagProvider<Item> {
   public Items(FabricDataOutput o,CompletableFuture<HolderLookup.Provider> l) { super(o,Registries.ITEM,l); }
   @Override protected void addTags(HolderLookup.Provider lookup) {
+   tag(com.howierux.mortalexpansion.machine.PurificationStationEntity.REAGENTS).add(net.minecraft.resources.ResourceKey.create(Registries.ITEM,Catalog.id("grave_moss")),net.minecraft.resources.ResourceKey.create(Registries.ITEM,Catalog.id("holy_salt")));
    CatalogItems.ALL.forEach((id,item) -> {
     if(item instanceof ArmorItem a) {
      tag(ItemTags.TRIMMABLE_ARMOR).add(net.minecraft.resources.ResourceKey.create(Registries.ITEM,Catalog.id(id))); tag(ItemTags.ARMOR_ENCHANTABLE).add(net.minecraft.resources.ResourceKey.create(Registries.ITEM,Catalog.id(id)));

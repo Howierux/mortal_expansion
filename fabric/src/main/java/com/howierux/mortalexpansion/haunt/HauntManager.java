@@ -27,16 +27,19 @@ public final class HauntManager {
     public static HauntTier getTier(ServerLevel level,ChunkPos pos){return HauntTier.fromValue(getValue(level,pos));}
     public static HauntTier getTier(ServerLevel level,BlockPos pos){return getTier(level,new ChunkPos(pos));}
     public static int setValue(ServerLevel level,ChunkPos pos,int value){
-        int clamped=HauntTier.clampValue(value);((AttachmentTarget)loaded(level,pos)).setAttached(FabricHauntData.CHUNK,clamped*100);return clamped;
+        int clamped=HauntTier.clampValue(value);var chunk=loaded(level,pos);int before=((AttachmentTarget)chunk).getAttachedOrThrow(FabricHauntData.CHUNK);((AttachmentTarget)chunk).setAttached(FabricHauntData.CHUNK,clamped*100);notifyTier(chunk,before,clamped*100);return clamped;
     }
     public static int setValue(ServerLevel level,BlockPos pos,int value){return setValue(level,new ChunkPos(pos),value);}
     public static HauntTier setTier(ServerLevel level,ChunkPos pos,HauntTier tier){setValue(level,pos,tier.midpointValue());return tier;}
     public static HauntTier setTier(ServerLevel level,BlockPos pos,HauntTier tier){return setTier(level,new ChunkPos(pos),tier);}
     public static void addHundredths(ServerLevel level,ChunkPos pos,long amount){
         var chunk=loaded(level,pos);int current=((AttachmentTarget)chunk).getAttachedOrThrow(FabricHauntData.CHUNK);
-        ((AttachmentTarget)chunk).setAttached(FabricHauntData.CHUNK,FractionalHaunt.add(current,amount));
+        int next=FractionalHaunt.add(current,amount);((AttachmentTarget)chunk).setAttached(FabricHauntData.CHUNK,next);notifyTier(chunk,current,next);
     }
     public static void addHundredths(ServerLevel level,BlockPos pos,long amount){addHundredths(level,new ChunkPos(pos),amount);}
+    private static void notifyTier(LevelChunk chunk,int before,int after){
+        if(HauntTier.fromValue(before/100)!=HauntTier.fromValue(after/100))com.howierux.mortalexpansion.machine.HauntFurnaceEntity.onChunkTierChanged(chunk,HauntTier.fromValue(after/100));
+    }
     public static int addPoints(ServerLevel level,ChunkPos pos,int amount){addHundredths(level,pos,(long)amount*100);return getValue(level,pos);}
     public static int addPoints(ServerLevel level,BlockPos pos,int amount){return addPoints(level,new ChunkPos(pos),amount);}
 }

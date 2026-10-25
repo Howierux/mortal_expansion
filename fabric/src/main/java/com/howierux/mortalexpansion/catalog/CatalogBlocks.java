@@ -35,8 +35,8 @@ public static final Block SPIRITWOOD_TRAPDOOR=register("spiritwood_trapdoor",new
 public static final Block SPIRITWOOD_PRESSURE_PLATE=register("spiritwood_pressure_plate",new PressurePlateBlock(BlockSetType.OAK,copy(Blocks.OAK_PRESSURE_PLATE)));
 public static final Block SPIRITWOOD_BUTTON=register("spiritwood_button",new ButtonBlock(BlockSetType.OAK,30,copy(Blocks.OAK_BUTTON)));
 public static final Block GRAVESTONE=register("gravestone",new Block(copy(Blocks.STONE)));
-public static final Block HAUNT_FURNACE=register("haunt_furnace",new HauntFurnaceVisual(BlockBehaviour.Properties.ofFullCopy(Blocks.STONE).noOcclusion()));
-public static final Block HAINT_FURNACE=register("haint_furnace",new HaintFurnaceVisual(BlockBehaviour.Properties.ofFullCopy(Blocks.STONE).noOcclusion()));
+public static final Block HAUNT_FURNACE=register("haunt_furnace",new HauntFurnaceBlock(BlockBehaviour.Properties.ofFullCopy(Blocks.FURNACE)));
+public static final Block HAINT_FURNACE=register("haint_furnace",new HauntFurnaceBlock.Haint(BlockBehaviour.Properties.ofFullCopy(Blocks.FURNACE)));
 public static final Block GRAVE_MOSS=register("grave_moss",new GlowLichenBlock(copy(Blocks.GLOW_LICHEN)));
 public static final Block PURIFIED_GRAVESTONE=register("purified_gravestone",new Block(copy(Blocks.STONE)));
 public static final Block PURIFIED_SPIRITWOOD_LOG=register("purified_spiritwood_log",new RotatedPillarBlock(copy(Blocks.OAK_LOG)));
@@ -55,8 +55,8 @@ public static final Block MORTALITY_RESEARCH_STATION=register("mortality_researc
 public static final Block ECTCHANTMENT_MACHINE=register("ectchantment_machine",new EctchantmentMachineVisual(BlockBehaviour.Properties.ofFullCopy(Blocks.STONE).noOcclusion()));
 public static final Block ECTOPLASMIC_GENERATOR=register("ectoplasmic_generator",new GeneratorBlock(BlockBehaviour.Properties.ofFullCopy(Blocks.STONE).noOcclusion()));
 public static final Block ENCHANTMENT_GENERATOR=register("enchantment_generator",new GeneratorBlock(BlockBehaviour.Properties.ofFullCopy(Blocks.STONE).noOcclusion()));
-public static final Block PURIFICATION_WARD=register("purification_ward",new PurificationWardVisual(BlockBehaviour.Properties.ofFullCopy(Blocks.STONE).noOcclusion()));
-public static final Block PURIFICATION_STATION=register("purification_station",new PurificationStationVisual(BlockBehaviour.Properties.ofFullCopy(Blocks.STONE).noOcclusion()));
+public static final Block PURIFICATION_WARD=register("purification_ward",new PurificationWardBlock(BlockBehaviour.Properties.ofFullCopy(Blocks.STONE).noOcclusion()));
+public static final Block PURIFICATION_STATION=register("purification_station",new PurificationStationBlock(BlockBehaviour.Properties.ofFullCopy(Blocks.STONE).noOcclusion()));
 public static final Block LIQUID_ECTOPLASM_BLOCK=register("liquid_ectoplasm",new LiquidBlock(CatalogFluids.LIQUID_ECTOPLASM.source,copy(Blocks.WATER)));
 public static final Block HOLY_WATER_BLOCK=register("holy_water",new LiquidBlock(CatalogFluids.HOLY_WATER.source,copy(Blocks.WATER)));
 public static final Block PURIFIED_ECTOPLASM_BLOCK=register("purified_ectoplasm_fluid",new LiquidBlock(CatalogFluids.PURIFIED_ECTOPLASM.source,copy(Blocks.WATER)));
@@ -121,25 +121,8 @@ static final IntegerProperty P_FLESH_STAGE = IntegerProperty.create("flesh_stage
  @Override public BlockState getStateForPlacement(net.minecraft.world.item.context.BlockPlaceContext c) { return defaultBlockState().setValue(P_FACING,c.getHorizontalDirection().getOpposite()); }
  
  }
-/** Missing function: port haunt_furnace interactions and simulation; this is its catalog appearance. */
- static final class HauntFurnaceVisual extends Block {
- static final DirectionProperty P_FACING = BlockStateProperties.HORIZONTAL_FACING;
-static final BooleanProperty P_LIT = BlockStateProperties.LIT;
- HauntFurnaceVisual(Properties p) { super(p); registerDefaultState(stateDefinition.any().setValue(P_LIT,false).setValue(P_FACING,net.minecraft.core.Direction.NORTH)); }
- @Override protected void createBlockStateDefinition(StateDefinition.Builder<Block,BlockState> b) { b.add(P_FACING,P_LIT); }
- @Override public BlockState getStateForPlacement(net.minecraft.world.item.context.BlockPlaceContext c) { return defaultBlockState().setValue(P_FACING,c.getHorizontalDirection().getOpposite()); }
- 
- }
-/** Missing function: port haint_furnace interactions and simulation; this is its catalog appearance. */
- static final class HaintFurnaceVisual extends Block {
- static final DirectionProperty P_FACING = BlockStateProperties.HORIZONTAL_FACING;
-static final BooleanProperty P_HAUNT_POWERED = BooleanProperty.create("haunt_powered");
-static final BooleanProperty P_LIT = BlockStateProperties.LIT;
- HaintFurnaceVisual(Properties p) { super(p); registerDefaultState(stateDefinition.any().setValue(P_LIT,false).setValue(P_FACING,net.minecraft.core.Direction.NORTH)); }
- @Override protected void createBlockStateDefinition(StateDefinition.Builder<Block,BlockState> b) { b.add(P_FACING,P_HAUNT_POWERED,P_LIT); }
- @Override public BlockState getStateForPlacement(net.minecraft.world.item.context.BlockPlaceContext c) { return defaultBlockState().setValue(P_FACING,c.getHorizontalDirection().getOpposite()); }
- 
- }
+
+
 /** Missing function: port altar_of_impurity interactions and simulation; this is its catalog appearance. */
  static final class AltarOfImpurityVisual extends Block {
  static final BooleanProperty P_LIT = BlockStateProperties.LIT;
@@ -174,22 +157,8 @@ static final BooleanProperty P_LIT = BlockStateProperties.LIT;
  }
 
 
-/** Missing function: port purification_ward interactions and simulation; this is its catalog appearance. */
- static final class PurificationWardVisual extends Block {
- 
- PurificationWardVisual(Properties p) { super(p); registerDefaultState(stateDefinition.any()); }
- @Override protected void createBlockStateDefinition(StateDefinition.Builder<Block,BlockState> b) {  }
- 
- 
- }
-/** Missing function: port purification_station interactions and simulation; this is its catalog appearance. */
- static final class PurificationStationVisual extends Block {
- 
- PurificationStationVisual(Properties p) { super(p); registerDefaultState(stateDefinition.any()); }
- @Override protected void createBlockStateDefinition(StateDefinition.Builder<Block,BlockState> b) {  }
- 
- 
- }
+
+
 /** Missing function: port spirit_torch interactions and simulation; this is its catalog appearance. */
  static final class SpiritTorchVisual extends Block {
  static final BooleanProperty P_LIT = BlockStateProperties.LIT;

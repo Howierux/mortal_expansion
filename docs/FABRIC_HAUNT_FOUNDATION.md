@@ -48,7 +48,7 @@ The datagen provider writes natural_haunt, supernatural_haunt and dead_rising_ha
 
 ## Explicitly deferred
 
-Source comments marked **missing function** identify dependent boundaries: Purification Ward cleansing/exclusions, Graveyard weathering/Bloodstone formation and Darkhold overflow. Haunt effects, recipes, EMF Readers, book progression, original items/blocks/biomes/mobs, machines, rituals and Spirit Journey are not implemented by this slice. Machine tier-change notifications must be connected with the furnace/machine port. No placeholder command pretends these features work.
+Source comments marked **missing function** identify dependent boundaries: Graveyard weathering/Bloodstone formation and Darkhold overflow. Purification Ward cleansing/exclusions are now connected by the purification port. Haunt effects, recipes, EMF Readers, book progression, original items/blocks/biomes/mobs, machines, rituals and Spirit Journey are not implemented by this slice. Furnace tier-change notifications are now connected through the authoritative Haunt manager. No placeholder command pretends these features work.
 
 ## Validation
 

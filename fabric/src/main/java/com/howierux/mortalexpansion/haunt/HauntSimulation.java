@@ -23,18 +23,22 @@ public final class HauntSimulation {
     public static boolean leak(ServerLevel level,net.minecraft.server.level.ServerPlayer p,float roll){
         int personal=PlayerHauntManager.getValue(p);var pos=p.chunkPosition();
         if(level.getChunkSource().getChunkNow(pos.x,pos.z)==null || personal<=HauntManager.getValue(level,pos) || roll>=leakChance(personal))return false;
-        // missing function: Purification Ward exclusions must be connected when Ward blocks are ported.
+        if(PurificationWardTracker.isChunkProtected(level,pos))return false;
         HauntManager.addPoints(level,pos,1);PlayerHauntManager.addPoints(p,-1);return true;
     }
     public static Map<Long,Integer> plan(Map<Long,Integer> starting,Map<Long,Integer> floors,boolean spread,boolean daily,int moon,RandomSource random){
+        return plan(starting,floors,spread,daily,moon,random,Set.of());
+    }
+    public static Map<Long,Integer> plan(Map<Long,Integer> starting,Map<Long,Integer> floors,boolean spread,boolean daily,int moon,RandomSource random,Set<Long> protectedChunks){
         var planned=new HashMap<>(starting);
+        if(daily)for(long key:protectedChunks)if(planned.containsKey(key))planned.put(key,Math.max(0,planned.get(key)-1));
         for(var entry:starting.entrySet()){
             long key=entry.getKey();int value=entry.getValue();
-            if(spread && value>0 && random.nextFloat()<spreadChance(value,moon)){
+            if(spread && !protectedChunks.contains(key) && value>0 && random.nextFloat()<spreadChance(value,moon)){
                 var at=new ChunkPos(key);int[] side=SIDES[random.nextInt(4)];long target=ChunkPos.asLong(at.x+side[0],at.z+side[1]);
-                if(starting.containsKey(target))planned.compute(target,(k,v)->Math.min(HauntTier.MAX_VALUE,v+1));
+                if(starting.containsKey(target)&&!protectedChunks.contains(target))planned.compute(target,(k,v)->Math.min(HauntTier.MAX_VALUE,v+1));
             }
-            if(daily && random.nextFloat()<.10F){
+            if(daily && !protectedChunks.contains(key) && random.nextFloat()<.10F){
                 int floor=floors.getOrDefault(key,HauntTier.NATURAL.midpointValue()),current=planned.get(key);
                 planned.put(key,current+Integer.compare(floor,current));
             }
@@ -52,8 +56,9 @@ public final class HauntSimulation {
             starting.put(key,HauntManager.getValue(level,pos));
             if(daily)floors.put(key,NaturalHauntGenerator.determineInitialTier(level,chunk).midpointValue());
         }
-        // missing function: Ward cleansing/exclusions, Graveyard weathering and Bloodstone formation depend on their block/content ports.
-        for(var entry:plan(starting,floors,true,daily,level.getMoonPhase(),level.random).entrySet()){
+        // Missing function: Graveyard weathering and Bloodstone formation depend on their block/content ports.
+        var protectedChunks=PurificationWardTracker.protectedLoadedChunks(level,starting.keySet());
+        for(var entry:plan(starting,floors,true,daily,level.getMoonPhase(),level.random,protectedChunks).entrySet()){
             int change=entry.getValue()-starting.get(entry.getKey());if(change!=0)HauntManager.addPoints(level,new ChunkPos(entry.getKey()),change);
         }
     }

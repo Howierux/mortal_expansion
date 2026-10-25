@@ -1,0 +1,12 @@
+{
+  "type": "minecraft:smelting",
+  "category": "blocks",
+  "cookingtime": 200,
+  "experience": 0.0,
+  "ingredient": {
+    "item": "mortal_expansion:holy_water_bucket"
+  },
+  "result": {
+    "id": "mortal_expansion:holy_salt"
+  }
+}
