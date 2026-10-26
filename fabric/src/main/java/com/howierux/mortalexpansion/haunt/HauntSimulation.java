@@ -48,17 +48,25 @@ public final class HauntSimulation {
     public static void tick(ServerLevel level){
         if(!NaturalHauntGenerator.supportsDimension(level))return;
         if(level.getGameTime()%200==0)for(var p:level.players())leak(level,p,level.random.nextFloat());
-        long now=level.getDayTime();Long previous=LAST.put(level,now);if(previous==null || !spreadCheckDue(previous,now))return;
+        long now=level.getDayTime();Long previous=LAST.put(level,now);if(previous==null)return;boolean spread=spreadCheckDue(previous,now),bloodstone=BloodstoneFormation.due(previous,now);if(!spread&&!bloodstone)return;
         boolean daily=Math.floorDiv(now,24000)>Math.floorDiv(previous,24000);
         var starting=new HashMap<Long,Integer>();var floors=new HashMap<Long,Integer>();
         for(long key:List.copyOf(LOADED.getOrDefault(level,Set.of()))){
             var pos=new ChunkPos(key);var chunk=level.getChunkSource().getChunkNow(pos.x,pos.z);if(chunk==null)continue;
+            if(daily)GraveyardStoneWeathering.sample(level,chunk);
             starting.put(key,HauntManager.getValue(level,pos));
             if(daily)floors.put(key,NaturalHauntGenerator.determineInitialTier(level,chunk).midpointValue());
         }
-        // Missing function: Graveyard weathering and Bloodstone formation depend on their block/content ports.
         var protectedChunks=PurificationWardTracker.protectedLoadedChunks(level,starting.keySet());
-        for(var entry:plan(starting,floors,true,daily,level.getMoonPhase(),level.random,protectedChunks).entrySet()){
+        var results=plan(starting,floors,spread,daily,level.getMoonPhase(),level.random,protectedChunks);
+        if(bloodstone)for(var entry:starting.entrySet())if(entry.getValue()>=30&&level.random.nextFloat()<BloodstoneFormation.chance(entry.getValue())){
+            var pos=new ChunkPos(entry.getKey());var chunk=level.getChunkSource().getChunkNow(pos.x,pos.z);
+            if(chunk!=null&&BloodstoneFormation.convert(level,chunk,level.random)){
+                int floor=NaturalHauntGenerator.determineInitialTier(level,chunk).midpointValue(),planned=results.get(entry.getKey());
+                if(planned>floor)results.put(entry.getKey(),Math.max(floor,planned-1));
+            }
+        }
+        for(var entry:results.entrySet()){
             int change=entry.getValue()-starting.get(entry.getKey());if(change!=0)HauntManager.addPoints(level,new ChunkPos(entry.getKey()),change);
         }
     }

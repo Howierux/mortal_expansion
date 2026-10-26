@@ -1,8 +1,5 @@
 {
   "values": [
-    {
-      "id": "mortal_expansion:spiritwood_forest",
-      "required": false
-    }
+    "mortal_expansion:spiritwood_forest"
   ]
 }

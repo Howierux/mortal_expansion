@@ -1,0 +1,14 @@
+{
+  "placement": {
+    "type": "minecraft:random_spread",
+    "salt": 18470631,
+    "separation": 7,
+    "spacing": 9
+  },
+  "structures": [
+    {
+      "structure": "mortal_expansion:graveyard_cemetery",
+      "weight": 1
+    }
+  ]
+}

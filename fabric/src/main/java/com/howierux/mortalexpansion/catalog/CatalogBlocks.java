@@ -10,6 +10,8 @@ import net.minecraft.world.level.block.state.*;
 import net.minecraft.world.level.block.state.properties.*;
 import net.minecraft.util.valueproviders.UniformInt;
 public final class CatalogBlocks {
+ public static final IntegerProperty GRAVE_DEPTH=IntegerProperty.create("depth",0,2);
+ public static final BooleanProperty GRAVE_NATURAL=BooleanProperty.create("natural");
  public static final Map<String,Block> ALL=new LinkedHashMap<>();
  static BlockBehaviour.Properties copy(Block b) { return BlockBehaviour.Properties.ofFullCopy(b); }
  static Block register(String id,Block block) { ALL.put(id,block); return Registry.register(BuiltInRegistries.BLOCK,Catalog.id(id),block); }
@@ -71,11 +73,9 @@ public static final Block STONE_FENCE=register("stone_fence",new FenceBlock(copy
 public static final Block BLOODSTONE_ORE=register("bloodstone_ore",new DropExperienceBlock(UniformInt.of(3,7),copy(Blocks.DEEPSLATE_DIAMOND_ORE)));
 public static final Block BLOODSTONE_ORE_STONE=register("bloodstone_ore_stone",new DropExperienceBlock(UniformInt.of(3,7),copy(Blocks.DIAMOND_ORE)));
 public static final Block SPIRITWOOD_LEAVES=register("spiritwood_leaves",new LeavesBlock(copy(Blocks.OAK_LEAVES)));
-public static final Block SPIRITWOOD_SAPLING=register("spiritwood_sapling",new CatalogBlocks.SaplingVisual(copy(Blocks.OAK_SAPLING)));
+public static final Block SPIRITWOOD_SAPLING=register("spiritwood_sapling",new com.howierux.mortalexpansion.worldgen.SpiritwoodSaplingBlock(com.howierux.mortalexpansion.worldgen.ModTreeGrowers.SPIRITWOOD,copy(Blocks.OAK_SAPLING)));
 public static final Block SPIRITWELL=register("spiritwell",new SpiritwellVisual(BlockBehaviour.Properties.of().strength(-1,3600000).noCollission().noOcclusion().noLootTable()));
  public static void initialize() {}
- /** Missing function: Spiritwood tree features and growth. */
- static final class SaplingVisual extends BushBlock { SaplingVisual(Properties p) { super(p); } @Override protected net.minecraft.world.phys.shapes.VoxelShape getShape(BlockState s,net.minecraft.world.level.BlockGetter l,BlockPos p,net.minecraft.world.phys.shapes.CollisionContext c) { return box(2,0,2,14,12,14); } @Override protected com.mojang.serialization.MapCodec<? extends BushBlock> codec() { return simpleCodec(SaplingVisual::new); } }
 /** Missing function: port fancifier interactions and simulation; this is its catalog appearance. */
  static final class FancifierVisual extends Block {
  static final DirectionProperty P_FACING = BlockStateProperties.HORIZONTAL_FACING;
@@ -168,9 +168,9 @@ static final EnumProperty<RedstoneSide> P_WEST = BlockStateProperties.WEST_REDST
  }
 /** Missing function: port grave interactions and simulation; this is its catalog appearance. */
  static final class GraveVisual extends Block {
- static final IntegerProperty P_DEPTH = IntegerProperty.create("depth",0,2);
+ static final IntegerProperty P_DEPTH = GRAVE_DEPTH;
 static final DirectionProperty P_FACING = BlockStateProperties.HORIZONTAL_FACING;
-static final BooleanProperty P_NATURAL = BooleanProperty.create("natural");
+static final BooleanProperty P_NATURAL = GRAVE_NATURAL;
  GraveVisual(Properties p) { super(p); registerDefaultState(stateDefinition.any().setValue(P_DEPTH,1).setValue(P_FACING,net.minecraft.core.Direction.NORTH)); }
  @Override protected void createBlockStateDefinition(StateDefinition.Builder<Block,BlockState> b) { b.add(P_DEPTH,P_FACING,P_NATURAL); }
  @Override public BlockState getStateForPlacement(net.minecraft.world.item.context.BlockPlaceContext c) { return defaultBlockState().setValue(P_FACING,c.getHorizontalDirection().getOpposite()); }

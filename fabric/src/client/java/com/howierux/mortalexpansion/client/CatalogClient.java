@@ -20,6 +20,10 @@ public final class CatalogClient {
   return 0xFF000000|(r<<16)|(g<<8)|b;
  }
  public static void initialize() {
+  net.minecraft.client.renderer.item.ItemProperties.register(CatalogItems.EMF_READER,Catalog.id("emf_level"),(stack,world,holder,seed)->EmfReaderClient.modelLevel(stack,holder)/12.0F);
+  net.fabricmc.fabric.api.client.rendering.v1.HudRenderCallback.EVENT.register(EmfReaderClient::render);
+  net.fabricmc.fabric.api.client.rendering.v1.BuiltinItemRendererRegistry.INSTANCE.register(CatalogItems.PRECISE_EMF_READER,new PreciseEmfRenderer());
+  net.fabricmc.fabric.api.client.model.loading.v1.ModelLoadingPlugin.register(context->{for(int i=0;i<=12;i++)context.addModels(Catalog.id("item/precise_emf_reader_"+i));});
   net.fabricmc.fabric.api.client.networking.v1.ClientPlayNetworking.registerGlobalReceiver(com.howierux.mortalexpansion.guide.BookOpenPayload.TYPE,(payload,context)->context.client().execute(()->EctceteraBookScreen.open(payload.hand())));
   net.minecraft.client.gui.screens.MenuScreens.register(com.howierux.mortalexpansion.machine.Machines.RESEARCH_MENU,com.howierux.mortalexpansion.client.screen.MortalityResearchStationScreen::new);
   net.minecraft.client.gui.screens.MenuScreens.register(com.howierux.mortalexpansion.machine.Machines.PURITY_MENU,com.howierux.mortalexpansion.client.screen.AltarScreen::new);
@@ -29,7 +33,7 @@ public final class CatalogClient {
   net.minecraft.client.gui.screens.MenuScreens.register(com.howierux.mortalexpansion.machine.Machines.ENCHANT_MENU,com.howierux.mortalexpansion.client.screen.EnchantmentGeneratorScreen::new);
   net.minecraft.client.renderer.blockentity.BlockEntityRenderers.register(com.howierux.mortalexpansion.machine.Machines.FLUID,EctankRenderer::new);
 
-  net.minecraft.client.renderer.item.ItemProperties.register(CatalogItems.BOOK_OF_ECTCETERA,Catalog.id("book_tier"),(stack,level,entity,seed) -> stack.getOrDefault(Catalog.BOOK_TIER,0));
+  net.minecraft.client.renderer.item.ItemProperties.register(CatalogItems.BOOK_OF_ECTCETERA,Catalog.id("book_tier"),(stack,level,entity,seed) -> stack.getOrDefault(Catalog.BOOK_TIER,0)/4.0F);
   net.fabricmc.fabric.api.client.rendering.v1.ColorProviderRegistry.BLOCK.register((state,world,pos,tint) -> coolFoliage(world!=null&&pos!=null?net.minecraft.client.renderer.BiomeColors.getAverageFoliageColor(world,pos):net.minecraft.world.level.FoliageColor.getDefaultColor()),CatalogBlocks.SPIRITWOOD_LEAVES);
   net.fabricmc.fabric.api.client.rendering.v1.ColorProviderRegistry.ITEM.register((stack,tint) -> coolFoliage(net.minecraft.world.level.FoliageColor.getDefaultColor()),CatalogItems.SPIRITWOOD_LEAVES);
 
@@ -58,6 +62,6 @@ public final class CatalogClient {
   BlockRenderLayerMap.INSTANCE.putFluids(RenderType.translucent(),pair.source,pair.flowing);
  }
  private static boolean pending(String id) {
-  return !(java.util.Set.of("mortality_research_station","book_of_ectcetera","ritual_star","altar_of_purity","altar_of_impurity","haunt_furnace","haint_furnace","purification_station","purification_ward","ecto_pipe","purified_ecto_pipe","ectank","purified_ectank","ectoplasmic_generator","enchantment_generator").contains(id)||id.equals("bloodstone")||id.equals("demonic_ash")||id.endsWith("ectoplasm")||id.endsWith("ectothread")||id.equals("gravestone")||id.equals("purified_gravestone")||id.startsWith("spiritwood_")&&!id.endsWith("sapling")||id.startsWith("purified_spiritwood_")||id.equals("stone_fence")||id.startsWith("bloodstone_ore"));
+  return !(java.util.Set.of("spiritwood_sapling","emf_reader","precise_emf_reader","mortality_research_station","book_of_ectcetera","ritual_star","altar_of_purity","altar_of_impurity","haunt_furnace","haint_furnace","purification_station","purification_ward","ecto_pipe","purified_ecto_pipe","ectank","purified_ectank","ectoplasmic_generator","enchantment_generator").contains(id)||id.equals("bloodstone")||id.equals("demonic_ash")||id.endsWith("ectoplasm")||id.endsWith("ectothread")||id.equals("gravestone")||id.equals("purified_gravestone")||id.startsWith("spiritwood_")&&!id.endsWith("sapling")||id.startsWith("purified_spiritwood_")||id.equals("stone_fence")||id.startsWith("bloodstone_ore"));
  }
 }

@@ -1,3 +1,19 @@
 {
-  "parent": "mortal_expansion:item/precise_emf_reader_0"
+  "parent": "builtin/entity",
+  "display": {
+    "firstperson_lefthand": {
+      "scale": [
+        0.8,
+        0.8,
+        0.8
+      ]
+    },
+    "firstperson_righthand": {
+      "scale": [
+        0.8,
+        0.8,
+        0.8
+      ]
+    }
+  }
 }

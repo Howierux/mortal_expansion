@@ -7,6 +7,7 @@ plugins {
 }
 
 repositories {
+    maven("https://maven.minecraftforge.net/")
     maven("https://maven.fabricmc.net")
 	// Add repositories to retrieve artifacts from in here.
 	// You should only use this when depending on other mods because
@@ -46,6 +47,7 @@ fabricApi {
 }
 
 dependencies {
+    modImplementation("com.github.glitchfiend:TerraBlender-fabric:1.21.1-4.1.0.8")
     include(modImplementation("teamreborn:energy:${providers.gradleProperty("energy_api_version").get()}")!!)
 	// To change the versions see the gradle.properties file
 	minecraft("com.mojang:minecraft:${providers.gradleProperty("minecraft_version").get()}")

@@ -8,12 +8,12 @@ import net.minecraft.world.level.block.*;
 import net.minecraft.world.level.block.state.*;
 import net.minecraft.world.level.block.state.properties.*;
 import net.minecraft.util.valueproviders.UniformInt;
-/** Native item types provide ordinary use/equipment. Missing function: specialized powers, book UI and machines. */
+/** Native item types provide ordinary use/equipment. Missing function: remaining specialized equipment powers. */
 public final class CatalogItems {
  public static final Map<String,Item> ALL=new LinkedHashMap<>();
  static Item register(String id,Item item) { ALL.put(id,item); return Registry.register(BuiltInRegistries.ITEM,Catalog.id(id),item); }
-public static final Item PRECISE_EMF_READER=register("precise_emf_reader",new Item(new Item.Properties().stacksTo(1)));
-public static final Item EMF_READER=register("emf_reader",new Item(new Item.Properties().stacksTo(1)));
+public static final Item PRECISE_EMF_READER=register("precise_emf_reader",new com.howierux.mortalexpansion.haunt.EmfReaderItem(new Item.Properties().stacksTo(1)));
+public static final Item EMF_READER=register("emf_reader",new com.howierux.mortalexpansion.haunt.EmfReaderItem(new Item.Properties().stacksTo(1)));
 public static final Item RITUAL_STAR=register("ritual_star",new Item(new Item.Properties().stacksTo(1)));
 public static final Item DEMONIC_ASH=register("demonic_ash",new Item(new Item.Properties()));
 public static final Item SPIRIT_BOON=register("spirit_boon",new Item(new Item.Properties()));

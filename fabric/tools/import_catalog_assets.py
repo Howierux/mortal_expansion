@@ -35,7 +35,11 @@ def main():
     data={'parent':'minecraft:block/block','textures':textures,'elements':elements}
    if data.get('loader')=='neoforge:fluid_container':
     data=bucket_model()
-   if src.name=='precise_emf_reader.json': data={'parent':'mortal_expansion:item/precise_emf_reader_0'}
+   if src.name in ['emf_reader.json','book_of_ectcetera.json']:
+    divisor=12 if src.name=='emf_reader.json' else 4
+    for override in data.get('overrides',[]):
+     for key in override.get('predicate',{}): override['predicate'][key]/=divisor
+   if src.name=='precise_emf_reader.json': data={'parent':'builtin/entity','display':json.loads((ROOT/'src/generated/resources/assets/mortal_expansion/models/item/emf_reader_0.json').read_text()) .get('display',{})}
    if src.name=='fancified_block.json':
     data={'variants':{'':{'model':'mortal_expansion:block/gravestone'}}} if folder=='blockstates' else {'parent':'mortal_expansion:block/gravestone'}
    if data.get('parent')=='minecraft:block/cube_orientable': data['parent']='minecraft:block/orientable'

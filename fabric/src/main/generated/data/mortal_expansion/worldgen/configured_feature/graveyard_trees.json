@@ -1,0 +1,15 @@
+{
+  "type": "minecraft:random_selector",
+  "config": {
+    "default": "minecraft:trees_plains",
+    "features": [
+      {
+        "chance": 0.8,
+        "feature": {
+          "feature": "mortal_expansion:spiritwood_tree",
+          "placement": []
+        }
+      }
+    ]
+  }
+}

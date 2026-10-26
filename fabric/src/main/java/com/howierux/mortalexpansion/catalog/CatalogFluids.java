@@ -34,7 +34,7 @@ public final class CatalogFluids {
   @Override public Item getBucket() { return CatalogItems.ALL.get(pair.bucket); }
   @Override public boolean isSame(Fluid f) { return f==pair.source||f==pair.flowing; }
   @Override public BlockState createLegacyBlock(FluidState state) { return CatalogBlocks.ALL.get(pair.block).defaultBlockState().setValue(LiquidBlock.LEVEL,getLegacyLevel(state)); }
-  // Missing function: ectoplasm viscosity, holy-water blessing, cauldrons and machine transfer.
+  // Missing function: ectoplasm viscosity, holy-water blessing, and cauldrons.
  }
  private static final class Source extends Base {
   Source(Pair p) { super(p); }

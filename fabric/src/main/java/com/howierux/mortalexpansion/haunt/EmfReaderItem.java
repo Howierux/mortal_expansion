@@ -1,0 +1,67 @@
+package com.howierux.mortalexpansion.haunt;
+
+import com.howierux.mortalexpansion.haunt.*;
+import com.howierux.mortalexpansion.catalog.Catalog;
+import net.minecraft.ChatFormatting;
+import net.minecraft.network.chat.Component;
+import net.minecraft.server.level.ServerPlayer;
+import net.minecraft.world.*;
+import net.minecraft.world.entity.Entity;
+import net.minecraft.world.entity.LivingEntity;
+import net.minecraft.world.entity.player.Player;
+import net.minecraft.world.item.*;
+import net.minecraft.world.item.context.UseOnContext;
+import net.minecraft.world.level.Level;
+import java.util.List;
+
+/** Read-only sensor: the server samples both sources, and held use selects the personal display. */
+public final class EmfReaderItem extends Item {
+    public static final net.minecraft.core.component.DataComponentType<EmfReading> EMF_READING = net.minecraft.core.Registry.register(net.minecraft.core.registries.BuiltInRegistries.DATA_COMPONENT_TYPE,Catalog.id("emf_reading"),net.minecraft.core.component.DataComponentType.<EmfReading>builder().networkSynchronized(EmfReading.STREAM_CODEC).build());
+    public static void initialize(){net.fabricmc.fabric.api.event.player.UseBlockCallback.EVENT.register((player,world,hand,hit)->player.getItemInHand(hand).getItem() instanceof EmfReaderItem reader?reader.use(world,player,hand).getResult():InteractionResult.PASS);}
+    public EmfReaderItem(Properties properties) { super(properties); }
+    @Override public void inventoryTick(ItemStack stack, Level level, Entity entity, int slot, boolean selected) {
+        if (!(entity instanceof ServerPlayer player)) return;
+        if (stack == player.getMainHandItem() || stack == player.getOffhandItem()) sample(stack, player);
+        else stack.remove(EMF_READING);
+    }
+    public static void sample(ItemStack stack, ServerPlayer player) {
+        var pos = player.chunkPosition();
+        // A player's current chunk is already loaded; never scan adjacent or unloaded chunks.
+        if (!player.serverLevel().hasChunk(pos.x, pos.z)) return;
+        var sample = new EmfReading(player.level().dimension().location(), pos.x, pos.z, player.getUUID(),
+                HauntManager.getHundredths(player.serverLevel(), pos), PlayerHauntManager.getHundredths(player));
+        if (!sample.equals(stack.get(EMF_READING))) stack.set(EMF_READING, sample);
+    }
+    public static EmfReading reading(ItemStack stack, Player player) {
+        var sample = stack.get(EMF_READING);
+        return sample != null && sample.isCurrentFor(player) ? sample : null;
+    }
+    public static boolean personal(ItemStack stack, LivingEntity holder) {
+        return holder != null && holder.isUsingItem() && holder.getUseItem() == stack;
+    }
+    public static int value(ItemStack stack, Player player) {
+        var sample = reading(stack, player);
+        if (sample == null) return -1;
+        return personal(stack, player) ? sample.personalHaunt() : sample.chunkHaunt();
+    }
+    public static int hundredths(ItemStack stack, Player player) {
+        var sample = reading(stack, player);
+        return sample == null ? -1 : personal(stack, player) ? sample.personalHundredths()
+                : sample.chunkHundredths();
+    }
+    @Override public InteractionResultHolder<ItemStack> use(Level level, Player player, InteractionHand hand) {
+        var stack = player.getItemInHand(hand);
+        if (player instanceof ServerPlayer serverPlayer) sample(stack, serverPlayer);
+        player.startUsingItem(hand);
+        return InteractionResultHolder.consume(stack);
+    }
+    @Override public int getUseDuration(ItemStack stack, LivingEntity entity) { return 72000; }
+    @Override public UseAnim getUseAnimation(ItemStack stack) { return UseAnim.NONE; }
+    @Override public void appendHoverText(ItemStack stack, TooltipContext context, List<Component> tooltip, TooltipFlag flag) {
+        tooltip.add(Component.translatable("tooltip.mortal_expansion.emf_reader.chunk").withStyle(ChatFormatting.GRAY));
+        tooltip.add(Component.translatable("tooltip.mortal_expansion.emf_reader.personal").withStyle(ChatFormatting.AQUA));
+        if (stack.is(com.howierux.mortalexpansion.catalog.CatalogItems.PRECISE_EMF_READER))
+            tooltip.add(Component.translatable("tooltip.mortal_expansion.emf_reader.precise").withStyle(ChatFormatting.GREEN));
+        tooltip.add(Component.translatable("tooltip.mortal_expansion.emf_reader.scale").withStyle(ChatFormatting.GRAY));
+    }
+}

@@ -4,7 +4,7 @@
     {
       "model": "mortal_expansion:item/darkhold",
       "predicate": {
-        "mortal_expansion:book_tier": 4.0
+        "mortal_expansion:book_tier": 1.0
       }
     }
   ],

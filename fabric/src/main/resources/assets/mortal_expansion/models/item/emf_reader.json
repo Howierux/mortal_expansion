@@ -4,73 +4,73 @@
     {
       "model": "mortal_expansion:item/emf_reader_1",
       "predicate": {
-        "mortal_expansion:emf_level": 1.0
+        "mortal_expansion:emf_level": 0.08333333333333333
       }
     },
     {
       "model": "mortal_expansion:item/emf_reader_2",
       "predicate": {
-        "mortal_expansion:emf_level": 2.0
+        "mortal_expansion:emf_level": 0.16666666666666666
       }
     },
     {
       "model": "mortal_expansion:item/emf_reader_3",
       "predicate": {
-        "mortal_expansion:emf_level": 3.0
+        "mortal_expansion:emf_level": 0.25
       }
     },
     {
       "model": "mortal_expansion:item/emf_reader_4",
       "predicate": {
-        "mortal_expansion:emf_level": 4.0
+        "mortal_expansion:emf_level": 0.3333333333333333
       }
     },
     {
       "model": "mortal_expansion:item/emf_reader_5",
       "predicate": {
-        "mortal_expansion:emf_level": 5.0
+        "mortal_expansion:emf_level": 0.4166666666666667
       }
     },
     {
       "model": "mortal_expansion:item/emf_reader_6",
       "predicate": {
-        "mortal_expansion:emf_level": 6.0
+        "mortal_expansion:emf_level": 0.5
       }
     },
     {
       "model": "mortal_expansion:item/emf_reader_7",
       "predicate": {
-        "mortal_expansion:emf_level": 7.0
+        "mortal_expansion:emf_level": 0.5833333333333334
       }
     },
     {
       "model": "mortal_expansion:item/emf_reader_8",
       "predicate": {
-        "mortal_expansion:emf_level": 8.0
+        "mortal_expansion:emf_level": 0.6666666666666666
       }
     },
     {
       "model": "mortal_expansion:item/emf_reader_9",
       "predicate": {
-        "mortal_expansion:emf_level": 9.0
+        "mortal_expansion:emf_level": 0.75
       }
     },
     {
       "model": "mortal_expansion:item/emf_reader_10",
       "predicate": {
-        "mortal_expansion:emf_level": 10.0
+        "mortal_expansion:emf_level": 0.8333333333333334
       }
     },
     {
       "model": "mortal_expansion:item/emf_reader_11",
       "predicate": {
-        "mortal_expansion:emf_level": 11.0
+        "mortal_expansion:emf_level": 0.9166666666666666
       }
     },
     {
       "model": "mortal_expansion:item/emf_reader_12",
       "predicate": {
-        "mortal_expansion:emf_level": 12.0
+        "mortal_expansion:emf_level": 1.0
       }
     }
   ]

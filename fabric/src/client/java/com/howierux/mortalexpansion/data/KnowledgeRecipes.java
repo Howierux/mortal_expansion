@@ -20,6 +20,8 @@ public final class KnowledgeRecipes extends FabricRecipeProvider {
    public void accept(ResourceLocation id,Recipe<?> recipe,net.minecraft.advancements.AdvancementHolder advancement){output.accept(id,recipe,InsightSecret.required(id)==0?advancement:null);}
   };
   ShapelessRecipeBuilder.shapeless(RecipeCategory.MISC,CatalogItems.BOOK_OF_ECTCETERA).requires(Items.BOOK).requires(Items.ROTTEN_FLESH).unlockedBy("has_flesh",has(Items.ROTTEN_FLESH)).save(out,Catalog.id("book_of_ectcetera"));
+  shape(out,"emf_reader",RecipeCategory.TOOLS,CatalogItems.EMF_READER,1,new String[]{"III","RSR","III"},java.util.Map.of('I',Items.IRON_INGOT,'R',Items.REDSTONE,'S',CatalogItems.HOLY_SALT));
+  shapeless(out,"precise_emf_reader",CatalogItems.PRECISE_EMF_READER,1,CatalogItems.EMF_READER,CatalogItems.RAW_ECTOPLASM);
   for(int tier=0;tier<4;tier++){
    var id=Catalog.id("book_of_ectcetera_upgrade_"+(tier+1));
    var advancement=out.advancement().parent(ResourceLocation.withDefaultNamespace("recipes/root")).addCriterion("has_book",has(CatalogItems.BOOK_OF_ECTCETERA)).rewards(net.minecraft.advancements.AdvancementRewards.Builder.recipe(id)).build(id.withPrefix("recipes/misc/"));
@@ -64,6 +66,6 @@ public final class KnowledgeRecipes extends FabricRecipeProvider {
   shape(out,"purified_spiritwood_log",RecipeCategory.BUILDING_BLOCKS,CatalogItems.PURIFIED_SPIRITWOOD_LOG,8,new String[]{"LLL","LEL","LLL"},java.util.Map.of('E',CatalogItems.PURE_ECTOPLASM,'L',CatalogItems.SPIRITWOOD_LOG));
   shapeless(out,"purified_spiritwood_planks",CatalogItems.PURIFIED_SPIRITWOOD_PLANKS,4,CatalogItems.PURIFIED_SPIRITWOOD_LOG);
  }
- private void shape(RecipeOutput output,String id,RecipeCategory category,ItemLike result,int count,String[] pattern,java.util.Map<Character,ItemLike> keys){var builder=ShapedRecipeBuilder.shaped(category,result,count);for(var row:pattern)builder.pattern(row);keys.forEach(builder::define);builder.unlockedBy("has_material",has(keys.values().iterator().next())).save(output,Catalog.id(id));}
+ private void shape(RecipeOutput output,String id,RecipeCategory category,ItemLike result,int count,String[] pattern,java.util.Map<Character,ItemLike> keys){var builder=ShapedRecipeBuilder.shaped(category,result,count);for(var row:pattern)builder.pattern(row);var ordered=new java.util.TreeMap<>(keys);ordered.forEach(builder::define);builder.unlockedBy("has_material",has(ordered.firstEntry().getValue())).save(output,Catalog.id(id));}
  private void shapeless(RecipeOutput output,String id,ItemLike result,int count,ItemLike... ingredients){var builder=ShapelessRecipeBuilder.shapeless(RecipeCategory.MISC,result,count);for(var ingredient:ingredients)builder.requires(ingredient);builder.unlockedBy("has_material",has(ingredients[0])).save(output,Catalog.id(id));}
 }
