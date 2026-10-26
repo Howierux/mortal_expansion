@@ -30,7 +30,7 @@ public enum HauntEffectKind {
 
             // Helpful Visitation now grants a consumable Spirit Boon; worker jobs remain a separate proposal.
             // missing function: expertise-aware Spirit service menu and service definitions.
-            case SPIRIT_COMMISSION, SPIRIT_RECOGNITION -> false; // Missing function: quests and expertise services.
+            case SPIRIT_RECOGNITION -> false; // Missing function: expertise services.
             // missing function: hidden-site registry and willing powerful Spirit encounters.
             case VEIL_REVELATION -> false;
             default -> true;

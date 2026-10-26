@@ -1,0 +1,7 @@
+package com.howierux.mortalexpansion.mixin;
+import org.spongepowered.asm.mixin.Mixin;import org.spongepowered.asm.mixin.injection.*;import org.spongepowered.asm.mixin.injection.callback.CallbackInfoReturnable;
+/** Must run after vanilla equips its bow; Fabric has no post-finalize equipment event. */
+@Mixin(net.minecraft.world.entity.monster.AbstractSkeleton.class)
+public abstract class HauntedSkeletonEquipmentMixin {
+ @Inject(method="finalizeSpawn",at=@At("RETURN")) private void mortalExpansion$melee(net.minecraft.world.level.ServerLevelAccessor access,net.minecraft.world.DifficultyInstance difficulty,net.minecraft.world.entity.MobSpawnType reason,net.minecraft.world.entity.SpawnGroupData group,CallbackInfoReturnable<net.minecraft.world.entity.SpawnGroupData> cir){var mob=(net.minecraft.world.entity.monster.AbstractSkeleton)(Object)this;var level=access.getLevel();if(reason==net.minecraft.world.entity.MobSpawnType.NATURAL&&level.dimension()==net.minecraft.world.level.Level.OVERWORLD&&!(mob instanceof net.minecraft.world.entity.monster.WitherSkeleton)&&com.howierux.mortalexpansion.haunt.HauntManager.getTier(level,mob.blockPosition())==com.howierux.mortalexpansion.haunt.HauntTier.SUPERNATURAL){mob.setItemSlot(net.minecraft.world.entity.EquipmentSlot.MAINHAND,net.minecraft.world.item.ItemStack.EMPTY);mob.setItemSlot(net.minecraft.world.entity.EquipmentSlot.OFFHAND,net.minecraft.world.item.ItemStack.EMPTY);}}
+}

@@ -27,7 +27,18 @@
     "HauntOwnedEffectMixin",
     "HauntFurnaceAccessor",
     "JourneyRespawnMixin",
-    "JourneySpawnPointMixin"
+    "JourneySpawnPointMixin",
+    "FadingChunkMixin",
+    "FadingBlockItemMixin",
+    "FadingItemUseMixin",
+    "FadingDropsMixin",
+    "FadingEntityDropMixin",
+    "FadingFallingBlockMixin",
+    "FadingPistonResolutionMixin",
+    "FadingPistonTransactionMixin",
+    "GolemPotionMixin",
+    "VanillaHauntSpawnsMixin",
+    "HauntedSkeletonEquipmentMixin"
   ],
   "injectors": {
     "defaultRequire": 1
@@ -37,6 +48,18 @@
     "GhostGarbLocalPlayerMixin",
     "GhostGarbRenderMixin",
     "GarbOverlayMixin",
-    "JourneyPostEffectInvoker"
+    "JourneyPostEffectInvoker",
+    "FadingBlockEntityRenderMixin",
+    "FadingChunkRenderMixin",
+    "FadingCompositeStateAccessor",
+    "FadingCompositeTypeAccessor",
+    "FadingFallingRenderMixin",
+    "FadingItemRenderMixin",
+    "FadingMeshBuilderMixin",
+    "FadingMeshSortMixin",
+    "FadingNeighborFaceMixin",
+    "FadingPickMixin",
+    "FadingTextureStateAccessor",
+    "FadingVisibilityMixin"
   ]
 }

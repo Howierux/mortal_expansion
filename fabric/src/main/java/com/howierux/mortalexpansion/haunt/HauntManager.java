@@ -9,6 +9,7 @@ import net.minecraft.world.level.chunk.LevelChunk;
 /** Loaded-chunk-only authoritative API. Reading a sensor/command never generates adjacent terrain. */
 public final class HauntManager {
     private HauntManager(){}
+    public static boolean isAtLeast(ServerLevel level,BlockPos pos,HauntTier tier){return level.hasChunkAt(pos)&&getTier(level,pos).id()>=tier.id();}
     public static void initialize(ServerLevel level,LevelChunk chunk){
         var target=(AttachmentTarget)chunk;
         if(!target.hasAttached(FabricHauntData.CHUNK))target.setAttached(FabricHauntData.CHUNK,

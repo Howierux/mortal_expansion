@@ -1,0 +1,24 @@
+{
+  "type": "minecraft:crafting_shaped",
+  "category": "redstone",
+  "key": {
+    "C": {
+      "item": "mortal_expansion:pure_ectoplasm"
+    },
+    "E": {
+      "item": "minecraft:enchanting_table"
+    },
+    "P": {
+      "item": "mortal_expansion:purified_gravestone"
+    }
+  },
+  "pattern": [
+    "PPP",
+    "PEP",
+    "PCP"
+  ],
+  "result": {
+    "count": 1,
+    "id": "mortal_expansion:ectchantment_machine"
+  }
+}

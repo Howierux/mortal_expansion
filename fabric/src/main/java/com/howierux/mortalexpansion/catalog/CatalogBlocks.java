@@ -15,14 +15,14 @@ public final class CatalogBlocks {
  public static final Map<String,Block> ALL=new LinkedHashMap<>();
  static BlockBehaviour.Properties copy(Block b) { return BlockBehaviour.Properties.ofFullCopy(b); }
  static Block register(String id,Block block) { ALL.put(id,block); return Registry.register(BuiltInRegistries.BLOCK,Catalog.id(id),block); }
-public static final Block FANCIFIER=register("fancifier",new FancifierVisual(BlockBehaviour.Properties.ofFullCopy(Blocks.STONE).noOcclusion()));
+public static final Block FANCIFIER=register("fancifier",new com.howierux.mortalexpansion.block.FancifierBlock(BlockBehaviour.Properties.ofFullCopy(Blocks.STONE).noOcclusion()));
 public static final Block FANCIFIED_BLOCK=register("fancified_block",new FancifiedBlockVisual(BlockBehaviour.Properties.ofFullCopy(Blocks.STONE).noOcclusion()));
 public static final Block ECTANK=register("ectank",new FluidMachineBlock(BlockBehaviour.Properties.ofFullCopy(Blocks.STONE).noOcclusion()));
 public static final Block PURIFIED_ECTANK=register("purified_ectank",new FluidMachineBlock(BlockBehaviour.Properties.ofFullCopy(Blocks.STONE).noOcclusion()));
 public static final Block ECTO_PIPE=register("ecto_pipe",new FluidMachineBlock.Pipe(BlockBehaviour.Properties.ofFullCopy(Blocks.STONE).noOcclusion()));
 public static final Block PURIFIED_ECTO_PIPE=register("purified_ecto_pipe",new FluidMachineBlock.Pipe(BlockBehaviour.Properties.ofFullCopy(Blocks.STONE).noOcclusion()));
-public static final Block MORTAL_GOLEM_BASE=register("mortal_golem_base",new MortalGolemBaseVisual(BlockBehaviour.Properties.ofFullCopy(Blocks.STONE).noOcclusion()));
-public static final Block WISP_O_LANTERN=register("wisp_o_lantern",new CarvedPumpkinBlock(copy(Blocks.JACK_O_LANTERN).lightLevel(state -> 4)));
+public static final Block MORTAL_GOLEM_BASE=register("mortal_golem_base",new com.howierux.mortalexpansion.block.MortalGolemBaseBlock(BlockBehaviour.Properties.ofFullCopy(Blocks.STONE).noOcclusion()));
+public static final Block WISP_O_LANTERN=register("wisp_o_lantern",new com.howierux.mortalexpansion.block.WispLanternBlock(copy(Blocks.JACK_O_LANTERN).lightLevel(state -> 4)));
 public static final Block PURIFIED_DREAMCATCHER=register("purified_dreamcatcher",new PurifiedDreamcatcherVisual(BlockBehaviour.Properties.of().strength(0.5F).noOcclusion().noCollission().sound(SoundType.WOOD)));
 public static final Block DREAMCATCHER=register("dreamcatcher",new DreamcatcherVisual(BlockBehaviour.Properties.of().strength(0.5F).noOcclusion().noCollission().sound(SoundType.WOOD)));
 public static final Block HAUNTED_FARMLAND=register("haunted_farmland",new com.howierux.mortalexpansion.block.HauntedFarmlandBlock(copy(Blocks.FARMLAND)));
@@ -54,7 +54,7 @@ public static final Block PURIFIED_SPIRITWOOD_BUTTON=register("purified_spiritwo
 public static final Block ALTAR_OF_IMPURITY=register("altar_of_impurity",new AltarBlock(BlockBehaviour.Properties.ofFullCopy(Blocks.STONE).noOcclusion().lightLevel(state->state.getValue(BlockStateProperties.LIT)?10:0)));
 public static final Block ALTAR_OF_PURITY=register("altar_of_purity",new AltarBlock(BlockBehaviour.Properties.ofFullCopy(Blocks.STONE).noOcclusion().lightLevel(state->state.getValue(BlockStateProperties.LIT)?10:0)));
 public static final Block MORTALITY_RESEARCH_STATION=register("mortality_research_station",new ResearchStationBlock(BlockBehaviour.Properties.ofFullCopy(Blocks.STONE).noOcclusion()));
-public static final Block ECTCHANTMENT_MACHINE=register("ectchantment_machine",new EctchantmentMachineVisual(BlockBehaviour.Properties.ofFullCopy(Blocks.STONE).noOcclusion()));
+public static final Block ECTCHANTMENT_MACHINE=register("ectchantment_machine",new com.howierux.mortalexpansion.machine.EctchantmentBlock(BlockBehaviour.Properties.ofFullCopy(Blocks.STONE).noOcclusion()));
 public static final Block ECTOPLASMIC_GENERATOR=register("ectoplasmic_generator",new GeneratorBlock(BlockBehaviour.Properties.ofFullCopy(Blocks.STONE).noOcclusion()));
 public static final Block ENCHANTMENT_GENERATOR=register("enchantment_generator",new GeneratorBlock(BlockBehaviour.Properties.ofFullCopy(Blocks.STONE).noOcclusion()));
 public static final Block PURIFICATION_WARD=register("purification_ward",new PurificationWardBlock(BlockBehaviour.Properties.ofFullCopy(Blocks.STONE).noOcclusion()));

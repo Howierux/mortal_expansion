@@ -1,0 +1,27 @@
+{
+  "type": "minecraft:crafting_shaped",
+  "category": "misc",
+  "key": {
+    "E": {
+      "item": "mortal_expansion:raw_ectoplasm"
+    },
+    "I": {
+      "item": "minecraft:iron_ingot"
+    },
+    "R": {
+      "item": "minecraft:redstone"
+    },
+    "S": {
+      "item": "minecraft:stonecutter"
+    }
+  },
+  "pattern": [
+    "IEI",
+    "ESE",
+    "IRI"
+  ],
+  "result": {
+    "count": 1,
+    "id": "mortal_expansion:fancifier"
+  }
+}

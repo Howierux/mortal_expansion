@@ -86,7 +86,7 @@ public final class HauntEffects {
             // missing function: dependency-gated benefits are listed in HauntEffectKind.implemented().
             case SECOND_SIGHT -> com.howierux.mortalexpansion.discovery.SpectralDiscovery.startTracks(player);
             case SPECTRAL_INSIGHT -> com.howierux.mortalexpansion.guide.SpectralInsight.perform(player);
-            case SPIRIT_COMMISSION -> false; // Missing function: unfinished-business quest slice.
+            case SPIRIT_COMMISSION -> com.howierux.mortalexpansion.quest.SpiritQuests.offer(player,"A restless spirit");
             case HELPFUL_VISITATION -> {
                 var boon = new ItemStack(com.howierux.mortalexpansion.catalog.CatalogItems.SPIRIT_BOON);
                 if (!player.getInventory().add(boon)) {

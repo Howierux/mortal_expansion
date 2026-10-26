@@ -8,7 +8,7 @@ import net.minecraft.world.level.block.*;
 import net.minecraft.world.level.block.entity.BlockEntity;
 import net.minecraft.world.level.block.state.*;
 import net.minecraft.world.level.block.state.properties.BlockStateProperties;
-/** Grave binding/inscriptions support journeys. Missing function: flower naturalization and Spirit workstation conversion. */
+/** Owned inscriptions, daily flower naturalization and Spirit workstations share one saved grave. */
 public final class GraveBlock extends BaseEntityBlock {
  public GraveBlock(Properties p){super(p);registerDefaultState(stateDefinition.any().setValue(CatalogBlocks.GRAVE_DEPTH,1).setValue(CatalogBlocks.GRAVE_NATURAL,false).setValue(BlockStateProperties.HORIZONTAL_FACING,Direction.NORTH));}
  protected com.mojang.serialization.MapCodec<? extends BaseEntityBlock> codec(){return simpleCodec(GraveBlock::new);}
@@ -19,4 +19,6 @@ public final class GraveBlock extends BaseEntityBlock {
  public void setPlacedBy(Level level,BlockPos pos,BlockState state,LivingEntity placer,ItemStack stack){super.setPlacedBy(level,pos,state,placer,stack);if(placer instanceof net.minecraft.server.level.ServerPlayer p&&level.getBlockEntity(pos) instanceof GraveEntity grave)grave.placed(p);}
  protected net.minecraft.world.phys.shapes.VoxelShape getShape(BlockState s,BlockGetter l,BlockPos p,net.minecraft.world.phys.shapes.CollisionContext c){int depth=s.getValue(CatalogBlocks.GRAVE_DEPTH)*4;return s.getValue(BlockStateProperties.HORIZONTAL_FACING).getAxis()==Direction.Axis.X?box(depth,0,0,depth+8,16,16):box(0,0,depth,16,16,depth+8);}
  public static net.minecraft.world.phys.Vec3 inscriptionAnchor(BlockState state){Direction facing=state.getValue(BlockStateProperties.HORIZONTAL_FACING);double center=.25+state.getValue(CatalogBlocks.GRAVE_DEPTH)*.25;return new net.minecraft.world.phys.Vec3((facing.getAxis()==Direction.Axis.X?center:.5)+facing.getStepX()*.252,.70,(facing.getAxis()==Direction.Axis.Z?center:.5)+facing.getStepZ()*.252);}
+ public <T extends BlockEntity> net.minecraft.world.level.block.entity.BlockEntityTicker<T> getTicker(Level level,BlockState state,net.minecraft.world.level.block.entity.BlockEntityType<T> type){return level.isClientSide?null:createTickerHelper(type,JourneyRuntime.GRAVE,(world,pos,block,grave)->grave.tick((net.minecraft.server.level.ServerLevel)world));}
+ protected void onRemove(BlockState state,Level level,BlockPos pos,BlockState next,boolean moving){if(!next.is(this)&&level instanceof net.minecraft.server.level.ServerLevel server&&level.getBlockEntity(pos) instanceof GraveEntity grave)com.howierux.mortalexpansion.entity.mob.SpiritWorkstations.removed(server,grave);super.onRemove(state,level,pos,next,moving);}
 }

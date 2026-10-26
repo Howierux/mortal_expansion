@@ -87,8 +87,8 @@ public final class SpiritEntity extends AbstractVillager implements HorizontalPh
     @Override public InteractionResult mobInteract(Player player, InteractionHand hand) {
         if (!isAlive() || isBaby() || isTrading()) return super.mobInteract(player, hand);
         if(player instanceof net.minecraft.server.level.ServerPlayer server)
-            {setTradingPlayer(server);openTradingScreen(server,getDisplayName(),getExpertise());}
-        // Missing function: Spirit interaction choices and unfinished-business quests.
+            {com.howierux.mortalexpansion.quest.SpiritInteraction.open(server,this);}
+
         return InteractionResult.sidedSuccess(level().isClientSide);
     }
     private long tradeSeed() { return getUUID().getMostSignificantBits() ^ getUUID().getLeastSignificantBits(); }
@@ -110,7 +110,7 @@ public final class SpiritEntity extends AbstractVillager implements HorizontalPh
     @Override public void tick() {
         super.tick();
         if (level() instanceof ServerLevel server) {
-            // Missing function: bind/validate engraved-grave workstations when grave gameplay is ported.
+            if(graveCreated()&&tickCount%20==0&&!SpiritWorkstations.validate(server,this))return;
             long day = server.getDayTime() / 24000;
             if (lastRestockDay == Long.MIN_VALUE) lastRestockDay = day;
             else if (day > lastRestockDay && !isTrading()) {
@@ -151,6 +151,6 @@ public final class SpiritEntity extends AbstractVillager implements HorizontalPh
         originalVillager = tag.contains("OriginalVillager") ? tag.getCompound("OriginalVillager").copy() : null;
     }
     @Override public void die(net.minecraft.world.damagesource.DamageSource source) {
-        super.die(source);
+        SpiritWorkstations.release(this);super.die(source);
     }
 }
