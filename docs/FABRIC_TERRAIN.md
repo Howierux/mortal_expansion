@@ -1,6 +1,6 @@
 # Fabric terrain and resource generation
 
-This ports the current coordinated cemetery and world-generation rules to Fabric 1.21.1. Native registry bootstraps generate both biomes, configured/placed features and the cemetery structure/set. The two biomes keep the reference's climate-independent atmosphere, vanilla terrain decoration and ordinary vanilla spawn lists. Mortal Expansion mobs are not yet ported.
+This ports the current coordinated cemetery and world-generation rules to Fabric 1.21.1. Native registry bootstraps generate both biomes, configured/placed features and the cemetery structure/set. The two biomes keep the reference's climate-independent atmosphere, vanilla terrain decoration and ordinary vanilla spawn lists. Mortal Expansion creatures and dynamic spawn requirements are now implemented by the [combat slice](FABRIC_COMBAT.md).
 
 ## Natural Overworld generation
 
@@ -28,4 +28,4 @@ Diamond-to-Bloodstone conversion checks loaded chunks at dawn, sunset and midnig
 
 The build passes 25 native server GameTests, including real sapling growth/moss, dynamic registry and biome-tag loading, formation cadence/chances and actual diamond conversion. Existing 21 tests remain passing. The fresh normal-world client located both natural biomes, generated a native cemetery at (4464, -576), and rendered the readers at 30% volume. Direct piece placement and native piece-NBT reload cover the cemetery state-property regression.
 
-Discovery footprints, custom creature spawning, Spiritwell travel, magical equipment and NeoForge save migration are not part of this slice. Matching registry names do not make NeoForge saves safe to import. Third-party biome-mod compatibility still requires playtesting.
+Discovery footprints, Spiritwell travel, remaining magical equipment and NeoForge save migration are not part of this slice. Matching registry names do not make NeoForge saves safe to import. Third-party biome-mod compatibility still requires playtesting.

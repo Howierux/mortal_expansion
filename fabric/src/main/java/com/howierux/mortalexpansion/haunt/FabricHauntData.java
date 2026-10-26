@@ -17,7 +17,7 @@ public final class FabricHauntData {
     public static final AttachmentType<Integer> PLAYER = AttachmentRegistry.create(
             ResourceLocation.fromNamespaceAndPath("mortal_expansion","player_haunt_units"),
             builder->builder.initializer(()->HauntTier.NATURAL.midpointValue()*100)
-                    .persistent(Codec.intRange(0,FractionalHaunt.MAX_UNITS)).copyOnDeath()
+                    .persistent(Codec.intRange(0,PlayerHauntManager.MAX_PERSONAL_UNITS)).copyOnDeath()
                     .syncWith(ByteBufCodecs.VAR_INT,AttachmentSyncPredicate.targetOnly()));
     public static void initialize(){} // Force registration from the common initializer before saved data is read.
 }

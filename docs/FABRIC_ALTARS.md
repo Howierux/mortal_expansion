@@ -36,7 +36,7 @@ Persistence boundaries:
 - Reconciliation runs after baseline initialization at `HauntManager.initialize`; changes notify existing furnace tier caches.
 - Tracking visits only loaded Overworld chunks and is cleared when the server stops. No new mixin is required.
 
-Use fresh Fabric worlds: these keys are deliberate Fabric persistence, not a NeoForge save migration guarantee. Pending personal-Haunt overflow/Darkhold behavior is separate from this Overworld ritual.
+Use fresh Fabric worlds: these keys are deliberate Fabric persistence, not a NeoForge save migration guarantee. Personal-Haunt overflow/Darkhold awakening are implemented separately in the combat slice and do not change this Overworld ritual.
 
 ## Deferred integration
 

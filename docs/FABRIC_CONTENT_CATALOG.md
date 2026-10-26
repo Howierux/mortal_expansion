@@ -40,7 +40,7 @@ gradlew.bat build
 
 The importer copies original textures byte-for-byte and converts loader-specific model schemas; it is explicit and reproducible. Framework-independent artwork remains at the repository root as the NeoForge reference. Native tag and loot providers remain Java Fabric data generators. CI checks imported assets and generated data for drift.
 
-Validation: 25 native headless Fabric GameTests pass, including ordinary equipment stats, pipe neighbor updates and native bucket placement/pickup. A local client smoke check loaded all 97 item models and 1,138 non-fluid block states, five armor texture pairs and the Darkhold, without missing-model/texture warnings, at 30% master volume. The temporary probe was removed from production sources. Gameplay behavior listed as pending has not been claimed as tested.
+Validation: 30 native headless Fabric GameTests pass, including ordinary equipment stats, pipe neighbor updates and native bucket placement/pickup. A local client smoke check loaded all 97 item models and 1,138 non-fluid block states, five armor texture pairs and the Darkhold, without missing-model/texture warnings, at 30% master volume. The temporary probe was removed from production sources. Gameplay behavior listed as pending has not been claimed as tested.
 
 The machinery update additionally verifies rollback, pipe budgets/directions, portable fluid contents, fuel/Haunt accounting, enchantment conversion, automation and exact menu values. Both generator screens and tank synchronization were checked in a real integrated client/server session at 30% volume.
 
@@ -48,6 +48,6 @@ The purification update supplies working Haunt/Haint furnaces, the Purification 
 
 Purity/Impurity altars and Ritual Star world shifts are functional; see [Fabric altars](FABRIC_ALTARS.md). Knowledge-gated altar recipes and a limited Insight/altar positive-event pool are now implemented; see [Fabric knowledge](FABRIC_KNOWLEDGE.md).
 
-The Book atlas/upgrades, permanent knowledge, Research Station and generated recipes are now implemented in the [knowledge slice](FABRIC_KNOWLEDGE.md). Darkhold exposure and sin abilities remain pending.
+The Book atlas/upgrades, permanent knowledge, Research Station and generated recipes are now implemented in the [knowledge slice](FABRIC_KNOWLEDGE.md). Darkhold exposure and Demon revelation are now implemented; the seven sin abilities remain pending.
 
 Native biomes/trees/ore/cemeteries and sapling growth are now implemented in the [terrain slice](FABRIC_TERRAIN.md). Discovery, Spiritwell travel and grave gameplay remain pending.

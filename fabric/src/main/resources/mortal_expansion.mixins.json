@@ -6,7 +6,15 @@
     "FluidBucketCookingMixin",
     "EctceteraCraftingKnowledgeMixin",
     "EctceteraSmithingKnowledgeMixin",
-    "EctceteraCrafterKnowledgeMixin"
+    "EctceteraCrafterKnowledgeMixin",
+    "DemiTangibleDamageSourcesMixin",
+    "DemiTangibleItemUseMixin",
+    "SpectralDamageMixin",
+    "HauntMobMixin",
+    "HauntMovementMixin",
+    "GhostGarbCollisionMixin",
+    "SpectralBarrierBlockMixin",
+    "DemiTangibleAnvilMixin"
   ],
   "injectors": {
     "defaultRequire": 1

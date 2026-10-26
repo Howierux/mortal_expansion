@@ -21,9 +21,9 @@ public final class GuideRuntime {
  public static void completed(ServerPlayer p){((AttachmentTarget)p).setAttached(KnowledgeData.NEXT_INSIGHT,now(p)+1200);}
  public static double rollChance(int tier){return switch(tier){case 1->.02;case 2->.05;case 3->.08;case 4->.12;case 5->.16;case 6->.20;default->0;};}
  public static void initialize(){
-  KnowledgeData.initialize();BookRecipes.initialize();PayloadTypeRegistry.playS2C().register(BookOpenPayload.TYPE,BookOpenPayload.CODEC);
+  DarkholdProgression.initialize();KnowledgeData.initialize();BookRecipes.initialize();PayloadTypeRegistry.playS2C().register(BookOpenPayload.TYPE,BookOpenPayload.CODEC);
   ServerTickEvents.END_WORLD_TICK.register(level->{if(level.getGameTime()%20!=0)return;for(var p:level.players()){
-   SpectralInsight.absorbAll(p);MortalityResearch.complete(p);hint(p);
+   DarkholdProgression.pulse(p);SpectralInsight.absorbAll(p);MortalityResearch.complete(p);hint(p);
    if(level.getGameTime()%600==0&&p.isAlive()&&!p.isSpectator()&&!p.isCreative()&&((AttachmentTarget)p).getAttachedOrCreate(KnowledgeData.NEXT_INSIGHT)<=now(p)&&p.getRandom().nextDouble()<rollChance(PlayerHauntManager.getTier(p).id()))rollBenefit(p);
   }});
   UseBlockCallback.EVENT.register((player,world,hand,hit)->{

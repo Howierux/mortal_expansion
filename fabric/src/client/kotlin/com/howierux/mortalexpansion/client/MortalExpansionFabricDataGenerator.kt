@@ -12,6 +12,8 @@ import com.howierux.mortalexpansion.data.KnowledgeRecipes
 
 object MortalExpansionFabricDataGenerator : DataGeneratorEntrypoint {
     override fun buildRegistry(builder: RegistrySetBuilder) {
+        builder.add(Registries.DAMAGE_TYPE, CombatData::damageTypes)
+        builder.add(Registries.ENCHANTMENT, CombatData::enchantments)
         builder.add(Registries.CONFIGURED_FEATURE, TerrainBootstrap::configured)
         builder.add(Registries.PLACED_FEATURE, TerrainBootstrap::placed)
         builder.add(Registries.BIOME, TerrainBootstrap::biomes)
@@ -20,6 +22,10 @@ object MortalExpansionFabricDataGenerator : DataGeneratorEntrypoint {
     }
 	override fun onInitializeDataGenerator(fabricDataGenerator: FabricDataGenerator) {
         val pack = fabricDataGenerator.createPack()
+        pack.addProvider(CombatData::RegistryData)
+        pack.addProvider(CombatData::Entities)
+        pack.addProvider(CombatData::DamageTags)
+        pack.addProvider(CombatData::Assets)
         pack.addProvider(::TerrainProvider)
         pack.addProvider(::HauntBiomeProvider)
         pack.addProvider(::CatalogBlockTags)

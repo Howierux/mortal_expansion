@@ -20,6 +20,7 @@ public final class CatalogClient {
   return 0xFF000000|(r<<16)|(g<<8)|b;
  }
  public static void initialize() {
+  CombatClient.initialize();
   net.minecraft.client.renderer.item.ItemProperties.register(CatalogItems.EMF_READER,Catalog.id("emf_level"),(stack,world,holder,seed)->EmfReaderClient.modelLevel(stack,holder)/12.0F);
   net.fabricmc.fabric.api.client.rendering.v1.HudRenderCallback.EVENT.register(EmfReaderClient::render);
   net.fabricmc.fabric.api.client.rendering.v1.BuiltinItemRendererRegistry.INSTANCE.register(CatalogItems.PRECISE_EMF_READER,new PreciseEmfRenderer());

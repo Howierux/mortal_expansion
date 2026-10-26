@@ -56,8 +56,10 @@ def main():
   'gui.mortal_expansion.fabric.guide_notice':'Fabric development: some features are still being ported.',
   'message.mortal_expansion.fabric.offering_gift':'Something unseen leaves salt among your offerings.',
   'message.mortal_expansion.fabric.offering_blessing':'A gentle presence feeds the waiting flame.',
-  'tooltip.mortal_expansion.fabric.darkhold_pending':'Darkhold exposure and sin powers await their Fabric port.'
+  'tooltip.mortal_expansion.fabric.darkhold_pending':'Sin powers await their Fabric port.'
  })
+ for name in ['ghost','phantom','spirit','elemental','haunt','haint','mummy','pharaohl','demon','mortal_golem']:
+  data['item.mortal_expansion.'+name+'_spawn_egg']=data.get('entity.mortal_expansion.'+name,name.replace('_',' ').title())+' Spawn Egg'
  lang.write_text(json.dumps(data,indent=2,ensure_ascii=False)+'\n',encoding='utf-8',newline='\n')
  print('Imported existing catalog models, blockstates, textures and translations.')
 if __name__=='__main__': main()

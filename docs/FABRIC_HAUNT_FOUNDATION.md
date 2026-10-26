@@ -48,7 +48,7 @@ The datagen provider writes natural_haunt, supernatural_haunt and dead_rising_ha
 
 ## Explicitly deferred
 
-Graveyard weathering and Bloodstone formation are now connected by the terrain slice. Darkhold overflow remains a **missing function** boundary. Purification Ward cleansing/exclusions are now connected by the purification port. Haunt effects, recipes, EMF Readers, book progression, original items/blocks/biomes/mobs, machines, rituals and Spirit Journey are not implemented by this slice. Furnace tier-change notifications are now connected through the authoritative Haunt manager. No placeholder command pretends these features work.
+Graveyard weathering and Bloodstone formation are now connected by the terrain slice. Darkhold world awakening now enables personal overflow through the combat slice. Purification Ward cleansing/exclusions are now connected by the purification port. Haunt effects, recipes, EMF Readers, book progression, original items/blocks/biomes/mobs, machines, rituals and Spirit Journey are not implemented by this slice. Furnace tier-change notifications are now connected through the authoritative Haunt manager. No placeholder command pretends these features work.
 
 ## Validation
 

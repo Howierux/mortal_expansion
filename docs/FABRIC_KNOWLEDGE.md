@@ -32,7 +32,7 @@ Recipes are generated through native Fabric data generation, including public re
 
 ## Boundaries
 
-Darkhold exposure, backpacks, above-Eldritch personal Haunt, Demon awakening/visibility and the seven sin powers remain unported and are marked with Missing function comments. The Darkhold chapter can be viewed, but its sin powers stay locked. Garb abilities, dreamcatcher protection, worldgen, Spirit Journey and other documented systems remain separate slices. This update does not claim full Haunt-event parity or NeoForge save compatibility.
+The [combat slice](FABRIC_COMBAT.md) now implements basic Darkhold exposure, native nested containers/bundles, personal overflow, Demon awakening and sight. Non-native backpacks and the seven sin powers remain unported and are marked with Missing function comments. The Darkhold chapter can be viewed, but its sin powers stay locked. Garb abilities, dreamcatcher protection, Spirit Journey and other documented systems remain separate slices. This update does not claim full Haunt-event parity or NeoForge save compatibility.
 
 ## Validation
 

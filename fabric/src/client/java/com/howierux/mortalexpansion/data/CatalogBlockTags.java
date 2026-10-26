@@ -13,7 +13,9 @@ import java.util.concurrent.CompletableFuture;
 public final class CatalogBlockTags extends FabricTagProvider<Block> {
  public CatalogBlockTags(FabricDataOutput o,CompletableFuture<HolderLookup.Provider> l) { super(o,Registries.BLOCK,l); }
  @Override protected void addTags(HolderLookup.Provider lookup) {
+  var spectralSolid=tag(com.howierux.mortalexpansion.entity.mob.SpectralPhasingRules.INTANGIBLE_SOLID);
   CatalogBlocks.ALL.forEach((id,b) -> {
+   if(id.contains("spiritwood")||id.equals("gravestone")||id.equals("purified_gravestone")||id.equals("grave")||id.equals("holy_salt"))spectralSolid.add(net.minecraft.resources.ResourceKey.create(Registries.BLOCK,Catalog.id(id)));
    if(id.contains("spiritwood")&&!id.endsWith("leaves")&&!id.endsWith("sapling")) tag(BlockTags.MINEABLE_WITH_AXE).add(net.minecraft.resources.ResourceKey.create(Registries.BLOCK,Catalog.id(id)));
    else if(!id.contains("water")&&!id.contains("ectoplasm")&&!id.contains("torch")&&!id.contains("salt")&&!id.contains("dreamcatcher")&&!id.equals("grave_moss")&&!id.endsWith("leaves")&&!id.endsWith("sapling")) tag(BlockTags.MINEABLE_WITH_PICKAXE).add(net.minecraft.resources.ResourceKey.create(Registries.BLOCK,Catalog.id(id)));
    if(id.endsWith("_log")) { tag(BlockTags.LOGS).add(net.minecraft.resources.ResourceKey.create(Registries.BLOCK,Catalog.id(id))); tag(BlockTags.LOGS_THAT_BURN).add(net.minecraft.resources.ResourceKey.create(Registries.BLOCK,Catalog.id(id))); }
@@ -35,6 +37,10 @@ public final class CatalogBlockTags extends FabricTagProvider<Block> {
  public static final class Items extends FabricTagProvider<Item> {
   public Items(FabricDataOutput o,CompletableFuture<HolderLookup.Provider> l) { super(o,Registries.ITEM,l); }
   @Override protected void addTags(HolderLookup.Provider lookup) {
+   var demi=tag(com.howierux.mortalexpansion.combat.ModCombatItemTags.DEMI_TANGIBLE);var armor=tag(com.howierux.mortalexpansion.combat.ModCombatItemTags.SPECTRAL_PROTECTIVE_ARMOR);
+   CatalogItems.ALL.forEach((id,item)->{if((id.startsWith("bloodstone_")||id.startsWith("spectralite_"))&&(item instanceof net.minecraft.world.item.DiggerItem||item instanceof net.minecraft.world.item.SwordItem)||id.equals("gravestone_sword")||id.equals("purified_gravestone_sword"))demi.add(net.minecraft.resources.ResourceKey.create(Registries.ITEM,Catalog.id(id)));if(id.startsWith("spectralite_")&&item instanceof net.minecraft.world.item.ArmorItem)armor.add(net.minecraft.resources.ResourceKey.create(Registries.ITEM,Catalog.id(id)));});
+   var enchantable=tag(CombatData.ENCHANTABLE);for(var item:net.minecraft.core.registries.BuiltInRegistries.ITEM)if(item!=net.minecraft.world.item.Items.AIR)enchantable.add(net.minecraft.resources.ResourceKey.create(Registries.ITEM,net.minecraft.core.registries.BuiltInRegistries.ITEM.getKey(item)));
+   tag(com.howierux.mortalexpansion.entity.mob.MortalGolemEntity.LURE_ITEMS).add(net.minecraft.resources.ResourceKey.create(Registries.ITEM,net.minecraft.resources.ResourceLocation.withDefaultNamespace("rotten_flesh")),net.minecraft.resources.ResourceKey.create(Registries.ITEM,net.minecraft.resources.ResourceLocation.withDefaultNamespace("bone")),net.minecraft.resources.ResourceKey.create(Registries.ITEM,Catalog.id("raw_ectoplasm")),net.minecraft.resources.ResourceKey.create(Registries.ITEM,Catalog.id("pure_ectoplasm")));
    var offerings=tag(com.howierux.mortalexpansion.haunt.PurityOfferings.TAG);
    for(String id:new String[]{"raw_ectoplasm","spirit_boon","spiritwood_log","purified_spiritwood_log","grave_moss","holy_salt","pure_ectoplasm"})offerings.add(net.minecraft.resources.ResourceKey.create(Registries.ITEM,Catalog.id(id)));
    tag(com.howierux.mortalexpansion.haunt.PurityOfferings.IMPURITY).addTag(com.howierux.mortalexpansion.haunt.PurityOfferings.TAG);

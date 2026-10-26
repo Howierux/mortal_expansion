@@ -79,7 +79,7 @@ public final class AltarGameTests implements FabricGameTest {
    var grid=new ArrayList<ItemStack>();for(int i=0;i<9;i++)grid.add(new ItemStack(i==4?Items.NETHER_STAR:CatalogItems.BLOODSTONE));
    var recipe=level.getRecipeManager().getRecipeFor(RecipeType.CRAFTING,CraftingInput.of(3,3,grid),level);
    h.assertTrue(recipe.isPresent()&&recipe.get().value().getResultItem(level.registryAccess()).is(CatalogItems.RITUAL_STAR),"Native generated recipe crafts Nether Star surrounded by eight Bloodstone");
-   HauntManager.setValue(level,impure.getBlockPos(),69);impure.setItem(0,new ItemStack(CatalogItems.RITUAL_STAR));impure.tick(level);
+   HauntManager.setValue(level,pure.getBlockPos(),69);HauntManager.setValue(level,impure.getBlockPos(),69);impure.setItem(0,new ItemStack(CatalogItems.RITUAL_STAR));impure.tick(level);
    h.assertTrue(impure.getItem(0).isEmpty()&&impure.getBurnTicks()==0&&WorldHauntRitualData.get(level).revision()==1&&HauntManager.getValue(level,impure.getBlockPos())==69,"Sacrificed Star records one capped raise without becoming fuel");
    var far=new ChunkPos(200000,200000);h.assertTrue(level.getChunkSource().getChunkNow(far.x,far.z)==null,"Global ritual never force-loads absent chunks");
    var future=new LevelChunk(level,far);HauntManager.initialize(level,future);h.assertTrue(((AttachmentTarget)future).getAttachedOrThrow(FabricHauntData.CHUNK)==2500&&NaturalHauntGenerator.determineInitialTier(level,future)==HauntTier.NATURAL,"Future chunks receive rise while natural baseline stays Natural");

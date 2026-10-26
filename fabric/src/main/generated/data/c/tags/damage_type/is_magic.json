@@ -1,0 +1,13 @@
+{
+  "values": [
+    "minecraft:magic",
+    "minecraft:indirect_magic",
+    "minecraft:thorns",
+    "minecraft:wither",
+    "minecraft:dragon_breath",
+    "minecraft:sonic_boom",
+    "mortal_expansion:demi_tangible_player",
+    "mortal_expansion:demi_tangible_mob",
+    "mortal_expansion:sanctification"
+  ]
+}

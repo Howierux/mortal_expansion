@@ -9,7 +9,7 @@ public enum DamnedSecret {
     public int bit() { return 2 << ordinal(); }
     public int threshold() { return 70 + ordinal() * 10; }
     public String key() { return "sin_" + name().toLowerCase(java.util.Locale.ROOT); }
-    // Missing function: sin abilities and above-Eldritch knowledge belong to the later Darkhold slice.
+    // Missing function: the seven sin abilities/unlocks belong to a later Darkhold slice; Demon revelation is implemented.
     public boolean unlocked(Player player) { return player != null && (0 & bit()) != 0; }
     public static int revealedAt(int haunt) {
         int mask = haunt >= 70 ? 1 : 0;
