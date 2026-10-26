@@ -47,6 +47,13 @@ def main():
   (out/'blockstates'/f'{fluid}.json').write_text(json.dumps({'variants':{'':{'model':'minecraft:block/water'}}},indent=2)+'\n',encoding='utf-8',newline='\n')
  lang=out/'lang/en_us.json'
  data=json.loads(lang.read_text(encoding='utf-8')); data['tooltip.mortal_expansion.fabric.pending']='Fabric preview: special behavior not yet ported.'; data['gui.mortal_expansion.enchantment_generator.processing']='Extracting enchantments...'
+ data.update({
+  'gui.mortal_expansion.fabric.dead_tab':'Dead Secrets',
+  'gui.mortal_expansion.fabric.guide_notice':'Fabric development: some features are still being ported.',
+  'message.mortal_expansion.fabric.offering_gift':'Something unseen leaves salt among your offerings.',
+  'message.mortal_expansion.fabric.offering_blessing':'A gentle presence feeds the waiting flame.',
+  'tooltip.mortal_expansion.fabric.darkhold_pending':'Darkhold exposure and sin powers await their Fabric port.'
+ })
  lang.write_text(json.dumps(data,indent=2,ensure_ascii=False)+'\n',encoding='utf-8',newline='\n')
  print('Imported existing catalog models, blockstates, textures and translations.')
 if __name__=='__main__': main()

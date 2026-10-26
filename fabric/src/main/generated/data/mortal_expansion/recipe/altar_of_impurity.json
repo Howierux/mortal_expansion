@@ -1,0 +1,20 @@
+{
+  "type": "minecraft:crafting_shaped",
+  "category": "misc",
+  "key": {
+    "B": {
+      "item": "minecraft:beacon"
+    },
+    "F": {
+      "item": "mortal_expansion:haunt_furnace"
+    }
+  },
+  "pattern": [
+    "B",
+    "F"
+  ],
+  "result": {
+    "count": 1,
+    "id": "mortal_expansion:altar_of_impurity"
+  }
+}

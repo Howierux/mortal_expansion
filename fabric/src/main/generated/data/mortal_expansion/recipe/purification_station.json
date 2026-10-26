@@ -1,0 +1,24 @@
+{
+  "type": "minecraft:crafting_shaped",
+  "category": "misc",
+  "key": {
+    "I": {
+      "item": "minecraft:iron_ingot"
+    },
+    "P": {
+      "item": "mortal_expansion:purified_spiritwood_planks"
+    },
+    "R": {
+      "item": "minecraft:redstone"
+    }
+  },
+  "pattern": [
+    "III",
+    "RIR",
+    "IPI"
+  ],
+  "result": {
+    "count": 1,
+    "id": "mortal_expansion:purification_station"
+  }
+}

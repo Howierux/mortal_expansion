@@ -1,1 +1,14 @@
-{"required":true,"package":"com.howierux.mortalexpansion.mixin","compatibilityLevel":"JAVA_21","mixins":["FluidBucketCookingMixin"],"injectors":{"defaultRequire":1}}
+{
+  "required": true,
+  "package": "com.howierux.mortalexpansion.mixin",
+  "compatibilityLevel": "JAVA_21",
+  "mixins": [
+    "FluidBucketCookingMixin",
+    "EctceteraCraftingKnowledgeMixin",
+    "EctceteraSmithingKnowledgeMixin",
+    "EctceteraCrafterKnowledgeMixin"
+  ],
+  "injectors": {
+    "defaultRequire": 1
+  }
+}

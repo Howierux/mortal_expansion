@@ -629,5 +629,10 @@
   "tooltip.mortal_expansion.consecration": "Cleanses 1 personal Haunt; Holy Water blessing for 1 minute.",
   "tooltip.mortal_expansion.consecration_cooldown": "Cleansing shares Holy Water's 1-minute cooldown.",
   "tooltip.mortal_expansion.fabric.pending": "Fabric preview: special behavior not yet ported.",
-  "gui.mortal_expansion.enchantment_generator.processing": "Extracting enchantments..."
+  "gui.mortal_expansion.enchantment_generator.processing": "Extracting enchantments...",
+  "gui.mortal_expansion.fabric.dead_tab": "Dead Secrets",
+  "gui.mortal_expansion.fabric.guide_notice": "Fabric development: some features are still being ported.",
+  "message.mortal_expansion.fabric.offering_gift": "Something unseen leaves salt among your offerings.",
+  "message.mortal_expansion.fabric.offering_blessing": "A gentle presence feeds the waiting flame.",
+  "tooltip.mortal_expansion.fabric.darkhold_pending": "Darkhold exposure and sin powers await their Fabric port."
 }

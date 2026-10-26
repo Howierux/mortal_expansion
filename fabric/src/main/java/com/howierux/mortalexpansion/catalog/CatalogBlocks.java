@@ -51,7 +51,7 @@ public static final Block PURIFIED_SPIRITWOOD_PRESSURE_PLATE=register("purified_
 public static final Block PURIFIED_SPIRITWOOD_BUTTON=register("purified_spiritwood_button",new ButtonBlock(BlockSetType.OAK,30,copy(Blocks.OAK_BUTTON)));
 public static final Block ALTAR_OF_IMPURITY=register("altar_of_impurity",new AltarBlock(BlockBehaviour.Properties.ofFullCopy(Blocks.STONE).noOcclusion().lightLevel(state->state.getValue(BlockStateProperties.LIT)?10:0)));
 public static final Block ALTAR_OF_PURITY=register("altar_of_purity",new AltarBlock(BlockBehaviour.Properties.ofFullCopy(Blocks.STONE).noOcclusion().lightLevel(state->state.getValue(BlockStateProperties.LIT)?10:0)));
-public static final Block MORTALITY_RESEARCH_STATION=register("mortality_research_station",new MortalityResearchStationVisual(BlockBehaviour.Properties.ofFullCopy(Blocks.STONE).noOcclusion()));
+public static final Block MORTALITY_RESEARCH_STATION=register("mortality_research_station",new ResearchStationBlock(BlockBehaviour.Properties.ofFullCopy(Blocks.STONE).noOcclusion()));
 public static final Block ECTCHANTMENT_MACHINE=register("ectchantment_machine",new EctchantmentMachineVisual(BlockBehaviour.Properties.ofFullCopy(Blocks.STONE).noOcclusion()));
 public static final Block ECTOPLASMIC_GENERATOR=register("ectoplasmic_generator",new GeneratorBlock(BlockBehaviour.Properties.ofFullCopy(Blocks.STONE).noOcclusion()));
 public static final Block ENCHANTMENT_GENERATOR=register("enchantment_generator",new GeneratorBlock(BlockBehaviour.Properties.ofFullCopy(Blocks.STONE).noOcclusion()));
@@ -125,14 +125,7 @@ static final IntegerProperty P_FLESH_STAGE = IntegerProperty.create("flesh_stage
 
 
 
-/** Missing function: port mortality_research_station interactions and simulation; this is its catalog appearance. */
- static final class MortalityResearchStationVisual extends Block {
- 
- MortalityResearchStationVisual(Properties p) { super(p); registerDefaultState(stateDefinition.any()); }
- @Override protected void createBlockStateDefinition(StateDefinition.Builder<Block,BlockState> b) {  }
- 
- 
- }
+
 /** Missing function: port ectchantment_machine interactions and simulation; this is its catalog appearance. */
  static final class EctchantmentMachineVisual extends Block {
  

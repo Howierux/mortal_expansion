@@ -1,0 +1,27 @@
+{
+  "type": "minecraft:crafting_shaped",
+  "category": "redstone",
+  "key": {
+    "F": {
+      "item": "mortal_expansion:haunt_furnace"
+    },
+    "G": {
+      "item": "minecraft:grindstone"
+    },
+    "I": {
+      "item": "minecraft:iron_ingot"
+    },
+    "R": {
+      "item": "minecraft:redstone"
+    }
+  },
+  "pattern": [
+    "IRI",
+    "IGI",
+    "IFI"
+  ],
+  "result": {
+    "count": 1,
+    "id": "mortal_expansion:enchantment_generator"
+  }
+}

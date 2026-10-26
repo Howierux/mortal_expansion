@@ -10,7 +10,8 @@
       "com.howierux.mortalexpansion.gametest.CatalogGameTests",
       "com.howierux.mortalexpansion.gametest.MachineGameTests",
       "com.howierux.mortalexpansion.gametest.PurificationGameTests",
-      "com.howierux.mortalexpansion.gametest.AltarGameTests"
+      "com.howierux.mortalexpansion.gametest.AltarGameTests",
+      "com.howierux.mortalexpansion.gametest.KnowledgeGameTests"
     ]
   },
   "depends": {

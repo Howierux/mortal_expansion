@@ -108,6 +108,6 @@ public static final Item SPIRITWOOD_LEAVES=register("spiritwood_leaves",new Bloc
 public static final Item SPIRITWOOD_SAPLING=register("spiritwood_sapling",new BlockItem(CatalogBlocks.SPIRITWOOD_SAPLING, new Item.Properties()));
 public static final Item HAUNT_FURNACE=register("haunt_furnace",new BlockItem(CatalogBlocks.HAUNT_FURNACE, new Item.Properties()));
 public static final Item HAINT_FURNACE=register("haint_furnace",new BlockItem(CatalogBlocks.HAINT_FURNACE, new Item.Properties()));
-public static final Item BOOK_OF_ECTCETERA=register("book_of_ectcetera",new Item(new Item.Properties().stacksTo(1)));
+public static final Item BOOK_OF_ECTCETERA=register("book_of_ectcetera",new com.howierux.mortalexpansion.guide.EctceteraBookItem(new Item.Properties().stacksTo(1)));
  public static void initialize() {}
 }

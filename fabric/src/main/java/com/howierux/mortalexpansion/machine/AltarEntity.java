@@ -25,7 +25,7 @@ public final class AltarEntity extends BlockEntity implements WorldlyContainer,E
  public boolean isImpure(){return getBlockState().is(CatalogBlocks.ALTAR_OF_IMPURITY);}
  public int getBurnTicks(){return burnTicks;}
  public boolean hasBlessedOffering(){return offeringBlessed;}
- /** Missing function: invoke these two hooks from positive Haunt events when the event dispatcher is ported. */
+ /** Used by the native positive-event dispatcher for nearby Purity altar benefits. */
  public boolean blessNextOffering(){int duration=PurityOfferings.burnTicks(items.get(0),isImpure());if(isImpure()||offeringBlessed||duration<=0||duration+duration/2>MAX_BURN_TICKS-burnTicks)return false;offeringBlessed=true;setChanged();return true;}
  public boolean addOfferingGift(){var input=items.get(0);if(isImpure()||!input.isEmpty()&&(!ItemStack.isSameItemSameComponents(input,new ItemStack(CatalogItems.HOLY_SALT))||input.getCount()>=input.getMaxStackSize()))return false;if(input.isEmpty())items.set(0,new ItemStack(CatalogItems.HOLY_SALT));else input.grow(1);setChanged();return true;}
  private boolean consumeOffering(){

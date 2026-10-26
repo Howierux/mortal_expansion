@@ -1,0 +1,16 @@
+{
+  "type": "minecraft:crafting_shapeless",
+  "category": "misc",
+  "ingredients": [
+    {
+      "item": "mortal_expansion:dreamcatcher"
+    },
+    {
+      "item": "mortal_expansion:purified_ectothread"
+    }
+  ],
+  "result": {
+    "count": 1,
+    "id": "mortal_expansion:purified_dreamcatcher"
+  }
+}

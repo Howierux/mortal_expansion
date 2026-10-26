@@ -40,12 +40,12 @@ Use fresh Fabric worlds: these keys are deliberate Fabric persistence, not a Neo
 
 ## Deferred integration
 
-Altar crafting recipes remain Secrets of the Dead and are not enabled before knowledge enforcement is ported. Obtain the altar blocks through the creative catalog or `/give` for now; the public Ritual Star recipe is enabled.
+Altar crafting recipes remain Secrets of the Dead and are now enabled with the [knowledge slice](FABRIC_KNOWLEDGE.md): beacon above Haunt Furnace for Impurity, beacon above Haint Furnace for Purity. Both require their learned secret. The Ritual Star recipe is public.
 
-The Purity altar exposes `blessNextOffering` (50% extra time on one offering) and `addOfferingGift` (Holy Salt). Their behavior and persistence are implemented and tested; the missing Haunt-event dispatcher is marked with a `Missing function` comment. The hooks are not presented as spontaneously occurring Haunt events.
+The Purity altar exposes `blessNextOffering` (50% extra time on one offering) and `addOfferingGift` (Holy Salt). Their behavior and persistence are implemented and tested. The [knowledge slice](FABRIC_KNOWLEDGE.md) now dispatches both hooks as nearby positive Haunt events.
 
 ## Validation
 
-Seventeen native server GameTests pass. Four new integration checks cover offering cadence and 3×3 fractional pulses, cap/return-slot/automation behavior, real block-entity saves and blessed-offering hooks, native journal/chunk-NBT revision round trips, ordered clamping, generated Star crafting, actual altar consumption, other-dimension rejection and future-chunk baseline preservation. The test-only Milk Bucket offering exercises returned vessels and is excluded from the production jar.
+The altar slice passed seventeen native server GameTests; the current knowledge update passes 21. Four new integration checks cover offering cadence and 3×3 fractional pulses, cap/return-slot/automation behavior, real block-entity saves and blessed-offering hooks, native journal/chunk-NBT revision round trips, ordered clamping, generated Star crafting, actual altar consumption, other-dimension rejection and future-chunk baseline preservation. The test-only Milk Bucket offering exercises returned vessels and is excluded from the production jar.
 
 A real client verified both screen variants and a reserve exceeding 65,535 ticks. A second launch verified ritual persistence, exactly-once reads, a newly generated chunk receiving the prior shift, and a Purity ritual reversing it. Layout screenshots were inspected, including a follow-up check for low-reserve fire visibility. All launched clients used 30% volume. Temporary probes, worlds and screenshots are excluded from published artifacts.

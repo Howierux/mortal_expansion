@@ -1,0 +1,13 @@
+{
+  "type": "minecraft:crafting_shapeless",
+  "category": "misc",
+  "ingredients": [
+    {
+      "item": "mortal_expansion:purified_spiritwood_log"
+    }
+  ],
+  "result": {
+    "count": 4,
+    "id": "mortal_expansion:purified_spiritwood_planks"
+  }
+}

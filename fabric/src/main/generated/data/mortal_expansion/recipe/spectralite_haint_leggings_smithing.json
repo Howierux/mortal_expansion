@@ -1,0 +1,13 @@
+{
+  "type": "mortal_expansion:template_free_smithing",
+  "addition": {
+    "item": "mortal_expansion:spectralite_leggings"
+  },
+  "base": {
+    "item": "mortal_expansion:haint_garb_leggings"
+  },
+  "result": {
+    "count": 1,
+    "id": "mortal_expansion:spectralite_haint_leggings"
+  }
+}

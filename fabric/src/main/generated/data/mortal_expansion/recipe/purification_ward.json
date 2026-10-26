@@ -1,0 +1,21 @@
+{
+  "type": "minecraft:crafting_shaped",
+  "category": "misc",
+  "key": {
+    "M": {
+      "item": "mortal_expansion:grave_moss"
+    },
+    "P": {
+      "item": "mortal_expansion:purified_spiritwood_planks"
+    }
+  },
+  "pattern": [
+    "MPM",
+    "PPP",
+    "MPM"
+  ],
+  "result": {
+    "count": 1,
+    "id": "mortal_expansion:purification_ward"
+  }
+}

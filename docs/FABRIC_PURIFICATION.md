@@ -1,6 +1,6 @@
 # Fabric furnaces and purification
 
-Haunt Furnace, Haint Furnace, Purification Station and Purification Ward now have functional Fabric implementations. Their original block IDs, models and textures remain. Block crafting/knowledge gates are part of the pending Book port; use the creative catalog or `/give` for now.
+Haunt Furnace, Haint Furnace, Purification Station and Purification Ward now have functional Fabric implementations. Their original block IDs, models and textures remain. Block crafting and secret gates are now supplied by the [knowledge slice](FABRIC_KNOWLEDGE.md).
 
 ## Haunt and Haint furnaces
 
@@ -54,4 +54,4 @@ Thirteen native Fabric GameTests pass. Four new checks cover tier rescaling, Hai
 
 Real client checks opened the station and native furnace screens, verified live values and Haint-eye synchronization, and visually checked the layouts. A second client launch verified exact station resources after restart and restored an active Ward 640 blocks away from spawn, outside player view distance, before removing it and confirming owner cleanup. Both launches used 30% master volume. Temporary probes, worlds and screenshots are excluded from the published jar.
 
-Altars and world rituals are now implemented in the [altar slice](FABRIC_ALTARS.md). Research, Ectchantment Machine, Fancifier behavior, book progression, other Haunt effects and NeoForge save migration remain pending ports. These checks do not establish full mod parity or third-party modpack compatibility.
+Altars and world rituals are now implemented in the [altar slice](FABRIC_ALTARS.md). Research and book progression are now implemented. Ectchantment Machine, Fancifier behavior, other Haunt effects and NeoForge save migration remain pending ports. These checks do not establish full mod parity or third-party modpack compatibility.
