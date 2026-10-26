@@ -389,8 +389,8 @@
   "screen.mortal_expansion.journey.continue": "Continue journey",
   "screen.mortal_expansion.journey.destination": "Spiritwell at %s, %s, %s",
   "screen.mortal_expansion.journey.none": "No known spiritwell in this dimension",
-  "screen.mortal_expansion.journey.cost": "Cost: +%s personal haunt, +%s local haunt",
-  "screen.mortal_expansion.journey.body": "Returning to your body remains free.",
+  "screen.mortal_expansion.journey.cost": "Recover your items here for +10 personal and local Haunt.",
+  "screen.mortal_expansion.journey.body": "Continue searching for my body",
   "message.mortal_expansion.spiritwell_blocked": "This spiritwell has no safe return space.",
   "message.mortal_expansion.journey_menu": "Press %s to open Spirit Journey options.",
   "item.mortal_expansion.ectothread": "Ectothread",
@@ -644,5 +644,13 @@
   "item.mortal_expansion.mummy_spawn_egg": "Mummy Spawn Egg",
   "item.mortal_expansion.pharaohl_spawn_egg": "Pharaohl Spawn Egg",
   "item.mortal_expansion.demon_spawn_egg": "Demon Spawn Egg",
-  "item.mortal_expansion.mortal_golem_spawn_egg": "Mortal Golem Spawn Egg"
+  "item.mortal_expansion.mortal_golem_spawn_egg": "Mortal Golem Spawn Egg",
+  "key.mortal_expansion.spirit_journey": "Open Spirit Journey",
+  "screen.mortal_expansion.journey.well": "Return through the nearest Spiritwell",
+  "screen.mortal_expansion.journey.free": "Your body offers a return without this cost.",
+  "screen.mortal_expansion.grave.title": "Grave inscription",
+  "screen.mortal_expansion.grave.name": "Name",
+  "screen.mortal_expansion.grave.engrave": "Engrave",
+  "screen.mortal_expansion.grave.hint": "Your own name binds this grave for respawn and Spirit Journey.",
+  "message.mortal_expansion.journey.no_well": "No safe Spiritwell return is available."
 }

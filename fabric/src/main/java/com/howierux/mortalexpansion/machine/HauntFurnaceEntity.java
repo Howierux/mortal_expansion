@@ -57,7 +57,7 @@ public final class HauntFurnaceEntity extends AbstractFurnaceBlockEntity {
     public static void serverTick(Level level, BlockPos pos, BlockState state,
             HauntFurnaceEntity furnace) {
         if (!(level instanceof ServerLevel serverLevel)) return;
-        // Missing function: Spectral Interference pause resumes when Haunt effects are ported.
+        if(com.howierux.mortalexpansion.haunt.effects.HauntState.data(furnace).getLong("MortalExpansionInterferenceUntil")>serverLevel.getServer().overworld().getGameTime())return;
         // Initialize once after placement/load. Later changes are pushed by HauntManager.
         if (furnace.cachedTier == null) {
             var chunk = serverLevel.getChunkSource().getChunkNow(pos.getX() >> 4, pos.getZ() >> 4);

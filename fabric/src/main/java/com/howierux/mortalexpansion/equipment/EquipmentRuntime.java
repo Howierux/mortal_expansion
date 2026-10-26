@@ -27,6 +27,7 @@ public final class EquipmentRuntime {
  public static double multiplier(HauntTier tier){return 1+.1*(Math.clamp(tier.id(),0,6)-1);}
  public static float mining(Player p,float original){return bloodstone(p.getMainHandItem())&&!p.isSpectator()?(float)(original*multiplier(PlayerHauntManager.getTier(p))):original;}
  public static void tick(Player p){
+  if(p instanceof net.minecraft.server.level.ServerPlayer server)com.howierux.mortalexpansion.haunt.effects.HauntProtection.equipmentTick(server);
   modifier(p,Attributes.JUMP_STRENGTH,JUMP,fullHaint(p)?.3:0,AttributeModifier.Operation.ADD_VALUE);
   double bonus=!p.isSpectator()&&bloodstone(p.getMainHandItem())?multiplier(PlayerHauntManager.getTier(p))-1:0;
   modifier(p,Attributes.ATTACK_DAMAGE,POWER,bonus,AttributeModifier.Operation.ADD_MULTIPLIED_TOTAL);
@@ -38,7 +39,7 @@ public final class EquipmentRuntime {
   current.removeModifier(id);if(amount!=0)current.addTransientModifier(new AttributeModifier(id,amount,op));
  }
  /** Dispatch after choosing a negative Haunt roll, so protection does not increase positive-event odds.
-  * Missing function: the Fabric negative Haunt-event pool must call this gate when that slice is ported. */
+  * The Haunt dispatcher calls this gate for both natural and operator-selected risks. */
  public static boolean preventHaunting(net.minecraft.server.level.ServerPlayer p){
   if(!fullGarb(p))return false;
   p.displayClientMessage(net.minecraft.network.chat.Component.translatable("message.mortal_expansion.haunt.garb_prevented"),true);return true;

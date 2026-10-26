@@ -20,7 +20,7 @@ public final class CatalogClient {
   return 0xFF000000|(r<<16)|(g<<8)|b;
  }
  public static void initialize() {
-  CombatClient.initialize();
+  CombatClient.initialize(); JourneyClient.initialize();
   net.minecraft.client.renderer.item.ItemProperties.register(CatalogItems.EMF_READER,Catalog.id("emf_level"),(stack,world,holder,seed)->EmfReaderClient.modelLevel(stack,holder)/12.0F);
   net.fabricmc.fabric.api.client.rendering.v1.HudRenderCallback.EVENT.register(EmfReaderClient::render);
   net.fabricmc.fabric.api.client.rendering.v1.BuiltinItemRendererRegistry.INSTANCE.register(CatalogItems.PRECISE_EMF_READER,new PreciseEmfRenderer());
@@ -63,6 +63,6 @@ public final class CatalogClient {
   BlockRenderLayerMap.INSTANCE.putFluids(RenderType.translucent(),pair.source,pair.flowing);
  }
  private static boolean pending(String id) {
-  return !(java.util.Set.of("spiritwood_sapling","emf_reader","precise_emf_reader","mortality_research_station","book_of_ectcetera","ritual_star","altar_of_purity","altar_of_impurity","haunt_furnace","haint_furnace","purification_station","purification_ward","ecto_pipe","purified_ecto_pipe","ectank","purified_ectank","ectoplasmic_generator","enchantment_generator").contains(id)||id.equals("bloodstone")||id.equals("pharaohl_scepter")||id.startsWith("bloodstone_")||id.startsWith("spectralite_")||id.startsWith("ghost_garb_")||id.startsWith("haint_garb_")||id.equals("gravestone_sword")||id.equals("purified_gravestone_sword")||id.equals("demonic_ash")||id.endsWith("ectoplasm")||id.endsWith("ectothread")||id.equals("gravestone")||id.equals("purified_gravestone")||id.startsWith("spiritwood_")&&!id.endsWith("sapling")||id.startsWith("purified_spiritwood_")||id.equals("stone_fence")||id.startsWith("bloodstone_ore"));
+  return !(java.util.Set.of("spiritwood_sapling","emf_reader","precise_emf_reader","mortality_research_station","book_of_ectcetera","ritual_star","altar_of_purity","altar_of_impurity","haunt_furnace","haint_furnace","purification_station","purification_ward","ecto_pipe","purified_ecto_pipe","ectank","purified_ectank","ectoplasmic_generator","enchantment_generator").contains(id)||id.equals("bloodstone")||id.equals("grave")||id.equals("spiritwell")||id.equals("spirit_boon")||id.equals("pharaohl_scepter")||id.startsWith("bloodstone_")||id.startsWith("spectralite_")||id.startsWith("ghost_garb_")||id.startsWith("haint_garb_")||id.equals("gravestone_sword")||id.equals("purified_gravestone_sword")||id.equals("demonic_ash")||id.endsWith("ectoplasm")||id.endsWith("ectothread")||id.equals("gravestone")||id.equals("purified_gravestone")||id.startsWith("spiritwood_")&&!id.endsWith("sapling")||id.startsWith("purified_spiritwood_")||id.equals("stone_fence")||id.startsWith("bloodstone_ore"));
  }
 }

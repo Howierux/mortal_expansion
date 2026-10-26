@@ -14,7 +14,8 @@
       "com.howierux.mortalexpansion.gametest.KnowledgeGameTests",
       "com.howierux.mortalexpansion.gametest.TerrainReaderGameTests",
       "com.howierux.mortalexpansion.gametest.SpectralCombatGameTests",
-      "com.howierux.mortalexpansion.gametest.EquipmentGameTests"
+      "com.howierux.mortalexpansion.gametest.EquipmentGameTests",
+      "com.howierux.mortalexpansion.gametest.HauntDiscoveryJourneyGameTests"
     ]
   },
   "depends": {

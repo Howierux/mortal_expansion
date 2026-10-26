@@ -9,7 +9,7 @@ Implemented on `fabric-dev`, Minecraft 1.21.1 / Java 21. Root NeoForge sources r
 - Collision at the eyes, including glass, enters Minecraft's existing underwater-air branch. Respiration, Water Breathing, creative immunity, air refill and the native bubble meter remain in control. Ordinary drowning and exhausted wall air damage garb wearers; magic, intangible attackers and void damage retain the shared combat exceptions.
 - The player's rendered body uses 20% opacity. Armor keeps its woven/hybrid art. Only the opaque block overlay and normal wall-ejection behavior are suppressed; fire/water overlays and unrelated movement validation remain.
 - Bloodstone, Spectralite and Spectralite Haint armor reduce damage from intangible attackers by 5% per equipped piece, up to 20%, before normal armor handling. Existing native trim support remains.
-- Garb tooltips summarize the implemented equipment rules. `EquipmentRuntime.preventHaunting` is the post-selection negative-event gate and sends the gear-prevented notice. **Missing function:** the full negative Haunt-event dispatcher and its owned-effect cleanup/garb-repair triggers are not yet ported. Natural prevention notices cannot occur until that dispatcher calls the gate. Ordinary negative potions are not removed by wearing garb.
+- Garb tooltips summarize the implemented equipment rules. `EquipmentRuntime.preventHaunting` is the post-selection negative-event gate and sends the gear-prevented notice. The follow-up [Haunt-event slice](FABRIC_HAUNT_EVENTS.md) now supplies natural prevention dispatch, owned-effect cleanup and successful event-linked garb repairs. Ordinary external negative potions are not removed by wearing garb.
 
 ## Tools and Scepter
 
@@ -37,6 +37,6 @@ Focused mixins are needed because Fabric 1.21.1 has no matching supported hooks 
 
 ## Verification
 
-- Native data generation and the Fabric build pass; 37 required GameTests pass. Seven equipment tests exercise actual phasing, air exhaustion/drowning, Respiration/Water Breathing, mixed sets, damage rules, attribute removal, exact repair costs, protected face-based/connected harvesting, tree felling, native soil/crop growth and Scepter charging/summons.
+- Native data generation and the Fabric build pass; 46 required GameTests pass. Seven equipment tests exercise actual phasing, air exhaustion/drowning, Respiration/Water Breathing, mixed sets, damage rules, attribute removal, exact repair costs, protected face-based/connected harvesting, tree felling, native soil/crop growth and Scepter charging/summons.
 - An isolated integrated client at 30% volume crossed an ordinary wall using real movement packets. The server accepted its position; the client air meter reached 264 and native Haint jump strength was 0.72. Wall-overlay suppression, woven/hybrid armor and Scepter bar were visually checked.
 - Temporary client probes were removed before the production build. Dedicated multiplayer, third-party equipment/claim/crop mods, shaders and NeoForge world migration remain separate validation work.

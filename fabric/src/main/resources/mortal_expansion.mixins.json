@@ -21,7 +21,13 @@
     "EquipmentMiningMixin",
     "EquipmentDroppedItemMixin",
     "HauntedSoilMixin",
-    "HauntedCropGrowthMixin"
+    "HauntedCropGrowthMixin",
+    "JourneyDropsMixin",
+    "JourneyDropCaptureMixin",
+    "HauntOwnedEffectMixin",
+    "HauntFurnaceAccessor",
+    "JourneyRespawnMixin",
+    "JourneySpawnPointMixin"
   ],
   "injectors": {
     "defaultRequire": 1
@@ -30,6 +36,7 @@
     "EmfHandPoseMixin",
     "GhostGarbLocalPlayerMixin",
     "GhostGarbRenderMixin",
-    "GarbOverlayMixin"
+    "GarbOverlayMixin",
+    "JourneyPostEffectInvoker"
   ]
 }

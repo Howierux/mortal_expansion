@@ -68,13 +68,13 @@ public static final Block PURIFIED_ECTOPLASM_CAULDRON=register("purified_ectopla
 public static final Block SPIRIT_TORCH=register("spirit_torch",new SpiritTorchVisual(BlockBehaviour.Properties.of().strength(0).noCollission().noOcclusion()));
 public static final Block SPIRIT_WALL_TORCH=register("spirit_wall_torch",new SpiritWallTorchVisual(BlockBehaviour.Properties.of().strength(0).noCollission().noOcclusion()));
 public static final Block HOLY_SALT=register("holy_salt",new HolySaltVisual(BlockBehaviour.Properties.of().strength(0).noCollission().noOcclusion()));
-public static final Block GRAVE=register("grave",new GraveVisual(BlockBehaviour.Properties.ofFullCopy(Blocks.STONE).noOcclusion()));
+public static final Block GRAVE=register("grave",new com.howierux.mortalexpansion.travel.GraveBlock(BlockBehaviour.Properties.ofFullCopy(Blocks.STONE).noOcclusion()));
 public static final Block STONE_FENCE=register("stone_fence",new FenceBlock(copy(Blocks.STONE)));
 public static final Block BLOODSTONE_ORE=register("bloodstone_ore",new DropExperienceBlock(UniformInt.of(3,7),copy(Blocks.DEEPSLATE_DIAMOND_ORE)));
 public static final Block BLOODSTONE_ORE_STONE=register("bloodstone_ore_stone",new DropExperienceBlock(UniformInt.of(3,7),copy(Blocks.DIAMOND_ORE)));
 public static final Block SPIRITWOOD_LEAVES=register("spiritwood_leaves",new LeavesBlock(copy(Blocks.OAK_LEAVES)));
 public static final Block SPIRITWOOD_SAPLING=register("spiritwood_sapling",new com.howierux.mortalexpansion.worldgen.SpiritwoodSaplingBlock(com.howierux.mortalexpansion.worldgen.ModTreeGrowers.SPIRITWOOD,copy(Blocks.OAK_SAPLING)));
-public static final Block SPIRITWELL=register("spiritwell",new SpiritwellVisual(BlockBehaviour.Properties.of().strength(-1,3600000).noCollission().noOcclusion().noLootTable()));
+public static final Block SPIRITWELL=register("spiritwell",new com.howierux.mortalexpansion.spiritwell.SpiritwellBlock(BlockBehaviour.Properties.of().strength(-1,3600000).noCollission().noOcclusion().noLootTable()));
  public static void initialize() {}
 /** Missing function: port fancifier interactions and simulation; this is its catalog appearance. */
  static final class FancifierVisual extends Block {
@@ -166,22 +166,6 @@ static final EnumProperty<RedstoneSide> P_WEST = BlockStateProperties.WEST_REDST
  
  
  }
-/** Missing function: port grave interactions and simulation; this is its catalog appearance. */
- static final class GraveVisual extends Block {
- static final IntegerProperty P_DEPTH = GRAVE_DEPTH;
-static final DirectionProperty P_FACING = BlockStateProperties.HORIZONTAL_FACING;
-static final BooleanProperty P_NATURAL = GRAVE_NATURAL;
- GraveVisual(Properties p) { super(p); registerDefaultState(stateDefinition.any().setValue(P_DEPTH,1).setValue(P_FACING,net.minecraft.core.Direction.NORTH)); }
- @Override protected void createBlockStateDefinition(StateDefinition.Builder<Block,BlockState> b) { b.add(P_DEPTH,P_FACING,P_NATURAL); }
- @Override public BlockState getStateForPlacement(net.minecraft.world.item.context.BlockPlaceContext c) { return defaultBlockState().setValue(P_FACING,c.getHorizontalDirection().getOpposite()); }
- @Override protected net.minecraft.world.phys.shapes.VoxelShape getShape(BlockState s,net.minecraft.world.level.BlockGetter l,BlockPos p,net.minecraft.world.phys.shapes.CollisionContext c) { int d=s.getValue(P_DEPTH)*4; return s.getValue(P_FACING).getAxis()==net.minecraft.core.Direction.Axis.X?box(d,0,0,d+8,16,16):box(0,0,d,16,16,d+8); }
- }
-/** Missing function: port spiritwell interactions and simulation; this is its catalog appearance. */
- static final class SpiritwellVisual extends Block {
- 
- SpiritwellVisual(Properties p) { super(p); registerDefaultState(stateDefinition.any()); }
- @Override protected void createBlockStateDefinition(StateDefinition.Builder<Block,BlockState> b) {  }
- 
- 
- }
+
+
 }

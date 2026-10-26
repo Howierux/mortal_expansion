@@ -6,6 +6,7 @@ import net.minecraft.world.item.crafting.Ingredient;
 import static net.minecraft.advancements.critereon.InventoryChangeTrigger.TriggerInstance.hasItems;
 public final class EquipmentRecipes {
  public static void emit(RecipeOutput out){
+  ShapedRecipeBuilder.shaped(RecipeCategory.BUILDING_BLOCKS,CatalogItems.GRAVE,3).pattern("GG").pattern("GG").pattern("GG").define('G',CatalogItems.GRAVESTONE).unlockedBy("has_gravestone",hasItems(CatalogItems.GRAVESTONE)).save(out,Catalog.id("grave"));
   ShapedRecipeBuilder.shaped(RecipeCategory.TOOLS,CatalogItems.BLOODSTONE_AXE,1).pattern("BB").pattern("BS").pattern(" S").define('B',CatalogItems.BLOODSTONE).define('S',Items.STICK).unlockedBy("has_material",hasItems(CatalogItems.BLOODSTONE)).save(out,Catalog.id("bloodstone_axe"));
   ShapedRecipeBuilder.shaped(RecipeCategory.TOOLS,CatalogItems.BLOODSTONE_BOOTS,1).pattern("B B").pattern("B B").define('B',CatalogItems.BLOODSTONE).unlockedBy("has_material",hasItems(CatalogItems.BLOODSTONE)).save(out,Catalog.id("bloodstone_boots"));
   ShapedRecipeBuilder.shaped(RecipeCategory.TOOLS,CatalogItems.BLOODSTONE_CHESTPLATE,1).pattern("B B").pattern("BBB").pattern("BBB").define('B',CatalogItems.BLOODSTONE).unlockedBy("has_material",hasItems(CatalogItems.BLOODSTONE)).save(out,Catalog.id("bloodstone_chestplate"));

@@ -22,6 +22,7 @@ object MortalExpansionFabricDataGenerator : DataGeneratorEntrypoint {
     }
 	override fun onInitializeDataGenerator(fabricDataGenerator: FabricDataGenerator) {
         val pack = fabricDataGenerator.createPack()
+        pack.addProvider(::ModPostEffects)
         pack.addProvider(CombatData::RegistryData)
         pack.addProvider(CombatData::Entities)
         pack.addProvider(CombatData::DamageTags)
