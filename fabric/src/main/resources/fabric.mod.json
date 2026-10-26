@@ -3,7 +3,7 @@
   "id": "mortal_expansion",
   "version": "${version}",
   "name": "Mortal Expansion (Fabric development)",
-  "description": "Fabric gameplay port in progress: Haunt and EMF readers, native terrain, book research, machinery, purification, spectral combat and ME creatures. Spirit quests, player garb powers, construction/encounter hooks and travel remain pending.",
+  "description": "Fabric gameplay port in progress: Haunt and EMF readers, terrain, book research, machinery, purification, spectral combat, ME creatures and equipment/garb powers. Full Haunt events, Spirit quests, construction/encounters and travel remain pending.",
   "authors": [
     "Howierux"
   ],

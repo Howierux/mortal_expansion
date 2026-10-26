@@ -13,7 +13,8 @@
       "com.howierux.mortalexpansion.gametest.AltarGameTests",
       "com.howierux.mortalexpansion.gametest.KnowledgeGameTests",
       "com.howierux.mortalexpansion.gametest.TerrainReaderGameTests",
-      "com.howierux.mortalexpansion.gametest.SpectralCombatGameTests"
+      "com.howierux.mortalexpansion.gametest.SpectralCombatGameTests",
+      "com.howierux.mortalexpansion.gametest.EquipmentGameTests"
     ]
   },
   "depends": {

@@ -14,12 +14,22 @@
     "HauntMovementMixin",
     "GhostGarbCollisionMixin",
     "SpectralBarrierBlockMixin",
-    "DemiTangibleAnvilMixin"
+    "DemiTangibleAnvilMixin",
+    "GhostGarbServerMovementMixin",
+    "GarbBreathingMixin",
+    "EquipmentPlayerMixin",
+    "EquipmentMiningMixin",
+    "EquipmentDroppedItemMixin",
+    "HauntedSoilMixin",
+    "HauntedCropGrowthMixin"
   ],
   "injectors": {
     "defaultRequire": 1
   },
   "client": [
-    "EmfHandPoseMixin"
+    "EmfHandPoseMixin",
+    "GhostGarbLocalPlayerMixin",
+    "GhostGarbRenderMixin",
+    "GarbOverlayMixin"
   ]
 }

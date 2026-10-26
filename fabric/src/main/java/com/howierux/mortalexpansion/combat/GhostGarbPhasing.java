@@ -12,7 +12,7 @@ public final class GhostGarbPhasing {
     public static boolean active(Entity entity) {
         if (entity instanceof net.minecraft.world.entity.monster.Phantom)
             return com.howierux.mortalexpansion.entity.IntangibleEntities.isIntangible(entity);
-        return false; // Missing function: spectral garb player movement and wall breathing.
+        return entity instanceof Player player && com.howierux.mortalexpansion.equipment.EquipmentRuntime.fullGarb(player);
     }
     public static Vec3 collide(Entity entity, Vec3 motion) {
         double y = motion.y>0 ? com.howierux.mortalexpansion.entity.mob.UpwardSpectralPhasing.rise(entity,motion.y) : Entity.collideBoundingBox(entity, new Vec3(0, motion.y, 0), entity.getBoundingBox(), entity.level(), java.util.List.of()).y;

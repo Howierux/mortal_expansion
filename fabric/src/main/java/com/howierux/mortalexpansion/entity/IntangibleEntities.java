@@ -7,6 +7,7 @@ public final class IntangibleEntities {
     private IntangibleEntities() {}
 
     public static boolean isIntangible(Entity entity) {
+        if (entity instanceof net.minecraft.world.entity.player.Player player && com.howierux.mortalexpansion.equipment.EquipmentRuntime.fullGarb(player)) return true;
         if (entity instanceof DynamicIntangible dynamic
                 && dynamic.isCurrentlyIntangible()) {
             return true;

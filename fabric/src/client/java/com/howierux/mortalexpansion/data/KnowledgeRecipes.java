@@ -14,7 +14,7 @@ import java.util.concurrent.CompletableFuture;
 public final class KnowledgeRecipes extends FabricRecipeProvider {
  public KnowledgeRecipes(FabricDataOutput output,CompletableFuture<HolderLookup.Provider> lookup){super(output,lookup);}
  @Override public void buildRecipes(RecipeOutput output){
-  ProcessingRecipes.emit(output);
+  ProcessingRecipes.emit(output); EquipmentRecipes.emit(output);
   RecipeOutput out=new RecipeOutput(){
    public net.minecraft.advancements.Advancement.Builder advancement(){return output.advancement();}
    public void accept(ResourceLocation id,Recipe<?> recipe,net.minecraft.advancements.AdvancementHolder advancement){output.accept(id,recipe,InsightSecret.required(id)==0?advancement:null);}

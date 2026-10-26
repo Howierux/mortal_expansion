@@ -12,6 +12,7 @@ public final class CatalogLoot extends FabricBlockLootTableProvider {
   CatalogBlocks.ALL.forEach((id,b) -> {
    if(id.startsWith("bloodstone_ore")) add(b,createOreDrop(b,CatalogItems.BLOODSTONE));
    else if(id.equals("wisp_o_lantern")) add(b,createSilkTouchDispatchTable(b,applyExplosionCondition(b,net.minecraft.world.level.storage.loot.entries.LootItem.lootTableItem(Items.CARVED_PUMPKIN))));
+   else if(id.equals("haunted_farmland")) dropOther(b,Items.DIRT);
    else if(id.equals("spiritwood_leaves")) add(b,createLeavesDrops(b,CatalogBlocks.SPIRITWOOD_SAPLING,NORMAL_LEAVES_SAPLING_CHANCES));
    else if(id.endsWith("_door")) add(b,createDoorTable(b));
    else if(id.endsWith("_slab")) add(b,createSlabItemTable(b));
