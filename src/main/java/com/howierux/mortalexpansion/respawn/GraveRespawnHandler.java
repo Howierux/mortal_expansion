@@ -64,7 +64,8 @@ public final class GraveRespawnHandler {
         // Preserve the player's ordinary bed/world spawn for future fallback.
         event.setCopyOriginalSpawnPosition(true);
 
-        if (!grave.isNaturallyGenerated()) {
+        // Entering Spirit Journey borrows the grave; only ordinary respawn spends it.
+        if (!player.getData(ModAttachments.SPIRIT_JOURNEY_RESPAWN) && !grave.isNaturallyGenerated()) {
             PlayerHauntManager.addPoints(player, 1);
             targetLevel.destroyBlock(target.pos(), false);
             player.setData(ModAttachments.GRAVE_RESPAWN_POINT, "");

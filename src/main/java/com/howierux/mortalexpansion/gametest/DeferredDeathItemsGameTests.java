@@ -58,6 +58,44 @@ public final class DeferredDeathItemsGameTests {
         try { test.run(); }
         finally { rule.set(previous, helper.getLevel().getServer()); }
     }
+    @GameTest(template = "deferred_items_test", batch = "grave_consumption")
+    public static void journey_preserves_owned_graves_and_personal_haunt(GameTestHelper helper) {
+        for (boolean naturalized : new boolean[]{false, true}) {
+            ServerPlayer dead = player(helper, true);
+            BlockPos pos = helper.absolutePos(new BlockPos(10, 1, 10));
+            if (naturalized) ((GraveBlockEntity)helper.getLevel().getBlockEntity(pos)).setNaturallyGenerated(true);
+            com.howierux.mortalexpansion.haunt.PlayerHauntManager.setValue(dead, 20);
+            die(dead);
+            SpiritJourneyHandler.choose(dead);
+            ServerPlayer live = dead.connection.player;
+            helper.assertTrue(SpiritJourneyHandler.isActive(live), "Journey becomes active");
+            helper.assertTrue(helper.getLevel().getBlockEntity(pos) instanceof GraveBlockEntity grave && grave.isRespawnGraveFor(live.getUUID()), "Journey keeps the owned grave; naturalized=" + naturalized);
+            helper.assertTrue(!live.getData(ModAttachments.GRAVE_RESPAWN_POINT).isEmpty(), "Journey retains its grave binding");
+            helper.assertTrue(com.howierux.mortalexpansion.haunt.PlayerHauntManager.getValue(live) == 20, "Journey does not charge normal grave-respawn Haunt");
+            helper.assertTrue(!live.getData(ModAttachments.SPIRIT_JOURNEY_CORPSE).isEmpty(), "Journey retains corpse recovery");
+            live.discard();
+            helper.getLevel().removeBlock(pos, false);
+        }
+        helper.succeed();
+    }
+    @GameTest(template = "deferred_items_test", batch = "grave_consumption")
+    public static void normal_respawn_consumes_only_nonnatural_owned_graves(GameTestHelper helper) {
+        for (boolean naturalized : new boolean[]{false, true}) {
+            ServerPlayer dead = player(helper, true);
+            BlockPos pos = helper.absolutePos(new BlockPos(10, 1, 10));
+            if (naturalized) ((GraveBlockEntity)helper.getLevel().getBlockEntity(pos)).setNaturallyGenerated(true);
+            com.howierux.mortalexpansion.haunt.PlayerHauntManager.setValue(dead, 20);
+            die(dead);
+            ServerPlayer live = dead.server.getPlayerList().respawn(dead, false, Entity.RemovalReason.KILLED);
+            helper.assertTrue(naturalized ? helper.getLevel().getBlockState(pos).is(ModBlocks.GRAVE.get()) : helper.getLevel().getBlockState(pos).isAir(), "Only non-natural grave is consumed; naturalized=" + naturalized);
+            helper.assertTrue(live.getData(ModAttachments.GRAVE_RESPAWN_POINT).isEmpty() != naturalized, "Only consumed grave binding is cleared");
+            helper.assertTrue(com.howierux.mortalexpansion.haunt.PlayerHauntManager.getValue(live) == (naturalized ? 20 : 21), "Only non-natural grave respawn charges one personal point");
+            helper.assertTrue(!live.isSpectator(), "Ordinary respawn stays outside Journey");
+            live.discard();
+            helper.getLevel().removeBlock(pos, false);
+        }
+        helper.succeed();
+    }
     @GameTest(template = "deferred_items_test", timeoutTicks = 100)
     public static void journey_death_returns_to_normal_spawn(GameTestHelper helper) {
         withKeepInventory(helper, false, () -> {

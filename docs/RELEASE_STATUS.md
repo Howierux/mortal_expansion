@@ -2,7 +2,7 @@
 
 ## 1.1.0-beta.1 candidate — 2026-10-27
 
-Prepared for dev-to-main promotion. The versioned build and all **239 required server GameTests** pass after isolating shared-cap/autonomous-target test fixtures; gameplay is unchanged by that isolation. Main has not been merged by this preparation. See [candidate changelog and release gate](RELEASE_1.1.0-beta.1.md). Earlier dated validation counts below are historical. The cemetery playtest follow-up adds Stone Fence to the native fence tags, so placed/generated connections survive neighbor updates; existing disconnected saved states may need a neighbor update.
+Prepared for dev-to-main promotion. The versioned build and all **241 required server GameTests** pass after isolating shared-cap/autonomous-target test fixtures; gameplay is unchanged by that isolation. Main has not been merged by this preparation. See [candidate changelog and release gate](RELEASE_1.1.0-beta.1.md). Earlier dated validation counts below are historical. The cemetery playtest follow-up adds Stone Fence to the native fence tags, so placed/generated connections survive neighbor updates; existing disconnected saved states may need a neighbor update.
 
 Updated 2026-10-16. The gameplay baseline promoted to `main` is `f6e36d817a88972118fd59078811f2a034eb33bf`. Its Gradle build and all **194 required server GameTests** passed. This documentation revision adds no gameplay and does not change that count. Earlier per-feature counts are historical.
 
