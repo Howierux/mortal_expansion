@@ -21,7 +21,7 @@ public final class PreciseEmfRenderer extends BlockEntityWithoutLevelRenderer {
             MultiBufferSource buffers, int light, int overlay) {
         var mc = Minecraft.getInstance(); var player = mc.player;
         int units = player == null ? -1 : EmfReaderItem.hundredths(stack, player);
-        int lit = units < 0 ? 0 : EmfScale.litBulbs(units / 100);
+        int lit = units < 0 ? 0 : EmfScale.modelLevel(units / 100);
         var model = mc.getModelManager().getModel(ModelResourceLocation.standalone(
                 ResourceLocation.fromNamespaceAndPath(MortalExpansion.MOD_ID, "item/precise_emf_reader_" + lit)));
         mc.getItemRenderer().renderModelLists(model, stack, light, overlay, pose,

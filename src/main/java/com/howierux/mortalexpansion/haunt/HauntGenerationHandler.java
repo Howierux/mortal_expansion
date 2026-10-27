@@ -43,6 +43,7 @@ public final class HauntGenerationHandler {
         HauntTier initialTier = NaturalHauntGenerator.determineInitialTier(level, chunk);
         int initialValue = initialTier.midpointValue();
 
+        chunk.setData(ModAttachments.HAUNT_RITUAL_REVISION,0);
         chunk.setData(ModAttachments.HAUNT_TIER, initialTier.id());
         chunk.setData(
                 ModAttachments.HAUNT_PROGRESS,

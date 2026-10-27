@@ -34,16 +34,28 @@ public final class HauntSimulationHandler {
 
     private static final long TICKS_PER_DAY = 24_000L;
 
-    /** 7.5 percentage points per named tier above Void's residual spread chance. */
-    private static final float SPREAD_CHANCE_PER_TIER = 0.075F;
+    private static final long SPREAD_INTERVAL = TICKS_PER_DAY / 3;
+    private static final float BASE_SPREAD_CHANCE = 2.0F / 3.0F;
 
-    /**
-     * Zero Haunt cannot spread. Residual Void Haunt spreads at 7.5%, Natural at
-     * 15%, Supernatural at 22.5%, and so on through Eldritch at 52.5% per day.
-     */
-    private static float spreadChance(int value) {
-        return value <= HauntTier.MIN_VALUE ? 0.0F
-                : SPREAD_CHANCE_PER_TIER * (HauntTier.fromValue(value).id() + 1);
+    /** Zero never spreads. All nonzero tiers reach 100% at new moon. */
+    public static float spreadChance(int value, int moonPhase) {
+        int phase = Math.floorMod(moonPhase, 8);
+        float moonWeight = 0.5F + 0.25F * (4 - Math.abs(phase - 4));
+        return value <= HauntTier.MIN_VALUE ? 0.0F : Math.min(1.0F, BASE_SPREAD_CHANCE * moonWeight);
+    }
+
+    /** One pass on a forward interval crossing; skipped intervals never catch up. */
+    public static boolean spreadCheckDue(long previousTime, long currentTime) {
+        return currentTime > previousTime
+                && Math.floorDiv(currentTime, SPREAD_INTERVAL) > Math.floorDiv(previousTime, SPREAD_INTERVAL);
+    }
+
+    /** Native day times: dawn 0, sunset 12000, midnight 18000. Never replay skipped checks. */
+    public static boolean bloodstoneCheckDue(long previousTime, long currentTime) {
+        if (currentTime <= previousTime) return false;
+        return Math.floorDiv(currentTime, TICKS_PER_DAY) > Math.floorDiv(previousTime, TICKS_PER_DAY)
+                || Math.floorDiv(currentTime - 12_000L, TICKS_PER_DAY) > Math.floorDiv(previousTime - 12_000L, TICKS_PER_DAY)
+                || Math.floorDiv(currentTime - 18_000L, TICKS_PER_DAY) > Math.floorDiv(previousTime - 18_000L, TICKS_PER_DAY);
     }
 
     /** 10% daily chance to lose one haunt point: 90% chance to remain unchanged. */
@@ -59,11 +71,12 @@ public final class HauntSimulationHandler {
     private static final long PLAYER_LEAK_CHECK_INTERVAL = 200L;
     private static final float PLAYER_LEAK_CHANCE_PER_TIER = 0.0025F;
 
-    /**
-     * 0.25% daily conversion roll for each loaded chunk at Dead Rising or above.
-     * A successful Bloodstone conversion consumes one haunt point.
-     */
-    private static final float BLOODSTONE_CONVERSION_CHANCE = 0.0025F;
+    /** Each eligible tier doubles the dawn/sunset/midnight chance, starting at 0.5%. */
+    public static float bloodstoneConversionChance(int hauntValue) {
+        int tier = HauntTier.fromValue(hauntValue).id();
+        return tier < HauntTier.DEAD_RISING.id() ? 0.0F
+                : 0.005F * (1 << (tier - HauntTier.DEAD_RISING.id()));
+    }
 
     private static final int[][] CARDINAL_OFFSETS = {
             {1, 0},
@@ -73,7 +86,7 @@ public final class HauntSimulationHandler {
     };
 
     private static final Map<ServerLevel, Set<Long>> LOADED_CHUNKS = new WeakHashMap<>();
-    private static final Map<ServerLevel, Long> LAST_DAY = new WeakHashMap<>();
+    private static final Map<ServerLevel, Long> LAST_SIMULATION_TIME = new WeakHashMap<>();
 
     @SubscribeEvent
     public static void onChunkLoad(ChunkEvent.Load event) {
@@ -110,14 +123,15 @@ public final class HauntSimulationHandler {
 
         runPlayerHauntLeakChecks(level);
 
-        long currentDay = Math.floorDiv(level.getDayTime(), TICKS_PER_DAY);
-        Long previousDay = LAST_DAY.put(level, currentDay);
-
-        if (previousDay == null || previousDay == currentDay) {
-            return;
-        }
-
-        runDailySimulation(level);
+        long currentTime = level.getDayTime();
+        Long previousTime = LAST_SIMULATION_TIME.put(level, currentTime);
+        if (previousTime == null) return;
+        boolean spread = spreadCheckDue(previousTime, currentTime);
+        boolean bloodstone = bloodstoneCheckDue(previousTime, currentTime);
+        if (!spread && !bloodstone) return;
+        boolean daily = currentTime > previousTime
+                && Math.floorDiv(currentTime, TICKS_PER_DAY) > Math.floorDiv(previousTime, TICKS_PER_DAY);
+        runSimulation(level, daily, spread, bloodstone);
     }
 
     /**
@@ -169,11 +183,11 @@ public final class HauntSimulationHandler {
     }
 
     /**
-     * Runs one daily pass against a snapshot of currently loaded chunks.
-     * Planned changes are applied only after all rolls, preventing same-day
-     * chain reactions.
+     * Runs one spread pass against a snapshot of currently loaded chunks.
+     * Planned changes are applied only after all rolls, preventing chain
+     * reactions within a pass.
      */
-    public static void runDailySimulation(ServerLevel level) {
+    private static void runSimulation(ServerLevel level, boolean daily, boolean spread, boolean bloodstone) {
         Set<Long> tracked = LOADED_CHUNKS.get(level);
         if (tracked == null || tracked.isEmpty()) {
             return;
@@ -212,7 +226,7 @@ public final class HauntSimulationHandler {
 
         // A Ward cleanses each affected loaded chunk exactly once per day.
         // Multiple overlapping Wards do not stack their daily point reduction.
-        for (long protectedKey : wardProtectedChunks) {
+        if (daily) for (long protectedKey : wardProtectedChunks) {
             int value = resultingValues.getOrDefault(
                     protectedKey,
                     startingValues.getOrDefault(protectedKey, 0)
@@ -224,18 +238,19 @@ public final class HauntSimulationHandler {
         }
 
         RandomSource random = level.getRandom();
+        int moonPhase = level.getMoonPhase();
 
         for (LevelChunk chunk : loadedChunks) {
-            GraveyardStoneWeathering.sample(level, chunk);
+            if (daily) GraveyardStoneWeathering.sample(level, chunk);
             long sourceKey = chunk.getPos().toLong();
             int sourceValue = startingValues.getOrDefault(sourceKey, 0);
             HauntTier sourceTier = HauntTier.fromValue(sourceValue);
 
             boolean sourceWardProtected = wardProtectedChunks.contains(sourceKey);
 
-            if (!sourceWardProtected
+            if (spread && !sourceWardProtected
                     && sourceValue > 0
-                    && random.nextFloat() < spreadChance(sourceValue)) {
+                    && random.nextFloat() < spreadChance(sourceValue, moonPhase)) {
                 int[] offset = CARDINAL_OFFSETS[random.nextInt(CARDINAL_OFFSETS.length)];
                 ChunkPos sourcePos = chunk.getPos();
                 ChunkPos targetPos = new ChunkPos(sourcePos.x + offset[0], sourcePos.z + offset[1]);
@@ -252,7 +267,7 @@ public final class HauntSimulationHandler {
                 }
             }
 
-            if (!sourceWardProtected && random.nextFloat() < DECAY_CHANCE) {
+            if (daily && !sourceWardProtected && random.nextFloat() < DECAY_CHANCE) {
                 int floorValue = determineSourceFloorValue(chunk);
                 int planned = resultingValues.getOrDefault(sourceKey, sourceValue);
 
@@ -265,8 +280,8 @@ public final class HauntSimulationHandler {
                 }
             }
 
-            if (sourceTier.id() >= HauntTier.DEAD_RISING.id()
-                    && random.nextFloat() < BLOODSTONE_CONVERSION_CHANCE
+            if (bloodstone && sourceTier.id() >= HauntTier.DEAD_RISING.id()
+                    && random.nextFloat() < bloodstoneConversionChance(sourceValue)
                     && tryConvertDiamondOre(level, chunk, random)) {
                 int floorValue = determineSourceFloorValue(chunk);
                 int planned = resultingValues.getOrDefault(sourceKey, sourceValue);

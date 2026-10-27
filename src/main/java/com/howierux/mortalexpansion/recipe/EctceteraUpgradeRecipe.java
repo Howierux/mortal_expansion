@@ -36,12 +36,13 @@ public final class EctceteraUpgradeRecipe extends ShapelessRecipe {
                 || input.items().stream().noneMatch(stack -> stack.is(EctceteraProgression.upgradeIngredient(fromTier)))) return ItemStack.EMPTY;
         var result = inputBook(input).copyWithCount(1);
         result.set(ModDataComponents.ECTCETERA_TIER.get(), fromTier + 1);
+        if(fromTier==3)result.set(ModDataComponents.ECTCETERA_SECRETS.get(),com.howierux.mortalexpansion.guide.SpectralInsight.ALL);
         return result;
     }
     @Override public RecipeSerializer<?> getSerializer() { return ModRecipeSerializers.ECTCETERA_UPGRADE.get(); }
 
     public static final class Serializer implements RecipeSerializer<EctceteraUpgradeRecipe> {
-        private static final MapCodec<EctceteraUpgradeRecipe> CODEC = Codec.intRange(0, 2)
+        private static final MapCodec<EctceteraUpgradeRecipe> CODEC = Codec.intRange(0, 3)
                 .fieldOf("from_tier").xmap(EctceteraUpgradeRecipe::new, recipe -> recipe.fromTier);
         private static final StreamCodec<RegistryFriendlyByteBuf, EctceteraUpgradeRecipe> STREAM = StreamCodec.of(
                 (buffer, recipe) -> buffer.writeVarInt(recipe.fromTier), buffer -> new EctceteraUpgradeRecipe(buffer.readVarInt()));

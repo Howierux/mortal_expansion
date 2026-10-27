@@ -11,7 +11,7 @@ import net.neoforged.bus.api.SubscribeEvent;
 public final class SpectralInsight {
     public static final int ALL=127,LEGACY_KNOWLEDGE=15;
     private SpectralInsight(){}
-    public static int secrets(ItemStack book){return !book.has(ModDataComponents.ECTCETERA_TIER.get())?LEGACY_KNOWLEDGE:book.getOrDefault(ModDataComponents.ECTCETERA_SECRETS.get(),0)&ALL;}
+    public static int secrets(ItemStack book){if(EctceteraProgression.tier(book)==4)return ALL;return !book.has(ModDataComponents.ECTCETERA_TIER.get())?LEGACY_KNOWLEDGE:book.getOrDefault(ModDataComponents.ECTCETERA_SECRETS.get(),0)&ALL;}
     public static int allowedAtTier(int tier){return tier<2?64:tier==2?87:ALL;}
     public static boolean canCraft(Player player,net.minecraft.resources.ResourceLocation id){
         int required=InsightSecret.required(id);
@@ -35,6 +35,7 @@ public final class SpectralInsight {
         if(!book.has(ModDataComponents.ECTCETERA_TIER.get())){
             book.set(ModDataComponents.ECTCETERA_TIER.get(),3);book.set(ModDataComponents.ECTCETERA_SECRETS.get(),LEGACY_KNOWLEDGE);
         }
+        DarkholdProgression.absorb(p,book);
         int bits=secrets(book)&allowedAtTier(EctceteraProgression.tier(book));
         int playerBits=p.getData(ModAttachments.ECTCETERA_KNOWLEDGE);
         if((bits&~playerBits)!=0)learnPlayer(p,bits);

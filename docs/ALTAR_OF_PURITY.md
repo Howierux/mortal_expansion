@@ -9,6 +9,8 @@ A furnace-style offering inventory accumulates burn time while cleansing the alt
 | Grave Moss | 30 seconds |
 | Spiritwood Log | 30 seconds |
 | Holy Salt | 60 seconds |
+| Raw Ectoplasm | 60 seconds |
+| Spirit Boon | 60 seconds |
 | Purified Spiritwood Log | 60 seconds |
 | Purified Ectoplasm | 120 seconds |
 
@@ -50,3 +52,5 @@ Operator tests: `/mortalexpansion haunt effect @s offering_gift` and `/mortalexp
 Persistence adds only the optional `OfferingBlessed` boolean to altar NBT, defaulting false in older saves. No new network payloads or resources. Existing GUI burn-time synchronization shows the increased reserve once the blessed offering is consumed.
 
 Validation: build and 134 server tests pass, including full-garb positive eligibility, independent benefit/risk cooldowns, one-item bonus consumption, ordinary following fuel, actual gift insertion, multiple players/shared cooldown, full/incompatible slots, capacity, pending-blessing replay and save/load. Client hints and long-term balance remain playtest checks.
+
+Raw Ectoplasm is accepted by both altars through the shared offering tag. One solid Raw Ectoplasm adds 1,200 ticks (60 seconds), compared with 2,400 ticks for Purified Ectoplasm. The existing offering-duration test covers real consumption in both altars.

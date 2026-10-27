@@ -4,9 +4,9 @@ import re
 from pathlib import Path
 
 ROOT = Path(__file__).resolve().parents[1]
-LANG = json.loads((ROOT / "src/main/resources/assets/mortal_expansion/lang/en_us.json").read_text())
+LANG = json.loads((ROOT / "src/main/resources/assets/mortal_expansion/lang/en_us.json").read_text(encoding="utf-8"))
 PREFIX = "book.mortal_expansion.ectcetera."
-SOURCE = (ROOT / "src/main/java/com/howierux/mortalexpansion/guide/EctceteraGuide.java").read_text()
+SOURCE = (ROOT / "src/main/java/com/howierux/mortalexpansion/guide/EctceteraGuide.java").read_text(encoding="utf-8")
 CHAPTERS = re.findall(r'new Chapter\("([^"]+)", (\d+), ([0-3])\)', SOURCE)
 
 # Conservative default-font width estimate; actual in-game rendering remains a smoke test.
@@ -59,6 +59,18 @@ for part in range(1, 7):
     key = "guide.mortal_expansion.mortal_golem.page." + str(part)
     assert LANG[key].strip() and lines(LANG[key]) <= 9, (key, "map entry exceeds page budget")
 assert LANG["guide.mortal_expansion.mortal_golem.name"].strip()
+for chapter in ("darkhold", "demons"):
+    assert LANG[f"darkhold.mortal_expansion.{chapter}.name"].strip()
+    for part in range(1, 5 if chapter=="demons" else 3):
+        assert LANG[f"darkhold.mortal_expansion.{chapter}.page.{part}"].strip()
+for part in range(1, 4):
+    key = f"guide.mortal_expansion.holy_water.page.{part}"
+    assert LANG[key].strip() and lines(LANG[key]) <= 9, (key, "brewing entry exceeds page budget")
+assert LANG["guide.mortal_expansion.holy_water.name"].strip()
+for sin in ("lust", "gluttony", "greed", "sloth", "wrath", "envy", "pride"):
+    key = f"darkhold.mortal_expansion.sin_{sin}.page.1"
+    assert LANG[f"darkhold.mortal_expansion.sin_{sin}.name"].strip()
+    assert LANG[key].strip() and lines(LANG[key]) <= 9, (key, "sin entry exceeds page budget")
 assert lines(LANG[PREFIX + "cover"] + "\n\nContents") <= 14
 total = 1 + (len(CHAPTERS) + 4) // 5 + sum(int(count) for _, count, _ in CHAPTERS)
 assert total <= 128
@@ -69,11 +81,11 @@ for tier in range(4):
     assert all(int(level) <= tier for key, _, level in CHAPTERS if key in {key for key, _ in unlocked})
     tier_total = 1 + (len(unlocked) + 4) // 5 + sum(count for _, count in unlocked)
     assert tier_total <= 128
-recipe = json.loads((ROOT / "src/generated/resources/data/mortal_expansion/recipe/book_of_ectcetera.json").read_text())
+recipe = json.loads((ROOT / "src/generated/resources/data/mortal_expansion/recipe/book_of_ectcetera.json").read_text(encoding="utf-8"))
 assert recipe["result"]["id"] == "mortal_expansion:book_of_ectcetera"
 assert {ingredient["item"] for ingredient in recipe["ingredients"]} == {"minecraft:book", "minecraft:rotten_flesh"}
 assert recipe["result"]["components"]["mortal_expansion:ectcetera_tier"] == 0
-for tier in range(3):
-    upgrade = json.loads((ROOT / f"src/generated/resources/data/mortal_expansion/recipe/book_of_ectcetera_upgrade_{tier + 1}.json").read_text())
+for tier in range(4):
+    upgrade = json.loads((ROOT / f"src/generated/resources/data/mortal_expansion/recipe/book_of_ectcetera_upgrade_{tier + 1}.json").read_text(encoding="utf-8"))
     assert upgrade["type"] == "mortal_expansion:ectcetera_upgrade" and upgrade["from_tier"] == tier
 print(f"Ectcetera guide checks passed: {len(CHAPTERS)} chapters, {total} pages")

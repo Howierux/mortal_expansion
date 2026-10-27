@@ -1,6 +1,8 @@
 {
   "values": [
+    "minecraft:phantom",
     "minecraft:ghast",
+    "mortal_expansion:demon",
     "mortal_expansion:ghost",
     "mortal_expansion:spirit",
     "mortal_expansion:elemental",

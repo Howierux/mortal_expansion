@@ -19,6 +19,19 @@ public final class ModAttachments {
     public static final DeferredRegister<AttachmentType<?>> ATTACHMENTS =
             DeferredRegister.create(NeoForgeRegistries.ATTACHMENT_TYPES, MortalExpansion.MOD_ID);
 
+    public static final Supplier<AttachmentType<com.howierux.mortalexpansion.fancifier.FadingData>> FADING_BLOCKS = ATTACHMENTS.register("fading_blocks",()->AttachmentType.builder(()->com.howierux.mortalexpansion.fancifier.FadingData.EMPTY)
+            .serialize(com.howierux.mortalexpansion.fancifier.FadingData.CODEC)
+            .sync(new net.neoforged.neoforge.attachment.AttachmentSyncHandler<com.howierux.mortalexpansion.fancifier.FadingData>() {
+                public boolean sendToPlayer(net.neoforged.neoforge.attachment.IAttachmentHolder holder,net.minecraft.server.level.ServerPlayer player){return true;}
+                public void write(net.minecraft.network.RegistryFriendlyByteBuf buf,com.howierux.mortalexpansion.fancifier.FadingData data,boolean initial){com.howierux.mortalexpansion.fancifier.FadingData.STREAM_CODEC.encode(buf,data);}
+                public com.howierux.mortalexpansion.fancifier.FadingData read(net.neoforged.neoforge.attachment.IAttachmentHolder holder,net.minecraft.network.RegistryFriendlyByteBuf buf,com.howierux.mortalexpansion.fancifier.FadingData previous){
+                    var next=com.howierux.mortalexpansion.fancifier.FadingData.STREAM_CODEC.decode(buf);if(holder instanceof net.minecraft.world.level.chunk.LevelChunk chunk)com.howierux.mortalexpansion.fancifier.FadingWorld.clientChanged.accept(chunk,next);return next;
+                }
+            }).build());
+    public static final Supplier<AttachmentType<Integer>> FADING_ENTITY = ATTACHMENTS.register("fading_entity",()->AttachmentType.builder(()->100).serialize(Codec.intRange(1,100)).sync(net.minecraft.network.codec.ByteBufCodecs.VAR_INT).build());
+
+    public static final Supplier<AttachmentType<Boolean>> DEMI_TANGIBLE_PROJECTILE=ATTACHMENTS.register("demi_tangible_projectile",()->AttachmentType.builder(()->false).serialize(Codec.BOOL).build());
+
     /**
      * Named chunk haunt tier. Retained as a separate attachment so worlds made
      * before fine-grained haunt points keep their existing tier.
@@ -122,8 +135,16 @@ public final class ModAttachments {
             ATTACHMENTS.register("spirit_quests", () -> AttachmentType.builder(() -> com.howierux.mortalexpansion.quest.SpiritQuestState.EMPTY)
                     .serialize(com.howierux.mortalexpansion.quest.SpiritQuestState.CODEC).copyOnDeath().build());
 
+    public static final Supplier<AttachmentType<Integer>> PLAYER_HAUNT_EXCESS=ATTACHMENTS.register("player_haunt_excess",()->AttachmentType.builder(()->0).serialize(Codec.intRange(0,20_000_000)).copyOnDeath().build());
+    public static final Supplier<AttachmentType<Integer>> DAMNED_KNOWLEDGE=ATTACHMENTS.register("damned_knowledge",()->AttachmentType.builder(()->0).serialize(Codec.intRange(0,255)).copyOnDeath().build());
+    public static final Supplier<AttachmentType<Long>> DARKHOLD_EXPOSURE_TIME=ATTACHMENTS.register("darkhold_exposure_time",()->AttachmentType.builder(()->-1L).serialize(Codec.LONG).build());
+    public static final Supplier<AttachmentType<Integer>> HAUNT_RITUAL_REVISION=ATTACHMENTS.register("haunt_ritual_revision",()->AttachmentType.builder(()->0).serialize(Codec.intRange(0,Integer.MAX_VALUE)).build());
+
     public static final Supplier<AttachmentType<Integer>> MORTALITY_RESEARCH_BONUS=ATTACHMENTS.register("mortality_research_bonus",()->AttachmentType.builder(()->0).serialize(Codec.intRange(0,100)).copyOnDeath().build());
-    public static final Supplier<AttachmentType<Integer>> MORTALITY_RESEARCH_ECTO=ATTACHMENTS.register("mortality_research_ecto",()->AttachmentType.builder(()->0).serialize(Codec.intRange(0,2)).copyOnDeath().build());
+    public static final Supplier<AttachmentType<Integer>> MORTALITY_RESEARCH_ECTO=ATTACHMENTS.register("mortality_research_ecto",()->AttachmentType.builder(()->0).serialize(Codec.intRange(0,3)).copyOnDeath().build());
+    /** Transient ability counters: no cooldown bypass via client packets, no global player map. */
+    public static final Supplier<AttachmentType<net.minecraft.nbt.CompoundTag>> DAMNED_ABILITY_STATE = ATTACHMENTS.register(
+            "damned_ability_state", () -> AttachmentType.builder(() -> new net.minecraft.nbt.CompoundTag()).build());
     public static void register(IEventBus modBus) {
         ATTACHMENTS.register(modBus);
     }

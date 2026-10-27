@@ -16,7 +16,7 @@ public final class ModItemModels extends ItemModelProvider {
     private void emfModels() {
         String[] colors = {"lime_concrete", "yellow_concrete", "yellow_concrete", "orange_concrete", "red_concrete", "purple_concrete"};
         var base = getBuilder("emf_reader").parent(new ModelFile.UncheckedModelFile("mortal_expansion:item/emf_reader_0"));
-        for (int lit = 0; lit <= 6; lit++) {
+        for (int lit = 0; lit <= 12; lit++) {
             var model = getBuilder("emf_reader_" + lit).parent(new ModelFile.UncheckedModelFile("minecraft:block/block"))
                     .texture("particle", "minecraft:block/iron_block").texture("case", "minecraft:block/iron_block")
                     .texture("panel", "minecraft:block/black_concrete");
@@ -30,7 +30,7 @@ public final class ModItemModels extends ItemModelProvider {
             model.element().from(3.5F, 8, 9).to(12.5F, 13.5F, 9.2F).allFaces((dir, face) -> face.texture("#panel")).end();
             for (int bulb = 0; bulb < 6; bulb++) {
                 String texture = "bulb" + bulb;
-                model.texture(texture, "minecraft:block/" + (bulb < lit ? colors[bulb] : "gray_concrete"));
+                model.texture(texture, "minecraft:block/" + (bulb < lit ? (lit > 6 && bulb < lit-6 ? (bulb < 3 ? "red_concrete" : "purple_concrete") : colors[bulb]) : "gray_concrete"));
                 final String reference = "#" + texture;
                 float x = 4 + bulb * 1.35F;
                 model.element().from(x, 10, 9.2F).to(x + 1.05F, 12, 9.4F)
@@ -60,6 +60,19 @@ public final class ModItemModels extends ItemModelProvider {
             }
     }
     @Override protected void registerModels() {
+        withExistingParent("fancifier",modLoc("block/fancifier"));
+        var fancified=getBuilder("fancified_block").parent(new ModelFile.UncheckedModelFile("minecraft:builtin/entity"));
+        fancified.transforms().transform(net.minecraft.world.item.ItemDisplayContext.GUI).rotation(30,225,0).scale(0.625F).end()
+                .transform(net.minecraft.world.item.ItemDisplayContext.GROUND).translation(0,3,0).scale(0.25F).end()
+                .transform(net.minecraft.world.item.ItemDisplayContext.FIRST_PERSON_RIGHT_HAND).rotation(0,45,0).scale(0.4F).end()
+                .transform(net.minecraft.world.item.ItemDisplayContext.FIRST_PERSON_LEFT_HAND).rotation(0,225,0).scale(0.4F).end()
+                .transform(net.minecraft.world.item.ItemDisplayContext.THIRD_PERSON_RIGHT_HAND).rotation(75,45,0).translation(0,2.5F,0).scale(0.375F).end()
+                .transform(net.minecraft.world.item.ItemDisplayContext.THIRD_PERSON_LEFT_HAND).rotation(75,225,0).translation(0,2.5F,0).scale(0.375F).end();
+
+        singleTexture("demonic_ash", mcLoc("item/generated"), "layer0", modLoc("item/demonic_ash"));
+        singleTexture("darkhold", mcLoc("item/generated"), "layer0", modLoc("item/darkhold"));
+        singleTexture("ritual_star", mcLoc("item/generated"), "layer0", modLoc("item/ritual_star"));
+        singleTexture("spirit_boon", mcLoc("item/generated"), "layer0", modLoc("item/spirit_boon"));
         withExistingParent("ectank",modLoc("block/ectank"));
         withExistingParent("purified_ectank",modLoc("block/purified_ectank"));
         withExistingParent("ecto_pipe",modLoc("block/ecto_pipe_inventory"));
@@ -84,7 +97,7 @@ public final class ModItemModels extends ItemModelProvider {
                 net.minecraft.world.item.ItemDisplayContext.THIRD_PERSON_LEFT_HAND}) {
             precise.transforms().transform(context).rotation(0, 0, 0).translation(0, 1, 0).scale(0.55F).end();
         }
-        for (int lit = 0; lit <= 6; lit++) {
+        for (int lit = 0; lit <= 12; lit++) {
             // Ordinary baked body avoids recursive custom rendering; registered as additional client models.
             getBuilder("precise_emf_reader_" + lit).parent(new ModelFile.UncheckedModelFile("mortal_expansion:item/emf_reader_" + lit));
         }
@@ -152,6 +165,7 @@ public final class ModItemModels extends ItemModelProvider {
         {
             var model = this.getBuilder("book_of_ectcetera").parent(new ModelFile.UncheckedModelFile("minecraft:item/generated"));
             model.texture("layer0", "minecraft:item/book");
+            model.override().predicate(modLoc("book_tier"),4).model(new ModelFile.UncheckedModelFile("mortal_expansion:item/darkhold")).end();
         }
         {
             var model = this.getBuilder("ectchantment_machine").parent(new ModelFile.UncheckedModelFile("mortal_expansion:block/ectchantment_machine"));

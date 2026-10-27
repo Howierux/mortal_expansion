@@ -52,15 +52,21 @@ public final class WispLanternGameTests {
                     && drops.stream().filter(stack->stack.is(Items.CARVED_PUMPKIN)).mapToInt(ItemStack::getCount).sum()==1
                     && drops.stream().filter(stack->stack.is(ModItems.RAW_ECTOPLASM.get())).mapToInt(ItemStack::getCount).sum()==1,
                     "Breaking drops exactly one regular Carved Pumpkin and one raw Ectoplasm");
+            var tool=new ItemStack(Items.DIAMOND_AXE);
+            tool.enchant(level.registryAccess().lookupOrThrow(net.minecraft.core.registries.Registries.ENCHANTMENT)
+                    .getOrThrow(net.minecraft.world.item.enchantment.Enchantments.SILK_TOUCH),1);
+            var silkDrops=Block.getDrops(state,level,lantern.getBlockPos(),lantern,null,tool);
+            h.assertTrue(silkDrops.size()==1 && silkDrops.getFirst().is(ModItems.WISP_O_LANTERN.get())
+                    && silkDrops.getFirst().getCount()==1,"Silk Touch preserves exactly one lantern without bonus Ectoplasm or pumpkin");
             level.setDayTime(6000);
             WispLanternBlockEntity.serverTick(level,lantern.getBlockPos(),state,lantern);
-            h.assertTrue(lantern.spawnDelay()==24000,"Daylight pauses the twenty-minute nighttime timer");
+            h.assertTrue(lantern.spawnDelay()==WispLanternBlockEntity.SPAWN_INTERVAL,"Daylight pauses the ten-minute nighttime timer");
             level.setDayTime(18000);
             for(int i=0;i<100;i++)WispLanternBlockEntity.serverTick(level,lantern.getBlockPos(),state,lantern);
-            h.assertTrue(lantern.spawnDelay()==23900,"Only loaded nighttime ticks advance spawning");
+            h.assertTrue(lantern.spawnDelay()==WispLanternBlockEntity.SPAWN_INTERVAL-100,"Only loaded nighttime ticks advance spawning");
             var restored=new WispLanternBlockEntity(lantern.getBlockPos(),state);
             restored.loadAdditional(lantern.saveWithoutMetadata(level.registryAccess()),level.registryAccess());
-            h.assertTrue(restored.spawnDelay()==23900,"Unloading/reloading retains progress without offline catch-up");
+            h.assertTrue(restored.spawnDelay()==WispLanternBlockEntity.SPAWN_INTERVAL-100,"Unloading/reloading retains progress without offline catch-up");
         } finally {level.setDayTime(old);}
         h.succeed();
     }
@@ -82,7 +88,7 @@ public final class WispLanternGameTests {
             h.assertTrue(level.getEntitiesOfClass(GhostEntity.class,nearby).isEmpty(),"No spawn before the timer expires");
             WispLanternBlockEntity.serverTick(level,lantern.getBlockPos(),lantern.getBlockState(),lantern);
             h.assertTrue(level.getEntitiesOfClass(GhostEntity.class,nearby).size()==1
-                    && lantern.spawnDelay()==24000,"Expiry creates one real Ghost and resets the long timer");
+                    && lantern.spawnDelay()==WispLanternBlockEntity.SPAWN_INTERVAL,"Expiry creates one real Ghost and resets the long timer");
             for(int i=1;i<4;i++) {
                 var ghost=ModEntities.GHOST.get().create(level);
                 ghost.moveTo(lantern.getBlockPos().getX()+0.5,lantern.getBlockPos().getY()+3,

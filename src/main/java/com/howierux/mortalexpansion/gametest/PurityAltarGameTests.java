@@ -20,9 +20,14 @@ public final class PurityAltarGameTests {
     private static void ticks(GameTestHelper h,AltarOfPurityBlockEntity a,int count){for(int i=0;i<count;i++)AltarOfPurityBlockEntity.serverTick(h.getLevel(),a.getBlockPos(),a.getBlockState(),a);}
     @GameTest(template="deferred_items_test")
     public static void offerings_have_their_durations_and_reject_regular_furnace_fuel(GameTestHelper h){
-        Item[] fuels={ModItems.GRAVE_MOSS.get(),ModItems.HOLY_SALT.get(),ModItems.PURE_ECTOPLASM.get(),ModItems.SPIRITWOOD_LOG.get(),ModItems.PURIFIED_SPIRITWOOD_LOG.get()};int[] durations={600,1200,2400,600,1200};
+        Item[] fuels={ModItems.RAW_ECTOPLASM.get(),ModItems.GRAVE_MOSS.get(),ModItems.HOLY_SALT.get(),ModItems.PURE_ECTOPLASM.get(),ModItems.SPIRITWOOD_LOG.get(),ModItems.PURIFIED_SPIRITWOOD_LOG.get()};int[] durations={1200,600,1200,2400,600,1200};
         for(int i=0;i<fuels.length;i++){var a=altar(h);a.getItems().setStackInSlot(0,new ItemStack(fuels[i]));ticks(h,a,1);
             h.assertTrue(a.getBurnTicks()==durations[i]-1 && a.getItems().getStackInSlot(0).isEmpty(),"Exactly one offering adds its fuel-specific duration");}
+        var inversePos=h.absolutePos(new BlockPos(7,2,7));h.getLevel().setBlock(inversePos,ModBlocks.ALTAR_OF_IMPURITY.get().defaultBlockState(),3);
+        var inverse=(AltarOfPurityBlockEntity)h.getLevel().getBlockEntity(inversePos);
+        h.assertTrue(inverse.getItems().isItemValid(0,new ItemStack(ModItems.RAW_ECTOPLASM.get())),"Impurity inherits Raw Ectoplasm offering membership");
+        inverse.getItems().setStackInSlot(0,new ItemStack(ModItems.RAW_ECTOPLASM.get()));ticks(h,inverse,1);
+        h.assertTrue(inverse.getBurnTicks()==1199 && inverse.getItems().getStackInSlot(0).isEmpty(),"Impurity consumes one Raw Ectoplasm for sixty seconds of burn time");
         var a=altar(h);h.assertFalse(a.getItems().isItemValid(0,new ItemStack(Items.COAL)),"Ordinary coal is not a purity offering");h.assertFalse(a.getItems().isItemValid(1,new ItemStack(ModItems.HOLY_SALT.get())),"Returned-container slot is output only");h.succeed();
     }
     @GameTest(template="deferred_items_test")

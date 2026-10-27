@@ -17,7 +17,9 @@ public final class ModDataGenerators {
         var lookup = event.getLookupProvider();
         var helper = event.getExistingFileHelper();
         var damageTypes = new net.neoforged.neoforge.common.data.DatapackBuiltinEntriesProvider(output, lookup,
-                new net.minecraft.core.RegistrySetBuilder().add(net.minecraft.core.registries.Registries.DAMAGE_TYPE, context -> {
+                new net.minecraft.core.RegistrySetBuilder()
+                .add(net.neoforged.neoforge.registries.NeoForgeRegistries.Keys.BIOME_MODIFIERS,ModSpawnModifiers::bootstrap)
+                .add(net.minecraft.core.registries.Registries.DAMAGE_TYPE, context -> {
                     context.register(com.howierux.mortalexpansion.effect.ModDamageTypes.DEMI_TANGIBLE_PLAYER,
                             new net.minecraft.world.damagesource.DamageType("player", net.minecraft.world.damagesource.DamageScaling.WHEN_CAUSED_BY_LIVING_NON_PLAYER, 0.1F));
                     context.register(com.howierux.mortalexpansion.effect.ModDamageTypes.DEMI_TANGIBLE_MOB,

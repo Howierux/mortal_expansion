@@ -11,6 +11,7 @@ A successful effect sends a localized, atmospheric chat hint. No hint or cooldow
 | Helpful whispers | Natural | Directional sound and particles at the closest loaded Grave Moss or Gravestone within a bounded 12-block horizontal/4-block vertical search. No trace means no trigger. |
 | Second Sight | Supernatural | Thirty-second footprint guidance toward the nearest recorded undiscovered Spiritwell or Cemetery; see [Spectral discovery](SPECTRAL_DISCOVERY.md). |
 | Spectral Insight | Supernatural | An aware carried Ectcetera book reveals one eligible secret family; personal/book thresholds and next-step guidance are detailed in [Spectral Insight](SPECTRAL_INSIGHT.md). |
+| Helpful Visitation | Dead Rising | Grants one Spirit Boon, worth 60 seconds of fuel in either altar. |
 | Spectral empowerment | Demonic | Holding a demi-tangible weapon grants 25% additional direct spectral melee damage for 20 seconds. Switching to an ordinary weapon does not retain the bonus. Supports the existing tag/component/enchantment permission helper. |
 
 Existing beneficial potions, Spirit visits, furnace completion and material conversions remain in the benefit pool.
@@ -33,12 +34,12 @@ Full Ghost/Haint-family garb, Holy Water blessings and Purification Wards suppre
 
 ## Missing functions: reserved, excluded from selection
 
-The four remaining inactive enum entries retain their intended minimum tiers but return false from `implemented()` and cannot spend a roll, cooldown, or send a fake success hint. Each dependency is marked with a literal `missing function` source comment:
+The two remaining inactive enum entries retain their intended minimum tiers but return false from `implemented()` and cannot spend a roll, cooldown, or send a fake success hint. Each dependency is marked with a literal `missing function` source comment:
 
 - Hidden inscription revealing remains a missing function; Second Sight footprint guidance is now active.
 Spectral Insight is now active for aware-book recipe secrets. Broader investigation-derived lore remains future work.
-- Spirit commissions (Dead Rising): quest acceptance, objectives, completion and rewards.
-- Helpful visitation (Dead Rising): spirit worker jobs, ownership and inventory permissions.
+Spirit commissions now offer unfinished-business kill quests with automatic rewards.
+Helpful Visitation now grants a Spirit Boon. Worker jobs remain a separate future proposal.
 - Spirit recognition (Abominable): expertise-aware service menus and service definitions.
 - Veil revelation (Eldritch): hidden-site registry and willing powerful Spirit encounters.
 

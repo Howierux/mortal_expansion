@@ -80,9 +80,7 @@ See [Book progression](BOOK_OF_ECTCETERA.md) for chapter groups, compatibility a
 
 ### Bloodstone tool scaling
 
-- [ ] At **Natural Haunt**, make each Bloodstone tool equivalent to its Diamond counterpart in power and speed, including attack damage, attack speed, and mining speed where applicable.
-- [ ] Use **personal Haunt** for Bloodstone tool scaling. Start with +10% power and speed per named tier above Natural: Supernatural +10%, Dead Rising +20%, Demonic +30%, Abominable +40%, Eldritch +50%. Treat these as accepted initial balance values to validate in play.
-- [ ] Define behavior at Void separately, and verify Diamond parity at Natural plus the intended increase at each higher tier. This replaces the historical Diamond-like Void baseline for tools; armor balance remains a separate decision.
+- [x] Diamond power/speed baseline at Natural personal Haunt, with 10% steps through the named tiers: Void 90%, Natural 100%, Supernatural 110%, Dead Rising 120%, Demonic 130%, Abominable 140%, Eldritch 150%. Existing durability and special tool functions remain. See [Spirit progression update](SPIRIT_PROGRESSION_UPDATE.md).
 
 ### Grave Moss cleansing [Closed: covered by altars]
 
@@ -417,7 +415,7 @@ Spirit Journey mode entry and deferred death items are the selected first two st
 - [ ] **Flashlight:** Pointable sunlight-like illumination, potentially with a stationary version, burning mobs normally vulnerable to sunlight and dealing low repeated damage to Endermen. Reconcile the proposed loss of general effectiveness at Demonic+ with the separate Enderman cutoff at Eldritch; cone shape, range, and actual lighting behavior remain unspecified.
 - [ ] **Spirit Detector:** Point toward a selected undead/dead-type mob, selected by striking it or crafting with its dropped raw ectoplasm without consuming that ectoplasm. Original recipe: Bones at edge centers, Gold Nuggets at corners, raw ectoplasm in the center.
 - [ ] **Spectral Analogue:** Glass thermometer containing fluid Bloodstone, possibly with Gold Nugget corners, measuring Haunt rather than temperature. Heat Bloodstone and combine with a bucket to make fluid Bloodstone, returning the bucket when crafting the instrument; consider using the Liquefactor to avoid redundant processing.
-- [ ] **Fancifier:** Reduce block/item-entity opacity through a Fading enchantment up to level four. Clarify the source's undefined opacity decrement and the distinction between enchantment levels and visual transparency.
+- [x] **Fancifier:** Any-placeable-block workstation with a 1�100% slider, numeric entry, live preview, stack processing and 100% restoration, recipe-based art and an intangible blade. Native functional blocks retain inventories, capabilities, physics and behavior; saved decorative proxies remain supported. This supersedes the original Fading-enchantment UI proposal. See [Fancifier](FANCIFIER.md).
 - [ ] **Schmancifier:** One-time Spectral enchantment/particle upgrade to a block or item. Define which targets are eligible and whether this shares mechanics with spectral furnace outputs.
 
 ### Powered defense, mob conversion, and ritual cleansing
@@ -495,7 +493,7 @@ Implemented a shapeless EMF Reader + Raw Ectoplasm upgrade. Live digits on the h
 
 - [x] Separate benefit/risk rolls and cooldowns, cumulative tier eligibility, localized chat hints on successful effects.
 - [x] Whispers, spectral empowerment, following footsteps, false apparitions, restless visits, furnace interference, marked presence, pursuers and warned breaches.
-- [ ] Hidden inscription revealing, spirit workers, recognition services and veil revelations: explicit `missing function` comments; excluded until supporting systems exist.
+- [ ] Hidden inscription revealing, recognition services and veil revelations: explicit `missing function` comments; excluded until supporting systems exist.
 - [ ] Visible harmless follower and further machine interference integrations.
 - [ ] Client effects/hints and extended live-world encounter playtest.
 
@@ -694,3 +692,29 @@ See [Holy Salt barriers](HOLY_SALT_BARRIERS.md) for findings, limits and validat
 - [x] Player-facing README, current system overview, documentation index, and publication status.
 - [x] Corrected stale garb, ranged retaliation, fluids, research, and secret progression summaries; preserved dated history.
 - [ ] Broader portal networks, missing Haunt services, and historical machine/encounter proposals remain separate work.
+
+
+### 2026-10-19 - Built-in optional JEI integration
+
+- [x] Integrated machine/cauldron references, furnace catalysts, book tier subtypes and spectral secret-recipe notices into the base mod.
+- [x] JEI remains optional; standalone addon scaffolding is superseded.
+- [ ] Live category layout, tooltips and navigation playtest.
+
+See [JEI integration](JEI_INTEGRATION.md).
+
+
+### 2026-10-19 - Simple distinct mob appearances
+
+- [x] Dedicated Ghost, Phantom, Spirit, Elemental, Haunt, Haint, Mummy and Pharaohl textures using native humanoid/villager UV layouts.
+- [x] Retain tangible/intangible rendering and existing Pharaohl phase switching.
+- [ ] In-game translucency, lighting and animation visual checks.
+
+See [Mob appearances](MOB_APPEARANCE.md).
+
+### 2026-10-20 - Spirit progression and boon offerings
+
+Helpful Visitation now grants a Spirit Boon worth 60 seconds in either altar. Spirits retain core trades plus two varied offers per expertise tier; old stock and XP survive migration. Bloodstone tools use the selected personal-Haunt scaling including Void below Diamond. Worker jobs remain a separate proposal. See [details](SPIRIT_PROGRESSION_UPDATE.md).
+
+### 2026-10-20 - Ritual Star
+
+A Nether Star surrounded by eight Bloodstone crafts a Ritual Star. Sacrificing it in an Overworld Altar of Purity/Impurity repeatably lowers/raises all Overworld chunks by ten current Haunt points, including deferred delivery to unloaded/future chunks. Natural recovery baselines and personal Haunt remain unchanged. See [Ritual Star](RITUAL_STAR.md).

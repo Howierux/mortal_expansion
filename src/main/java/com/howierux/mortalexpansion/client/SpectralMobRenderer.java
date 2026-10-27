@@ -14,19 +14,27 @@ import net.minecraft.world.entity.Mob;
 import javax.annotation.Nullable;
 import java.util.function.Predicate;
 
-public final class PlaceholderHumanoidRenderer<T extends Mob>
-        extends MobRenderer<T, PlaceholderHumanoidRenderer.SpectralHumanoidModel<T>> {
+public final class SpectralMobRenderer<T extends Mob>
+        extends MobRenderer<T, SpectralMobRenderer.SpectralHumanoidModel<T>> {
     private static final float SPECTRAL_ALPHA = 0.20F;
 
     private final ResourceLocation texture;
     private final Predicate<T> spectral;
+    private final Predicate<T> visible;
+    private final java.util.function.ToIntFunction<T> tint;
 
-    public PlaceholderHumanoidRenderer(
+    public SpectralMobRenderer(
             EntityRendererProvider.Context context,
             ResourceLocation texture,
             Predicate<T> spectral,
             float shadowRadius
-    ) {
+    ) { this(context,texture,spectral,shadowRadius,entity->0xFFFFFFFF); }
+    public SpectralMobRenderer(EntityRendererProvider.Context context,ResourceLocation texture,
+            Predicate<T> spectral,float shadowRadius,java.util.function.ToIntFunction<T> tint) {
+        this(context,texture,spectral,shadowRadius,tint,entity->true);
+    }
+    public SpectralMobRenderer(EntityRendererProvider.Context context,ResourceLocation texture,
+            Predicate<T> spectral,float shadowRadius,java.util.function.ToIntFunction<T> tint,Predicate<T> visible) {
         super(
                 context,
                 new SpectralHumanoidModel<>(context.bakeLayer(ModelLayers.ZOMBIE)),
@@ -34,6 +42,8 @@ public final class PlaceholderHumanoidRenderer<T extends Mob>
         );
         this.texture = texture;
         this.spectral = spectral;
+        this.tint = tint;
+        this.visible = visible;
     }
 
     @Override
@@ -45,8 +55,10 @@ public final class PlaceholderHumanoidRenderer<T extends Mob>
             MultiBufferSource buffer,
             int packedLight
     ) {
+        if(!visible.test(entity))return;
         boolean spectralNow = spectral.test(entity);
         this.model.setSpectral(spectralNow);
+        this.model.tint=tint.applyAsInt(entity);
 
         poseStack.pushPose();
         if (spectralNow) {
@@ -59,6 +71,10 @@ public final class PlaceholderHumanoidRenderer<T extends Mob>
         super.render(entity, entityYaw, partialTicks, poseStack, buffer, packedLight);
         poseStack.popPose();
     }
+
+    // Cull before dispatcher rendering so fire, outlines and nameplates cannot reveal hidden creatures.
+    @Override public boolean shouldRender(T entity,net.minecraft.client.renderer.culling.Frustum camera,
+            double x,double y,double z){return visible.test(entity) && super.shouldRender(entity,camera,x,y,z);}
 
     @Override
     protected float getShadowRadius(T entity) {
@@ -92,6 +108,7 @@ public final class PlaceholderHumanoidRenderer<T extends Mob>
     public static final class SpectralHumanoidModel<T extends Mob>
             extends HumanoidModel<T> {
         private boolean spectral;
+        private int tint=0xFFFFFFFF;
 
         public SpectralHumanoidModel(ModelPart root) {
             super(root);
@@ -109,6 +126,9 @@ public final class PlaceholderHumanoidRenderer<T extends Mob>
                 int packedOverlay,
                 int color
         ) {
+            color=(color&0xFF000000)
+                    | (((color>>16&255)*(tint>>16&255)/255)<<16)
+                    | (((color>>8&255)*(tint>>8&255)/255)<<8) | ((color&255)*(tint&255)/255);
             if (!spectral) {
                 super.renderToBuffer(
                         poseStack,

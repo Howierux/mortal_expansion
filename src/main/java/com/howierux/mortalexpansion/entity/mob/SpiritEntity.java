@@ -90,12 +90,13 @@ public final class SpiritEntity extends AbstractVillager implements HorizontalPh
             com.howierux.mortalexpansion.quest.SpiritInteraction.open(server,this);
         return InteractionResult.sidedSuccess(level().isClientSide);
     }
-    @Override protected void updateTrades() { SpiritTrades.populate(getOffers(), getExpertise()); }
+    private long tradeSeed() { return getUUID().getMostSignificantBits() ^ getUUID().getLeastSignificantBits(); }
+    @Override protected void updateTrades() { SpiritTrades.populate(getOffers(), getExpertise(), tradeSeed()); }
     @Override protected void rewardTradeXp(MerchantOffer offer) {
         setTradeXp((int)Math.min(Integer.MAX_VALUE, (long)getVillagerXp() + offer.getXp()));
         while (getExpertise() < 5 && getVillagerXp() >= net.minecraft.world.entity.npc.VillagerData.getMaxXpPerLevel(getExpertise())) {
             int next = getExpertise() + 1; entityData.set(EXPERTISE, next);
-            SpiritTrades.unlock(getOffers(), next);
+            SpiritTrades.unlock(getOffers(), next, tradeSeed());
         }
         if (getTradingPlayer() instanceof net.minecraft.server.level.ServerPlayer player) {
             player.sendMerchantOffers(player.containerMenu.containerId, getOffers(), getExpertise(), getVillagerXp(), true, true);
@@ -135,7 +136,10 @@ public final class SpiritEntity extends AbstractVillager implements HorizontalPh
         entityData.set(EXPERTISE, net.minecraft.util.Mth.clamp(tag.getInt("SpiritExpertise"), 1, 5));
         setTradeXp(tag.getInt("SpiritTradeXp"));
         // Rebuild only obsolete catalogs; current offers retain uses, demand, and unlock order.
-        if (tag.getInt("SpiritTradeCatalog") != SpiritTrades.CATALOG_VERSION) {
+        if (tag.getInt("SpiritTradeCatalog") == 2 && offers != null) {
+            // Append new offers without resetting purchased stock or demand.
+            for (int tier=1;tier<=getExpertise();tier++) SpiritTrades.variations(offers,tier,tradeSeed());
+        } else if (tag.getInt("SpiritTradeCatalog") != SpiritTrades.CATALOG_VERSION) {
             offers = null;
         }
         lastRestockDay = tag.contains("SpiritRestockDay") ? tag.getLong("SpiritRestockDay") : Long.MIN_VALUE;

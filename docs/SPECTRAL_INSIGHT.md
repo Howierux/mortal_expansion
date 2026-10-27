@@ -1,6 +1,6 @@
 # Spectral Insight and Secrets of the Dead
 
-Updated 2026-10-16. Book upgrades open subject tiers; **secret recipes are learned gradually through Insight**, rather than automatically when the book is upgraded. The first revelation is a whisper available with a starter book. Raw Ectoplasm (tier 2) makes the book aware; Pure Ectoplasm (tier 3) enables the final current subject tier.
+Updated 2026-10-16. Book upgrades open subject tiers; **secret recipes are learned gradually through Insight**, rather than automatically when the book is upgraded. The first revelation is a whisper available with a starter book. Raw Ectoplasm (tier 2) makes the book aware; Pure Ectoplasm (tier 3) opens Purification. A Ritual Star upgrades that book to [The Darkhold](DARKHOLD.md), which immediately teaches all ordinary secrets and opens a separate Secrets of the Damned chapter.
 
 Carry the book in ordinary inventory or either hand. A successful Insight reveals one eligible secret family, writes it into the book, teaches the player permanently, awards recipe-book entries, and gives a next-step hint. If no carried book and unrevealed secret meet the requirements, there is no revelation or spent event cooldown.
 
@@ -22,7 +22,7 @@ Knowledge survives lowering Haunt, losing a book, death, and logout. A learned b
 
 ## Presentation and event protection
 
-Secrets of the Dead has its own research-map chapter from the starting book, with the research whisper as its root. Later nodes retain their book-tier and individual revelation gates. Unrevealed entries conceal their recipes; upgrading alone does not reveal them. Dreamcatchers branch from Ectothread. Open guides refresh from synchronized book components.
+Secrets of the Dead has its own research-map chapter from the starting book, with the research whisper as its root. Later nodes retain their book-tier and individual revelation gates. Unrevealed entries conceal their recipes; upgrades through tier 3 alone do not reveal them. The final Darkhold upgrade deliberately reveals every ordinary secret. Dreamcatchers branch from Ectothread. Open guides refresh from synchronized book components.
 
 Insight belongs to the independent beneficial Haunt pool. Full garb permits benefits, while owned loaded Dreamcatchers can intercept both good and bad effects, including research-funded Insight. See [Dreamcatchers](DREAMCATCHER.md). [Mortality Research](MORTALITY_RESEARCH_STATION.md) biases selection; reaching 100% attempts an immediate eligible revelation. Book, personal Haunt, prerequisites, and protection still matter.
 

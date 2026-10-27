@@ -18,7 +18,7 @@ public record EmfReading(ResourceLocation dimension, int chunkX, int chunkZ, UUI
             EmfReading::new);
     public EmfReading {
         chunkHundredths = Math.max(0, Math.min(FractionalHaunt.MAX_UNITS, chunkHundredths));
-        personalHundredths = Math.max(0, Math.min(FractionalHaunt.MAX_UNITS, personalHundredths));
+        personalHundredths = Math.max(0, Math.min(PlayerHauntManager.MAX_PERSONAL_UNITS, personalHundredths));
     }
     public int chunkHaunt() { return chunkHundredths / FractionalHaunt.UNITS_PER_POINT; }
     public int personalHaunt() { return personalHundredths / FractionalHaunt.UNITS_PER_POINT; }

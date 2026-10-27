@@ -21,6 +21,9 @@ public final class ModItems {
             ITEMS.registerItem("precise_emf_reader", com.howierux.mortalexpansion.item.EmfReaderItem::new, new Item.Properties().stacksTo(1));
     public static final DeferredItem<com.howierux.mortalexpansion.item.EmfReaderItem> EMF_READER =
             ITEMS.registerItem("emf_reader", com.howierux.mortalexpansion.item.EmfReaderItem::new, new Item.Properties().stacksTo(1));
+    public static final DeferredItem<Item> RITUAL_STAR = ITEMS.registerItem("ritual_star", Item::new, new Item.Properties().stacksTo(1));
+    public static final DeferredItem<Item> DEMONIC_ASH = ITEMS.registerSimpleItem("demonic_ash");
+    public static final DeferredItem<Item> SPIRIT_BOON = ITEMS.registerSimpleItem("spirit_boon");
     public static final DeferredItem<BlockItem> WISP_O_LANTERN = ITEMS.registerSimpleBlockItem(ModBlocks.WISP_O_LANTERN);
     public static final DeferredItem<BlockItem> PURIFIED_DREAMCATCHER = ITEMS.registerSimpleBlockItem(ModBlocks.PURIFIED_DREAMCATCHER);
     public static final DeferredItem<BlockItem> DREAMCATCHER = ITEMS.registerSimpleBlockItem(ModBlocks.DREAMCATCHER);
@@ -83,6 +86,8 @@ public final class ModItems {
             ITEMS.registerSimpleBlockItem(ModBlocks.SPIRITWOOD_BUTTON);
 
     public static final DeferredItem<BlockItem> PURIFIED_ECTO_PIPE = ITEMS.registerSimpleBlockItem(ModBlocks.PURIFIED_ECTO_PIPE);
+    public static final DeferredItem<BlockItem> FANCIFIER = ITEMS.registerSimpleBlockItem(ModBlocks.FANCIFIER);
+    public static final DeferredItem<com.howierux.mortalexpansion.item.FancifiedBlockItem> FANCIFIED_BLOCK = ITEMS.register("fancified_block",()->new com.howierux.mortalexpansion.item.FancifiedBlockItem(ModBlocks.FANCIFIED_BLOCK.get(),new Item.Properties()));
     public static final DeferredItem<BlockItem> ECTANK = ITEMS.registerSimpleBlockItem(ModBlocks.ECTANK);
     public static final DeferredItem<BlockItem> PURIFIED_ECTANK = ITEMS.registerSimpleBlockItem(ModBlocks.PURIFIED_ECTANK);
     public static final DeferredItem<BlockItem> ECTO_PIPE = ITEMS.registerSimpleBlockItem(ModBlocks.ECTO_PIPE);
@@ -228,7 +233,7 @@ public final class ModItems {
             "bloodstone_sword",
             properties -> new SwordItem(
                     ModTiers.BLOODSTONE,
-                    properties.attributes(SwordItem.createAttributes(ModTiers.BLOODSTONE, 6.5F, -2.4F))
+                    properties.attributes(SwordItem.createAttributes(ModTiers.BLOODSTONE, 3, -2.4F))
             ),
             new Item.Properties()
     );
@@ -237,7 +242,7 @@ public final class ModItems {
             "bloodstone_pickaxe",
             properties -> new com.howierux.mortalexpansion.item.HauntedPickaxeItem(
                     ModTiers.BLOODSTONE,
-                    properties.attributes(PickaxeItem.createAttributes(ModTiers.BLOODSTONE, 3.5F, -2.8F))
+                    properties.attributes(PickaxeItem.createAttributes(ModTiers.BLOODSTONE, 1, -2.8F))
             ),
             new Item.Properties()
     );
@@ -246,7 +251,7 @@ public final class ModItems {
             "bloodstone_axe",
             properties -> new com.howierux.mortalexpansion.item.TreeAxeItem(
                     ModTiers.BLOODSTONE,
-                    properties.attributes(AxeItem.createAttributes(ModTiers.BLOODSTONE, 9.5F, -3.0F))
+                    properties.attributes(AxeItem.createAttributes(ModTiers.BLOODSTONE, 5, -3.0F))
             ),
             new Item.Properties()
     );
@@ -255,7 +260,7 @@ public final class ModItems {
             "bloodstone_shovel",
             properties -> new com.howierux.mortalexpansion.item.AreaShovelItem(
                     ModTiers.BLOODSTONE,
-                    properties.attributes(ShovelItem.createAttributes(ModTiers.BLOODSTONE, 4.25F, -3.0F))
+                    properties.attributes(ShovelItem.createAttributes(ModTiers.BLOODSTONE, 1.5F, -3.0F))
             ),
             new Item.Properties()
     );
@@ -264,7 +269,7 @@ public final class ModItems {
             "bloodstone_hoe",
             properties -> new com.howierux.mortalexpansion.item.HauntedHoeItem(
                     ModTiers.BLOODSTONE,
-                    properties.attributes(HoeItem.createAttributes(ModTiers.BLOODSTONE, -2.5F, 0.0F))
+                    properties.attributes(HoeItem.createAttributes(ModTiers.BLOODSTONE, -3, 0.0F))
             ),
             new Item.Properties()
     );

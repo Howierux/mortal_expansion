@@ -20,6 +20,10 @@ group = mod_group_id
 repositories {
     // TerraBlender is published through the Forge Maven.
     maven { url = 'https://maven.minecraftforge.net/' }
+    maven {
+        url = 'https://maven.blamejared.com'
+        content { includeGroup 'mezz.jei' }
+    }
 }
 
 base {
@@ -119,12 +123,12 @@ dependencies {
     // TerraBlender provides compatible insertion of custom biomes into modern Overworld climate generation.
     implementation 'com.github.glitchfiend:TerraBlender-neoforge:1.21.1-4.1.0.8'
 
-    // Example optional mod dependency with JEI
-    // The JEI API is declared for compile time use, while the full JEI artifact is used at runtime
-    // compileOnly "mezz.jei:jei-${mc_version}-common-api:${jei_version}"
-    // compileOnly "mezz.jei:jei-${mc_version}-neoforge-api:${jei_version}"
-    // We add the full version to localRuntime, not runtimeOnly, so that we do not publish a dependency on it
-    // localRuntime "mezz.jei:jei-${mc_version}-neoforge:${jei_version}"
+    // Compile against JEI's API only. Normal client/server runs do not install JEI.
+    compileOnly "mezz.jei:jei-${minecraft_version}-common-api:${jei_version}"
+    compileOnly "mezz.jei:jei-${minecraft_version}-neoforge-api:${jei_version}"
+    if (providers.gradleProperty('withJei').isPresent()) {
+        localRuntime "mezz.jei:jei-${minecraft_version}-neoforge:${jei_version}"
+    }
 
     // Example mod dependency using a mod jar from ./libs with a flat dir repository
     // This maps to ./libs/coolmod-${mc_version}-${coolmod_version}.jar
@@ -154,6 +158,7 @@ var generateModMetadata = tasks.register("generateModMetadata", ProcessResources
             mod_name               : mod_name,
             mod_license            : mod_license,
             mod_version            : mod_version,
+            jei_version            : jei_version,
     ]
     inputs.properties replaceProperties
     expand replaceProperties

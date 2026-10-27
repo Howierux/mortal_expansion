@@ -25,7 +25,7 @@ public final class HauntCommandGameTests {
         var p=h.makeMockServerPlayerInLevel();var source=p.createCommandSourceStack().withPermission(2);
         PlayerHauntManager.setTier(p,HauntTier.VOID);
         h.assertTrue(HauntEffectCommands.trigger(source,p,"random")==0,"Void has no eligible random effects");
-        h.assertTrue(HauntEffectCommands.trigger(source,p,"helpful_visitation")==0,"Unimplemented effects cannot pretend to run");
+        h.assertTrue(HauntEffectCommands.trigger(source,p,"spirit_recognition")==0,"Unimplemented effects cannot pretend to run");
         h.assertTrue(HauntEffectCommands.trigger(source,p,"unknown")==0,"Unknown names fail clearly");
         PlayerHauntManager.setTier(p,HauntTier.NATURAL);
         h.assertTrue(HauntEffectCommands.trigger(source,p,"random")==1,"Random eligible pool tries alternatives until a real event succeeds");

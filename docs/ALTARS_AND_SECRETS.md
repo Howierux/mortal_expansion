@@ -2,7 +2,7 @@
 
 The Altar of Impurity is the inverse of Purity: while burning it adds 0.10 Haunt every ten active seconds to each loaded chunk in its centered 3x3 square. Purity removes the same amount. Both clamp at the normal Haunt boundaries, preserve fractional values, affect no personal Haunt and do not force-load terrain. Burn reserves, 12.5-second offering consumption, one-hour capacity, container returns, automation and save/load behavior share one implementation. The Impurity GUI uses warmer colors; the bonfire and remaining-time tooltip work the same way.
 
-By default, Impurity accepts the same five offerings through `mortal_expansion:impurity_offerings`, which includes the purity_offerings tag. Datapacks can configure membership separately. Positive offering gifts and blessings remain exclusive to Purity.
+By default, Impurity accepts the same offerings, including Raw Ectoplasm (60 seconds) through `mortal_expansion:impurity_offerings`, which includes the purity_offerings tag. Datapacks can configure membership separately. Positive offering gifts and blessings remain exclusive to Purity.
 
 ## Secret recipes
 
@@ -31,3 +31,9 @@ Both furnace variants use the vanilla Furnace side, top and off/on front texture
 ## Verification
 
 Build and 138 required server tests pass. New tests verify inverse nine-chunk pulses, upper cap, separate native crafting unlocks and ingredient consumption, old recipe-book migration, legacy books, expanded saved knowledge and exclusion from positive Purity benefits. Existing altar, offering, weaving, crafting and persistence tests remain passing. Data generation and guide checks pass. GUI names/colors, furnace tints in both states/orientations and longer-term Haunt balance remain client playtest checks.
+
+## Ritual Star sacrifices
+
+Both altars accept a Ritual Star in the Overworld: Purity lowers current Haunt in every chunk by ten points, while Impurity raises it by ten. Recovery baselines remain unchanged. Craft the star with a Nether Star surrounded by eight Bloodstone. See [Ritual Star](RITUAL_STAR.md) for delivery, repeatability and persistence.
+
+Both altars expose their loaded offering tags and burn durations through separate optional JEI categories. The altar is a catalyst; container-bearing offerings show their real remainder. See [JEI offering integration](JEI_INTEGRATION.md#altar-offerings).

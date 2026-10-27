@@ -14,12 +14,37 @@
     "FluidBucketSmeltingMixin",
     "EctceteraCraftingKnowledgeMixin",
     "EctceteraSmithingKnowledgeMixin",
-    "EctceteraCrafterKnowledgeMixin"
+    "EctceteraCrafterKnowledgeMixin",
+    "FadingBlockItemMixin",
+    "FadingChunkMixin",
+    "FadingDropsMixin",
+    "FadingFallingBlockMixin",
+    "FadingEntityDropMixin",
+    "FadingItemUseMixin",
+    "FadingPistonResolutionMixin",
+    "DemiTangibleItemUseMixin",
+    "DamnedPlayerFoodMixin",
+    "DamnedDiamondUseMixin",
+    "DamnedDaySleepMixin",
+    "DamnedFoodDataMixin"
   ],
   "client": [
     "SpiritJourneyDeathScreenMixin",
     "GhostGarbLocalPlayerMixin",
-    "GhostGarbRenderMixin"
+    "GhostGarbRenderMixin",
+    "FadingChunkRenderMixin",
+    "FadingBlockEntityRenderMixin",
+    "FadingItemRenderMixin",
+    "FadingVisibilityMixin",
+    "FadingNeighborFaceMixin",
+    "FadingFallingRenderMixin",
+    "FadingPickMixin",
+    "FadingSodiumChunkMixin",
+    "FadingCompositeTypeAccessor",
+    "FadingCompositeStateAccessor",
+    "FadingTextureStateAccessor",
+    "FadingMeshBuilderMixin",
+    "FadingMeshSortMixin"
   ],
   "injectors": {
     "defaultRequire": 1

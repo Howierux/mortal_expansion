@@ -32,10 +32,11 @@ public final class SpectralPhasingRules {
 
     /**
      * Returns true if an intangible mob may track the target through the
-     * intervening blocks. Up to four occupied block cells are allowed.
-     * Spectral-solid materials always block tracking.
+     * intervening blocks. Demons use a bounded long-range ray; other spectral
+     * mobs allow up to four occupied cells. Spectral-solid materials block both.
      */
     public static boolean canTrackThroughBlocks(Entity mob, Entity target) {
+        if(mob instanceof DemonEntity demon)return canDemonTrack(demon,target);
         Level level = mob.level();
         Vec3 start = mob.getEyePosition();
         Vec3 end = target.getEyePosition();
@@ -63,7 +64,7 @@ public final class SpectralPhasingRules {
 
             BlockState state = level.getBlockState(pos);
 
-            if (state.is(INTANGIBLE_SOLID)) {
+            if (isSpectralSolid(level,pos,state)) {
                 return false;
             }
 
@@ -76,6 +77,21 @@ public final class SpectralPhasingRules {
         }
 
         return true;
+    }
+
+    /** One native voxel traversal; ordinary wall thickness is irrelevant, unloaded terrain is opaque. */
+    private static boolean canDemonTrack(DemonEntity demon,Entity target){
+        Level level=demon.level();if(target.level()!=level)return false;
+        Vec3 start=demon.getEyePosition(),end=target.getEyePosition();
+        double range=demon.getAttributeValue(net.minecraft.world.entity.ai.attributes.Attributes.FOLLOW_RANGE);
+        if(start.distanceToSqr(end)>range*range)return false;
+        return net.minecraft.world.level.BlockGetter.traverseBlocks(start,end,level,(world,pos)->{
+            if(!world.hasChunkAt(pos))return Boolean.FALSE;
+            if(HolySaltBarrierTracker.hasSaltColumn(world,pos.getX(),pos.getZ())
+                    || SpiritTorchBarrierTracker.hasBarrierColumn(world,pos.getX(),pos.getZ())
+                    || isSpectralSolid(world,pos,world.getBlockState(pos)))return Boolean.FALSE;
+            return null;
+        },world->Boolean.TRUE);
     }
 
     /**
@@ -92,7 +108,14 @@ public final class SpectralPhasingRules {
                                 pos.getZ()
                         )
                                 || SpiritTorchBarrierTracker.hasBarrierColumn(level, pos.getX(), pos.getZ())
-                                || level.getBlockState(pos).is(INTANGIBLE_SOLID)
+                                || isSpectralSolid(level,pos,level.getBlockState(pos))
                 );
     }
+    private static boolean isSpectralSolid(net.minecraft.world.level.BlockGetter level,BlockPos pos,BlockState state) {
+        if (state.is(INTANGIBLE_SOLID)) return true;
+        return state.getBlock() instanceof com.howierux.mortalexpansion.block.FancifiedBlock
+                && level.getBlockEntity(pos) instanceof com.howierux.mortalexpansion.blockentity.FancifiedBlockEntity be
+                && be.original().is(INTANGIBLE_SOLID);
+    }
+
 }

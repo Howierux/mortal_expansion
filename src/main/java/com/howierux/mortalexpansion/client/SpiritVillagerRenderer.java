@@ -9,7 +9,7 @@ import net.minecraft.client.renderer.entity.*;
 import net.minecraft.resources.ResourceLocation;
 
 public final class SpiritVillagerRenderer extends MobRenderer<SpiritEntity, SpiritVillagerRenderer.Model> {
-    private static final ResourceLocation TEXTURE = ResourceLocation.withDefaultNamespace("textures/entity/villager/villager.png");
+    private static final ResourceLocation TEXTURE = ResourceLocation.fromNamespaceAndPath(com.howierux.mortalexpansion.MortalExpansion.MOD_ID,"textures/entity/spirit.png");
     public SpiritVillagerRenderer(EntityRendererProvider.Context context) {
         super(context, new Model(context.bakeLayer(ModelLayers.VILLAGER)), 0);
     }

@@ -17,8 +17,11 @@ public final class EctceteraBookScreen {
     private EctceteraBookScreen(){}
     private static final String BOOK="book.mortal_expansion.ectcetera.",UI="gui.mortal_expansion.ectcetera.";
     public static void open(InteractionHand hand){Minecraft.getInstance().setScreen(new ResearchScreen(hand));}
-    private static Component chapterTitle(String key){if(key.equals("ecto_infrastructure"))return Component.translatable("guide.mortal_expansion.ecto_infrastructure.name");if(key.equals("grave_porting"))return Component.translatable("guide.mortal_expansion.grave_porting.name");if(key.equals("mortal_golem"))return Component.translatable("guide.mortal_expansion.mortal_golem.name");if(key.equals("wisp_o_lantern"))return Component.translatable("guide.mortal_expansion.wisp_o_lantern.name");return key.equals("dreamcatcher") || key.equals("purified_dreamcatcher") || key.equals("spectralite_haint") || key.startsWith("altar_of_") || key.equals("mortality_research_station")?Component.translatable("insight.mortal_expansion."+key+".name"):Component.translatable(BOOK+"chapter."+key);}
+    private static Component chapterTitle(String key){if(key.equals("holy_water"))return Component.translatable("guide.mortal_expansion.holy_water.name");if(key.equals("fancifier"))return Component.translatable("guide.mortal_expansion.fancifier.name");if(key.startsWith("sin_") || key.equals("darkhold") || key.equals("demons"))return Component.translatable("darkhold.mortal_expansion."+key+".name");if(key.equals("ecto_infrastructure"))return Component.translatable("guide.mortal_expansion.ecto_infrastructure.name");if(key.equals("grave_porting"))return Component.translatable("guide.mortal_expansion.grave_porting.name");if(key.equals("mortal_golem"))return Component.translatable("guide.mortal_expansion.mortal_golem.name");if(key.equals("wisp_o_lantern"))return Component.translatable("guide.mortal_expansion.wisp_o_lantern.name");return key.equals("dreamcatcher") || key.equals("purified_dreamcatcher") || key.equals("spectralite_haint") || key.startsWith("altar_of_") || key.equals("mortality_research_station")?Component.translatable("insight.mortal_expansion."+key+".name"):Component.translatable(BOOK+"chapter."+key);}
     private static Component body(String chapter,int part,int secrets){
+        if(chapter.equals("holy_water"))return Component.translatable("guide.mortal_expansion.holy_water.page."+part);
+        if(chapter.equals("fancifier"))return Component.translatable("guide.mortal_expansion.fancifier.page."+part);
+        if(chapter.startsWith("sin_") || chapter.equals("darkhold") || chapter.equals("demons"))return Component.translatable("darkhold.mortal_expansion."+chapter+".page."+part);
         if(chapter.equals("ecto_infrastructure"))return Component.translatable("guide.mortal_expansion.ecto_infrastructure.page."+part);
         if(chapter.equals("grave_porting"))return Component.translatable("guide.mortal_expansion.grave_porting.page."+part);
         if(chapter.equals("mortal_golem"))return Component.translatable("guide.mortal_expansion.mortal_golem.page."+part);
@@ -30,8 +33,8 @@ public final class EctceteraBookScreen {
         return Component.translatable(BOOK+"page."+chapter+"."+part);
     }
     private static Item icon(String key){return switch(key){
-        case "first_steps","insight","mastery"->ModItems.BOOK_OF_ECTCETERA.get();case "haunt","personal","haunt_events"->Items.SOUL_LANTERN;
-        case "ecto_infrastructure"->ModItems.ECTANK.get();case "grave_porting"->ModItems.GRAVE.get();case "mortal_golem"->Items.BONE_BLOCK;case "wisp_o_lantern"->ModItems.WISP_O_LANTERN.get();case "biomes"->Items.GRASS_BLOCK;case "unlock_bone"->Items.BONE;case "graves"->ModItems.GRAVE.get();
+        case "holy_water"->Items.POTION;case "sin_lust"->Items.WHEAT;case "sin_gluttony"->Items.COOKED_BEEF;case "sin_greed"->Items.DIAMOND;case "sin_sloth"->Items.RED_BED;case "sin_wrath"->Items.IRON_SWORD;case "sin_envy"->Items.ENDER_EYE;case "sin_pride"->Items.EXPERIENCE_BOTTLE;case "demons"->ModItems.DEMONIC_ASH.get();case "darkhold"->ModItems.RITUAL_STAR.get();case "first_steps","insight","mastery"->ModItems.BOOK_OF_ECTCETERA.get();case "haunt","personal","haunt_events"->Items.SOUL_LANTERN;
+        case "fancifier"->ModItems.FANCIFIER.get();case "ecto_infrastructure"->ModItems.ECTANK.get();case "grave_porting"->ModItems.GRAVE.get();case "mortal_golem"->Items.BONE_BLOCK;case "wisp_o_lantern"->ModItems.WISP_O_LANTERN.get();case "biomes"->Items.GRASS_BLOCK;case "unlock_bone"->Items.BONE;case "graves"->ModItems.GRAVE.get();
         case "intangibles"->Items.GLASS;case "creatures"->Items.ROTTEN_FLESH;case "spiritwells"->Items.NETHER_STAR;
         case "unlock_raw","ectoplasm"->ModItems.RAW_ECTOPLASM.get();case "cauldrons"->Items.CAULDRON;case "salt"->ModItems.HOLY_SALT.get();
         case "purified_dreamcatcher"->ModItems.PURIFIED_DREAMCATCHER.get();case "dreamcatcher"->ModItems.DREAMCATCHER.get();case "emf_reader"->ModItems.EMF_READER.get();case "torches"->ModItems.SPIRIT_TORCH.get();case "ectothread"->ModItems.ECTOTHREAD.get();
@@ -49,8 +52,8 @@ public final class EctceteraBookScreen {
         private void refresh(){
             var p=minecraft.player;if(p==null)return;var book=p.getItemInHand(hand);
             if(!book.is(ModItems.BOOK_OF_ECTCETERA.get())){onClose();return;}
-            int nextTier=EctceteraProgression.tier(book),nextSecrets=SpectralInsight.secrets(book);
-            if(nextTier!=tier || nextSecrets!=secrets){tier=nextTier;secrets=nextSecrets;
+            int nextTier=EctceteraProgression.tier(book),nextSecrets=SpectralInsight.secrets(book)|(book.getOrDefault(com.howierux.mortalexpansion.registry.ModDataComponents.DAMNED_SECRETS.get(),0)<<7);
+            if(nextTier!=tier || nextSecrets!=secrets){tier=nextTier;secrets=nextSecrets;if(tier<4 && category==5)category=0;
 
                 if(entry!=null && !EctceteraResearchMap.unlocked(entry.key(),tier,secrets))entry=null;
                 if(width>0)controls();
@@ -61,7 +64,7 @@ public final class EctceteraBookScreen {
         private void controls(){
             clearWidgets();
             if(entry==null){
-                int tabs=5;int tabTop=Math.min(62,Math.max(30,height-34-tabs*24));int spacing=Math.max(20,Math.min(28,(height-100)/tabs));
+                int tabs=tier>=4?6:5;int tabTop=Math.min(62,Math.max(30,height-34-tabs*24));int spacing=Math.max(20,Math.min(28,(height-100)/tabs));
                 for(int c=0;c<tabs;c++){final int tab=c;add("category."+c,12,tabTop+c*spacing,86,()->{category=tab;panX=panY=0;notice=Component.empty();});}
                 if(tabTop+(tabs-1)*spacing+26<=height-62)add("center",12,height-62,86,()->{panX=panY=0;zoom=1;});
             }else{
@@ -77,6 +80,8 @@ public final class EctceteraBookScreen {
         private int y(EctceteraResearchMap.Node n){return top()+(int)(panY+n.y()*zoom);}
         private Component label(EctceteraResearchMap.Node n){return EctceteraResearchMap.secret(n.chapter().key())!=0 && !EctceteraResearchMap.unlocked(n.chapter().key(),tier,secrets)?Component.translatable(UI+"secret"):chapterTitle(n.chapter().key());}
         private Component requirement(EctceteraResearchMap.Node n){
+            var sin=DamnedSecret.forKey(n.chapter().key());if(sin!=null)return Component.translatable("damned.mortal_expansion.requires",sin.threshold());
+            if(n.chapter().key().equals("demons"))return Component.translatable("darkhold.mortal_expansion.demons.locked");
             if(n.chapter().key().equals("mortality_research_station"))return Component.translatable("insight.mortal_expansion.mortality_research_station.guidance");
             if(n.chapter().tier()>tier && !(n.chapter().key().equals("haint_garb") && tier>=2 && (secrets&4)!=0))
                 return Component.translatable(UI+"upgrade",Component.translatable(UI+"material."+n.chapter().tier()));
@@ -89,7 +94,7 @@ public final class EctceteraBookScreen {
         }
         @Override public void render(GuiGraphics g,int mouseX,int mouseY,float delta){
             renderBackground(g,mouseX,mouseY,delta);g.fill(6,6,width-6,height-6,0xF01B2227);g.fill(left()-2,top()-2,right()+2,bottom()+2,0xFF6B817A);
-            g.drawString(font,title,14,17,0xCEE7D3,false);
+            g.drawString(font,tier>=4?Component.translatable("item.mortal_expansion.darkhold"):title,14,17,0xCEE7D3,false);
             g.drawString(font,Component.translatable(UI+"tier",Component.translatable(UI+"tier."+Math.max(0,tier))),left(),36,0xACBDB3,false);
             if(entry==null){
                 g.fill(left(),top(),right(),bottom(),0xFF242E2B);g.enableScissor(left(),top(),right(),bottom());
@@ -101,13 +106,20 @@ public final class EctceteraBookScreen {
                 for(var node:nodes){boolean unlocked=EctceteraResearchMap.unlocked(node.chapter().key(),tier,secrets);int x=x(node),y=y(node),size=(int)(15*zoom);
                     g.fill(x-size-2,y-size-2,x+size+2,y+size+2,unlocked?0xFF9ECB9F:0xFF5B6461);g.fill(x-size,y-size,x+size,y+size,unlocked?0xFF344B3B:0xFF222A27);
                     g.pose().pushPose();g.pose().translate(x-8*zoom,y-8*zoom,0);g.pose().scale((float)zoom,(float)zoom,1);
-                    g.renderItem(new ItemStack(unlocked?icon(node.chapter().key()):Items.BOOK),0,0);g.pose().popPose();
+                    g.renderItem(unlocked && node.chapter().key().equals("holy_water")?com.howierux.mortalexpansion.haunt.HolyWaterBrewing.bottle():new ItemStack(unlocked?icon(node.chapter().key()):Items.BOOK),0,0);g.pose().popPose();
                     g.drawCenteredString(font,label(node),x,y+size+5,unlocked?0xD6E6D6:0x8E9990);
                     if(mapContains(mouseX,mouseY) && Math.abs(mouseX-x)<=size+3 && Math.abs(mouseY-y)<=size+3)hovered=node;
                 }
                 g.disableScissor();renderWidgets(g,mouseX,mouseY,delta);
-                if(hovered!=null)g.renderTooltip(font,EctceteraResearchMap.unlocked(hovered.chapter().key(),tier,secrets)?label(hovered):label(hovered).copy().append("\n").append(requirement(hovered)),mouseX,mouseY);
                 g.drawString(font,notice.getString().isEmpty()?Component.translatable(UI+"controls"):notice,left(),height-34,0xB5CBB9,false);
+                if(hovered!=null){
+                    // Component-only tooltips flatten newlines into a visible glyph; submit wrapped lines explicitly.
+                    int tooltipWidth=Math.max(20,Math.min(240,width-24));
+                    var tooltip=new ArrayList<FormattedCharSequence>(font.split(label(hovered),tooltipWidth));
+                    if(!EctceteraResearchMap.unlocked(hovered.chapter().key(),tier,secrets))
+                        tooltip.addAll(font.split(requirement(hovered),tooltipWidth));
+                    g.renderTooltip(font,tooltip,mouseX,mouseY);
+                }
             }else{
                 g.fill(left(),top(),right(),bottom(),0xFFE0D3AF);g.drawCenteredString(font,chapterTitle(entry.key()),(left()+right())/2,top()+10,0x463D2A);
                 int textWidth=Math.max(30,right()-left()-32),textY=top()+32,rows=Math.max(1,(bottom()-textY-12)/font.lineHeight);

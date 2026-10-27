@@ -41,6 +41,8 @@ public final class MortalExpansion {
 
     public MortalExpansion(IEventBus modBus) {
         com.howierux.mortalexpansion.registry.ModEffects.register(modBus);
+        com.howierux.mortalexpansion.registry.ModPotions.register(modBus);
+        NeoForge.EVENT_BUS.register(com.howierux.mortalexpansion.haunt.HolyWaterBrewing.class);
         ModDataComponents.register(modBus);
         com.howierux.mortalexpansion.registry.ModSounds.register(modBus);
         GraveNamePayloads.register(modBus);
@@ -49,7 +51,10 @@ public final class MortalExpansion {
         com.howierux.mortalexpansion.network.SpiritInteractionPayloads.register(modBus);
         com.howierux.mortalexpansion.network.HauntEffectPayloads.register(modBus);
         com.howierux.mortalexpansion.network.SpectralTracksPayload.register(modBus);
+        com.howierux.mortalexpansion.network.DarkholdKnowledgePayload.register(modBus);
         com.howierux.mortalexpansion.network.SpiritJourneyPayloads.register(modBus);
+        com.howierux.mortalexpansion.network.EnvyPayloads.register(modBus);
+        NeoForge.EVENT_BUS.register(com.howierux.mortalexpansion.guide.DamnedAbilities.class);
         ModArmorMaterials.register(modBus);
         ModFluids.register(modBus);
         ModBlocks.register(modBus);
@@ -78,6 +83,7 @@ public final class MortalExpansion {
         NeoForge.EVENT_BUS.register(com.howierux.mortalexpansion.haunt.effects.AdditionalHauntEffects.class);
         NeoForge.EVENT_BUS.register(com.howierux.mortalexpansion.discovery.SpectralDiscovery.class);
         NeoForge.EVENT_BUS.register(com.howierux.mortalexpansion.guide.SpectralInsight.class);
+        NeoForge.EVENT_BUS.register(com.howierux.mortalexpansion.guide.DarkholdProgression.class);
         NeoForge.EVENT_BUS.register(com.howierux.mortalexpansion.guide.EctceteraIntroduction.class);
         NeoForge.EVENT_BUS.register(com.howierux.mortalexpansion.item.AreaShovelMining.class);
         NeoForge.EVENT_BUS.register(com.howierux.mortalexpansion.item.TreeAxeFelling.class);
@@ -85,6 +91,7 @@ public final class MortalExpansion {
         NeoForge.EVENT_BUS.register(ModCommands.class);
         NeoForge.EVENT_BUS.register(com.howierux.mortalexpansion.quest.SpiritQuests.class);
         NeoForge.EVENT_BUS.register(HauntGenerationHandler.class);
+        NeoForge.EVENT_BUS.register(com.howierux.mortalexpansion.haunt.WorldHauntRitual.class);
         NeoForge.EVENT_BUS.register(HauntSimulationHandler.class);
         NeoForge.EVENT_BUS.register(com.howierux.mortalexpansion.haunt.PlayerHauntKillHandler.class);
         NeoForge.EVENT_BUS.register(HauntSpawnHandler.class);
@@ -92,6 +99,7 @@ public final class MortalExpansion {
         NeoForge.EVENT_BUS.register(NaturalPurificationHandler.class);
         NeoForge.EVENT_BUS.register(IntangibleCombatHandler.class);
         NeoForge.EVENT_BUS.register(com.howierux.mortalexpansion.combat.HaintGarbJump.class);
+        NeoForge.EVENT_BUS.register(com.howierux.mortalexpansion.combat.BloodstoneToolScaling.class);
         NeoForge.EVENT_BUS.register(com.howierux.mortalexpansion.combat.GhostGarbBreathing.class);
         NeoForge.EVENT_BUS.register(PharaohlPyramidHandler.class);
         NeoForge.EVENT_BUS.register(MobDropHandler.class);

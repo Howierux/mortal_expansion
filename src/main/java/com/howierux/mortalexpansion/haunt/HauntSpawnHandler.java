@@ -25,7 +25,24 @@ import net.neoforged.neoforge.event.entity.living.FinalizeSpawnEvent;
 public final class HauntSpawnHandler {
     private HauntSpawnHandler() {}
 
+    public static boolean canSpawnDemon(ServerLevel level,net.minecraft.core.BlockPos pos) {
+        return com.howierux.mortalexpansion.guide.DarkholdWorldData.get(level).awakened()
+                && HauntManager.getTier(level,pos).id()>=HauntTier.DEMONIC.id();
+    }
+    /** Native placement hook: bypass light only for natural daytime spawns above Demonic. */
+    public static boolean demonPlacement(EntityType<com.howierux.mortalexpansion.entity.mob.DemonEntity> type,
+            net.minecraft.world.level.ServerLevelAccessor accessor,MobSpawnType reason,
+            net.minecraft.core.BlockPos pos,net.minecraft.util.RandomSource random){
+        if(reason==MobSpawnType.NATURAL && accessor instanceof ServerLevel level){
+            if(!canSpawnDemon(level,pos))return false;
+            if(level.isDay() && HauntManager.getTier(level,pos).id()>HauntTier.DEMONIC.id())
+                return net.minecraft.world.entity.monster.Monster.checkAnyLightMonsterSpawnRules(type,accessor,reason,pos,random);
+        }
+        // World generation and explicit spawn sources never query persistent Haunt here.
+        return net.minecraft.world.entity.monster.Monster.checkMonsterSpawnRules(type,accessor,reason,pos,random);
+    }
     private static final float NATURAL_ZOMBIE_ACCEPTANCE = 0.20F;
+    private static final float COMMON_HOSTILE_ACCEPTANCE = 0.85F;
     private static final float PRE_ELDRITCH_ENDERMAN_ACCEPTANCE = 0.25F;
 
     @SubscribeEvent
@@ -35,29 +52,35 @@ public final class HauntSpawnHandler {
         }
 
         Mob mob = event.getEntity();
-        if (!(mob.level() instanceof ServerLevel level)
-                || !level.dimension().equals(ServerLevel.OVERWORLD)) {
+        if (!(mob.level() instanceof ServerLevel level))return;
+        if(mob.getType()==ModEntities.DEMON.get()){
+            if(!canSpawnDemon(level,mob.blockPosition()))event.setSpawnCancelled(true);
             return;
         }
+        if(!level.dimension().equals(ServerLevel.OVERWORLD))return;
 
         HauntTier tier = HauntManager.getTier(level, mob.blockPosition());
         EntityType<?> type = mob.getType();
 
+        if(type==EntityType.CREEPER){
+            if(mob.getRandom().nextFloat()>=COMMON_HOSTILE_ACCEPTANCE)event.setSpawnCancelled(true);
+            return;
+        }
         if (isZombieFamily(type)) {
             if (tier.id() < HauntTier.NATURAL.id()) {
                 event.setSpawnCancelled(true);
                 return;
             }
 
-            if (tier == HauntTier.NATURAL
-                    && mob.getRandom().nextFloat() >= NATURAL_ZOMBIE_ACCEPTANCE) {
+            if (mob.getRandom().nextFloat() >= COMMON_HOSTILE_ACCEPTANCE
+                    * (tier == HauntTier.NATURAL ? NATURAL_ZOMBIE_ACCEPTANCE : 1.0F)) {
                 event.setSpawnCancelled(true);
             }
             return;
         }
 
         if (isBasicSkeletonFamily(type)) {
-            if (tier.id() < HauntTier.SUPERNATURAL.id()) {
+            if (tier.id() < HauntTier.SUPERNATURAL.id() || mob.getRandom().nextFloat() >= COMMON_HOSTILE_ACCEPTANCE) {
                 event.setSpawnCancelled(true);
             }
             return;
@@ -109,6 +132,9 @@ public final class HauntSpawnHandler {
             return;
         }
 
+        if (type == ModEntities.ELEMENTAL.get()) {
+            cancelBelow(event,tier,HauntTier.SUPERNATURAL);return;
+        }
         if (type == ModEntities.GHOST.get()) {
             cancelBelow(event, tier, HauntTier.DEAD_RISING);
             return;
@@ -129,10 +155,12 @@ public final class HauntSpawnHandler {
     public static void onEntityJoin(EntityJoinLevelEvent event) {
         if (!(event.getEntity() instanceof Mob mob)
                 || !isWorldSpawn(mob.getSpawnType())
-                || !(event.getLevel() instanceof ServerLevel level)
-                || !level.dimension().equals(ServerLevel.OVERWORLD)) {
+                || !(event.getLevel() instanceof ServerLevel level))return;
+        if(mob.getType()==ModEntities.DEMON.get()){
+            if(!canSpawnDemon(level,mob.blockPosition()))event.setCanceled(true);
             return;
         }
+        if(!level.dimension().equals(ServerLevel.OVERWORLD))return;
 
         HauntTier tier = HauntManager.getTier(level, mob.blockPosition());
         EntityType<?> type = mob.getType();
@@ -140,6 +168,7 @@ public final class HauntSpawnHandler {
         // Safety net for Haunt-controlled Mortal Expansion mobs. This catches
         // world-generation creature spawning even if it bypasses FinalizeSpawn.
         if ((type == ModEntities.SPIRIT.get() && tier.id() < HauntTier.NATURAL.id())
+                || (type == ModEntities.ELEMENTAL.get() && tier.id() < HauntTier.SUPERNATURAL.id())
                 || (type == ModEntities.GHOST.get() && tier.id() < HauntTier.DEAD_RISING.id())
                 || ((type == ModEntities.PHANTOM.get() || type == ModEntities.HAUNT.get())
                 && tier.id() < HauntTier.DEMONIC.id())) {

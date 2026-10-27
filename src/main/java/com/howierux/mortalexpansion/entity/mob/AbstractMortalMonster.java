@@ -54,6 +54,25 @@ public abstract class AbstractMortalMonster extends Monster {
         goalSelector.addGoal(7, new RandomLookAroundGoal(this));
 
         targetSelector.addGoal(1, new HurtByTargetGoal(this));
+        registerPlayerTargetGoals();
+        targetSelector.addGoal(
+                4,
+                new NearestAttackableTargetGoal<>(
+                        this,
+                        Monster.class,
+                        10,
+                        true,
+                        false,
+                        target -> isAllied()
+                                && target != this
+                                && (!(target instanceof AbstractMortalMonster mortal)
+                                || !mortal.isAllied())
+                )
+        );
+    }
+
+    /** Specialized hunters can replace player perception without changing allied/retaliation goals. */
+    protected void registerPlayerTargetGoals() {
         targetSelector.addGoal(
                 2,
                 new NearestAttackableTargetGoal<>(
@@ -74,20 +93,6 @@ public abstract class AbstractMortalMonster extends Monster {
                         true,
                         false,
                         target -> !isAllied()
-                )
-        );
-        targetSelector.addGoal(
-                4,
-                new NearestAttackableTargetGoal<>(
-                        this,
-                        Monster.class,
-                        10,
-                        true,
-                        false,
-                        target -> isAllied()
-                                && target != this
-                                && (!(target instanceof AbstractMortalMonster mortal)
-                                || !mortal.isAllied())
                 )
         );
     }

@@ -15,7 +15,7 @@ import net.minecraft.world.phys.AABB;
 import net.neoforged.neoforge.event.EventHooks;
 
 public final class WispLanternBlockEntity extends BlockEntity {
-    public static final int SPAWN_INTERVAL=20*60*20, NEARBY_GHOST_LIMIT=4;
+    public static final int SPAWN_INTERVAL=20*60*10, NEARBY_GHOST_LIMIT=4;
     private int spawnDelay=SPAWN_INTERVAL;
     public WispLanternBlockEntity(BlockPos pos, BlockState state) {super(ModBlockEntities.WISP_O_LANTERN.get(),pos,state);}
     public int spawnDelay() {return spawnDelay;}

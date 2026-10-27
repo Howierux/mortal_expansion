@@ -38,6 +38,12 @@ public final class ModLootTables implements DataProvider {
             tables.put(ResourceKey.create(net.minecraft.core.registries.Registries.LOOT_TABLE,
                     net.minecraft.resources.ResourceLocation.fromNamespaceAndPath("mortal_expansion","entities/mortal_golem")),
                     LootTable.lootTable().setParamSet(LootContextParamSets.ENTITY).build());
+            tables.put(ResourceKey.create(net.minecraft.core.registries.Registries.LOOT_TABLE,
+                    net.minecraft.resources.ResourceLocation.fromNamespaceAndPath("mortal_expansion","entities/demon")),
+                    LootTable.lootTable().withPool(net.minecraft.world.level.storage.loot.LootPool.lootPool()
+                            .add(net.minecraft.world.level.storage.loot.entries.LootItem.lootTableItem(
+                                    com.howierux.mortalexpansion.registry.ModItems.DEMONIC_ASH.get())))
+                            .setParamSet(LootContextParamSets.ENTITY).build());
             var problems = new ProblemReporter.Collector();
             var validation = new ValidationContext(problems, LootContextParamSets.BLOCK, registries.asGetterLookup());
             tables.forEach((id, table) -> table.validate(validation.enterElement("{" + id.location() + "}", id)));

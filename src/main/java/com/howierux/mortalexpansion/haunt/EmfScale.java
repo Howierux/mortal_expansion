@@ -12,4 +12,13 @@ public final class EmfScale {
     }
     public static int litBulbs(int value) { return HauntTier.fromValue(value).id(); }
     public static int bulbColor(int bulb) { return COLORS[bulb]; }
+    public static int modelLevel(int value) { return value < 70 ? litBulbs(value) : Math.min(12, value / 10); }
+    public static int bulbColor(int bulb, int value) {
+        return modelLevel(value) > 6 && bulb < modelLevel(value)-6
+                ? (bulb < 3 ? 0xFFFF2020 : 0xFF510080) : bulbColor(bulb);
+    }
+    public static net.minecraft.network.chat.Component tierLabel(int value) {
+        return value < 70 ? net.minecraft.network.chat.Component.translatable("haunt.mortal_expansion.tier."+HauntTier.fromValue(value).id())
+                : net.minecraft.network.chat.Component.translatable("darkhold.mortal_expansion.band",value/10-6);
+    }
 }

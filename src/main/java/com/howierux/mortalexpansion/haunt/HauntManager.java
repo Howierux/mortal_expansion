@@ -24,6 +24,7 @@ public final class HauntManager {
 
     public static int getValue(ServerLevel level, ChunkPos pos) {
         LevelChunk chunk = level.getChunk(pos.x, pos.z);
+        WorldHauntRitual.reconcile(level,chunk);
         HauntTier tier = HauntTier.fromId(chunk.getData(ModAttachments.HAUNT_TIER));
         int progress = chunk.getData(ModAttachments.HAUNT_PROGRESS);
 
@@ -49,6 +50,7 @@ public final class HauntManager {
     }
 
     public static int setValue(ServerLevel level, ChunkPos pos, int value) {
+        WorldHauntRitual.reconcile(level,level.getChunk(pos.x,pos.z));
         level.getChunk(pos.x,pos.z).setData(ModAttachments.HAUNT_FRACTION,0);
         return storeWholeValue(level,pos,value);
     }

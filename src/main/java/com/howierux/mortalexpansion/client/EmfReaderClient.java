@@ -16,7 +16,7 @@ public final class EmfReaderClient {
         var player = holder instanceof net.minecraft.world.entity.player.Player p ? p : Minecraft.getInstance().player;
         if (player == null) return 0;
         int value = EmfReaderItem.value(stack, player);
-        return value < 0 ? 0 : EmfScale.litBulbs(value);
+        return value < 0 ? 0 : EmfScale.modelLevel(value);
     }
     public static void render(GuiGraphics graphics, DeltaTracker delta) {
         var mc = Minecraft.getInstance(); var player = mc.player;
@@ -35,12 +35,12 @@ public final class EmfReaderClient {
         for (int bulb = 0; bulb < EmfScale.BULBS; bulb++) {
             int bx = x + bulb * 15;
             graphics.fill(bx, y + 12, bx + 11, y + 23, 0xFF111111);
-            graphics.fill(bx + 1, y + 13, bx + 10, y + 22, bulb < lit ? EmfScale.bulbColor(bulb) : 0xFF444444);
+            graphics.fill(bx + 1, y + 13, bx + 10, y + 22, bulb < lit ? EmfScale.bulbColor(bulb, value) : 0xFF444444);
         }
         Component label = value < 0 ? Component.translatable("hud.mortal_expansion.emf.waiting")
                 : Component.translatable("hud.mortal_expansion.emf.reading", stack.is(ModItems.PRECISE_EMF_READER.get())
                         ? com.howierux.mortalexpansion.haunt.EmfScale.decimal(EmfReaderItem.hundredths(stack, player)) : value,
-                        Component.translatable("haunt.mortal_expansion.tier." + HauntTier.fromValue(value).id()));
-        graphics.drawString(mc.font, label, x, y + 26, lit == 0 ? 0xFFBBBBBB : EmfScale.bulbColor(lit - 1));
+                        EmfScale.tierLabel(value));
+        graphics.drawString(mc.font, label, x, y + 26, lit == 0 ? 0xFFBBBBBB : EmfScale.bulbColor(lit - 1, value));
     }
 }

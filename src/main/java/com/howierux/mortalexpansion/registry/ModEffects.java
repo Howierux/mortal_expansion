@@ -14,5 +14,7 @@ public final class ModEffects {
             DeferredRegister.create(Registries.MOB_EFFECT, MortalExpansion.MOD_ID);
     public static final DeferredHolder<MobEffect, SanctifiedEffect> SANCTIFIED =
             EFFECTS.register("sanctified", SanctifiedEffect::new);
+    public static final DeferredHolder<MobEffect, com.howierux.mortalexpansion.effect.ConsecrationEffect> CONSECRATION =
+            EFFECTS.register("consecration", com.howierux.mortalexpansion.effect.ConsecrationEffect::new);
     public static void register(IEventBus bus) { EFFECTS.register(bus); }
 }

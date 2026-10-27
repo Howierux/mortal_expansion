@@ -19,6 +19,15 @@ import net.minecraft.world.item.crafting.RecipeSerializer;
 public final class ModRecipes extends RecipeProvider {
     public ModRecipes(PackOutput output, CompletableFuture<HolderLookup.Provider> lookup) { super(output, lookup); }
     @Override protected void buildRecipes(RecipeOutput output) {
+        ShapedRecipeBuilder.shaped(RecipeCategory.DECORATIONS,ModItems.FANCIFIER.get())
+                .pattern("IEI").pattern("ESE").pattern("IRI")
+                .define('I',Items.IRON_INGOT).define('E',ModItems.RAW_ECTOPLASM.get())
+                .define('S',Items.STONECUTTER).define('R',Items.REDSTONE)
+                .unlockedBy("has_ectoplasm",has(ModItems.RAW_ECTOPLASM.get())).save(output);
+        ShapedRecipeBuilder.shaped(RecipeCategory.MISC,ModItems.RITUAL_STAR.get())
+                .pattern("BBB").pattern("BSB").pattern("BBB")
+                .define('B',ModItems.BLOODSTONE.get()).define('S',Items.NETHER_STAR)
+                .unlockedBy("has_nether_star",has(Items.NETHER_STAR)).save(output);
         // Most existing recipes have no unlock advancement. Keep their behavior and
         // retain the separately authored Book advancement rather than introducing new unlocks.
         RecipeOutput recipesOnly = new RecipeOutput() {
@@ -28,6 +37,28 @@ public final class ModRecipes extends RecipeProvider {
                 output.accept(id, recipe, null, conditions);
             }
         };
+        // Preserve dedicated Bloodstone gear patterns; all other diamond-tag
+        // recipes accept Bloodstone directly. Native difference ingredients
+        // retain other mods' diamond equivalents without overlapping our gear.
+        Ingredient gearDiamond = net.neoforged.neoforge.common.crafting.DifferenceIngredient.of(
+                Ingredient.of(net.neoforged.neoforge.common.Tags.Items.GEMS_DIAMOND), Ingredient.of(ModItems.BLOODSTONE.get()));
+        diamondGear(recipesOnly, gearDiamond, Items.DIAMOND_HELMET, "DDD", "D D");
+        diamondGear(recipesOnly, gearDiamond, Items.DIAMOND_CHESTPLATE, "D D", "DDD", "DDD");
+        diamondGear(recipesOnly, gearDiamond, Items.DIAMOND_LEGGINGS, "DDD", "D D", "D D");
+        diamondGear(recipesOnly, gearDiamond, Items.DIAMOND_BOOTS, "D D", "D D");
+        diamondGear(recipesOnly, gearDiamond, Items.DIAMOND_SWORD, "D", "D", "S");
+        diamondGear(recipesOnly, gearDiamond, Items.DIAMOND_SHOVEL, "D", "S", "S");
+        diamondGear(recipesOnly, gearDiamond, Items.DIAMOND_PICKAXE, "DDD", " S ", " S ");
+        diamondGear(recipesOnly, gearDiamond, Items.DIAMOND_AXE, "DD", "DS", " S");
+        diamondGear(recipesOnly, gearDiamond, Items.DIAMOND_HOE, "DD", " S", " S");
+        ShapelessRecipeBuilder.shapeless(RecipeCategory.MISC, Items.DIAMOND)
+                .requires(ModItems.BLOODSTONE.get()).unlockedBy("has_bloodstone", has(ModItems.BLOODSTONE.get()))
+                .save(output, ResourceLocation.fromNamespaceAndPath(MortalExpansion.MOD_ID,"diamond_from_bloodstone"));
+        ShapedRecipeBuilder.shaped(RecipeCategory.BUILDING_BLOCKS, Items.DIAMOND_BLOCK)
+                .pattern("DDD").pattern("DDD").pattern("DDD")
+                .define('D', net.neoforged.neoforge.common.Tags.Items.GEMS_DIAMOND)
+                .unlockedBy("has_diamond", has(net.neoforged.neoforge.common.Tags.Items.GEMS_DIAMOND))
+                .save(recipesOnly, ResourceLocation.withDefaultNamespace("diamond_block"));
         ShapedRecipeBuilder.shaped(RecipeCategory.DECORATIONS,ModItems.ECTANK.get()).pattern("SSS").pattern("SGS").pattern("SSS")
                 .define('S',ModItems.GRAVESTONE.get()).define('G',Items.GLASS).unlockedBy("has_gravestone",has(ModItems.GRAVESTONE.get())).save(output);
         ShapedRecipeBuilder.shaped(RecipeCategory.DECORATIONS,ModItems.PURIFIED_ECTANK.get()).pattern("SSS").pattern("SGS").pattern("SSS")
@@ -115,7 +146,7 @@ public final class ModRecipes extends RecipeProvider {
         ShapedRecipeBuilder.shaped(RecipeCategory.COMBAT, ModItems.BLOODSTONE_SHOVEL.get(), 1).pattern("B").pattern("S").pattern("S").define('B', ModItems.BLOODSTONE.get()).define('S', Items.STICK).unlockedBy("has_ingredient", has(ModItems.BLOODSTONE.get())).save(recipesOnly, ResourceLocation.fromNamespaceAndPath(MortalExpansion.MOD_ID, "bloodstone_shovel"));
         ShapedRecipeBuilder.shaped(RecipeCategory.COMBAT, ModItems.BLOODSTONE_SWORD.get(), 1).pattern("B").pattern("B").pattern("S").define('B', ModItems.BLOODSTONE.get()).define('S', Items.STICK).unlockedBy("has_ingredient", has(ModItems.BLOODSTONE.get())).save(recipesOnly, ResourceLocation.fromNamespaceAndPath(MortalExpansion.MOD_ID, "bloodstone_sword"));
         ShapelessRecipeBuilder.shapeless(RecipeCategory.MISC, com.howierux.mortalexpansion.guide.EctceteraProgression.book(0)).requires(Items.BOOK).requires(Items.ROTTEN_FLESH).unlockedBy("has_ingredient", has(Items.BOOK)).save(recipesOnly, ResourceLocation.fromNamespaceAndPath(MortalExpansion.MOD_ID, "book_of_ectcetera"));
-        for (int tier = 0; tier < 3; tier++) {
+        for (int tier = 0; tier < 4; tier++) {
             recipesOnly.accept(ResourceLocation.fromNamespaceAndPath(MortalExpansion.MOD_ID, "book_of_ectcetera_upgrade_" + (tier + 1)),
                     new com.howierux.mortalexpansion.recipe.EctceteraUpgradeRecipe(tier), null);
         }
@@ -177,4 +208,13 @@ public final class ModRecipes extends RecipeProvider {
         ShapedRecipeBuilder.shaped(RecipeCategory.BUILDING_BLOCKS, ModItems.SPIRITWOOD_STAIRS.get(), 4).pattern("P  ").pattern("PP ").pattern("PPP").define('P', ModItems.SPIRITWOOD_PLANKS.get()).unlockedBy("has_ingredient", has(ModItems.SPIRITWOOD_PLANKS.get())).save(recipesOnly, ResourceLocation.fromNamespaceAndPath(MortalExpansion.MOD_ID, "spiritwood_stairs"));
         ShapedRecipeBuilder.shaped(RecipeCategory.BUILDING_BLOCKS, ModItems.SPIRITWOOD_TRAPDOOR.get(), 2).pattern("PPP").pattern("PPP").define('P', ModItems.SPIRITWOOD_PLANKS.get()).unlockedBy("has_ingredient", has(ModItems.SPIRITWOOD_PLANKS.get())).save(recipesOnly, ResourceLocation.fromNamespaceAndPath(MortalExpansion.MOD_ID, "spiritwood_trapdoor"));
     }
+    private static void diamondGear(RecipeOutput output, Ingredient diamond, net.minecraft.world.level.ItemLike result, String... rows) {
+        var builder = ShapedRecipeBuilder.shaped(RecipeCategory.COMBAT, result).define('D', diamond);
+        for (String row : rows) builder.pattern(row);
+        if (java.util.Arrays.stream(rows).anyMatch(row -> row.indexOf('S') >= 0))
+            builder.define('S', net.neoforged.neoforge.common.Tags.Items.RODS_WOODEN);
+        builder.unlockedBy("has_diamond", has(Items.DIAMOND))
+                .save(output, net.minecraft.core.registries.BuiltInRegistries.ITEM.getKey(result.asItem()));
+    }
+
 }

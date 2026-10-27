@@ -28,13 +28,17 @@ import net.neoforged.neoforge.client.model.DynamicFluidContainerModel;
 public final class ModClientEvents {
     private ModClientEvents() {}
     @SubscribeEvent public static void ectankRenderer(EntityRenderersEvent.RegisterRenderers event){
+        event.registerBlockEntityRenderer(com.howierux.mortalexpansion.registry.ModBlockEntities.FANCIFIED_BLOCK.get(),FancifiedRenderer::new);
         event.registerBlockEntityRenderer(com.howierux.mortalexpansion.registry.ModBlockEntities.ECTO_FLUID.get(),EctankRenderer::new);
+        event.registerBlockEntityRenderer(com.howierux.mortalexpansion.registry.ModBlockEntities.DREAMCATCHER.get(),DreamcatcherRenderer::new);
     }
     @SubscribeEvent public static void mortalGolemLayer(EntityRenderersEvent.RegisterLayerDefinitions event) {
         event.registerLayerDefinition(MortalGolemModel.LAYER, MortalGolemModel::createBodyLayer);
+        for(var sin:com.howierux.mortalexpansion.entity.mob.SinAffinity.values())
+            event.registerLayerDefinition(DemonModel.layer(sin),()->DemonModel.createBodyLayer(sin));
     }
     @SubscribeEvent public static void emfModels(net.neoforged.neoforge.client.event.ModelEvent.RegisterAdditional event) {
-        for (int lit = 0; lit <= 6; lit++) event.register(net.minecraft.client.resources.model.ModelResourceLocation.standalone(
+        for (int lit = 0; lit <= 12; lit++) event.register(net.minecraft.client.resources.model.ModelResourceLocation.standalone(
                 ResourceLocation.fromNamespaceAndPath(MortalExpansion.MOD_ID, "item/precise_emf_reader_" + lit)));
     }
     @SubscribeEvent public static void emfLayers(net.neoforged.neoforge.client.event.RegisterGuiLayersEvent event) {
@@ -42,6 +46,10 @@ public final class ModClientEvents {
                 ResourceLocation.fromNamespaceAndPath(MortalExpansion.MOD_ID, "emf_reader"), EmfReaderClient::render);
     }
     @SubscribeEvent public static void emfProperties(net.neoforged.fml.event.lifecycle.FMLClientSetupEvent event) {
+        event.enqueueWork(FadingNativeClient::initialize);
+        event.enqueueWork(() -> net.minecraft.client.renderer.item.ItemProperties.register(ModItems.BOOK_OF_ECTCETERA.get(),
+                ResourceLocation.fromNamespaceAndPath(MortalExpansion.MOD_ID,"book_tier"),
+                (stack,level,holder,seed)->com.howierux.mortalexpansion.guide.EctceteraProgression.tier(stack)));
         event.enqueueWork(() -> net.minecraft.client.renderer.item.ItemProperties.register(ModItems.EMF_READER.get(),
                 ResourceLocation.fromNamespaceAndPath(MortalExpansion.MOD_ID, "emf_level"),
                 (stack, level, holder, seed) -> EmfReaderClient.modelLevel(stack, holder)));
@@ -142,6 +150,10 @@ public final class ModClientEvents {
         return 0xFF000000 | (r << 16) | (g << 8) | b;
     }
 
+    private static ResourceLocation mobTexture(String name) {
+        return ResourceLocation.fromNamespaceAndPath(MortalExpansion.MOD_ID, "textures/entity/" + name + ".png");
+    }
+
     @SubscribeEvent
     public static void registerEntityRenderers(EntityRenderersEvent.RegisterRenderers event) {
         event.registerEntityRenderer(ModEntities.SPECTRAL_BOLT.get(),net.minecraft.client.renderer.entity.ThrownItemRenderer::new);
@@ -150,27 +162,25 @@ public final class ModClientEvents {
         event.registerEntityRenderer(EntityType.GHAST, IntangibleGhastRenderer::new);
         event.registerEntityRenderer(ModEntities.PLAYER_CORPSE.get(), PlayerCorpseRenderer::new);
 
-        ResourceLocation zombie = ResourceLocation.withDefaultNamespace("textures/entity/zombie/zombie.png");
-        ResourceLocation husk = ResourceLocation.withDefaultNamespace("textures/entity/zombie/husk.png");
-
+        event.registerEntityRenderer(ModEntities.DEMON.get(),DemonRenderer::new);
         event.registerEntityRenderer(ModEntities.GHOST.get(),
-                ctx -> new PlaceholderHumanoidRenderer<>(ctx, zombie, mob -> true, 0.45F));
+                ctx -> new SpectralMobRenderer<>(ctx, mobTexture("ghost"), mob -> true, 0.45F));
         event.registerEntityRenderer(ModEntities.PHANTOM.get(),
-                ctx -> new PlaceholderHumanoidRenderer<>(ctx, zombie, mob -> false, 0.45F));
+                ctx -> new SpectralMobRenderer<>(ctx, mobTexture("phantom"), mob -> false, 0.45F));
         event.registerEntityRenderer(ModEntities.MORTAL_GOLEM.get(), MortalGolemRenderer::new);
         event.registerEntityRenderer(ModEntities.SPIRIT.get(), SpiritVillagerRenderer::new);
         event.registerEntityRenderer(ModEntities.ELEMENTAL.get(),
-                ctx -> new PlaceholderHumanoidRenderer<>(ctx, zombie, mob -> true, 0.55F));
+                ctx -> new SpectralMobRenderer<>(ctx, mobTexture("elemental"), mob -> true, 0.55F));
         event.registerEntityRenderer(ModEntities.HAUNT.get(),
-                ctx -> new PlaceholderHumanoidRenderer<>(ctx, zombie, mob -> true, 0.6F));
+                ctx -> new SpectralMobRenderer<>(ctx, mobTexture("haunt"), mob -> true, 0.6F));
         event.registerEntityRenderer(ModEntities.HAINT.get(),
-                ctx -> new PlaceholderHumanoidRenderer<>(ctx, zombie, mob -> true, 0.75F));
+                ctx -> new SpectralMobRenderer<>(ctx, mobTexture("haint"), mob -> true, 0.75F));
         event.registerEntityRenderer(ModEntities.MUMMY.get(),
-                ctx -> new PlaceholderHumanoidRenderer<>(ctx, husk, mob -> false, 0.5F));
+                ctx -> new SpectralMobRenderer<>(ctx, mobTexture("mummy"), mob -> false, 0.5F));
         event.registerEntityRenderer(ModEntities.PHARAOHL.get(),
-                ctx -> new PlaceholderHumanoidRenderer<>(
+                ctx -> new SpectralMobRenderer<>(
                         ctx,
-                        husk,
+                        mobTexture("pharaohl"),
                         mob -> mob.isCurrentlyIntangible(),
                         0.7F
                 ));
@@ -183,6 +193,7 @@ public final class ModClientEvents {
 
     @SubscribeEvent
     public static void registerMenuScreens(RegisterMenuScreensEvent event) {
+        event.register(ModMenus.FANCIFIER.get(),com.howierux.mortalexpansion.client.screen.FancifierScreen::new);
         event.register(ModMenus.ALTAR_OF_IMPURITY.get(), com.howierux.mortalexpansion.client.screen.AltarOfPurityScreen::new);
         event.register(ModMenus.MORTALITY_RESEARCH_STATION.get(),com.howierux.mortalexpansion.client.screen.MortalityResearchStationScreen::new);
         event.register(ModMenus.ALTAR_OF_PURITY.get(), com.howierux.mortalexpansion.client.screen.AltarOfPurityScreen::new);

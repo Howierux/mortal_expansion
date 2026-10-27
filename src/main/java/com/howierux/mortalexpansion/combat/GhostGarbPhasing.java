@@ -6,10 +6,12 @@ import net.minecraft.world.entity.Entity;
 import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.phys.Vec3;
 
-/** Shared client/server garb movement: phase sideways/upward while retaining floors and spectral barriers. */
+/** Shared client/server garb and vanilla Phantom movement: phase sideways/upward while retaining floors and spectral barriers. */
 public final class GhostGarbPhasing {
     private GhostGarbPhasing() {}
     public static boolean active(Entity entity) {
+        if (entity instanceof net.minecraft.world.entity.monster.Phantom)
+            return com.howierux.mortalexpansion.entity.IntangibleEntities.isIntangible(entity);
         return entity instanceof Player player && !player.isSpectator() && HauntProtection.fullGarb(player);
     }
     public static Vec3 collide(Entity entity, Vec3 motion) {
@@ -20,7 +22,11 @@ public final class GhostGarbPhasing {
         double x = 0, z = 0;
         for (int i = 1; i <= steps; i++) {
             double nextX = motion.x * i / steps, nextZ = motion.z * i / steps;
-            if (!SpectralPhasingRules.canEnterHorizontally(entity, box.move(nextX, 0, nextZ))) break;
+            var destination = box.move(nextX, 0, nextZ);
+            if (entity instanceof net.minecraft.world.entity.monster.Phantom
+                    && net.minecraft.core.BlockPos.betweenClosedStream(destination.deflate(1.0E-4D))
+                        .anyMatch(pos -> !entity.level().hasChunkAt(pos))) break;
+            if (!SpectralPhasingRules.canEnterHorizontally(entity, destination)) break;
             x = nextX; z = nextZ;
         }
         return new Vec3(x, y, z);

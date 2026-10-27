@@ -15,7 +15,7 @@ running generators during normal gameplay.
   policy. The Book's custom advancement remains authored separately.
 - `ModBlockLoot` and `ModLootTables`: validated loot builders serialized with
   Mojang's codec, retaining the existing named-random-sequence policy.
-- `DatapackBuiltinEntriesProvider`: demi-tangible melee damage types, serialized with Mojang registry codecs.
+- `DatapackBuiltinEntriesProvider`: demi-tangible melee damage types and native biome spawn modifiers. `ModSpawnModifiers` supplies the Haunt, Demon and Spiritwood Elemental spawn entries; providers and generated resources are committed together.
 - `ModTags`: block, item, entity, damage-type, and biome tags, including empty
   extension tags and additions to vanilla tags.
 

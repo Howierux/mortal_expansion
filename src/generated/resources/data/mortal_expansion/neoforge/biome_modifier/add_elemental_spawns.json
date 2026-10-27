@@ -1,0 +1,10 @@
+{
+  "type": "neoforge:add_spawns",
+  "biomes": "mortal_expansion:spiritwood_forest",
+  "spawners": {
+    "type": "mortal_expansion:elemental",
+    "maxCount": 2,
+    "minCount": 1,
+    "weight": 12
+  }
+}

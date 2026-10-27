@@ -1,0 +1,9 @@
+# Enchantment Generator GUI
+
+Right-clicking the generator opens an inventory screen, including when holding an item. It uses the Ectoplasmic Generator's 176x208 panel style, FE bar and player inventory layout. Put one enchanted item in the left slot; the right slot unlocks the disenchanted result only after generation completes. Both slots support shift-click. Ordinary materials and insertion into the output slot are rejected. Remaining FE, current FE/t and result readiness appear above the player inventory.
+
+Existing enchantment-to-FE calculations, energy capacity, energy export and full-buffer pauses are unchanged. Enchanted books still return ordinary books, and other item components/damage are retained. The machine starts queued input on its server tick. An occupied result prevents the next process. Slots synchronize through the native menu protocol, and the menu checks that its generator still exists within eight blocks.
+
+The queued input adds an optional `InputItem` stack to the block entity save; old saves default to an empty input. Existing `FinishedItem`, energy, generation-rate and remaining-FE tags are preserved, so already-running generators resume and existing finished items appear in the output slot. Breaking the block returns the queued input and the retained disenchanted item (including an unfinished process), once. The menu uses a small native Container adapter over those existing fields; there are no custom packets or new capability/automation promises.
+
+Validation exercises shift-click insertion/retrieval, rejection rules, input save/load, processing/output lock, FE generation, retained item damage and removed enchantments, exact output count and distance validity. The build/server tests cover common behavior; visual layout and clicks on an actual client remain playtest checks.

@@ -34,3 +34,15 @@ by ModPostEffects. SpiritJourneyVisuals contains the renderer integration.
 Journey recovery/disconnection restores normal camera effects; resource reloads
 and spectator camera changes reapply grayscale while the journey remains active.
 HUD and menu rendering retain their normal colors.
+
+## Death during Spirit Journey
+
+Dying during an active Spirit Journey ends that journey. Ordinary Respawn returns the player in Survival mode to Minecraft's normal respawn point (a valid bed/anchor, otherwise world spawn), bypassing registered graves and the old corpse. Another Spirit Journey cannot be selected for that death. The registered grave is not consumed or permanently disabled by this fallback.
+
+The abandoned corpse is no longer recoverable and removes itself when loaded with its owner online. Items held by the failed journey drop at their original death location, rather than being duplicated or left inaccessible in escrow. Keep Inventory retains its normal behavior.
+
+Implementation uses the existing serialized, death-copied corpse link and one-shot journey choice to distinguish initial journey entry from a subsequent death. No new save format or mixin is required. Native respawn-position and respawn events preserve Minecraft's bed/anchor validity and fallback behavior; corpse and well recovery reject dead players.
+
+## Grave consumption
+
+Entering Spirit Journey preserves both non-natural and naturalized self-named graves, their binding, and personal Haunt. Only ordinary Respawn at a non-natural grave consumes it and adds one personal Haunt point. Naturalized graves remain reusable for either choice and do not incur that respawn cost. Death during a journey still uses bed/anchor/world spawn without spending the grave.

@@ -24,6 +24,11 @@ public final class ModCreativeTabs {
                     .displayItems((parameters, output) -> {
                         output.accept(com.howierux.mortalexpansion.guide.EctceteraProgression.book(0));
                         output.accept(ModItems.RAW_ECTOPLASM.get());
+                        output.accept(ModItems.SPIRIT_BOON.get());
+                        output.accept(ModItems.RITUAL_STAR.get());
+                        output.accept(ModItems.DEMONIC_ASH.get());
+                        output.accept(com.howierux.mortalexpansion.guide.EctceteraProgression.book(4));
+                        output.accept(ModItems.FANCIFIER.get());
                         output.accept(ModItems.DREAMCATCHER.get());
                         output.accept(ModItems.WISP_O_LANTERN.get());
                         output.accept(ModItems.PURIFIED_DREAMCATCHER.get());
@@ -79,6 +84,8 @@ public final class ModCreativeTabs {
 
                         output.accept(ModItems.LIQUID_ECTOPLASM_BUCKET.get());
                         output.accept(ModItems.HOLY_WATER_BUCKET.get());
+                        output.accept(com.howierux.mortalexpansion.haunt.HolyWaterBrewing.bottle());
+                        output.accept(com.howierux.mortalexpansion.haunt.HolyWaterBrewing.splash());
                         output.accept(ModItems.PURIFIED_ECTOPLASM_BUCKET.get());
                         output.accept(ModItems.HOLY_SALT.get());
                         output.accept(ModItems.EMF_READER.get());

@@ -6,6 +6,8 @@ import net.minecraft.world.entity.player.Player;
 /** Authoritative API for fine-grained personal haunt state. */
 public final class PlayerHauntManager {
     private PlayerHauntManager() {}
+    public static final int EXTENDED_MAX=20_000_000,MAX_PERSONAL_UNITS=EXTENDED_MAX*100;
+    private static int limit(Player player){return player.level() instanceof net.minecraft.server.level.ServerLevel level && com.howierux.mortalexpansion.guide.DarkholdWorldData.get(level).awakened()?EXTENDED_MAX:HauntTier.MAX_VALUE;}
 
     public static HauntTier getTier(Player player) {
         return HauntTier.fromValue(getValue(player));
@@ -20,7 +22,7 @@ public final class PlayerHauntManager {
             player.setData(ModAttachments.PLAYER_HAUNT_PROGRESS, progress);
         }
 
-        return tier.id() * HauntTier.POINTS_PER_TIER + progress;
+        return tier.id() * HauntTier.POINTS_PER_TIER + progress + player.getData(ModAttachments.PLAYER_HAUNT_EXCESS);
     }
 
     public static HauntTier setTier(Player player, HauntTier tier) {
@@ -34,13 +36,15 @@ public final class PlayerHauntManager {
     }
 
     private static int storeWholeValue(Player player, int value) {
-        int clamped = HauntTier.clampValue(value);
-        HauntTier tier = HauntTier.fromValue(clamped);
+        int clamped = Math.clamp(value,0,limit(player));
+        int base=Math.min(HauntTier.MAX_VALUE,clamped);
+        player.setData(ModAttachments.PLAYER_HAUNT_EXCESS,clamped-base);
+        HauntTier tier = HauntTier.fromValue(base);
 
         player.setData(ModAttachments.PLAYER_HAUNT_TIER, tier.id());
         player.setData(
                 ModAttachments.PLAYER_HAUNT_PROGRESS,
-                HauntTier.progressFromValue(clamped)
+                HauntTier.progressFromValue(base)
         );
         return clamped;
     }
@@ -62,7 +66,8 @@ public final class PlayerHauntManager {
 
     /** Fixed-point arithmetic avoids decimal drift and preserves fractions during whole-point changes. */
     public static void addHundredths(Player player, long amount) {
-        int result = FractionalHaunt.add(getHundredths(player), amount);
+        long current=getHundredths(player),max=(long)limit(player)*100;
+        int result=(int)(amount>=max-current?max:amount<=-current?0:current+amount);
         storeWholeValue(player, result / FractionalHaunt.UNITS_PER_POINT);
         player.setData(ModAttachments.PLAYER_HAUNT_FRACTION,
                 result % FractionalHaunt.UNITS_PER_POINT);

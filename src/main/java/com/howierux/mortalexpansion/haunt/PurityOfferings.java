@@ -12,6 +12,7 @@ public final class PurityOfferings {
     public static int burnTicks(ItemStack stack){return burnTicks(stack,false);}
     public static int burnTicks(ItemStack stack,boolean impure){
         if(!stack.is(impure?IMPURITY:TAG))return 0;
+        if(stack.is(ModItems.SPIRIT_BOON.get()))return 1200;
         return (stack.is(ModItems.GRAVE_MOSS.get()) || stack.is(ModItems.SPIRITWOOD_LOG.get()))?600:stack.is(ModItems.PURE_ECTOPLASM.get())?2400:1200;
     }
 }
