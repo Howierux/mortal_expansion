@@ -9,5 +9,8 @@
   "message.mortal_expansion.journey.no_well": "No safe Spiritwell return is available.",
   "tooltip.mortal_expansion.darkhold.exposure": "Its presence feeds your Haunt. Seven forbidden secrets await beyond Eldritch.",
   "screen.mortal_expansion.journey.cost": "Recover your items here for +10 personal and local Haunt.",
-  "screen.mortal_expansion.journey.body": "Continue searching for my body"
+  "screen.mortal_expansion.journey.body": "Continue searching for my body",
+  "book.mortal_expansion.ectcetera.page.graves.3": "Ordinary Respawn at a non-natural Grave consumes it and adds one personal Haunt point.",
+  "book.mortal_expansion.ectcetera.page.graves.5": "A naturalized Grave remains intact during ordinary Respawn and Spirit Journey, without the one-point respawn cost.",
+  "book.mortal_expansion.ectcetera.page.graves.7": "Spirit Journey begins at your self-named Grave and preserves it, whether placed or naturalized."
 }

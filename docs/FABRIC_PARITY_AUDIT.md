@@ -8,7 +8,7 @@ Compared on 2026-10-27 against fetched NeoForge `dev` **f080fdc36b994f3abcd2a0b2
 - Restore public wood, gem, enchanting, garb, damage and biome tag contracts. Bloodstone is a diamond-equivalent gem. Native generated vanilla recipes accept it; all-Bloodstone gear patterns still produce Bloodstone equipment. Fabric ingredient differences protect the nine diamond gear recipes. Vanilla diamond-block compression remains compatible, as in NeoForge.
 - Restore Overworld Wither Skeleton/Ghast population entries. Keep the reference rule that only Demons above Demonic Haunt bypass daylight light checks.
 - Restore default Ghost/Haint dye components, canonical `/mortalexpansion haunt effect <player> <effect|random>` command behavior, operator cooldown safety and targeted Ghost behavior.
-- Use the clicked third when placing graves. Consume owned non-natural graves and add one personal Haunt after successful normal/Journey respawns; preserve natural graves and failed-Journey bed/spawn behavior.
+- Use the clicked third when placing graves. Consume owned non-natural graves and add one personal Haunt only after successful ordinary respawns. Following the Spirit Journey playtest correction, journey entry preserves both grave types; naturalized graves remain reusable, and failed-Journey bed/spawn behavior is preserved.
 - Index pre-existing/generated Spiritwell block entities when their chunks load.
 - Port the optional Sodium 0.6 chunk suppression hook so fancified blocks do not also retain an opaque chunk-rendered copy. No required Sodium dependency is added.
 

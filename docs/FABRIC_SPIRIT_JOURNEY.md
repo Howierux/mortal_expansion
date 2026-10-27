@@ -28,3 +28,7 @@ Native tests perform actual deaths and replacement-player respawns, check grave 
 A two-launch integrated client check at 30% volume selected the death-screen button, saved an active journey, restarted with its corpse/escrow intact, opened the real J-key GUI and returned through its button. It recovered exactly seven Diamonds, added ten personal Haunt, and removed greyscale and the private beam. Screenshots verified footprints, the greyscale beam and the return screen. Temporary probes were removed from production sources.
 
 Dedicated multiplayer, third-party death/inventory/protection mods and NeoForge world migration are not yet release-validated.
+
+## Grave consumption
+
+Entering Spirit Journey preserves non-natural and naturalized self-named graves, their binding, and personal Haunt. Only ordinary Respawn at a non-natural grave consumes it and adds one personal Haunt point. Naturalized graves remain intact for both choices without that respawn cost. Failed journey deaths continue to use normal bed/anchor/world spawn and never consume the grave. Native regression tests exercise both grave states and both choices.

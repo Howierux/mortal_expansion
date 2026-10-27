@@ -40,8 +40,7 @@ public final class JourneyRuntime {
   if(failed){body(p,"");p.setGameMode(GameType.SURVIVAL);DeferredDeathItems.abandonJourney(p);DeferredDeathItems.resolveChoice(p,false);sync(p);return;}
   DeferredDeathItems.resolveChoice(p,pending);var target=graveTarget(p);
   if(pending){tag=data(p);tag.putBoolean("PendingJourney",false);data(p,tag);p.setGameMode(GameType.SPECTATOR);if(target!=null)p.teleportTo(target.level,target.pos.getX()+.5,target.pos.getY()+1,target.pos.getZ()+.5,p.getYRot(),0);else{body(p,"");p.setGameMode(GameType.SURVIVAL);DeferredDeathItems.abandonJourney(p);}}
-  else if(target!=null){Vec3 safe=safe(p,target.level,target.pos);if(safe!=null)p.teleportTo(target.level,safe.x,safe.y,safe.z,p.getYRot(),0);}
-  if(target!=null&&p.serverLevel()==target.level&&p.distanceToSqr(target.pos.getCenter())<16)consumeRespawnGrave(p,target);
+  else if(target!=null){Vec3 safe=safe(p,target.level,target.pos);if(safe!=null){p.teleportTo(target.level,safe.x,safe.y,safe.z,p.getYRot(),0);if(p.serverLevel()==target.level&&p.distanceToSqr(target.pos.getCenter())<16)consumeRespawnGrave(p,target);}}
   sync(p);
  }
  private static void consumeRespawnGrave(ServerPlayer p,GraveTarget target){if(target.level.getBlockEntity(target.pos) instanceof GraveEntity grave&&grave.owned(p)&&!grave.getBlockState().getValue(CatalogBlocks.GRAVE_NATURAL)){PlayerHauntManager.addPoints(p,1);target.level.destroyBlock(target.pos,false);grave(p,"");}}
