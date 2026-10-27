@@ -1,6 +1,8 @@
 {
   "values": [
     "mortal_expansion:bloodstone_ore",
+    "mortal_expansion:bloodstone_ore_stone",
+    "mortal_expansion:bloodstone_ore",
     "mortal_expansion:bloodstone_ore_stone"
   ]
 }

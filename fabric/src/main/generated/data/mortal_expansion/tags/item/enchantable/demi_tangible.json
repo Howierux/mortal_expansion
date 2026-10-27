@@ -1,5 +1,7 @@
 {
   "values": [
+    "#minecraft:enchantable/weapon",
+    "#minecraft:enchantable/mining",
     "minecraft:stone",
     "minecraft:granite",
     "minecraft:polished_granite",

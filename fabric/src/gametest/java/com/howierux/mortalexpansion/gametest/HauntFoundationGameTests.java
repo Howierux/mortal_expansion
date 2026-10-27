@@ -37,7 +37,7 @@ public final class HauntFoundationGameTests implements FabricGameTest {
  public void chunk_baselines_and_native_chunk_serialization(GameTestHelper h){
   var level=h.getLevel();var pos=new ChunkPos(h.absolutePos(new BlockPos(3,2,3)));var chunk=level.getChunkSource().getChunkNow(pos.x,pos.z);
   int before=HauntManager.getHundredths(level,pos);
-  try{
+  try(var area=BiomeTestArea.force(level,h.absolutePos(new BlockPos(3,2,3)),net.minecraft.world.level.biome.Biomes.PLAINS)){
    h.assertTrue(NaturalHauntGenerator.determineInitialTier(level,chunk)==HauntTier.NATURAL,"Overworld vanilla biomes retain Natural baseline");
    var nether=level.getServer().getLevel(net.minecraft.world.level.Level.NETHER);var end=level.getServer().getLevel(net.minecraft.world.level.Level.END);
    h.assertTrue(NaturalHauntGenerator.determineInitialTier(nether,chunk)==HauntTier.DEMONIC && NaturalHauntGenerator.determineInitialTier(end,chunk)==HauntTier.ELDRITCH,"Nether and End dimension baselines retained");

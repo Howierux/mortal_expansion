@@ -23,7 +23,7 @@ Minecraft 1.21.1; Fabric Loader 0.20.1; Fabric API 0.116.17+1.21.1; Java 21; Gra
 
 Namespace: mortal_expansion. The artifact filename includes -fabric. Datagen supplies Haunt biome tags, native block/item tags, loot tables and native machinery, knowledge and fluid-cooking recipes. Mod metadata retains All Rights Reserved and original branding; template provenance is in TEMPLATE_LICENSE.txt.
 
-The build runs 70 isolated Fabric GameTests automatically. These tests are not packaged in the gameplay jar. See the [Haunt foundation](../docs/FABRIC_HAUNT_FOUNDATION.md) for commands and exact scope.
+The build runs 79 isolated Fabric GameTests automatically. These tests are not packaged in the gameplay jar. See the [Haunt foundation](../docs/FABRIC_HAUNT_FOUNDATION.md) for commands and exact scope.
 
 See [branch policy](../docs/LOADER_BRANCHES.md) and [port status](../docs/FABRIC_PORT.md). TerraBlender Fabric is required. JEI is optional; `gradlew.bat -PwithJei runClient` adds its development runtime.
 
@@ -42,3 +42,5 @@ See [content catalog scope](../docs/FABRIC_CONTENT_CATALOG.md) for reused art, b
 [Spectral combat and creatures](../docs/FABRIC_COMBAT.md): intangible defenses/phasing, Demi-Tangible enchantment, saved projectile attribution, native mob AI/loot/rendering, Spirit expertise trades and Demon revelation. Pyramid/hut encounters, Wisp conversions and golem construction are implemented.
 
 See [Dreamcatchers](../docs/FABRIC_DREAMCATCHERS.md), [consecration and spirit circuits](../docs/FABRIC_CONSECRATION.md), [Grave Porting](../docs/FABRIC_GRAVE_PORTING.md), [Darkhold powers](../docs/FABRIC_DARKHOLD_POWERS.md), and [optional JEI](../docs/FABRIC_JEI.md). The [remaining audit](../docs/FABRIC_REMAINING_FEATURES.md) distinguishes unfinished reference designs from compatibility/release work.
+
+See the [NeoForge/Fabric parity audit](../docs/FABRIC_PARITY_AUDIT.md) and run `python fabric/tools/compare_neoforge.py` after datagen to check current reference resource contracts.

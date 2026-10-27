@@ -1,0 +1,23 @@
+{
+  "type": "minecraft:crafting_shaped",
+  "category": "equipment",
+  "key": {
+    "X": {
+      "fabric:type": "fabric:difference",
+      "base": {
+        "tag": "c:gems/diamond"
+      },
+      "subtracted": {
+        "item": "mortal_expansion:bloodstone"
+      }
+    }
+  },
+  "pattern": [
+    "X X",
+    "X X"
+  ],
+  "result": {
+    "count": 1,
+    "id": "minecraft:diamond_boots"
+  }
+}

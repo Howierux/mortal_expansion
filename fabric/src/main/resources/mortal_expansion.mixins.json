@@ -60,6 +60,7 @@
     "JourneyPostEffectInvoker",
     "FadingBlockEntityRenderMixin",
     "FadingChunkRenderMixin",
+    "FadingSodiumChunkMixin",
     "FadingCompositeStateAccessor",
     "FadingCompositeTypeAccessor",
     "FadingFallingRenderMixin",

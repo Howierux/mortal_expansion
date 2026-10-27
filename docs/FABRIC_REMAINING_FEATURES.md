@@ -21,7 +21,9 @@ These are future designs rather than skipped ports:
 
 - NeoForge saved-world migration, including old fading proxy blocks. Use fresh Fabric worlds; registry names alone do not ensure migration.
 - Dedicated multiplayer/modpack, third-party protection/teleport/death mods and unusual equipment/projectiles. Native claim cancellation is tested; this is not a guarantee for every mod.
-- Fancifier custom Fabric Renderer API/Sodium/Iris/connected-texture renderers and shader packs. Vanilla functional blocks are verified; custom renderer appearance needs provider-specific validation.
+- Fancifier custom Fabric Renderer API/Iris/connected-texture renderers and shader packs. The optional Sodium 0.6.13 chunk hook is checked; custom renderer appearance and combinations still need provider-specific validation.
 - Backpacks without native container/bundle components or Fabric ItemStorage; third-party automated crafting ownership; other recipe viewers and biome interoperability.
 
 These need named target mods/test environments or new feature designs. They are not marked implemented by a successful build.
+
+The [current dev parity audit](FABRIC_PARITY_AUDIT.md) records the reference SHA, corrections and 79-test validation.

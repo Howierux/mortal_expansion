@@ -1,0 +1,27 @@
+{
+  "type": "minecraft:crafting_shaped",
+  "category": "equipment",
+  "key": {
+    "#": {
+      "tag": "c:rods/wooden"
+    },
+    "X": {
+      "fabric:type": "fabric:difference",
+      "base": {
+        "tag": "c:gems/diamond"
+      },
+      "subtracted": {
+        "item": "mortal_expansion:bloodstone"
+      }
+    }
+  },
+  "pattern": [
+    "XXX",
+    " # ",
+    " # "
+  ],
+  "result": {
+    "count": 1,
+    "id": "minecraft:diamond_pickaxe"
+  }
+}

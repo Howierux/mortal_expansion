@@ -17,7 +17,8 @@
       "com.howierux.mortalexpansion.gametest.EquipmentGameTests",
       "com.howierux.mortalexpansion.gametest.HauntDiscoveryJourneyGameTests",
       "com.howierux.mortalexpansion.gametest.ContentSlicesGameTests",
-      "com.howierux.mortalexpansion.gametest.RemainingSlicesGameTests"
+      "com.howierux.mortalexpansion.gametest.RemainingSlicesGameTests",
+      "com.howierux.mortalexpansion.gametest.ParityGameTests"
     ]
   },
   "depends": {

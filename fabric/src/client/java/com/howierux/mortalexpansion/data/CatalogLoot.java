@@ -11,11 +11,12 @@ public final class CatalogLoot extends FabricBlockLootTableProvider {
  @Override public void generate() {
   CatalogBlocks.ALL.forEach((id,b) -> {
    if(id.startsWith("bloodstone_ore")) add(b,createOreDrop(b,CatalogItems.BLOODSTONE));
-   else if(id.equals("wisp_o_lantern")) add(b,createSilkTouchDispatchTable(b,applyExplosionCondition(b,net.minecraft.world.level.storage.loot.entries.LootItem.lootTableItem(Items.CARVED_PUMPKIN))).withPool(net.minecraft.world.level.storage.loot.LootPool.lootPool().when(doesNotHaveSilkTouch()).add(net.minecraft.world.level.storage.loot.entries.LootItem.lootTableItem(CatalogItems.RAW_ECTOPLASM))));
+   else if(id.equals("wisp_o_lantern")) add(b,createSilkTouchDispatchTable(b,applyExplosionCondition(b,net.minecraft.world.level.storage.loot.entries.LootItem.lootTableItem(Items.CARVED_PUMPKIN))).withPool(net.minecraft.world.level.storage.loot.LootPool.lootPool().when(doesNotHaveSilkTouch()).when(net.minecraft.world.level.storage.loot.predicates.ExplosionCondition.survivesExplosion()).add(net.minecraft.world.level.storage.loot.entries.LootItem.lootTableItem(CatalogItems.RAW_ECTOPLASM))));
+   else if(id.equals("mortal_golem_base")) dropOther(b,Items.BONE_BLOCK);
    else if(id.equals("haunted_farmland")) dropOther(b,Items.DIRT);
    else if(id.equals("spiritwood_leaves")) add(b,createLeavesDrops(b,CatalogBlocks.SPIRITWOOD_SAPLING,NORMAL_LEAVES_SAPLING_CHANCES));
    else if(id.endsWith("_door")) add(b,createDoorTable(b));
-   else if(id.endsWith("_slab")) add(b,createSlabItemTable(b));
+   else if(id.endsWith("_slab")) dropSelf(b);
    else if(CatalogItems.ALL.containsKey(id)) dropSelf(b);
    else if(id.equals("spirit_wall_torch")) dropOther(b,CatalogItems.SPIRIT_TORCH);
    else add(b,noDrop());

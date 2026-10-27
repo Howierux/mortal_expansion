@@ -12,7 +12,7 @@ import java.util.Locale;
 public final class HauntCommands {
     private HauntCommands(){}
     public static void register(){CommandRegistrationCallback.EVENT.register((dispatcher,registries,environment)->{
-        var haunt=Commands.literal("haunt").then(Commands.literal("get").executes(c->get(c,false)))
+        var haunt=Commands.literal("haunt").then(HauntEffectCommands.branch()).then(Commands.literal("get").executes(c->get(c,false)))
             .then(Commands.literal("natural").executes(HauntCommands::natural))
             .then(Commands.literal("tiers").executes(c->{for(var tier:HauntTier.values())c.getSource().sendSuccess(()->Component.literal(tier.displayName()+": "+tier.minimumValue()+"-"+tier.maximumValue()),false);return 1;}));
         for(boolean player:new boolean[]{false,true}){

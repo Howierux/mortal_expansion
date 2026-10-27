@@ -18,6 +18,7 @@ public final class HauntRuntime {
         ServerTickEvents.END_WORLD_TICK.register(HauntSimulation::tick);
         ServerLifecycleEvents.SERVER_STOPPED.register(server->{HauntSimulation.clear();WorldHauntRituals.clear();});
         ServerLivingEntityEvents.AFTER_DEATH.register((entity,source)->{
+            if(entity.getType()==net.minecraft.world.entity.EntityType.GHAST)entity.spawnAtLocation(com.howierux.mortalexpansion.catalog.CatalogItems.RAW_ECTOPLASM);
             if(entity instanceof Mob mob && !mob.getType().is(EntityTypeTags.SENSITIVE_TO_SMITE)
                     && source.getEntity() instanceof ServerPlayer p)PlayerHauntManager.addHundredths(p,FractionalHaunt.MOB_KILL_INCREASE);
         });

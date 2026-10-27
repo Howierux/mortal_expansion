@@ -49,9 +49,9 @@ public final class TerrainReaderGameTests implements FabricGameTest {
   h.assertTrue(BloodstoneFormation.due(11999,12000)&&BloodstoneFormation.due(17999,18000)&&BloodstoneFormation.due(23999,24000)&&!BloodstoneFormation.due(0,8000),"Formation checks occur at dawn sunset and midnight");
   h.assertTrue(BloodstoneFormation.chance(35)==.005F&&BloodstoneFormation.chance(45)==.01F&&BloodstoneFormation.chance(55)==.02F&&BloodstoneFormation.chance(65)==.04F,"Formation chance doubles by tier");
   var chunk=level.getChunkAt(h.absolutePos(new BlockPos(2,2,2)));var ore=new BlockPos(chunk.getPos().getMinBlockX()+1,level.getMinBuildHeight()+2,chunk.getPos().getMinBlockZ()+1);level.setBlockAndUpdate(ore,Blocks.DEEPSLATE_DIAMOND_ORE.defaultBlockState());h.assertTrue(BloodstoneFormation.convert(level,chunk,net.minecraft.util.RandomSource.create(1))&&level.getBlockState(ore).is(CatalogBlocks.BLOODSTONE_ORE),"Loaded section diamond conversion forms Bloodstone");
-  chunk.fillBiomesFromNoise((x,y,z,climate)->grave,level.getChunkSource().randomState().sampler());
+  try(var biomeArea=BiomeTestArea.force(level,h.absolutePos(new BlockPos(2,3,2)),ModBiomes.GRAVEYARD)){
   var stone=h.absolutePos(new BlockPos(2,3,2));level.setBlockAndUpdate(stone,Blocks.STONE.defaultBlockState());HauntManager.setValue(level,chunk.getPos(),35);
-  h.assertTrue(GraveyardStoneWeathering.convert(level,stone)&&level.getBlockState(stone).is(CatalogBlocks.GRAVESTONE)&&HauntManager.getValue(level,chunk.getPos())==35,"Actual Graveyard stone weathering preserves Haunt");h.succeed();
+  h.assertTrue(GraveyardStoneWeathering.convert(level,stone)&&level.getBlockState(stone).is(CatalogBlocks.GRAVESTONE)&&HauntManager.getValue(level,chunk.getPos())==35,"Actual Graveyard stone weathering preserves Haunt");}h.succeed();
  }
  @GameTest(template=EMPTY_STRUCTURE,batch="terrain_readers")
  public void cemetery_piece_places_native_natural_graves_with_registered_properties(GameTestHelper h){

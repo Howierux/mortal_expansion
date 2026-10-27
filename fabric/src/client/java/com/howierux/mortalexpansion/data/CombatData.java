@@ -44,6 +44,11 @@ public final class CombatData {
  public static final class DamageTags extends FabricTagProvider<DamageType> {
   public DamageTags(FabricDataOutput o,CompletableFuture<HolderLookup.Provider> l){super(o,Registries.DAMAGE_TYPE,l);}
   @Override protected void addTags(HolderLookup.Provider lookup){
+   // NeoForge dev f080fdc: preserve public tag contracts with native Fabric builders.
+   tag(net.minecraft.tags.TagKey.create(net.minecraft.core.registries.Registries.DAMAGE_TYPE,net.minecraft.resources.ResourceLocation.parse("minecraft:bypasses_armor"))).add(net.minecraft.resources.ResourceKey.create(net.minecraft.core.registries.Registries.DAMAGE_TYPE,net.minecraft.resources.ResourceLocation.parse("mortal_expansion:sanctification")));
+   tag(net.minecraft.tags.TagKey.create(net.minecraft.core.registries.Registries.DAMAGE_TYPE,net.minecraft.resources.ResourceLocation.parse("neoforge:is_magic"))).add(net.minecraft.resources.ResourceKey.create(net.minecraft.core.registries.Registries.DAMAGE_TYPE,net.minecraft.resources.ResourceLocation.parse("mortal_expansion:demi_tangible_player")));
+   tag(net.minecraft.tags.TagKey.create(net.minecraft.core.registries.Registries.DAMAGE_TYPE,net.minecraft.resources.ResourceLocation.parse("neoforge:is_magic"))).add(net.minecraft.resources.ResourceKey.create(net.minecraft.core.registries.Registries.DAMAGE_TYPE,net.minecraft.resources.ResourceLocation.parse("mortal_expansion:demi_tangible_mob")));
+
    tag(TagKey.create(Registries.DAMAGE_TYPE,ResourceLocation.parse("c:is_magic"))).add(DamageTypes.MAGIC,DamageTypes.INDIRECT_MAGIC,DamageTypes.THORNS,DamageTypes.WITHER,DamageTypes.DRAGON_BREATH,DamageTypes.SONIC_BOOM,ModDamageTypes.DEMI_TANGIBLE_PLAYER,ModDamageTypes.DEMI_TANGIBLE_MOB,ModDamageTypes.SANCTIFICATION);
   }
  }
