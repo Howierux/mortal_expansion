@@ -23,7 +23,7 @@ Minecraft 1.21.1; Fabric Loader 0.20.1; Fabric API 0.116.17+1.21.1; Java 21; Gra
 
 Namespace: mortal_expansion. The artifact filename includes -fabric. Datagen supplies Haunt biome tags, native block/item tags, loot tables and native machinery, knowledge and fluid-cooking recipes. Mod metadata retains All Rights Reserved and original branding; template provenance is in TEMPLATE_LICENSE.txt.
 
-The build runs 79 isolated Fabric GameTests automatically. These tests are not packaged in the gameplay jar. See the [Haunt foundation](../docs/FABRIC_HAUNT_FOUNDATION.md) for commands and exact scope.
+The build runs 81 isolated Fabric GameTests automatically. These tests are not packaged in the gameplay jar. See the [Haunt foundation](../docs/FABRIC_HAUNT_FOUNDATION.md) for commands and exact scope.
 
 See [branch policy](../docs/LOADER_BRANCHES.md) and [port status](../docs/FABRIC_PORT.md). TerraBlender Fabric is required. JEI is optional; `gradlew.bat -PwithJei runClient` adds its development runtime.
 

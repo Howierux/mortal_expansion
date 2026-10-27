@@ -42,7 +42,7 @@ The isolated Fabric build passes on Java 21. Native jar metadata, all three Kotl
 
 See [Fabric Haunt foundation](FABRIC_HAUNT_FOUNDATION.md) for storage keys, retained rules, commands, validation and explicit dependent systems not yet ported. See [Fabric content catalog](FABRIC_CONTENT_CATALOG.md) for item/block registration, reused artwork and explicit limitations. Both original biomes now generate through TerraBlender.
 
-The current build passes 79 native Fabric GameTests. Real integrated-server/client checks opened both generator screens, verified live status and fluid synchronization, and confirmed 30% master volume. NeoForge save migration and third-party modpack interoperability playtests remain pending.
+The current build passes 81 native Fabric GameTests. Real integrated-server/client checks opened both generator screens, verified live status and fluid synchronization, and confirmed 30% master volume. NeoForge save migration and third-party modpack interoperability playtests remain pending.
 
 The purification update passed station/furnace screen checks and a two-launch save/restart check: exact stored station resources survived, and a distant Ward restored chunk tickets independently of the player. One focused cooking mixin returns the three fluid buckets because native smelting has no input-remainder event.
 
@@ -63,3 +63,5 @@ Three more slices add Spirit interaction menus/quests and grave workstations, Wi
 The remaining defined gameplay slices add [Dreamcatchers](FABRIC_DREAMCATCHERS.md), [Holy Water/consecration and spirit circuits](FABRIC_CONSECRATION.md), [Grave Porting](FABRIC_GRAVE_PORTING.md), [all seven Darkhold powers](FABRIC_DARKHOLD_POWERS.md) and [optional JEI](FABRIC_JEI.md). Native gameplay tests and two-launch client checks cover these features, including a client without JEI followed by one with it. The remaining audit now separates unfinished NeoForge design proposals from provider-specific compatibility and release validation. This is still a development branch, with no NeoForge save migration claim.
 
 The [2026-10-27 parity audit](FABRIC_PARITY_AUDIT.md) compares current NeoForge dev and records corrected loot, tags, recipes, graves, spawn rules, commands and Sodium support. The reproducible comparison covers all 97 items, 60 blocks, 90 ME recipes and 188 media assets.
+
+[Cemetery playtest fixes](FABRIC_CEMETERY_FIXES.md) restore translucent natural-grave shimmer and Haunt rewards on successful natural-grave breaking; the current build passes 81 tests.

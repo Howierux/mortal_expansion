@@ -49,7 +49,7 @@ public final class CatalogClient {
   colors(CatalogBlocks.LIQUID_ECTOPLASM_CAULDRON,0xFF42A83B); colors(CatalogBlocks.HOLY_WATER_CAULDRON,0xFFDDEEFF); colors(CatalogBlocks.PURIFIED_ECTOPLASM_CAULDRON,0xFFC6F4FF);
 
   CatalogBlocks.ALL.forEach((id,block) -> {
-   if(id.contains("ectank")||id.contains("ecto_pipe")||id.equals("fancifier"))
+   if(id.contains("ectank")||id.contains("ecto_pipe")||id.equals("fancifier")||id.equals("grave"))
     BlockRenderLayerMap.INSTANCE.putBlock(block,RenderType.translucent());
    else if(id.contains("leaves")||id.contains("sapling")||id.contains("dreamcatcher")||id.contains("torch")||id.equals("grave_moss")||id.endsWith("door")||id.equals("holy_salt"))
     BlockRenderLayerMap.INSTANCE.putBlock(block,RenderType.cutout());
