@@ -2,14 +2,14 @@
   "schemaVersion": 1,
   "id": "mortal_expansion",
   "version": "${version}",
-  "name": "Mortal Expansion (Fabric development)",
+  "name": "Mortal Expansion",
   "description": "Fabric gameplay port: Haunt, Spirit Journey and Grave Porting, book research and Darkhold powers, Dreamcatchers, Holy Water and consecration, machinery and functional block fading, terrain, spectral combat, equipment and Spirit quests. Optional JEI integration. Fresh Fabric worlds required; migration and broad modpack validation remain pending.",
   "authors": [
     "Howierux"
   ],
   "contact": {
     "homepage": "https://github.com/Howierux/mortal_expansion",
-    "sources": "https://github.com/Howierux/mortal_expansion/tree/fabric-dev",
+    "sources": "https://github.com/Howierux/mortal_expansion/tree/fabric",
     "issues": "https://github.com/Howierux/mortal_expansion/issues"
   },
   "license": "All Rights Reserved",
@@ -46,7 +46,7 @@
     "minecraft": "~1.21.1",
     "java": ">=21",
     "fabric-api": ">=0.116.17",
-    "fabric-language-kotlin": "*",
+    "fabric-language-kotlin": ">=1.14.2+kotlin.2.4.21",
     "team_reborn_energy": ">=4.1.0",
     "terrablender": ">=4.1.0.8"
   },
