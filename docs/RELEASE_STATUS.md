@@ -1,5 +1,9 @@
 # Current status and publication preparation
 
+## 1.1.0-beta.1 candidate — 2026-10-27
+
+Prepared for dev-to-main promotion. The versioned build and all **238 required server GameTests** pass after isolating shared-cap/autonomous-target test fixtures; gameplay is unchanged by that isolation. Main has not been merged by this preparation. See [candidate changelog and release gate](RELEASE_1.1.0-beta.1.md). Earlier dated validation counts below are historical.
+
 Updated 2026-10-16. The gameplay baseline promoted to `main` is `f6e36d817a88972118fd59078811f2a034eb33bf`. Its Gradle build and all **194 required server GameTests** passed. This documentation revision adds no gameplay and does not change that count. Earlier per-feature counts are historical.
 
 ## Current dev validation (2026-10-20)
@@ -34,4 +38,4 @@ Grave Moss fire cleansing is closed in favor of altars. Nether/End Spiritwell ge
 
 ## Distribution checks
 
-Align version metadata, changelog, dependencies, and artifact before tagging a release; the declared version remains `1.0.0`. Temporary art provenance is documented. The previously bundled Warframe tapping recording has been removed; current tapping uses vanilla wood impacts. See [audio provenance](THIRD_PARTY_AUDIO.md). Review other asset provenance before distribution. This source update does not create a release or certify asset permissions.
+Align version metadata, changelog, dependencies, and artifact before tagging a release; the candidate declares `1.1.0-beta.1`. Temporary art provenance is documented. The previously bundled Warframe tapping recording has been removed; current tapping uses vanilla wood impacts. See [audio provenance](THIRD_PARTY_AUDIO.md). Review other asset provenance before distribution. This source update does not create a release or certify asset permissions.

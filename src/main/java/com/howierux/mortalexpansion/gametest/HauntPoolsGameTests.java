@@ -107,7 +107,8 @@ public final class HauntPoolsGameTests {
         h.assertFalse(HauntEventController.choices(6,true,false).isEmpty(),"Benefit pool remains eligible");
         p.discard();h.succeed();
     }
-    @GameTest(template="deferred_items_test")
+    // Spawn-cap assertions must not share a batch with tests creating hostile mobs.
+    @GameTest(template="deferred_items_test",batch="haunt_encounter")
     public static void loaded_trace_and_bounded_encounter_respect_conditions(GameTestHelper h) {
         floor(h);var p=player(h);
         h.setBlock(new BlockPos(6,2,6),ModBlocks.GRAVESTONE.get());

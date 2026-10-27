@@ -30,8 +30,9 @@ public final class GhostTargetGameTests {
             ghost.discard();victim.discard();
         });
     }
-    @GameTest(template="deferred_items_test",timeoutTicks=180)
+    // Keep autonomous perception tests away from concurrent mock-player/hostile fixtures.
+    @GameTest(template="deferred_items_test",timeoutTicks=180,batch="ghost_targets_spirit")
     public static void ghost_targets_spirit_and_receives_retaliation(GameTestHelper h){fight(h,ModEntities.SPIRIT.get());}
-    @GameTest(template="deferred_items_test",timeoutTicks=180)
+    @GameTest(template="deferred_items_test",timeoutTicks=180,batch="ghost_targets_elemental")
     public static void ghost_targets_elemental_and_receives_retaliation(GameTestHelper h){fight(h,ModEntities.ELEMENTAL.get());}
 }

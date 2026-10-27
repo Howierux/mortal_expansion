@@ -7,8 +7,8 @@ public final class HauntEffectPolicyTest {
         for (int tier = 0; tier < chances.length; tier++) {
             assert HauntEffectKind.chance(tier) == chances[tier];
             for (HauntEffectKind effect : HauntEffectKind.values()) {
-                assert effect.eligible(tier, false) == (tier >= effect.tier);
-                assert effect.eligible(tier, true) == (tier >= effect.tier && !effect.negative);
+                assert effect.eligible(tier, false) == (effect.implemented() && tier >= effect.tier);
+                assert effect.eligible(tier, true) == (effect.implemented() && tier >= effect.tier && !effect.negative);
             }
         }
         assert HauntEffectKind.HIT.weight > HauntEffectKind.SHOVE.weight;
