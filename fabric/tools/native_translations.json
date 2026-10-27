@@ -1,0 +1,13 @@
+{
+  "key.mortal_expansion.spirit_journey": "Open Spirit Journey",
+  "screen.mortal_expansion.journey.well": "Return through the nearest Spiritwell",
+  "screen.mortal_expansion.journey.free": "Your body offers a return without this cost.",
+  "screen.mortal_expansion.grave.title": "Grave inscription",
+  "screen.mortal_expansion.grave.name": "Name",
+  "screen.mortal_expansion.grave.engrave": "Engrave",
+  "screen.mortal_expansion.grave.hint": "Your own name binds this grave for respawn and Spirit Journey.",
+  "message.mortal_expansion.journey.no_well": "No safe Spiritwell return is available.",
+  "tooltip.mortal_expansion.darkhold.exposure": "Its presence feeds your Haunt. Seven forbidden secrets await beyond Eldritch.",
+  "screen.mortal_expansion.journey.cost": "Recover your items here for +10 personal and local Haunt.",
+  "screen.mortal_expansion.journey.body": "Continue searching for my body"
+}

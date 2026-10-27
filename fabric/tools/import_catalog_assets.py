@@ -60,6 +60,8 @@ def main():
  })
  for name in ['ghost','phantom','spirit','elemental','haunt','haint','mummy','pharaohl','demon','mortal_golem']:
   data['item.mortal_expansion.'+name+'_spawn_egg']=data.get('entity.mortal_expansion.'+name,name.replace('_',' ').title())+' Spawn Egg'
+ # Native screens have different arguments/actions from the NeoForge menus.
+ data.update(json.loads((ROOT/'fabric/tools/native_translations.json').read_text(encoding='utf-8')))
  lang.write_text(json.dumps(data,indent=2,ensure_ascii=False)+'\n',encoding='utf-8',newline='\n')
  print('Imported existing catalog models, blockstates, textures and translations.')
 if __name__=='__main__': main()

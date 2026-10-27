@@ -5,7 +5,7 @@
 | main | Consolidated NeoForge/release baseline | Repository root |
 | dev | NeoForge development | Repository root |
 | fabric-dev | Fabric 1.21.1 port development | fabric/ |
-| fabric | Reserved for validated Fabric releases; not created yet | fabric/ |
+| fabric | Stable Fabric baseline; release candidates promoted from fabric-dev | fabric/ |
 
 fabric-dev starts from NeoForge dev commit f080fdc36b994f3abcd2a0b2e0a0687c5130e545. Repository history and all current NeoForge source/assets remain available.
 
@@ -28,3 +28,5 @@ Fabric checkout: C:/Users/scott/Documents/MyMods/mortal_expansion_fabric
 Fabric project inside that checkout: fabric/
 
 The original downloaded template is preserved separately. Caches, build output, run worlds, IDE state and local logs are excluded from Git.
+
+On 2026-10-27, `fabric` was created from validated Fabric parity revision `66577cc`, preserving the implemented Fabric port. The 1.1.0-beta.1 promotion PR supplies final public metadata and notes. NeoForge promotion remains dev to main.
