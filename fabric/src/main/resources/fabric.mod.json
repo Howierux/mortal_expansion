@@ -3,7 +3,7 @@
   "id": "mortal_expansion",
   "version": "${version}",
   "name": "Mortal Expansion (Fabric development)",
-  "description": "Fabric gameplay port in progress: Haunt effects, named discoveries and tracks, Spirit Journey, book research, machinery, purification, terrain, spectral combat and equipment powers. Spirit quests, remaining machines/encounters, sin powers and Grave Porting remain pending.",
+  "description": "Fabric gameplay port: Haunt, Spirit Journey and Grave Porting, book research and Darkhold powers, Dreamcatchers, Holy Water and consecration, machinery and functional block fading, terrain, spectral combat, equipment and Spirit quests. Optional JEI integration. Fresh Fabric worlds required; migration and broad modpack validation remain pending.",
   "authors": [
     "Howierux"
   ],
@@ -36,6 +36,9 @@
     ],
     "terrablender": [
       "com.howierux.mortalexpansion.worldgen.TerrainRuntime"
+    ],
+    "jei_mod_plugin": [
+      "com.howierux.mortalexpansion.integration.jei.MortalJeiPlugin"
     ]
   },
   "depends": {

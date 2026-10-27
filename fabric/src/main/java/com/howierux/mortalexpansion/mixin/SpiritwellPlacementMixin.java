@@ -1,0 +1,6 @@
+package com.howierux.mortalexpansion.mixin;
+import org.spongepowered.asm.mixin.Mixin;import org.spongepowered.asm.mixin.injection.*;import org.spongepowered.asm.mixin.injection.callback.CallbackInfoReturnable;
+@Mixin(net.minecraft.world.item.BlockItem.class)
+public abstract class SpiritwellPlacementMixin {
+ @Inject(method="placeBlock",at=@At("HEAD"),cancellable=true) private void mortal$protected(net.minecraft.world.item.context.BlockPlaceContext c,net.minecraft.world.level.block.state.BlockState state,CallbackInfoReturnable<Boolean> ci){if(!(c.getLevel() instanceof net.minecraft.server.level.ServerLevel level))return;var pos=c.getClickedPos();boolean blocked=com.howierux.mortalexpansion.spiritwell.SpiritwellProtection.isProtected(level,pos);if(state.getBlock() instanceof net.minecraft.world.level.block.BedBlock)blocked|=com.howierux.mortalexpansion.spiritwell.SpiritwellProtection.isProtected(level,pos.relative(state.getValue(net.minecraft.world.level.block.BedBlock.FACING)));if(state.getBlock() instanceof net.minecraft.world.level.block.DoublePlantBlock||state.getBlock() instanceof net.minecraft.world.level.block.DoorBlock)blocked|=com.howierux.mortalexpansion.spiritwell.SpiritwellProtection.isProtected(level,pos.above());if(blocked)ci.setReturnValue(false);}
+}

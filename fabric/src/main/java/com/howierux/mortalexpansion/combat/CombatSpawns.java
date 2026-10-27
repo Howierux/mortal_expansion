@@ -23,7 +23,7 @@ public final class CombatSpawns {
   BiomeModifications.addSpawn(overworld,MobCategory.MONSTER,CombatEntities.HAUNT,8,1,1);
   BiomeModifications.addSpawn(BiomeSelectors.includeByKey(ModBiomes.SPIRITWOOD_FOREST),MobCategory.CREATURE,CombatEntities.ELEMENTAL,12,1,2);
   BiomeModifications.addSpawn(overworld.or(BiomeSelectors.foundInTheNether()).or(BiomeSelectors.foundInTheEnd()),MobCategory.MONSTER,CombatEntities.DEMON,12,1,1);
-  // Missing function: Pharaohl pyramid encounters, Haint haunt events and golem block formation.
+  // Loaded structure encounters and player-built formation are registered by ContentRuntime.
  }
  private static <T extends Mob> void register(EntityType<T> type){
   SpawnPlacements.register(type,SpawnPlacementTypes.ON_GROUND,Heightmap.Types.MOTION_BLOCKING_NO_LEAVES,(entityType,world,reason,pos,random)->{

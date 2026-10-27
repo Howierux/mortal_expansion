@@ -38,7 +38,16 @@
     "FadingPistonTransactionMixin",
     "GolemPotionMixin",
     "VanillaHauntSpawnsMixin",
-    "HauntedSkeletonEquipmentMixin"
+    "HauntedSkeletonEquipmentMixin",
+    "HolyWaterBrewingMixin",
+    "PurificationItemMixin",
+    "DamnedFoodDataMixin",
+    "DamnedPlayerFoodMixin",
+    "DamnedDiamondUseMixin",
+    "GreedDropsMixin",
+    "SanctificationMixin",
+    "SpiritwellPlacementMixin",
+    "HolyWaterBucketRemainderMixin"
   ],
   "injectors": {
     "defaultRequire": 1

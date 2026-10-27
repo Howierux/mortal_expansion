@@ -9,5 +9,5 @@ import org.spongepowered.asm.mixin.injection.callback.CallbackInfoReturnable;
 @Mixin(LevelChunk.class)
 public abstract class FadingChunkMixin {
     @Inject(method="setBlockState",at=@At("RETURN"))
-    private void mortalExpansion$changed(BlockPos pos,BlockState state,boolean moving,CallbackInfoReturnable<BlockState> callback){FadingWorld.changed((LevelChunk)(Object)this,pos,callback.getReturnValue(),state);}
+    private void mortalExpansion$changed(BlockPos pos,BlockState state,boolean moving,CallbackInfoReturnable<BlockState> callback){FadingWorld.changed((LevelChunk)(Object)this,pos,callback.getReturnValue(),state);if(callback.getReturnValue()!=null)com.howierux.mortalexpansion.sanctification.SanctifiedAreaHandler.changed(((LevelChunk)(Object)this).getLevel(),pos,callback.getReturnValue(),state);}
 }

@@ -20,13 +20,13 @@ Reference baseline: NeoForge dev f080fdc36b994f3abcd2a0b2e0a0687c5130e545. Fabri
 - [x] First gameplay feature port: [Haunt foundation](FABRIC_HAUNT_FOUNDATION.md).
 
 ## Porting sequence
-1. Native item/block registration and artwork are implemented: 97 items, 60 blocks, native tags and loot. Specialized interactions remain pending.
+1. Native item/block registration, artwork and defined gameplay interactions are implemented: 97 items, 60 blocks, native tags and loot.
 2. Haunt persistence is implemented for fresh Fabric worlds. Discoveries, ownership and Spirit Journey are implemented; NeoForge save migration remains pending.
 3. Event wiring, payloads, permissions and dedicated-server class separation.
 4. Native biomes, features/structures and TerraBlender climate insertion are implemented; naming/discovery are implemented.
 5. Mobs, combat AI, intangible damage, barriers and mob phasing are implemented. Player garb powers are implemented; pyramid/hut encounters and Wisp/golem formation are implemented.
 6. Both generators, their inventories/screens, energy export, tanks and pipes are implemented. Haunt/Haint furnaces, the Purification Station and Ward are also functional. Altars and world rituals are implemented; research is implemented; the Ectchantment Machine and Fancifier are implemented.
-7. Book progression and a limited Insight/altar event pool are implemented; remaining dependency-gated haunt events, seven sin powers, potions and Grave Porting remain pending. Demon revelation/exposure is implemented.
+7. Book progression, defined Haunt events, seven sin powers, potions and Grave Porting are implemented. Proposal-only Spirit service/revelation effects remain pending.
 8. Rendering/models/mixins, shaders and connected textures.
 9. Gameplay/migration tests, recipe-viewer integration and parity audit.
 
@@ -42,7 +42,7 @@ The isolated Fabric build passes on Java 21. Native jar metadata, all three Kotl
 
 See [Fabric Haunt foundation](FABRIC_HAUNT_FOUNDATION.md) for storage keys, retained rules, commands, validation and explicit dependent systems not yet ported. See [Fabric content catalog](FABRIC_CONTENT_CATALOG.md) for item/block registration, reused artwork and explicit limitations. Both original biomes now generate through TerraBlender.
 
-The current build passes 56 native Fabric GameTests. Real integrated-server/client checks opened both generator screens, verified live status and fluid synchronization, and confirmed 30% master volume. NeoForge save migration and third-party modpack interoperability playtests remain pending.
+The current build passes 70 native Fabric GameTests. Real integrated-server/client checks opened both generator screens, verified live status and fluid synchronization, and confirmed 30% master volume. NeoForge save migration and third-party modpack interoperability playtests remain pending.
 
 The purification update passed station/furnace screen checks and a two-launch save/restart check: exact stored station resources survived, and a distant Ward restored chunk tickets independently of the player. One focused cooking mixin returns the three fluid buckets because native smelting has no input-remainder event.
 
@@ -56,6 +56,8 @@ The combat slice adds ten native creatures and spawn eggs, entity loot, Spirit e
 
 The equipment slice ports garb phasing/jumps and native wall air, armor protection, Bloodstone scaling, pickaxe repair, face-based/connected shovel mining, tree axes, spectral growth, Haunted Farmland and Scepter charges. Twenty equipment recipes use native datagen. Seven new gameplay tests and an integrated client movement/render check passed at 30% volume. Natural negative-haunting prevention still needs the negative-event dispatcher. See [Fabric equipment](FABRIC_EQUIPMENT.md).
 
-Three follow-up slices add independent Haunt pools/commands/garb feedback, persistent named discovery with visible tracks, and Spirit Journey with actual death-drop escrow, corpses, private beams, greyscale and safe return/failure rules. Nine new native tests exercise these integrations, including keepInventory and Vanishing. A two-launch client check at 30% volume verified persisted journey items/corpse and real GUI recovery. See [Haunt events](FABRIC_HAUNT_EVENTS.md), [discovery](FABRIC_DISCOVERY.md) and [Spirit Journey](FABRIC_SPIRIT_JOURNEY.md). Spirit Commission now uses quests. Grave Porting, Dreamcatchers and Holy Water/consecration remain explicit gaps.
+Three follow-up slices add independent Haunt pools/commands/garb feedback, persistent named discovery with visible tracks, and Spirit Journey with actual death-drop escrow, corpses, private beams, greyscale and safe return/failure rules. Nine new native tests exercise these integrations, including keepInventory and Vanishing. A two-launch client check at 30% volume verified persisted journey items/corpse and real GUI recovery. See [Haunt events](FABRIC_HAUNT_EVENTS.md), [discovery](FABRIC_DISCOVERY.md) and [Spirit Journey](FABRIC_SPIRIT_JOURNEY.md). Spirit Commission uses quests; Grave Porting, Dreamcatchers and Holy Water/consecration are now implemented in the final gameplay slices.
 
 Three more slices add Spirit interaction menus/quests and grave workstations, Wisp/golem formation and loaded pyramid/hut encounters, then Ectchantment and functional native-block Fancifier opacity. See [Spirit interactions](FABRIC_SPIRIT_INTERACTIONS.md), [formation/encounters](FABRIC_FORMATION_ENCOUNTERS.md) and [Fancifier/Ectchantment](FABRIC_FANCIFIER_ECTCHANTMENT.md). Client slider/screens/rendering and two-launch persistence passed at 30% volume; optional renderer interoperability remains pending.
+
+The remaining defined gameplay slices add [Dreamcatchers](FABRIC_DREAMCATCHERS.md), [Holy Water/consecration and spirit circuits](FABRIC_CONSECRATION.md), [Grave Porting](FABRIC_GRAVE_PORTING.md), [all seven Darkhold powers](FABRIC_DARKHOLD_POWERS.md) and [optional JEI](FABRIC_JEI.md). Native gameplay tests and two-launch client checks cover these features, including a client without JEI followed by one with it. The remaining audit now separates unfinished NeoForge design proposals from provider-specific compatibility and release validation. This is still a development branch, with no NeoForge save migration claim.

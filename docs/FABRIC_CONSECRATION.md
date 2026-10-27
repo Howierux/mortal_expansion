@@ -1,0 +1,13 @@
+# Fabric Holy Water, cauldrons and consecration
+
+Holy Water is a registered native potion with an instant Consecration effect. A fueled brewing stand accepts a Holy Water bucket above one to three single empty bottles and fills them through native timed brewing, returning the bucket. Native gunpowder conversion produces Splash Potions of Consecration; potion contents, names, tints, throwing and targeting remain Mojang behavior. Both bottle variants are included in the creative catalog.
+
+Drinking, splashing or touching placed Holy Water invokes the shared blessing: cleanse one personal Haunt and prevent negative haunting for a minute, with the shared one-minute cleanse cooldown and brief contact throttle. Repeated contact cannot repeatedly cleanse. Existing haunting-owned negative effects are cleared without deleting unrelated external effects.
+
+The four reference heated-cauldron processes work by right click or tossed items: full water plus raw ectoplasm makes liquid ectoplasm; full water plus Grave Moss makes Holy Water; either intermediate plus the other reagent makes purified ectoplasm. Lit campfires, fire, soul fire and lava provide heat. Hand bucket extraction consumes the interaction so it cannot immediately pour the result above the cauldron. Full custom cauldrons are registered with Fabric's native CauldronFluidContent for transactional fluid automation. Flow delays/ranges/drop-off use the reference raw/holy/purified values.
+
+Closed Holy Salt and linked Spirit Torch column boundaries apply Sanctified to mobs. Smite-sensitive mobs take one sanctification damage every two seconds. Bounded flood fills, two cold searches per tick, cached interiors and salt/torch/chunk invalidation preserve the reference performance safeguards; opening a boundary stops refresh. Salt and torches also have their separate spirit circuit and never emit ordinary redstone power. Torch items can place standing or wall variants.
+
+Spiritwell radius protection covers native item placement, vanilla multipart bed/door placement and piston destinations. Protected wells remain unbreakable. Third-party placement implementations require interoperability validation.
+
+Validation includes actual 400-tick three-bottle brewing and bucket return, native potion conversion/drinking/cooldown, cauldron bucket round trips and transaction rollback, salt enclosure invalidation and spirit circuit updates. One brewing mixin supplies the non-potion-to-potion recipe that Fabric's builder cannot express; another captures the bucket remainder before native brewing shrinks the single ingredient to zero. A small item ticker applies tossed cauldron ingredients.

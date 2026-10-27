@@ -34,7 +34,9 @@ public final class CatalogFluids {
   @Override public Item getBucket() { return CatalogItems.ALL.get(pair.bucket); }
   @Override public boolean isSame(Fluid f) { return f==pair.source||f==pair.flowing; }
   @Override public BlockState createLegacyBlock(FluidState state) { return CatalogBlocks.ALL.get(pair.block).defaultBlockState().setValue(LiquidBlock.LEVEL,getLegacyLevel(state)); }
-  // Missing function: ectoplasm viscosity, holy-water blessing, and cauldrons.
+  @Override public int getTickDelay(net.minecraft.world.level.LevelReader level){return pair==LIQUID_ECTOPLASM?18:pair==PURIFIED_ECTOPLASM?2:5;}
+  @Override public int getSlopeFindDistance(net.minecraft.world.level.LevelReader level){return pair==LIQUID_ECTOPLASM?2:pair==PURIFIED_ECTOPLASM?6:4;}
+  @Override public int getDropOff(net.minecraft.world.level.LevelReader level){return pair==LIQUID_ECTOPLASM?2:1;}
  }
  private static final class Source extends Base {
   Source(Pair p) { super(p); }

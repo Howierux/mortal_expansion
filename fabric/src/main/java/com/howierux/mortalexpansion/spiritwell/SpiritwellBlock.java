@@ -11,4 +11,5 @@ public final class SpiritwellBlock extends BaseEntityBlock {
  protected RenderShape getRenderShape(BlockState state){return RenderShape.MODEL;}
  protected void onPlace(BlockState state,Level level,BlockPos pos,BlockState old,boolean moving){super.onPlace(state,level,pos,old,moving);if(level instanceof net.minecraft.server.level.ServerLevel server)SpiritwellIndex.get(server).add(pos);}
  protected void onRemove(BlockState state,Level level,BlockPos pos,BlockState next,boolean moving){if(!next.is(this)&&level instanceof net.minecraft.server.level.ServerLevel server)SpiritwellIndex.get(server).remove(pos);super.onRemove(state,level,pos,next,moving);}
+ protected net.minecraft.world.InteractionResult useWithoutItem(BlockState state,Level level,BlockPos pos,net.minecraft.world.entity.player.Player player,net.minecraft.world.phys.BlockHitResult hit){if(player instanceof net.minecraft.server.level.ServerPlayer server)GravePorting.open(server,pos);return net.minecraft.world.InteractionResult.sidedSuccess(level.isClientSide);}
 }

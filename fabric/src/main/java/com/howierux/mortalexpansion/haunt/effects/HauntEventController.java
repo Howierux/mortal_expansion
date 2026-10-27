@@ -28,11 +28,12 @@ public final class HauntEventController {
   if(kind.negative&&HauntProtection.fullGarb(p)){completed(p,0,true);com.howierux.mortalexpansion.equipment.EquipmentRuntime.preventHaunting(p);return true;}
   if(kind.negative&&HauntProtection.protectedPlayer(p))return false;
   long pending=HauntEventData.get(p.serverLevel()).pendingGhosts();if(!HauntEffects.perform(p,kind))return false;
+  if(com.howierux.mortalexpansion.haunt.Dreamcatchers.consumeFeedback(p)){completed(p,0,kind.negative);return true;}
   if(kind==HauntEffectKind.GHOST&&HauntEventData.get(p.serverLevel()).pendingGhosts()>pending)return true;
   completed(p,kind.activeTicks,kind.negative);hint(p,kind);return true;
  }
  public static boolean tryEffect(ServerPlayer p,HauntEffectKind kind){return trigger(p,kind,false);}
- public static void hint(ServerPlayer p,HauntEffectKind kind){if(kind!=HauntEffectKind.SPECTRAL_INSIGHT)p.displayClientMessage(net.minecraft.network.chat.Component.translatable("message.mortal_expansion.haunt."+kind.name().toLowerCase(Locale.ROOT)),false);}
+ public static void hint(ServerPlayer p,HauntEffectKind kind){if(com.howierux.mortalexpansion.haunt.Dreamcatchers.consumeFeedback(p))return;if(kind!=HauntEffectKind.SPECTRAL_INSIGHT)p.displayClientMessage(net.minecraft.network.chat.Component.translatable("message.mortal_expansion.haunt."+kind.name().toLowerCase(Locale.ROOT)),false);}
  public static void rollPool(ServerPlayer p,boolean negative){
   int tier=PlayerHauntManager.getTier(p).id();if(!ready(p,negative)||p.getRandom().nextDouble()>=HauntEffectKind.chance(tier))return;
   if(negative&&HauntProtection.protectedPlayer(p)&&!HauntProtection.fullGarb(p))return;
@@ -44,7 +45,7 @@ public final class HauntEventController {
  public static void tick(ServerLevel level){
   if(level.getGameTime()%20!=0)return;AdditionalHauntEffects.tick(level);var events=HauntEventData.get(level);
   for(var p:level.players()){if(HauntProtection.protectedPlayer(p))HauntProtection.clearNegative(p);if(!p.isAlive()||p.isSpectator()||p.isCreative())continue;
-   if(events.pendingGhosts()>0&&ready(p,true)&&!HauntProtection.protectedPlayer(p)&&HauntEffects.spawnGhostNear(p)){events.deliveredGhost();completed(p,0,true);hint(p,HauntEffectKind.GHOST);break;}
+   if(events.pendingGhosts()>0&&ready(p,true)&&!HauntProtection.protectedPlayer(p)&&(com.howierux.mortalexpansion.haunt.Dreamcatchers.prevent(p)||HauntEffects.spawnGhostNear(p))){events.deliveredGhost();completed(p,0,true);hint(p,HauntEffectKind.GHOST);break;}
   }
   if(level.getGameTime()%600==0){events.prune(level.getServer().overworld().getGameTime());for(var p:level.players())if(p.isAlive()&&!p.isSpectator()&&!p.isCreative()){rollPool(p,false);rollPool(p,true);}}
  }

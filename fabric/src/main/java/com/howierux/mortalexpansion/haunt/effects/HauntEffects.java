@@ -57,7 +57,7 @@ public final class HauntEffects {
     private HauntEffects() {}
     public static boolean perform(ServerPlayer player, HauntEffectKind kind) {
         if (!kind.implemented() || (kind.negative && HauntProtection.protectedPlayer(player))) return false;
-        // Dreamcatcher ownership/protection remains a separate block slice.
+        if(com.howierux.mortalexpansion.haunt.Dreamcatchers.prevent(player))return true;
         return switch (kind) {
             case OFFERING_GIFT, OFFERING_BLESSING -> com.howierux.mortalexpansion.haunt.effects.AltarHauntBenefits.perform(player,kind);
             case HIT -> { sound(player, com.howierux.mortalexpansion.haunt.effects.HauntEventController.TAPPING, player.position().subtract(horizontal(player).scale(2)), 0.8F, 1.0F); yield true; }

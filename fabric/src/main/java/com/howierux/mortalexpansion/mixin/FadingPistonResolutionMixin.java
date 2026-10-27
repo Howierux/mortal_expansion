@@ -10,5 +10,5 @@ import com.llamalad7.mixinextras.sugar.Local;
 @Mixin(PistonBaseBlock.class)
 public abstract class FadingPistonResolutionMixin {
     @WrapOperation(method="moveBlocks",at=@At(value="INVOKE",target="Lnet/minecraft/world/level/block/piston/PistonStructureResolver;resolve()Z"))
-    private boolean mortalExpansion$resolved(PistonStructureResolver resolver,Operation<Boolean> original,@Local(argsOnly=true) Level level,@Local(argsOnly=true) BlockPos pos){boolean success=original.call(resolver);if(success)FadingPistons.resolved(level,pos,resolver);return success;}
+    private boolean mortalExpansion$resolved(PistonStructureResolver resolver,Operation<Boolean> original,@Local(argsOnly=true) Level level,@Local(argsOnly=true) BlockPos pos){boolean success=original.call(resolver);if(success&&level instanceof net.minecraft.server.level.ServerLevel server){for(var from:resolver.getToPush())if(com.howierux.mortalexpansion.spiritwell.SpiritwellProtection.isProtected(server,from.relative(resolver.getPushDirection())))return false;for(var broken:resolver.getToDestroy())if(com.howierux.mortalexpansion.spiritwell.SpiritwellProtection.isProtected(server,broken))return false;}if(success)FadingPistons.resolved(level,pos,resolver);return success;}
 }

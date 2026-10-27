@@ -49,7 +49,7 @@ At 70 personal Haunt with a Darkhold, the Demon secret enters the book and perma
 
 Salt and torch indexes scan only matching section palettes on chunk load. Successful block transitions update indexes immediately, including commands, actual breaks and client corrections. Chunk unload removes contributions; breaking one of multiple salt blocks in a column preserves the remaining block's protection. Torch links rebuild only after relevant changes and stay within loaded chunks.
 
-Garb movement/breathing/jump/protection-from-events, Holy Water/consecrated-area gameplay, Fancifier spectral-solid resolution, Spirit quests/workstations, golem construction and Spirit Journey are still separate ports. Golems can currently be created with eggs/commands and have their entity interactions. Scepter ammunition/summoning remains unported. No claim of full gameplay or NeoForge save compatibility is made.
+Later gameplay slices now implement garb powers/event prevention, Holy Water/consecrated enclosures, Spirit quests/workstations, golem formation, Spirit Journey/Grave Porting and Scepter ammunition. Fancifier preserves native block identity, so spectral-solid tags continue to apply directly. No claim of full gameplay or NeoForge save compatibility is made.
 
 ## Validation
 

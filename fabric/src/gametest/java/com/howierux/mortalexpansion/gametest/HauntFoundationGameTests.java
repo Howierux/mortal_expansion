@@ -29,7 +29,7 @@ public final class HauntFoundationGameTests implements FabricGameTest {
    h.assertTrue(PlayerHauntManager.getHundredths(p)==1601,"Native player serialization preserves fractional Haunt");
    next=h.getLevel().getServer().getPlayerList().respawn(p,false,net.minecraft.world.entity.Entity.RemovalReason.KILLED);
    h.assertTrue(PlayerHauntManager.getHundredths(next)==1601,"Fabric attachment copyOnDeath survives native player replacement");
-   PlayerHauntManager.addHundredths(next,Long.MAX_VALUE);h.assertTrue(PlayerHauntManager.getHundredths(next)==6900,"Large additions clamp before overflow");
+   PlayerHauntManager.addHundredths(next,Long.MAX_VALUE);h.assertTrue(PlayerHauntManager.getHundredths(next)==(com.howierux.mortalexpansion.guide.DarkholdWorldData.get(next.serverLevel()).awakened()?PlayerHauntManager.MAX_PERSONAL_UNITS:6900),"Large additions clamp to the current world limit before overflow");
    PlayerHauntManager.addHundredths(next,Long.MIN_VALUE);h.assertTrue(PlayerHauntManager.getHundredths(next)==0,"Large reductions clamp at zero");
   }finally{remove(next==null?p:next);}h.succeed();
  }

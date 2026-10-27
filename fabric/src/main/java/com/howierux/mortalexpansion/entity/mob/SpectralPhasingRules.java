@@ -114,7 +114,7 @@ public final class SpectralPhasingRules {
     }
     private static boolean isSpectralSolid(net.minecraft.world.level.BlockGetter level,BlockPos pos,BlockState state) {
         if (state.is(INTANGIBLE_SOLID)) return true;
-        return false; // Missing function: resolve fancified spectral-solid originals when Fancifier is ported.
+        return false; // Fancifier preserves the original block identity and tags.
     }
 
 }

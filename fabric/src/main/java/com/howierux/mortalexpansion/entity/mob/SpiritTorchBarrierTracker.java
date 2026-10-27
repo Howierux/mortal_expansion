@@ -35,7 +35,7 @@ public final class SpiritTorchBarrierTracker {
                     chunks.containsKey(chunkKey(SpiritTorchLinks.x(column), SpiritTorchLinks.z(column))));
             wallChunks.clear();
             for(long column:walls)wallChunks.add(chunkKey(SpiritTorchLinks.x(column),SpiritTorchLinks.z(column)));
-            // Missing function: consecrated-area cache integration when sanctification is ported.
+            com.howierux.mortalexpansion.sanctification.SanctifiedAreaHandler.invalidateAreas(level);
         }
     }
 

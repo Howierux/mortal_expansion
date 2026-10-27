@@ -7,6 +7,7 @@ plugins {
 }
 
 repositories {
+    maven("https://maven.blamejared.com") { content { includeGroup("mezz.jei") } }
     maven("https://maven.minecraftforge.net/")
     maven("https://maven.fabricmc.net")
 	// Add repositories to retrieve artifacts from in here.
@@ -47,6 +48,9 @@ fabricApi {
 }
 
 dependencies {
+    modCompileOnly("mezz.jei:jei-1.21.1-fabric-api:${providers.gradleProperty("jei_version").get()}")
+    if(providers.gradleProperty("withJei").isPresent) modLocalRuntime("mezz.jei:jei-1.21.1-fabric:${providers.gradleProperty("jei_version").get()}")
+
     modImplementation("com.github.glitchfiend:TerraBlender-fabric:1.21.1-4.1.0.8")
     include(modImplementation("teamreborn:energy:${providers.gradleProperty("energy_api_version").get()}")!!)
 	// To change the versions see the gradle.properties file

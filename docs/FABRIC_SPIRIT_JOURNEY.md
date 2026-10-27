@@ -2,7 +2,7 @@
 
 ## Survival flow
 
-Craft three Graves from six Gravestone in a 2x3 rectangle. Place a grave, right-click it, and engrave your own player name to bind it. Naming is limited to the placing owner, once, and the server rechecks reach/permission/ownership. Inscriptions render on the actual facing/depth surface. Flower-assisted naturalization, generated grave names, Spirit workstation conversion and Grave Porting remain separate work.
+Craft three Graves from six Gravestone in a 2x3 rectangle. Place a grave, right-click it, and engrave your own player name to bind it. Naming is limited to the placing owner, once, and the server rechecks reach/permission/ownership. Inscriptions render on the actual facing/depth surface. Flower naturalization, grave Spirit workstations and loaded cross-dimensional Grave Porting are now implemented. Generated unowned graves store the natural block-state and do not assign a player respawn owner.
 
 A dead, non-hardcore player with a valid bound self-grave can choose **Spirit Journey** on the death screen. Their player-shaped corpse remains at the original death position and they respawn at the grave as a spectator. The journey applies the generated greyscale post-chain and reveals Spiritwell beacon beams only to that player.
 

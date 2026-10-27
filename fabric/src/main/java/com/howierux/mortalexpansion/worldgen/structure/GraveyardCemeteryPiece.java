@@ -429,7 +429,7 @@ public final class GraveyardCemeteryPiece extends StructurePiece {
     }
 
     private static void markNaturalGrave(WorldGenLevel level, BlockPos pos) {
-        // Missing function: grave ownership/inscriptions. The natural block-state is persisted by terrain generation.
+        // Natural identity is already persisted in the generated block state. Unowned generated graves do not bind a player respawn.
     }
 
     private static int depthToward(Direction direction) {

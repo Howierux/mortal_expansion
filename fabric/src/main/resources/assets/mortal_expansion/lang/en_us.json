@@ -652,5 +652,6 @@
   "screen.mortal_expansion.grave.name": "Name",
   "screen.mortal_expansion.grave.engrave": "Engrave",
   "screen.mortal_expansion.grave.hint": "Your own name binds this grave for respawn and Spirit Journey.",
-  "message.mortal_expansion.journey.no_well": "No safe Spiritwell return is available."
+  "message.mortal_expansion.journey.no_well": "No safe Spiritwell return is available.",
+  "tooltip.mortal_expansion.darkhold.exposure": "Its presence feeds your Haunt. Seven forbidden secrets await beyond Eldritch."
 }

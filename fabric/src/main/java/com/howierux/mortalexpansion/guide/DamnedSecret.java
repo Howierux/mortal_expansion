@@ -9,8 +9,7 @@ public enum DamnedSecret {
     public int bit() { return 2 << ordinal(); }
     public int threshold() { return 70 + ordinal() * 10; }
     public String key() { return "sin_" + name().toLowerCase(java.util.Locale.ROOT); }
-    // Missing function: the seven sin abilities/unlocks belong to a later Darkhold slice; Demon revelation is implemented.
-    public boolean unlocked(Player player) { return player != null && (0 & bit()) != 0; }
+    public boolean unlocked(Player player) { return player != null && (((net.fabricmc.fabric.api.attachment.v1.AttachmentTarget)player).getAttachedOrCreate(DarkholdProgression.KNOWN) & bit()) != 0; }
     public static int revealedAt(int haunt) {
         int mask = haunt >= 70 ? 1 : 0;
         for (var secret : values()) if (haunt >= secret.threshold()) mask |= secret.bit();
